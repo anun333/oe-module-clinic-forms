@@ -89,7 +89,7 @@ final class MetadataTest extends TestCase
     {
         $doc = DocumentLibrary::shipped()->get('consent-to-treat') ?? throw new \LogicException();
         $html = (new Renderer(new Context(['name' => 'C'])))->document($doc);
-        self::assertStringContainsString("<tfoot><tr><td><div class='cf-stamp'>consent-to-treat v1</div></td></tr></tfoot>", $html);
+        self::assertStringContainsString("<tfoot><tr><td><div class='cf-foot'><div class='cf-stamp'>consent-to-treat v1</div></div></td></tr></tfoot>", $html);
         $draft = new Document('x', 'X', 'C', 'A', [['type' => 'paragraph', 'text' => 'Hi']], [], 'clinic', version: 3, status: 'draft');
         self::assertSame('x v3 · borrador · versión local', (new Renderer(new Context(['name' => 'C']), 'es'))->stamp($draft));
         $layout = (new Renderer(new Context(['name' => 'C'])))->layoutForm(new LayoutForm('DEM', 'Registration', ['1' => 'Who'], [], []));
@@ -146,6 +146,11 @@ final class MetadataTest extends TestCase
         self::assertSame([], $bad->hide);
         self::assertStringContainsString('"hide" must be a list of document ids', $bad->problems[0] ?? '');
         self::assertEquals(new Settings(), Settings::forSite(null));
+        file_put_contents($this->site . '/' . DocumentLibrary::LOCAL_FOLDER . '/settings.json', '{"label_box": true}');
+        self::assertTrue(Settings::forSite($this->site)->labelBox);
+        file_put_contents($this->site . '/' . DocumentLibrary::LOCAL_FOLDER . '/settings.json', '{"label_box": "yes"}');
+        self::assertStringContainsString('"label_box" must be true or false', Settings::forSite($this->site)->problems[0] ?? '');
+        self::assertFalse(Settings::forSite($this->site)->labelBox);
     }
 
     public function testPacksCarryTheirIsoCodes(): void

@@ -25,6 +25,7 @@ final class Words
         'Patient' => 'Paciente',
         'draft' => 'borrador',
         'local version' => 'versión local',
+        'Patient label' => 'Etiqueta del paciente',
         'DOB' => 'Fecha de nac.',
         'ID' => 'N.º',
         'Patient name' => 'Nombre del paciente',

@@ -80,10 +80,10 @@ As written in the source; whether they behave correctly for a given user is not 
 | part | files | lines |
 |---|---|---|
 | document library (`data/`, JSON read at runtime) | 74 | 13172 |
-| PHP logic (`src/`) | 28 | 4398 |
-| tests (`tests/`, `phpunit.xml.dist`) | 18 | 2168 |
+| PHP logic (`src/`) | 29 | 4527 |
+| tests (`tests/`, `phpunit.xml.dist`) | 19 | 2264 |
 | tools (`tools/`) | 3 | 836 |
-| pages (`public/`) | 5 | 729 |
+| pages (`public/`) | 5 | 736 |
 | module wiring | 3 | 71 |
 
 ## Not covered here

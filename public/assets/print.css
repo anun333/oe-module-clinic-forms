@@ -83,4 +83,10 @@
 }
 @media print { .cf-toolbar { display: none; } }
 .cf-frame > tfoot { display: table-footer-group; }
+.cf-foot { display: flex; justify-content: space-between; align-items: flex-end; gap: 0.2in; }
+.cf-foot .cf-stamp { flex: 1; }
 .cf-stamp { font-size: 7pt; color: #555; text-align: right; padding-top: 0.06in; }
+.cf-code { padding-top: 0.06in; }
+.cf-code .cf-barcode { display: block; }
+/* Sized for a standard patient label (2 5/8 by 1 inch, as on Avery 5160 sheets). */
+.cf-label-box { float: right; width: 2.7in; height: 1.05in; margin: 0 0 0.1in 0.2in; border: 1px dashed #888; font-size: 7pt; color: #777; padding: 0.04in 0.06in; box-sizing: border-box; }

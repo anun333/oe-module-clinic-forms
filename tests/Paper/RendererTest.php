@@ -148,6 +148,30 @@ final class RendererTest extends TestCase
     }
 
     /** @param list<array<string, mixed>> $blocks */
+    public function testAFilledPageCarriesTheChartNumberAsABarcodeAtTheFoot(): void
+    {
+        $doc = $this->doc([['type' => 'paragraph', 'text' => 'Hello.']]);
+        $filled = (new Renderer(new Context(self::FACILITY, ['name' => 'Jane Q Sample', 'id' => '00042'])))->document($doc);
+        $foot = substr($filled, (int)strpos($filled, '<tfoot>'), (int)strpos($filled, '</tfoot>') - (int)strpos($filled, '<tfoot>'));
+        self::assertStringContainsString("<svg xmlns='http://www.w3.org/2000/svg' class='cf-barcode'", $foot, 'in the foot, so it repeats on every page');
+        self::assertStringContainsString("aria-label='Patient ID 00042'", $foot);
+        self::assertStringNotContainsString('cf-barcode', (new Renderer(new Context(self::FACILITY)))->document($doc), 'a blank print has none');
+        $poster = new Document('notice', 'Notice', 'Front desk', 'A notice.', [['type' => 'paragraph', 'text' => 'Posted.']], [], poster: true);
+        self::assertStringNotContainsString('cf-barcode', (new Renderer(new Context(self::FACILITY, ['id' => '00042'])))->document($poster), 'a poster has none');
+        self::assertStringNotContainsString('cf-barcode', (new Renderer(new Context(self::FACILITY, ['id' => 'Peña-1'])))->document($doc), 'a chart number Code 128 cannot carry is left as text');
+    }
+
+    public function testTheLabelBoxIsOnlyOnBlankPrintsWhenTheClinicAsks(): void
+    {
+        $doc = $this->doc([['type' => 'paragraph', 'text' => 'Hello.']]);
+        self::assertStringNotContainsString('cf-label-box', (new Renderer(new Context(self::FACILITY)))->document($doc), 'off unless asked');
+        $blank = (new Renderer(new Context(self::FACILITY), 'en', [], true))->document($doc);
+        self::assertSame(1, substr_count($blank, "<div class='cf-label-box'>Patient label</div>"), 'once, on the first page');
+        self::assertStringNotContainsString('cf-label-box', (new Renderer(new Context(self::FACILITY, ['id' => '00042']), 'en', [], true))->document($doc), 'not when the patient is printed');
+        self::assertStringContainsString('Etiqueta del paciente', (new Renderer(new Context(self::FACILITY), 'es', [], true))->document($doc));
+        self::assertStringContainsString('cf-label-box', (new Renderer(new Context(self::FACILITY), 'en', [], true))->layoutForm(new LayoutForm('DEM', 'Registration', ['1' => 'Who'], [], [])));
+    }
+
     private function doc(array $blocks): Document
     {
         return new Document('sample', 'Sample', 'Front desk', 'A sample.', $blocks, []);

@@ -15,7 +15,7 @@ namespace OpenHealthcare\ClinicForms\Paper;
 final readonly class Renderer
 {
     /** @param list<string> $taglines language assistance taglines, one per language, printed on patient pages */
-    public function __construct(private Context $context, private string $language = 'en', private array $taglines = [])
+    public function __construct(private Context $context, private string $language = 'en', private array $taglines = [], private bool $labelBox = false)
     {
     }
 
@@ -62,9 +62,27 @@ final readonly class Renderer
     {
         // A notice for posting goes on a wall: it never carries the patient line.
         $head = $poster ? '' : "<thead><tr><td>" . $this->running($title) . "</td></tr></thead>";
-        // The foot of every page names the document and its version, so a signed copy says which it was.
-        $foot = $stamp === '' ? '' : "<tfoot><tr><td><div class='cf-stamp'>" . self::e($stamp) . "</div></td></tr></tfoot>";
+        // The foot of every page names the document and its version, so a signed copy says which it was,
+        // and carries the patient's chart number as a barcode, so a scanned page can be filed to the chart.
+        $foot = $stamp === '' ? '' : "<tfoot><tr><td><div class='cf-foot'>" . ($poster ? '' : $this->patientCode()) . "<div class='cf-stamp'>" . self::e($stamp) . "</div></div></td></tr></tfoot>";
         return "<section class='cf-page" . ($poster ? " cf-poster" : '') . "' lang='" . self::e($this->language) . "'><table class='cf-frame'>" . $head . $foot . "<tbody><tr><td>";
+    }
+
+    /**
+     * The chart number (pubpid) as a Code 128 barcode, as OpenEMR's own patient barcode label encodes
+     * it. Nothing on a blank print, or for a chart number Code 128 can't carry.
+     */
+    public function patientCode(): string
+    {
+        $id = $this->context->value('patient.id');
+        return Code128::encodable($id) ? "<div class='cf-code'>" . Code128::svg($id, label: $this->t('Patient ID') . ' ' . $id) . "</div>" : '';
+    }
+
+    /** A box for a patient label, at the top of a blank document's first page, when the clinic asks for it. */
+    private function labelBox(bool $poster): string
+    {
+        return $this->labelBox && !$poster && $this->context->value('patient.id') === ''
+            ? "<div class='cf-label-box'>" . self::e($this->t('Patient label')) . "</div>" : '';
     }
 
     /** What the foot of a document's pages says: its id and version, and whether it's a draft or the clinic's own. */
@@ -92,7 +110,7 @@ final readonly class Renderer
 
     public function document(Document $doc): string
     {
-        $html = $this->open($doc->title, $doc->poster, $this->stamp($doc)) . $this->letterhead() . "<h1>" . $this->text($doc->title) . "</h1>";
+        $html = $this->open($doc->title, $doc->poster, $this->stamp($doc)) . $this->labelBox($doc->poster) . $this->letterhead() . "<h1>" . $this->text($doc->title) . "</h1>";
         foreach ($doc->blocks as $block) {
             $html .= match ($block['type']) {
                 'heading' => "<h2>" . $this->text($block['text']) . "</h2>",
@@ -139,7 +157,7 @@ final readonly class Renderer
     {
         $title = $values === [] ? $form->title : $form->title . ': ' . $this->t('please check and correct');
         $intro = $values === [] ? '' : "<p class='cf-intro'>" . self::e($this->t('This is what we have on file. Cross out anything that is wrong and write the correction beside it, and fill in anything missing.')) . "</p>";
-        return $this->open($title, false, 'layout ' . $form->id) . $this->letterhead() . "<h1>" . self::e($title) . "</h1>"
+        return $this->open($title, false, 'layout ' . $form->id) . $this->labelBox(false) . $this->letterhead() . "<h1>" . self::e($title) . "</h1>"
             . $this->patientStrip() . $intro . (new LayoutPaper($this->language))->render($form, $values) . $this->taglines(false) . $this->close();
     }
 
