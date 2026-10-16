@@ -57,12 +57,14 @@ $renderer = new Renderer(new Context($facility, $patient, $recipient, $today, $l
 
 $pages = [];
 $titles = [];
+$versions = [];
 foreach ($items as $item) {
     if (str_starts_with($item, 'doc:')) {
         $doc = $library->get(substr($item, 4));
         if ($doc !== null) {
             $pages[] = $renderer->document($doc);
             $titles[] = $doc->title;
+            $versions[] = $renderer->stamp($doc);
         }
     } else {
         $form = $site->layoutForm(substr($item, 7), $pack?->layouts ?? []);
@@ -83,7 +85,8 @@ if ($patient !== []) {
     OpenEmr::audit(
         'patient-record-select',
         'Clinic Forms printed with patient details: ' . implode(', ', $titles)
-            . ($filled !== [] ? '; filled with values on file: ' . implode(', ', $filled) : ''),
+            . ($filled !== [] ? '; filled with values on file: ' . implode(', ', $filled) : '')
+            . ($versions !== [] ? '; versions: ' . implode(', ', $versions) : ''),
         $pid,
     );
 }

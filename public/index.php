@@ -83,6 +83,7 @@ foreach ($library->all() as $doc) {
         'about' => $doc->about,
         'es' => $spanish->isTranslated($doc->id),
         'esOutOfDate' => isset($spanish->outOfDate()[$doc->id]),
+        'draft' => $doc->status === 'draft',
     ];
 }
 foreach ($layouts as $form) {
@@ -106,14 +107,24 @@ foreach ($layouts as $form) {
         <?php echo xlt('Consents and releases are starting points: have them reviewed for your state before use.'); ?></p>
     <p class="cf-about" id="cf-pack">
         <?php if ($pack !== null) { ?>
-            <?php echo xlt('Country pack'); ?>: <strong><?php echo text($pack->name); ?></strong><?php echo $region !== null ? ' (' . text($pack->regions[$region]['name']) . ')' : ''; ?>.
+            <?php echo xlt('Country pack'); ?>: <strong><?php echo text($pack->name); ?></strong><?php echo $region !== null ? ' (' . text($pack->regions[$region]['name'] . ', ' . $pack->isoRegion($region)) . ')' : ''; ?>.
             <?php echo xlt('Its documents follow the law and programmes of that country; the others apply anywhere.'); ?>
         <?php } else { ?>
             <?php echo xlt('No country pack: only the documents that apply anywhere are offered.'); ?>
         <?php } ?>
         <?php echo xlt('To choose another, put'); ?> <code><?php echo text('{"country": "us"}'); ?></code> <?php echo xlt('or'); ?> <code><?php echo text('{"country": "none"}'); ?></code>
         <?php echo xlt('in settings.json in your Clinic Forms folder.'); ?>
+        <?php $hidden = array_keys(array_filter($library->withdrawn(), static fn(string $why): bool => $why === 'hidden')); ?>
+        <?php if ($hidden !== []) { ?>
+            <?php echo xlt('Hidden there'); ?>: <?php echo text(implode(', ', $hidden)); ?>.
+        <?php } ?>
     </p>
+    <?php if ($library->unstatedBasis() !== []) { ?>
+        <div class="alert alert-light border cf-basis">
+            <?php echo xlt('Your own versions of these documents do not say which version of the module they were copied from, so you will not be told when the module version changes. Add the based_on line shown to each'); ?>:
+            <ul class="mb-0"><?php foreach ($library->unstatedBasis() as $u) { ?><li><?php echo text($u['title'] . ' (' . $u['id'] . ', ' . xl('the module has version') . ' ' . $u['version'] . '): '); ?><code><?php echo text('"based_on": "' . $u['fingerprint'] . '"'); ?></code></li><?php } ?></ul>
+        </div>
+    <?php } ?>
     <?php if ($packNotes !== []) { ?>
         <div class="alert alert-info"><?php foreach ($packNotes as $note) { ?><div><?php echo text($note); ?></div><?php } ?></div>
     <?php } ?>
@@ -231,7 +242,7 @@ foreach ($layouts as $form) {
                 <?php foreach ($items as $item) { ?>
                     <div class="form-check">
                         <input class="form-check-input cf-item" type="checkbox" name="items[]" value="<?php echo attr($item['value']); ?>" id="<?php echo attr('i-' . $item['value']); ?>">
-                        <label class="form-check-label" for="<?php echo attr('i-' . $item['value']); ?>"><?php echo text($item['title']); ?><?php echo !empty($item['es']) ? ' <span class="badge badge-info">ES</span>' : (!empty($item['esOutOfDate']) ? ' <span class="badge badge-light">' . xlt('ES out of date') . '</span>' : ''); ?>
+                        <label class="form-check-label" for="<?php echo attr('i-' . $item['value']); ?>"><?php echo text($item['title']); ?><?php echo !empty($item['draft']) ? ' <span class="badge badge-warning">' . xlt('Draft') . '</span>' : ''; ?><?php echo !empty($item['es']) ? ' <span class="badge badge-info">ES</span>' : (!empty($item['esOutOfDate']) ? ' <span class="badge badge-light">' . xlt('ES out of date') . '</span>' : ''); ?>
                             <span class="cf-about">— <?php echo text($item['about']); ?></span></label>
                     </div>
                 <?php } ?>

@@ -46,6 +46,9 @@ interface OfficeWriter
 
     public function pageBreak(): void;
 
+    /** Small, right-aligned: the document's id and version, at the end of each document. */
+    public function stamp(string $text): void;
+
     /** The finished file. $running is the line at the top of every page; $paper 'letter' or 'A4'. */
     public function file(string $running, string $paper): string;
 

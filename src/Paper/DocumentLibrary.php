@@ -36,6 +36,10 @@ final class DocumentLibrary
     private array $problems = [];
     /** @var array<string, string> translations whose English has changed, by document id: the file */
     private array $outOfDate = [];
+    /** @var array<string, string> documents not offered, by id: retired, or hidden by the clinic */
+    private array $withdrawn = [];
+    /** @var list<array{id: string, title: string, version: int, fingerprint: string}> clinic versions that don't say which of the module's they were copied from */
+    private array $unstated = [];
 
     /**
      * @param ?string $localDir   the clinic's own documents, or null for none
@@ -44,6 +48,7 @@ final class DocumentLibrary
      *                            <dir>/<language>/ uses it, any other stays in English
      * @param list<array{0: string, 1: string}> $packs folders between the core and the clinic's,
      *                            each [folder, how messages name it]: a country pack's documents, then a region's
+     * @param list<string> $hide  documents the clinic doesn't offer (settings.json "hide")
      */
     public function __construct(
         private readonly string $dir,
@@ -51,6 +56,7 @@ final class DocumentLibrary
         private readonly string $localLabel = 'sites/default/' . self::LOCAL_FOLDER,
         private readonly string $language = 'en',
         private readonly array $packs = [],
+        private readonly array $hide = [],
     ) {
     }
 
@@ -76,6 +82,7 @@ final class DocumentLibrary
             'sites/' . basename($siteDir) . '/' . self::LOCAL_FOLDER,
             $language,
             $pack === null ? [] : self::packLayers(Pack::get($pack), $region),
+            Settings::forSite($siteDir)->hide,
         );
     }
 
@@ -103,6 +110,7 @@ final class DocumentLibrary
                 $layers[] = [$this->localDir, $this->localLabel, 'clinic'];
             }
             $docs = [];
+            $files = [];
             foreach ($layers as [$dir, $label, $source]) {
                 foreach (glob($dir . '/*.json') ?: [] as $file) {
                     try {
@@ -114,7 +122,12 @@ final class DocumentLibrary
                         $this->problems[] = $e->getMessage();
                         continue;
                     }
+                    $shipped = $docs[$doc->id] ?? null;
+                    if ($source === 'clinic' && $shipped !== null && $shipped->source === 'shipped') {
+                        $this->checkBasis($doc, $shipped, "$label/" . basename($file), $files[$doc->id]);
+                    }
                     $docs[$doc->id] = $doc;
+                    $files[$doc->id] = "$label/" . basename($file);
                 }
             }
             if ($this->language !== 'en') {
@@ -147,6 +160,19 @@ final class DocumentLibrary
                     }
                 }
             }
+            foreach ($docs as $id => $doc) {
+                if ($doc->status === 'retired') {
+                    $this->withdrawn[$id] = 'retired';
+                }
+            }
+            foreach ($this->hide as $id) {
+                if (isset($docs[$id])) {
+                    $this->withdrawn[$id] = 'hidden';
+                } else {
+                    $this->problems[] = "settings.json: \"hide\" names $id, which is not a document";
+                }
+            }
+            $docs = array_diff_key($docs, $this->withdrawn);
             uasort($docs, static fn(Document $a, Document $b): int => [$a->category, $a->title] <=> [$b->category, $b->title]);
             $this->documents = $docs;
         }
@@ -170,6 +196,45 @@ final class DocumentLibrary
     {
         $this->all();
         return $this->outOfDate;
+    }
+
+    /**
+     * A clinic's version replacing a shipped document: say when the shipped one has changed since
+     * it was copied ("based_on" no longer matches), and remember those that don't say.
+     */
+    private function checkBasis(Document $clinic, Document $shipped, string $file, string $shippedFile): void
+    {
+        $current = Translation::fingerprint($shipped);
+        if ($clinic->basedOn === null) {
+            $this->unstated[] = ['id' => $shipped->id, 'title' => $shipped->title, 'version' => $shipped->version, 'fingerprint' => $current];
+        } elseif ($clinic->basedOn !== $current) {
+            $this->problems[] = "$file: copied from an earlier version of the module's \"$shipped->title\", which is now version $shipped->version. "
+                . "Compare yours with the module's ($shippedFile in the Clinic Forms module folder), then set \"based_on\": \"$current\".";
+        }
+    }
+
+    /** Documents not offered: retired by the module, or hidden in settings.json. @return array<string, string> */
+    public function withdrawn(): array
+    {
+        $this->all();
+        return $this->withdrawn;
+    }
+
+    public function isWithdrawn(string $id): bool
+    {
+        return isset($this->withdrawn()[$id]);
+    }
+
+    /**
+     * The clinic's versions of shipped documents that don't say which of the module's versions they
+     * were copied from, with the value to put in "based_on".
+     *
+     * @return list<array{id: string, title: string, version: int, fingerprint: string}>
+     */
+    public function unstatedBasis(): array
+    {
+        $this->all();
+        return $this->unstated;
     }
 
     public function get(string $id): ?Document
@@ -202,6 +267,17 @@ final class DocumentLibrary
         if ($english !== null) {
             // A translation takes its audience, code and validated flag from the English document.
             self::onlyKeys($data, ['id', 'title', 'category', 'about', 'blocks'], ['translates'], $where);
+            // ...and its version, status, source and licence.
+            $data['status'] = $english->status;
+            if ($english->version > 0) {
+                $data['version'] = $english->version;
+            }
+            if ($english->origin !== null) {
+                $data['source'] = $english->origin;
+            }
+            if ($english->licence !== null) {
+                $data['licence'] = $english->licence;
+            }
             if (isset($data['translates']) && (!is_string($data['translates']) || preg_match('/^[0-9a-f]{16}$/', $data['translates']) !== 1)) {
                 throw new \InvalidArgumentException("$where translates: must be the 16-digit fingerprint of the English it translates");
             }
@@ -214,7 +290,8 @@ final class DocumentLibrary
             $data['validated'] = $english->validated;
             $data['poster'] = $english->poster;
         }
-        self::onlyKeys($data, ['id', 'title', 'category', 'about', 'audience', 'blocks'], ['code', 'validated', 'poster'], $where);
+        self::onlyKeys($data, ['id', 'title', 'category', 'about', 'audience', 'blocks'], ['code', 'validated', 'poster', 'version', 'status', 'source', 'licence', 'based_on'], $where);
+        [$version, $status, $origin, $licence, $basedOn] = self::metadata($data, $where);
         if (isset($data['poster']) && !is_bool($data['poster'])) {
             throw new \InvalidArgumentException("$where poster: must be true or false");
         }
@@ -350,7 +427,64 @@ final class DocumentLibrary
             $language,
             ($data['poster'] ?? false) === true,
             $translates,
+            $version,
+            $status,
+            $origin,
+            $licence,
+            $basedOn,
         );
+    }
+
+    /**
+     * version, status, source, licence and based_on, checked.
+     *
+     * @param array<mixed> $data
+     * @return array{0: int, 1: string, 2: ?array{kind: string, name: string, url?: string}, 3: ?array{holder: string, terms: string, permission?: string}, 4: ?string}
+     */
+    private static function metadata(array $data, string $where): array
+    {
+        $version = $data['version'] ?? 0;
+        if (!is_int($version) || $version < 0 || (array_key_exists('version', $data) && $version === 0)) {
+            throw new \InvalidArgumentException("$where version: must be a whole number from 1, raised when the wording changes");
+        }
+        $status = $data['status'] ?? 'active';
+        if (!is_string($status) || !in_array($status, Document::STATUSES, true)) {
+            throw new \InvalidArgumentException("$where status: must be one of " . implode(', ', Document::STATUSES));
+        }
+        $origin = null;
+        if (isset($data['source'])) {
+            if (!is_array($data['source'])) {
+                throw new \InvalidArgumentException("$where source: must be an object with kind and name");
+            }
+            self::onlyKeys($data['source'], ['kind', 'name'], ['url'], "$where source");
+            if (!in_array($data['source']['kind'], Document::SOURCE_KINDS, true)) {
+                throw new \InvalidArgumentException("$where source kind: must be one of " . implode(', ', Document::SOURCE_KINDS));
+            }
+            $origin = ['kind' => (string)$data['source']['kind'], 'name' => self::text($data['source']['name'], "$where source name")];
+            if (isset($data['source']['url'])) {
+                $url = self::text($data['source']['url'], "$where source url");
+                if (!str_starts_with($url, 'https://')) {
+                    throw new \InvalidArgumentException("$where source url: must start with https://");
+                }
+                $origin['url'] = $url;
+            }
+        }
+        $licence = null;
+        if (isset($data['licence'])) {
+            if (!is_array($data['licence'])) {
+                throw new \InvalidArgumentException("$where licence: must be an object with holder and terms");
+            }
+            self::onlyKeys($data['licence'], ['holder', 'terms'], ['permission'], "$where licence");
+            $licence = ['holder' => self::text($data['licence']['holder'], "$where licence holder"), 'terms' => self::text($data['licence']['terms'], "$where licence terms")];
+            if (isset($data['licence']['permission'])) {
+                $licence['permission'] = self::text($data['licence']['permission'], "$where licence permission");
+            }
+        }
+        $basedOn = $data['based_on'] ?? null;
+        if ($basedOn !== null && (!is_string($basedOn) || preg_match('/^[0-9a-f]{16}$/', $basedOn) !== 1)) {
+            throw new \InvalidArgumentException("$where based_on: must be the 16-digit fingerprint of the module's version it was copied from");
+        }
+        return [$version, $status, $origin, $licence, $basedOn];
     }
 
     /**

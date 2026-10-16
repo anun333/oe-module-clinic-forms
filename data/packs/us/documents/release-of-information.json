@@ -9,6 +9,17 @@
     "code": "64292-6",
     "display": "Release of Information Consent Document"
   },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "HIPAA authorization, 45 CFR 164.508(c)",
+    "url": "https://www.ecfr.gov/current/title-45/section-164.508"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
   "blocks": [
     {
       "type": "fields",

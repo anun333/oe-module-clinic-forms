@@ -10,6 +10,18 @@
     "display": "Patient Health Questionnaire 2 item (PHQ-2) [Reported]"
   },
   "validated": true,
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "instrument",
+    "name": "PHQ-2, the PHQ-9's first two questions (Kroenke, Spitzer and Williams)",
+    "url": "https://www.phqscreeners.com/"
+  },
+  "licence": {
+    "holder": "Pfizer Inc.",
+    "terms": "No permission required to reproduce, translate, display or distribute.",
+    "permission": "None needed: the statement printed on the instrument."
+  },
   "blocks": [
     {
       "type": "fields",

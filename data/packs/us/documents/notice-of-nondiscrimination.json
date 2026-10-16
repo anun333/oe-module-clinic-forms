@@ -5,6 +5,17 @@
   "about": "The notice Section 1557 requires (45 CFR 92.10): no discrimination, free help for people with disabilities and for people who speak other languages, how to get it, and how to complain. Post it in 20-point type and give it out each year; fill in the Section 1557 Coordinator.",
   "audience": "patient",
   "poster": true,
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "Section 1557 notice of nondiscrimination, 45 CFR 92.10(a)(1)",
+    "url": "https://www.ecfr.gov/current/title-45/section-92.10"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
   "blocks": [
     {
       "type": "paragraph",

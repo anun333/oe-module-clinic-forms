@@ -82,3 +82,5 @@
   .cf-toolbar { max-width: 8.5in; margin: 0.15in auto; display: flex; gap: 0.5rem; }
 }
 @media print { .cf-toolbar { display: none; } }
+.cf-frame > tfoot { display: table-footer-group; }
+.cf-stamp { font-size: 7pt; color: #555; text-align: right; padding-top: 0.06in; }

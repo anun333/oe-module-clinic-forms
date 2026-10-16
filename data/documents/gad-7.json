@@ -10,6 +10,18 @@
     "display": "Generalized anxiety disorder 7 item (GAD-7)"
   },
   "validated": true,
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "instrument",
+    "name": "GAD-7 (Spitzer, Kroenke, Williams and Löwe)",
+    "url": "https://www.phqscreeners.com/"
+  },
+  "licence": {
+    "holder": "Pfizer Inc.",
+    "terms": "No permission required to reproduce, translate, display or distribute.",
+    "permission": "None needed: the statement printed on the instrument."
+  },
   "blocks": [
     {
       "type": "fields",

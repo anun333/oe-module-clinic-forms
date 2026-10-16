@@ -26,6 +26,16 @@
  * LOINC document code ("code": {"system": "http://loinc.org", "code": "57133-1", "display": "Referral Note"})
  * and "validated": true for a validated instrument (PHQ-9…) whose wording must not be changed.
  *
+ * What a document says about itself (required on shipped documents, optional on a clinic's own):
+ *   "version": 3          a whole number, raised whenever the wording changes (data/document-versions.json
+ *                         records each version's fingerprint, and the tests fail on a change without one);
+ *                         printed small at the foot of each page with the id, so a signed copy names its version
+ *   "status": "active"    draft (offered, marked draft), active, or retired (no longer offered)
+ *   "source": {"kind": "written" | "rule" | "instrument", "name": "...", "url": "..."}   where the wording comes from
+ *   "licence": {"holder": "...", "terms": "...", "permission": "..."}                       who owns it and on what terms
+ * A clinic's own version of a shipped document may say "based_on": the fingerprint (Translation::fingerprint)
+ * of the module's version it was copied from, so the page can say when the module's has changed since.
+ *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
  */
@@ -38,6 +48,8 @@ final readonly class Document
 {
     public const BLOCK_TYPES = ['heading', 'paragraph', 'fields', 'checklist', 'lines', 'signature', 'scale', 'table', 'taglines'];
     public const AUDIENCES = ['patient', 'staff', 'provider'];
+    public const STATUSES = ['draft', 'active', 'retired'];
+    public const SOURCE_KINDS = ['written', 'rule', 'instrument'];
 
     /**
      * @param list<array<string, mixed>> $blocks validated by DocumentLibrary
@@ -49,6 +61,11 @@ final readonly class Document
      * @param string                     $language  the language of its wording (en, es)
      * @param bool                       $poster    a notice for posting: printed in 20-point sans serif, as 45 CFR 92.10-92.11 require
      * @param ?string                    $translates for a translation, the fingerprint of the English it was made from
+     * @param int                        $version   0 when the document doesn't say
+     * @param string                     $status    draft, active or retired
+     * @param ?array{kind: string, name: string, url?: string} $origin where the wording comes from (the JSON's "source")
+     * @param ?array{holder: string, terms: string, permission?: string} $licence
+     * @param ?string                    $basedOn   for a clinic's own version, the fingerprint of the module's version it was copied from
      */
     public function __construct(
         public string $id,
@@ -64,7 +81,18 @@ final readonly class Document
         public string $language = 'en',
         public bool $poster = false,
         public ?string $translates = null,
+        public int $version = 0,
+        public string $status = 'active',
+        public ?array $origin = null,
+        public ?array $licence = null,
+        public ?string $basedOn = null,
     ) {
+    }
+
+    /** What the foot of each printed page says: the id and version, and draft or local when it is. */
+    public function stamp(): string
+    {
+        return $this->id . ($this->version > 0 ? ' v' . $this->version : '');
     }
 
     public function usesPatient(): bool

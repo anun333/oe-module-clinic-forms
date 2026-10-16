@@ -66,6 +66,7 @@ final readonly class OfficeExport
             if ($doc->audience === 'patient' && !$hasBlock) {
                 $this->taglines($writer);
             }
+            $writer->stamp($doc->stamp() . ($doc->status === 'draft' ? ' · ' . $this->t('draft') : '') . ($doc->source === 'clinic' ? ' · ' . $this->t('local version') : ''));
         }
         return $writer->file($this->running(), $paper);
     }

@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.11.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.12.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -59,7 +59,7 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Privacy and patient rights | Free Language Help and Services for People with Disabilities | The Section 1557 notice of availability (92.11) with every tagline, as a 20-point poster | — | US |
 | After the visit | Work or School Note | Confirms the visit and when the patient may return, without giving the reason for the visit | — | any |
 
-Each is a JSON file, the same on every OpenEMR release: in `data/documents/` if it applies anywhere, or in `data/packs/us/documents/` if it belongs to United States law or programmes (the **Pack** column; see [Country packs](#country-packs)). The short UDS form is the US pack's too. The PHQ-9 and GAD-7 are printed with their authors' statement that no permission is needed to reproduce them. Their answers can be typed into OpenEMR's own PHQ-9 and GAD-7 encounter forms, which ship with OpenEMR but have to be enabled under **Administration › Forms › Forms Administration**.
+The format, and the rules every document follows, are in [docs/](docs/README.md). Each is a JSON file, the same on every OpenEMR release: in `data/documents/` if it applies anywhere, or in `data/packs/us/documents/` if it belongs to United States law or programmes (the **Pack** column; see [Country packs](#country-packs)). The short UDS form is the US pack's too. The PHQ-9 and GAD-7 are printed with their authors' statement that no permission is needed to reproduce them. Their answers can be typed into OpenEMR's own PHQ-9 and GAD-7 encounter forms, which ship with OpenEMR but have to be enabled under **Administration › Forms › Forms Administration**.
 
 ### Standards the documents follow
 
@@ -67,6 +67,8 @@ Each is a JSON file, the same on every OpenEMR release: in `data/documents/` if 
 - **What the law says goes in.** `data/requirements.json` (the instruments' wording) and the US pack's `data/packs/us/requirements.json` list, for the documents a rule governs, each required element and its citation: the Notice of Privacy Practices (164.520(b)(1), element by element), the patient-rights requests (164.522, 164.524, 164.526, 164.528, 164.508(b)(5)), the Part 2 consent (42 CFR 2.31), the HIPAA authorization (45 CFR 164.508(c)), the privacy notice acknowledgment (164.520(c)(2)(ii)), the sliding fee application (HRSA Compliance Manual, chapter 9), the work or school note's minimum necessary (164.502(b)), and the PHQ-9 and GAD-7 wording. The tests fail if a shipped document loses one. A clinic's own version of one of these documents is checked too, and the Clinic Forms page names anything it can't find (by wording, so check before relying on the warning).
 - **Plain language.** Every patient document reads at an 8th-grade level or below (Flesch-Kincaid), as AHRQ's health literacy toolkit advises; the tests measure it. Validated instruments (PHQ-9, GAD-7) keep their published wording and are exempt.
 - Each document says who reads it (patient, staff or provider) and whether its wording is a validated instrument's.
+- **Each document has a version**, printed small at the foot of every page with its id (`consent-to-treat v1`) and recorded in the audit event, so a signed copy names the wording the patient signed. A version means one wording: the tests fail if a document's wording changes without its version being raised.
+- **Each document says where its wording comes from and on what terms:** written for Clinic Forms, written to a rule's elements (with a link to the rule), or a published instrument (with its holder, terms and the permission they give: PHQ-9, PHQ-2 and GAD-7 from Pfizer, "no permission required"; AUDIT-C from the WHO manual).
 
 ### The documents are starting points
 
@@ -87,8 +89,11 @@ The documents that work anywhere (consent to treatment, the screening questionna
 Put your own documents in `sites/<site>/documents/clinic-forms/` (for most installs, `sites/default/documents/clinic-forms/`), in the same format as `data/documents/`. That folder belongs to the site, so module updates leave it alone.
 
 - A file with a new id adds a document. A file with the id of a shipped document replaces it, so the clinic's edited consent prints instead of the module's.
+- **Know when the module's version changes.** Start from a copy of the shipped file and add the `"based_on"` line the Clinic Forms page shows for it. When a later module release changes that document, the page says so and names the file to compare with. Your version keeps printing; it is never overwritten.
+- **Stop offering a shipped document** without replacing it: list its id in `settings.json`, `{"hide": ["financial-policy"]}`. It leaves the picker and the packets.
+- A document marked `"status": "draft"` is offered with a Draft badge and prints "draft" at the foot of each page; `"retired"` stops offering it.
 - Files are checked strictly. A document with an unknown field, an unknown block type or a placeholder that doesn't exist is left out, and the Clinic Forms page names the file and the mistake.
-- `settings.json` in the same folder chooses the country pack: `{"country": "us"}` or `{"country": "none"}`.
+- `settings.json` in the same folder chooses the country pack and hides shipped documents: `{"country": "us", "hide": ["financial-policy"]}` (both optional).
 - Your own packets go in `packets.json` in the same folder, in the format of `data/packets.json`. A packet with the id of a shipped one replaces it. A file with a mistake is left out and reported; the shipped packets stay.
 
 The format is in `src/Paper/Document.php`. Blocks are headings, paragraphs, fields, checklists, ruled lines, signature lines, scales (a question per row and a box per answer, optionally scored, as the PHQ-9 is) and tables (column headings over blank rows, as the household list is). Text can use these placeholders, which print as a blank line when the value isn't known:

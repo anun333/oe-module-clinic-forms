@@ -6,7 +6,7 @@
  * data/documents work anywhere; a pack adds its own and may replace a core one by id, a region
  * (a state) may add or replace again, and the clinic's own folder has the last word.
  *
- *   data/packs/<id>/pack.json            name, the facility country names it answers to, paper size,
+ *   data/packs/<id>/pack.json            name, jurisdiction (ISO 3166-1), the facility country names it answers to, paper size,
  *                                        layout forms it adds (the US pack's UDS short form)
  *   data/packs/<id>/documents/[<lang>/]  documents and their translations
  *   data/packs/<id>/requirements.json    legal elements, as data/requirements.json
@@ -15,7 +15,7 @@
  *   data/packs/<id>/regions.json         regions (states): name and the languages the tagline rule counts
  *   data/packs/<id>/regions/<code>/documents/  a region's own documents, when it has any
  *
- * Which pack a site uses: "country" in the clinic's settings.json (a pack id, or "none"), else the
+ * Which pack a site uses: "country" in the clinic's settings.json (Settings: a pack id, or "none"), else the
  * country of its first facility, else the US pack when that country is blank, which is how a default
  * OpenEMR install leaves it and how Clinic Forms behaved before packs.
  *
@@ -35,11 +35,13 @@ final readonly class Pack
      * @param list<string> $countries facility country values that choose this pack, compared without regard to case
      * @param list<string> $layouts   extra layout forms the pack offers (UDS)
      * @param array<string, array{name: string, languages: list<array{census: string, code: ?string, people: int}>}> $regions by code
+     * @param string $jurisdiction the ISO 3166-1 code of the country; a region's ISO 3166-2 code is "<jurisdiction>-<region>"
      */
     public function __construct(
         public string $id,
         public string $name,
         public string $dir,
+        public string $jurisdiction = '',
         public array $countries = [],
         public string $paper = 'letter',
         public array $layouts = [],
@@ -75,10 +77,11 @@ final readonly class Pack
         } catch (\JsonException $e) {
             throw new \InvalidArgumentException("$where: not valid JSON ({$e->getMessage()})", 0, $e);
         }
-        if (!is_array($data) || !is_string($data['name'] ?? null) || preg_match('/^[a-z]{2}$/', $id) !== 1) {
-            throw new \InvalidArgumentException("$where: needs a name, in a folder named by a two-letter country code");
+        if (!is_array($data) || !is_string($data['name'] ?? null) || preg_match('/^[a-z]{2}$/', $id) !== 1
+            || ($data['jurisdiction'] ?? null) !== strtoupper($id)) {
+            throw new \InvalidArgumentException("$where: needs a name and \"jurisdiction\" (the ISO 3166-1 code, " . strtoupper($id) . "), in a folder named by that code in lower case");
         }
-        if (array_diff(array_keys($data), ['about', 'name', 'countries', 'paper', 'layouts']) !== []) {
+        if (array_diff(array_keys($data), ['about', 'name', 'jurisdiction', 'countries', 'paper', 'layouts']) !== []) {
             throw new \InvalidArgumentException("$where: unknown field");
         }
         $paper = $data['paper'] ?? 'a4';
@@ -98,7 +101,7 @@ final readonly class Pack
             /** @var array<string, array{name: string, languages: list<array{census: string, code: ?string, people: int}>}> $regions */
             $regions = $r['regions'];
         }
-        return new self($id, $data['name'], $dir, $data['countries'] ?? [], $paper, $data['layouts'] ?? [], $regions);
+        return new self($id, $data['name'], $dir, $data['jurisdiction'], $data['countries'] ?? [], $paper, $data['layouts'] ?? [], $regions);
     }
 
     /**
@@ -145,22 +148,9 @@ final readonly class Pack
      */
     public static function forSite(string $siteDir, string $firstFacilityCountry): array
     {
-        $file = $siteDir . '/' . DocumentLibrary::LOCAL_FOLDER . '/settings.json';
-        $setting = null;
-        $notes = [];
-        if (is_file($file)) {
-            try {
-                $data = json_decode((string)file_get_contents($file), true, 4, JSON_THROW_ON_ERROR);
-                if (!is_array($data) || array_diff(array_keys($data), ['about', 'country']) !== [] || !is_string($data['country'] ?? '')) {
-                    throw new \JsonException('expected {"country": "us"} (a pack id, or "none")');
-                }
-                $setting = isset($data['country']) ? strtolower(trim($data['country'])) : null;
-            } catch (\JsonException $e) {
-                $notes[] = 'settings.json in the Clinic Forms folder was not used: ' . $e->getMessage();
-            }
-        }
-        [$pack, $more] = self::choose($setting, $firstFacilityCountry);
-        return [$pack, array_merge($notes, $more)];
+        $settings = Settings::forSite($siteDir);
+        [$pack, $notes] = self::choose($settings->country, $firstFacilityCountry);
+        return [$pack, array_merge($settings->problems, $notes)];
     }
 
     /** The region a facility's state names: its code ("TX" or "Texas" give TX), or null. */
@@ -176,6 +166,12 @@ final readonly class Pack
             }
         }
         return null;
+    }
+
+    /** A region's ISO 3166-2 code (US-TX), or null. */
+    public function isoRegion(?string $region): ?string
+    {
+        return $region === null ? null : $this->jurisdiction . '-' . $region;
     }
 
     /** A region's own documents folder, or null when it has none. */

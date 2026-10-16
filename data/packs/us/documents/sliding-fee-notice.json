@@ -4,6 +4,17 @@
   "category": "Front desk",
   "about": "A notice to post or hand out: the clinic's sliding fee discount, who qualifies, and that no one is turned away for being unable to pay. HRSA Health Center Program Compliance Manual, chapter 9.",
   "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "HRSA Health Center Program Compliance Manual, chapter 9 (patients are told about the sliding fee discount; no one is denied for inability to pay)",
+    "url": "https://bphc.hrsa.gov/sites/default/files/bphc/hc-compliance-manual.pdf"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
   "blocks": [
     {
       "type": "paragraph",

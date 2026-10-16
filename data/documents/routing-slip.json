@@ -4,6 +4,16 @@
   "category": "Office workflow",
   "about": "Travels with the patient through the visit: check-in, rooming, provider, checkout.",
   "audience": "staff",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
   "blocks": [
     {
       "type": "fields",

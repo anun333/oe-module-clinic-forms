@@ -62,6 +62,11 @@ final class WordWriter implements OfficeWriter
         $this->body .= $this->p($this->run($text));
     }
 
+    public function stamp(string $text): void
+    {
+        $this->body .= $this->p($this->run($text, size: 14), '<w:spacing w:before="160"/><w:jc w:val="right"/>');
+    }
+
     public function fields(array $fields): void
     {
         foreach ($fields as [$label, $value]) {

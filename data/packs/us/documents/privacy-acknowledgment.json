@@ -9,6 +9,17 @@
     "code": "57016-8",
     "display": "Privacy policy acknowledgment Document"
   },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "Notice of Privacy Practices acknowledgment, 45 CFR 164.520(c)(2)(ii)",
+    "url": "https://www.ecfr.gov/current/title-45/section-164.520"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
   "blocks": [
     {
       "type": "fields",

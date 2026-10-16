@@ -4,6 +4,17 @@
   "category": "Front desk",
   "about": "Household size and income for the clinic's sliding fee discount, the same facts UDS Table 4 reports by poverty level.",
   "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "HRSA Health Center Program Compliance Manual, chapter 9 (Sliding Fee Discount Program)",
+    "url": "https://bphc.hrsa.gov/sites/default/files/bphc/hc-compliance-manual.pdf"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
   "blocks": [
     {
       "type": "paragraph",

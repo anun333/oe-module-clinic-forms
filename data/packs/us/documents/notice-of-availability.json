@@ -5,6 +5,17 @@
   "about": "The notice of availability Section 1557 requires (45 CFR 92.11), with every tagline: English, Spanish and the clinic's own languages (taglines.json). Post it in 20-point type, give it out each year, and add your state's 15 most spoken languages.",
   "audience": "patient",
   "poster": true,
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "Section 1557 notice of availability, 45 CFR 92.11(a)",
+    "url": "https://www.ecfr.gov/current/title-45/section-92.11"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
   "blocks": [
     {
       "type": "paragraph",

@@ -91,11 +91,16 @@ final readonly class Packets
                 if (!is_string($item) || !self::isItem($item)) {
                     throw new \InvalidArgumentException("$at items[$j]: must be doc:<id> or layout:<form id>");
                 }
-                if (str_starts_with($item, 'doc:') && $library->get(substr($item, 4)) === null) {
+                if (str_starts_with($item, 'doc:') && $library->get(substr($item, 4)) === null && !$library->isWithdrawn(substr($item, 4))) {
                     throw new \InvalidArgumentException("$at items[$j]: no document " . substr($item, 4));
                 }
             }
-            $packets[] = ['id' => $p['id'], 'title' => $p['title'], 'items' => $p['items']];
+            // A retired document, or one the clinic hides, leaves the packet; a packet left empty goes.
+            $items = array_values(array_filter($p['items'], static fn(string $item): bool => !str_starts_with($item, 'doc:') || !$library->isWithdrawn(substr($item, 4))));
+            if ($items === []) {
+                continue;
+            }
+            $packets[] = ['id' => $p['id'], 'title' => $p['title'], 'items' => $items];
         }
         return new self($packets);
     }

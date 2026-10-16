@@ -1,0 +1,89 @@
+{
+    "about": "The wording (fingerprint) of each version of each shipped document. Written by tools/document-versions.php; do not edit.",
+    "documents": {
+        "documents/audit-c": {
+            "1": "b5b4123250ac27ed"
+        },
+        "documents/communication-consent": {
+            "1": "d977c8ac6e2c92e6"
+        },
+        "documents/consent-to-treat": {
+            "1": "b0baf03cd7871e0d"
+        },
+        "documents/downtime-visit-note": {
+            "1": "4fe9c5db2435e9ae"
+        },
+        "documents/financial-policy": {
+            "1": "90a2a9e64a00c5b7"
+        },
+        "documents/gad-7": {
+            "1": "c36a3bec30045bdd"
+        },
+        "documents/internal-referral": {
+            "1": "1f4fe34d2f9d6516"
+        },
+        "documents/phq-2": {
+            "1": "a32256eab8a9e178"
+        },
+        "documents/phq-9": {
+            "1": "b113d5e895f5f6df"
+        },
+        "documents/records-request": {
+            "1": "356b32e60a92e714"
+        },
+        "documents/referral-letter": {
+            "1": "e2e553db7118b502"
+        },
+        "documents/routing-slip": {
+            "1": "f7652d5ed62ab52c"
+        },
+        "documents/staff-handoff": {
+            "1": "c91fe3a9433aa27a"
+        },
+        "documents/telehealth-consent": {
+            "1": "b984d5c32adf44f4"
+        },
+        "documents/work-school-note": {
+            "1": "04d9e5e9c38f6f9b"
+        },
+        "packs/us/documents/accounting-request": {
+            "1": "bbbbb401c16f9873"
+        },
+        "packs/us/documents/amendment-request": {
+            "1": "76da8c2d43cfce18"
+        },
+        "packs/us/documents/authorization-revocation": {
+            "1": "119f62b4df86b9df"
+        },
+        "packs/us/documents/notice-of-availability": {
+            "1": "93976f83f75d1783"
+        },
+        "packs/us/documents/notice-of-nondiscrimination": {
+            "1": "ddd84bc57b5049f9"
+        },
+        "packs/us/documents/notice-of-privacy-practices": {
+            "1": "5d23163bd13169f9"
+        },
+        "packs/us/documents/part-2-consent": {
+            "1": "34ad2cd4745a6240"
+        },
+        "packs/us/documents/privacy-acknowledgment": {
+            "1": "6e7c56eddcc0c4c9"
+        },
+        "packs/us/documents/records-access-request": {
+            "1": "ee3768d630b87ef3"
+        },
+        "packs/us/documents/release-of-information": {
+            "1": "b870423247d3437c"
+        },
+        "packs/us/documents/restriction-request": {
+            "1": "4605deed3c1fed0b"
+        },
+        "packs/us/documents/sliding-fee-application": {
+            "1": "158026b6b47eb470"
+        },
+        "packs/us/documents/sliding-fee-notice": {
+            "1": "7e64d7e671225bec"
+        }
+    }
+}

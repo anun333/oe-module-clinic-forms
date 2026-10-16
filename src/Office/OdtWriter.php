@@ -65,6 +65,11 @@ final class OdtWriter implements OfficeWriter
         $this->body .= $this->p('Body', self::e($text));
     }
 
+    public function stamp(string $text): void
+    {
+        $this->body .= $this->p('Stamp', self::e($text));
+    }
+
     public function fields(array $fields): void
     {
         foreach ($fields as [$label, $value]) {
@@ -174,6 +179,7 @@ final class OdtWriter implements OfficeWriter
             'Title' => ['fo:margin-top="0.04in" fo:margin-bottom="0.1in" fo:keep-with-next="always"', 'fo:font-weight="bold" fo:font-size="15pt"'],
             'H2' => ['fo:margin-top="0.16in" fo:margin-bottom="0.06in" fo:border-bottom="0.5pt solid #666666" fo:keep-with-next="always"', 'fo:font-weight="bold" fo:font-size="11.5pt"'],
             'Body' => ['', ''],
+            'Stamp' => ['fo:text-align="end" fo:margin-top="0.12in"', 'fo:font-size="7pt" fo:color="#555555"'],
             'Label' => ['fo:margin-top="0.06in" fo:keep-with-next="always"', 'fo:font-weight="bold"'],
             'Item' => ['fo:margin-bottom="0.02in"', ''],
             'Line' => ['fo:border-bottom="0.75pt solid #000000" fo:margin-top="0.16in" fo:margin-bottom="0in" style:join-border="false"', ''],

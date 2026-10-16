@@ -4,6 +4,17 @@
   "category": "Privacy and patient rights",
   "about": "A patient's request for a list of who the clinic shared their information with. HIPAA accounting of disclosures, 45 CFR 164.528.",
   "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "HIPAA accounting of disclosures, 45 CFR 164.528",
+    "url": "https://www.ecfr.gov/current/title-45/section-164.528"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
   "blocks": [
     {
       "type": "fields",

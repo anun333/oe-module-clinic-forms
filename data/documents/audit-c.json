@@ -10,6 +10,18 @@
     "display": "Alcohol Use Disorder Identification Test - Consumption [AUDIT-C]"
   },
   "validated": true,
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "instrument",
+    "name": "AUDIT-C, questions 1 to 3 of the WHO AUDIT",
+    "url": "https://www.who.int/publications/i/item/WHO-MSD-MSB-01.6a"
+  },
+  "licence": {
+    "holder": "World Health Organization",
+    "terms": "The AUDIT manual (WHO/MSD/MSB/01.6a) may be reproduced and translated, in part or in whole, but not for sale or for commercial purposes.",
+    "permission": "None needed: the manual's statement."
+  },
   "blocks": [
     {
       "type": "fields",

@@ -10,6 +10,18 @@
     "display": "PHQ-9 quick depression assessment panel [Reported.PHQ]"
   },
   "validated": true,
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "instrument",
+    "name": "PHQ-9 (Kroenke, Spitzer and Williams)",
+    "url": "https://www.phqscreeners.com/"
+  },
+  "licence": {
+    "holder": "Pfizer Inc.",
+    "terms": "No permission required to reproduce, translate, display or distribute.",
+    "permission": "None needed: the statement printed on the instrument."
+  },
   "blocks": [
     {
       "type": "fields",

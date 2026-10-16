@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.12.0 (2026-10-16)
+
+- **Every document has a version, status, source and licence.** The version prints small at the foot of every page with the document's id (`consent-to-treat v1`), in Word and LibreOffice downloads too, and goes in the audit event, so a signed copy names the wording signed. `data/document-versions.json` records each version's wording, and the tests fail when a document's wording changes without a new version (`tools/document-versions.php`). The source says whether the wording is ours, written to a rule (linked), or a published instrument; the licence names its holder, terms and the permission they give.
+- **Status:** `draft` documents are offered with a Draft badge and print "draft"; `retired` ones are no longer offered and leave their packets.
+- **A clinic's own versions say what they were copied from** (`based_on`). The page warns when the module's version has changed since, names the file to compare, and gives the new value; for versions that don't say, it shows the line to add.
+- **Hide a shipped document** in `settings.json` (`"hide"`); it leaves the picker and the packets.
+- **Packs carry their ISO 3166 code** (`jurisdiction`), and the page shows the region's (US-TX).
+- New checks: no Spanish string left in English, no phone, email or street address in shipped files other than HHS's official ones, and no quotes inside strings passed to OpenEMR's translation (it prints them as backticks).
+- A `docs/` folder: principles, the document format, writing a country pack, releasing.
+- Documents changed in this release: all 28 are at version 1, the first versioned release.
+
 ## 0.11.0 (2026-10-16)
 
 - **Country packs.** The documents that apply anywhere stay in `data/documents/` (the core); the United States' move to a **US pack** in `data/packs/us/`: the HIPAA privacy set, the Part 2 consent, the Section 1557 notices and taglines, the HRSA sliding fee documents and the UDS form, with their legal checks (`requirements.json`) and the packets that use them. Document ids are unchanged, so a clinic's own versions still replace them.

@@ -58,11 +58,19 @@ final readonly class Renderer
      * Opens a document's page: a table whose header row repeats at the top of every printed page
      * (browsers repeat a table's thead), so a loose page still names the patient.
      */
-    private function open(string $title, bool $poster = false): string
+    private function open(string $title, bool $poster = false, string $stamp = ''): string
     {
         // A notice for posting goes on a wall: it never carries the patient line.
         $head = $poster ? '' : "<thead><tr><td>" . $this->running($title) . "</td></tr></thead>";
-        return "<section class='cf-page" . ($poster ? " cf-poster" : '') . "' lang='" . self::e($this->language) . "'><table class='cf-frame'>" . $head . "<tbody><tr><td>";
+        // The foot of every page names the document and its version, so a signed copy says which it was.
+        $foot = $stamp === '' ? '' : "<tfoot><tr><td><div class='cf-stamp'>" . self::e($stamp) . "</div></td></tr></tfoot>";
+        return "<section class='cf-page" . ($poster ? " cf-poster" : '') . "' lang='" . self::e($this->language) . "'><table class='cf-frame'>" . $head . $foot . "<tbody><tr><td>";
+    }
+
+    /** What the foot of a document's pages says: its id and version, and whether it's a draft or the clinic's own. */
+    public function stamp(Document $doc): string
+    {
+        return $doc->stamp() . ($doc->status === 'draft' ? ' · ' . $this->t('draft') : '') . ($doc->source === 'clinic' ? ' · ' . $this->t('local version') : '');
     }
 
     private function close(): string
@@ -84,7 +92,7 @@ final readonly class Renderer
 
     public function document(Document $doc): string
     {
-        $html = $this->open($doc->title, $doc->poster) . $this->letterhead() . "<h1>" . $this->text($doc->title) . "</h1>";
+        $html = $this->open($doc->title, $doc->poster, $this->stamp($doc)) . $this->letterhead() . "<h1>" . $this->text($doc->title) . "</h1>";
         foreach ($doc->blocks as $block) {
             $html .= match ($block['type']) {
                 'heading' => "<h2>" . $this->text($block['text']) . "</h2>",
@@ -131,7 +139,7 @@ final readonly class Renderer
     {
         $title = $values === [] ? $form->title : $form->title . ': ' . $this->t('please check and correct');
         $intro = $values === [] ? '' : "<p class='cf-intro'>" . self::e($this->t('This is what we have on file. Cross out anything that is wrong and write the correction beside it, and fill in anything missing.')) . "</p>";
-        return $this->open($title) . $this->letterhead() . "<h1>" . self::e($title) . "</h1>"
+        return $this->open($title, false, 'layout ' . $form->id) . $this->letterhead() . "<h1>" . self::e($title) . "</h1>"
             . $this->patientStrip() . $intro . (new LayoutPaper($this->language))->render($form, $values) . $this->taglines(false) . $this->close();
     }
 

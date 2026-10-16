@@ -23,6 +23,8 @@ final class Words
         'Phone' => 'Teléfono',
         'Fax' => 'Fax',
         'Patient' => 'Paciente',
+        'draft' => 'borrador',
+        'local version' => 'versión local',
         'DOB' => 'Fecha de nac.',
         'ID' => 'N.º',
         'Patient name' => 'Nombre del paciente',
