@@ -22,7 +22,7 @@ final class RequirementsTest extends TestCase
         $requirements = Requirements::shipped();
         $library = DocumentLibrary::shipped();
         // A floor, so an empty requirements file can't pass as "nothing missing".
-        self::assertGreaterThanOrEqual(7, count($requirements->documents));
+        self::assertGreaterThanOrEqual(14, count($requirements->documents));
         foreach (array_keys($requirements->documents) as $id) {
             $doc = $library->get($id);
             self::assertNotNull($doc, "requirements name a document that exists: $id");

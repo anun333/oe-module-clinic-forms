@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.5.0, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.6.0, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -44,6 +44,13 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Office workflow | Staff Handoff (SBAR) | Handing a patient from one staff member, shift or site to another | — |
 | Office workflow | Internal Referral | To behavioral health, care management, nutrition, social work or another of the clinic's sites | 57133-1 |
 | Downtime | Downtime Visit Note | A paper visit note for when OpenEMR is down, with a box to record when it was entered | 11506-3 |
+| Privacy and patient rights | Notice of Privacy Practices | The notice itself (45 CFR 164.520), with the 42 CFR Part 2 statements required from February 16, 2026; fill in the effective date and privacy contact | 57017-6 |
+| Privacy and patient rights | Request to See or Get a Copy of My Health Record | Right of access (164.524): paper or electronic, to the patient or a person they name | — |
+| Privacy and patient rights | Request to Correct My Health Record | Right to amend (164.526) | — |
+| Privacy and patient rights | Request for a List of Disclosures | Accounting of disclosures (164.528) | — |
+| Privacy and patient rights | Request to Limit How My Information Is Shared | Restrictions (164.522(a)), including self-paid care kept from the health plan | — |
+| Privacy and patient rights | Revoking My Authorization to Release Information | Revocation (164.508(b)(5)) | — |
+| Privacy and patient rights | Consent to Share Substance Use Disorder Treatment Records | 42 CFR Part 2 consent with every element of 2.31, including the single consent for treatment, payment and operations | 64292-6 |
 | After the visit | Work or School Note | Confirms the visit and when the patient may return, without giving the reason for the visit | — |
 
 Each is a JSON file in `data/documents/`, the same on every OpenEMR release. The PHQ-9 and GAD-7 are printed with their authors' statement that no permission is needed to reproduce them. Their answers can be typed into OpenEMR's own PHQ-9 and GAD-7 encounter forms, which ship with OpenEMR but have to be enabled under **Administration › Forms › Forms Administration**.
@@ -51,7 +58,7 @@ Each is a JSON file in `data/documents/`, the same on every OpenEMR release. The
 ### Standards the documents follow
 
 - **LOINC document codes** where an exact one exists (the table above), as OpenEMR's own C-CDA referral uses 57133-1. Each code is checked by its LOINC check digit; a document with no exact code is left uncoded rather than mislabeled.
-- **What the law says goes in.** `data/requirements.json` lists, for the documents a rule governs, each required element and its citation: the HIPAA authorization (45 CFR 164.508(c)), the privacy notice acknowledgment (164.520(c)(2)(ii)), the sliding fee application (HRSA Compliance Manual, chapter 9), the work or school note's minimum necessary (164.502(b)), and the PHQ-9 and GAD-7 wording. The tests fail if a shipped document loses one. A clinic's own version of one of these documents is checked too, and the Clinic Forms page names anything it can't find (by wording, so check before relying on the warning).
+- **What the law says goes in.** `data/requirements.json` lists, for the documents a rule governs, each required element and its citation: the Notice of Privacy Practices (164.520(b)(1), element by element), the patient-rights requests (164.522, 164.524, 164.526, 164.528, 164.508(b)(5)), the Part 2 consent (42 CFR 2.31), the HIPAA authorization (45 CFR 164.508(c)), the privacy notice acknowledgment (164.520(c)(2)(ii)), the sliding fee application (HRSA Compliance Manual, chapter 9), the work or school note's minimum necessary (164.502(b)), and the PHQ-9 and GAD-7 wording. The tests fail if a shipped document loses one. A clinic's own version of one of these documents is checked too, and the Clinic Forms page names anything it can't find (by wording, so check before relying on the warning).
 - **Plain language.** Every patient document reads at an 8th-grade level or below (Flesch-Kincaid), as AHRQ's health literacy toolkit advises; the tests measure it. Validated instruments (PHQ-9, GAD-7) keep their published wording and are exempt.
 - Each document says who reads it (patient, staff or provider) and whether its wording is a validated instrument's.
 

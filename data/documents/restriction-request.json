@@ -1,0 +1,126 @@
+{
+  "id": "restriction-request",
+  "title": "Request to Limit How My Information Is Shared",
+  "category": "Privacy and patient rights",
+  "about": "A patient's request to limit use or sharing, including keeping care they paid for in full from their health plan. HIPAA, 45 CFR 164.522(a).",
+  "audience": "patient",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Phone",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Address",
+          "value": "{patient.address}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "What you want us to limit"
+    },
+    {
+      "type": "lines",
+      "label": "Information to limit",
+      "count": 2
+    },
+    {
+      "type": "checklist",
+      "label": "Limit how it is used or shared for",
+      "items": [
+        "Treatment",
+        "Payment",
+        "Running our clinic (operations)",
+        "Sharing with family or friends involved in my care"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Do not share it with"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Care you paid for yourself"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "I paid in full for this care myself. Do not share it with my health plan."
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date of service"
+        },
+        {
+          "label": "Care or item"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "We do not have to agree to most requests, and we will tell you if we do not. We must agree not to share care you paid for in full with your health plan for payment or our operations, unless a law requires us to."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For clinic use"
+    },
+    {
+      "type": "checklist",
+      "label": "Decision",
+      "items": [
+        "Agreed",
+        "Not agreed (patient told)"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date"
+        },
+        {
+          "label": "By"
+        }
+      ]
+    }
+  ]
+}

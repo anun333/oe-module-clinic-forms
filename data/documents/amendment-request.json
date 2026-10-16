@@ -1,0 +1,124 @@
+{
+  "id": "amendment-request",
+  "title": "Request to Correct My Health Record",
+  "category": "Privacy and patient rights",
+  "about": "A patient's request to correct or add to their record. HIPAA right to amend, 45 CFR 164.526.",
+  "audience": "patient",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Phone",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Address",
+          "value": "{patient.address}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "What to correct"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date of the record (visit, test or letter)"
+        },
+        {
+          "label": "Which record"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "What is wrong or missing",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "What it should say",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "Why",
+      "count": 2
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Who else should be told about the correction (name and address)"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "We will answer within 60 days. If we need more time, we will tell you why in writing. If we say no, we will tell you why in writing. You may then send us a statement that you disagree, and we will add it to your record."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For clinic use"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date received"
+        },
+        {
+          "label": "Date answered"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Decision",
+      "items": [
+        "Corrected as asked",
+        "Corrected in part (explain below)",
+        "Not corrected: we did not create this record",
+        "Not corrected: not part of the record",
+        "Not corrected: the record is correct and complete"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Notes",
+      "count": 2
+    }
+  ]
+}

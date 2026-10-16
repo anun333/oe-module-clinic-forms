@@ -8,6 +8,7 @@
         "layout:DEM",
         "layout:HIS",
         "doc:consent-to-treat",
+        "doc:notice-of-privacy-practices",
         "doc:privacy-acknowledgment",
         "doc:financial-policy",
         "doc:communication-consent",

@@ -1,0 +1,154 @@
+{
+  "id": "part-2-consent",
+  "title": "Consent to Share Substance Use Disorder Treatment Records",
+  "category": "Privacy and patient rights",
+  "about": "Consent to use or share records protected by 42 CFR Part 2, including the single consent for treatment, payment and health care operations, with every element of 42 CFR 2.31.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "64292-6",
+    "display": "Release of Information Consent Document"
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Federal law (42 CFR Part 2) protects records of substance use disorder treatment. This form lets you choose who may use and share them."
+    },
+    {
+      "type": "heading",
+      "text": "Who may share my records"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Program or provider",
+          "value": "{facility.name}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "What may be shared"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "All of my substance use disorder treatment records",
+        "Diagnosis and treatment plan",
+        "Medications, including medications for opioid use disorder",
+        "Attendance and progress",
+        "Lab results, including drug tests",
+        "Other (write below)"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Other information or dates",
+      "count": 1
+    },
+    {
+      "type": "paragraph",
+      "text": "This consent does not cover substance use disorder counseling notes. They need a separate consent."
+    },
+    {
+      "type": "heading",
+      "text": "Who may receive them, and why"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "For treatment, payment and health care operations, now and later: my treating providers, health plans, third-party payers, and people helping to operate this program",
+        "Only the person or organization below, for the purpose below"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Person or organization"
+        },
+        {
+          "label": "Purpose (or: at my request)"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "If my records go to a health care provider, health plan or their business associate for treatment, payment or health care operations, they may share them again as the HIPAA rules allow. They may not use them in civil, criminal, administrative or legislative proceedings against me."
+    },
+    {
+      "type": "paragraph",
+      "text": "Records shared under this consent may be shared again by whoever receives them, and may then no longer be protected by 42 CFR Part 2."
+    },
+    {
+      "type": "paragraph",
+      "text": "If you do not sign, we cannot share these records for the purposes above. That may make it harder for your other providers to coordinate your care, and your health plan may not be billed for this care."
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "I do not want any fundraising contact from {facility.name}."
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "How long this consent lasts"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "It ends on this date or event (for treatment, payment and operations, you may write: end of treatment, or none)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Your right to revoke"
+    },
+    {
+      "type": "paragraph",
+      "text": "You may revoke this consent at any time by writing to {facility.name}, except for what has already been done because of it."
+    },
+    {
+      "type": "paragraph",
+      "text": "This consent cannot be used for court or other legal proceedings against you. That needs its own consent."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient",
+        "Parent, guardian or authorized representative, if required"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
+      ]
+    }
+  ]
+}

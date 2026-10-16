@@ -1,0 +1,91 @@
+{
+  "id": "authorization-revocation",
+  "title": "Revoking My Authorization to Release Information",
+  "category": "Privacy and patient rights",
+  "about": "Takes back an authorization the patient signed earlier. HIPAA, 45 CFR 164.508(b)(5).",
+  "audience": "patient",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Phone",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Address",
+          "value": "{patient.address}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "I want to cancel (revoke) the authorization below."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date I signed it"
+        },
+        {
+          "label": "Who it let release my information"
+        },
+        {
+          "label": "Who it let receive it"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "This starts when {facility.name} gets it. It does not undo what was already done because of it."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For clinic use"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date received"
+        },
+        {
+          "label": "By"
+        },
+        {
+          "label": "Others told"
+        }
+      ]
+    }
+  ]
+}

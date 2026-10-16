@@ -1,0 +1,161 @@
+{
+  "id": "notice-of-privacy-practices",
+  "title": "Notice of Privacy Practices",
+  "category": "Privacy and patient rights",
+  "about": "The notice every patient gets: how the clinic uses and shares health information, and the patient's rights. HIPAA, 45 CFR 164.520, with the 42 CFR Part 2 statements notices need from February 16, 2026.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "57017-6",
+    "display": "Privacy policy Organization Document"
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "text": "THIS NOTICE DESCRIBES HOW MEDICAL INFORMATION ABOUT YOU MAY BE USED AND DISCLOSED AND HOW YOU CAN GET ACCESS TO THIS INFORMATION. PLEASE REVIEW IT CAREFULLY."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Effective date"
+        },
+        {
+          "label": "Questions: privacy contact"
+        },
+        {
+          "label": "Phone",
+          "value": "{facility.phone}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Your rights"
+    },
+    {
+      "type": "paragraph",
+      "text": "You have the right to get a copy of your health record. Ask us, in writing if we ask you to. We will give you a paper or electronic copy within 30 days, usually sooner. We may charge a fair, cost-based fee."
+    },
+    {
+      "type": "paragraph",
+      "text": "You have the right to ask us to correct your record if you think it is wrong or missing something. We may say no. If we do, we will tell you why in writing within 60 days."
+    },
+    {
+      "type": "paragraph",
+      "text": "You have the right to ask us to contact you in a certain way or at a certain place, such as a different phone number or address. We will say yes to all reasonable requests."
+    },
+    {
+      "type": "paragraph",
+      "text": "You have the right to ask us to limit what we use or share. We do not have to agree. But if you pay for a service in full yourself, you can ask us not to share it with your health plan for payment or our operations. We will agree unless a law requires us to share it."
+    },
+    {
+      "type": "paragraph",
+      "text": "You have the right to get a list of who we shared your information with in the past six years. The list leaves out sharing for treatment, payment and our operations, and a few other cases. One list a year is free. We may charge a fair, cost-based fee for more."
+    },
+    {
+      "type": "paragraph",
+      "text": "You have the right to get a paper copy of this notice at any time, even if you agreed to get it by email."
+    },
+    {
+      "type": "paragraph",
+      "text": "You have the right to choose someone to act for you, such as a legal guardian or someone with your medical power of attorney."
+    },
+    {
+      "type": "heading",
+      "text": "How we use and share your information"
+    },
+    {
+      "type": "paragraph",
+      "text": "Treatment. We use your information and share it with others who treat you. For example, a doctor treating you for an injury may ask another doctor about your health."
+    },
+    {
+      "type": "paragraph",
+      "text": "Payment. We use and share your information to bill and get paid by health plans and others. For example, we give your health plan facts about your visit so it will pay for it."
+    },
+    {
+      "type": "paragraph",
+      "text": "Health care operations. We use your information to run our clinic, improve your care and contact you when needed. For example, we use it to check the quality of the care we give."
+    },
+    {
+      "type": "heading",
+      "text": "Other ways we may share your information without your written permission"
+    },
+    {
+      "type": "paragraph",
+      "text": "When the law allows or requires it, we may share your information:"
+    },
+    {
+      "type": "paragraph",
+      "text": "For public health and safety, such as preventing disease, reporting problems with medicines, reporting suspected abuse, neglect or domestic violence, and preventing a serious threat to anyone's health or safety."
+    },
+    {
+      "type": "paragraph",
+      "text": "For research that meets the law's rules, with organ and tissue donation groups, and with a medical examiner or funeral director."
+    },
+    {
+      "type": "paragraph",
+      "text": "With government agencies when the law requires it, including the Department of Health and Human Services. Also for workers' compensation claims, for law enforcement, for health oversight, and for military, national security and protective services."
+    },
+    {
+      "type": "paragraph",
+      "text": "To answer a court or administrative order, or a subpoena."
+    },
+    {
+      "type": "paragraph",
+      "text": "With family, close friends or others involved in your care, and for disaster relief, unless you tell us not to."
+    },
+    {
+      "type": "paragraph",
+      "text": "We may contact you to raise money for the clinic. You can tell us not to contact you again."
+    },
+    {
+      "type": "heading",
+      "text": "When we need your written permission"
+    },
+    {
+      "type": "paragraph",
+      "text": "We will not use or share your information for marketing, sell it, or share most psychotherapy notes without your written permission. Other uses and sharing not described here also need your written permission. You may take back (revoke) your permission in writing at any time, except for what we already did because of it."
+    },
+    {
+      "type": "heading",
+      "text": "Stricter laws"
+    },
+    {
+      "type": "paragraph",
+      "text": "Some laws give some information more protection. These include federal rules for substance use disorder treatment records (42 CFR Part 2) and, in many states, rules for HIV, mental health and genetic test results. When a stricter law applies, we follow it."
+    },
+    {
+      "type": "paragraph",
+      "text": "Substance use disorder treatment records we receive from programs covered by 42 CFR Part 2, or testimony about what they say, will not be used or shared in civil, criminal, administrative or legislative proceedings against you. The only exceptions are your written consent, or a court order made after you or the record holder had notice and a chance to be heard. A court order must come with a subpoena or other legal requirement before the records are used or shared."
+    },
+    {
+      "type": "paragraph",
+      "text": "If we use substance use disorder treatment records to raise money for the clinic, we will first give you a clear chance to say no to any fundraising contact."
+    },
+    {
+      "type": "heading",
+      "text": "Our responsibilities"
+    },
+    {
+      "type": "paragraph",
+      "text": "The law requires us to keep your health information private, to give you this notice of our legal duties and privacy practices, and to tell you if a breach puts your information at risk."
+    },
+    {
+      "type": "paragraph",
+      "text": "We must follow the duties and privacy practices in this notice and give you a copy of it."
+    },
+    {
+      "type": "paragraph",
+      "text": "We can change the terms of this notice, and the changes will apply to all the information we have about you. The new notice will be available on request, in our office and on our website."
+    },
+    {
+      "type": "heading",
+      "text": "Complaints"
+    },
+    {
+      "type": "paragraph",
+      "text": "If you think we have violated your rights, you can complain to our privacy contact named above. You can also complain to the U.S. Department of Health and Human Services, Office for Civil Rights: 200 Independence Avenue, S.W., Washington, D.C. 20201; phone 1-877-696-6775; or www.hhs.gov/ocr/privacy/hipaa/complaints/. We will not retaliate against you for filing a complaint."
+    }
+  ]
+}

@@ -1,0 +1,146 @@
+{
+  "id": "records-access-request",
+  "title": "Request to See or Get a Copy of My Health Record",
+  "category": "Privacy and patient rights",
+  "about": "A patient's request for their own record, on paper or electronically, to them or to someone they name. HIPAA right of access, 45 CFR 164.524.",
+  "audience": "patient",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Phone",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Address",
+          "value": "{patient.address}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "What you want"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "My whole record",
+        "Only some records or dates (write below)",
+        "Visit notes",
+        "Lab results",
+        "Imaging reports",
+        "Immunization record",
+        "Billing records"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Which records or dates",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "How you want it"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Look at it here, in person",
+        "Paper copy",
+        "Electronic copy on the patient portal",
+        "Electronic copy by email",
+        "Electronic copy on a USB drive or disc"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Email address"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Email is not always secure. If you ask for email, we may send it without encryption, and others could read it on the way."
+    },
+    {
+      "type": "heading",
+      "text": "Where to send it"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "I will pick it up",
+        "Mail it to me at the address above",
+        "Send it to the person or place named below"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Send to: person or organization"
+        },
+        {
+          "label": "Send to: address or email"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "We will answer within 30 days, usually sooner. If we need more time, we will tell you why in writing. We may charge a fair, cost-based fee for copying, supplies and postage, and we will tell you the fee before we make the copy."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For clinic use"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date received"
+        },
+        {
+          "label": "Identity checked by"
+        },
+        {
+          "label": "Date given or sent"
+        },
+        {
+          "label": "Fee"
+        }
+      ]
+    }
+  ]
+}

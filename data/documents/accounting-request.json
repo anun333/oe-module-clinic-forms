@@ -1,0 +1,100 @@
+{
+  "id": "accounting-request",
+  "title": "Request for a List of Disclosures",
+  "category": "Privacy and patient rights",
+  "about": "A patient's request for a list of who the clinic shared their information with. HIPAA accounting of disclosures, 45 CFR 164.528.",
+  "audience": "patient",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Phone",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Address",
+          "value": "{patient.address}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "The time you want the list to cover"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "From"
+        },
+        {
+          "label": "To"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "You can ask about the six years before today."
+    },
+    {
+      "type": "checklist",
+      "label": "How you want the list",
+      "items": [
+        "Paper",
+        "Electronic"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "The list shows who we shared your information with and why. It leaves out sharing for treatment, payment and our operations, and some other cases the law allows. The first list in any 12 months is free. For another list within 12 months, we may charge a fair, cost-based fee. We will tell you the fee first, and you can change or cancel your request. We will answer within 60 days."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For clinic use"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date received"
+        },
+        {
+          "label": "Date given"
+        },
+        {
+          "label": "Fee, if any"
+        }
+      ]
+    }
+  ]
+}
