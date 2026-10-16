@@ -85,6 +85,8 @@ final readonly class Renderer
                 'checklist' => $this->checklist($block['label'] ?? null, $block['items']),
                 'lines' => $this->lines($block['label'], $block['count']),
                 'signature' => $this->signatures($block['signers']),
+                'scale' => $this->scale($block['label'], $block['columns'], $block['items'], $block['scores'] ?? null, $block['total'] ?? null),
+                'table' => $this->table($block['label'], $block['columns'], $block['rows']),
                 default => '',
             };
         }
@@ -134,6 +136,42 @@ final readonly class Renderer
     {
         return "<div class='cf-lines'><div class='cf-label'>" . $this->text($label) . "</div>"
             . str_repeat("<div class='cf-line'></div>", $count) . "</div>";
+    }
+
+    /**
+     * A question per row and a box per answer, numbered, with each column's score under its
+     * heading when the scale is scored, and a total line for the office.
+     *
+     * @param list<string>   $columns
+     * @param list<string>   $items
+     * @param ?list<int>     $scores
+     */
+    private function scale(string $label, array $columns, array $items, ?array $scores, ?string $total): string
+    {
+        $html = "<div class='cf-scale'><div class='cf-label'>" . $this->text($label) . "</div><table class='cf-table cf-scale-table'><tr><th></th>";
+        foreach ($columns as $i => $column) {
+            $html .= "<th class='cf-scale-col'>" . $this->text($column) . ($scores !== null ? "<div class='cf-score'>" . self::e((string)$scores[$i]) . "</div>" : '') . "</th>";
+        }
+        $html .= "</tr>";
+        foreach ($items as $n => $item) {
+            $html .= "<tr><td class='cf-scale-item'>" . self::e((string)($n + 1)) . ". " . $this->text($item) . "</td>"
+                . str_repeat("<td class='cf-scale-box'><span class='cf-box'></span></td>", count($columns)) . "</tr>";
+        }
+        $html .= "</table>";
+        if ($total !== null) {
+            $html .= "<div class='cf-field cf-total'><span class='cf-label'>" . $this->text($total) . "</span><span class='cf-blank'></span></div>";
+        }
+        return $html . "</div>";
+    }
+
+    /** @param list<string> $columns */
+    private function table(string $label, array $columns, int $rows): string
+    {
+        $html = "<div class='cf-grid-block'><div class='cf-label'>" . $this->text($label) . "</div><table class='cf-grid'><tr>";
+        foreach ($columns as $column) {
+            $html .= "<th>" . $this->text($column) . "</th>";
+        }
+        return $html . "</tr>" . str_repeat("<tr>" . str_repeat("<td></td>", count($columns)) . "</tr>", $rows) . "</table></div>";
     }
 
     /** @param list<string> $signers */

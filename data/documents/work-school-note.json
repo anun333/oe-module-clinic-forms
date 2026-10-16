@@ -1,0 +1,78 @@
+{
+  "id": "work-school-note",
+  "title": "Work or School Note",
+  "category": "After the visit",
+  "about": "Confirms a visit and when the patient may return, without saying why they were seen.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date of visit"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "The patient named above was seen at {facility.name}. To protect their privacy, this note doesn't give the reason for the visit."
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "May return to work or school on the date below",
+        "May return with the restrictions below",
+        "Should stay home until seen again",
+        "Was here with a family member"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "May return on"
+        },
+        {
+          "label": "Excused from"
+        },
+        {
+          "label": "Excused until"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Restrictions or notes",
+      "count": 3
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Clinician"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Clinician name (printed)"
+        },
+        {
+          "label": "Clinic phone",
+          "value": "{facility.phone}"
+        }
+      ]
+    }
+  ]
+}

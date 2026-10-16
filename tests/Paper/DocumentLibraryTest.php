@@ -79,13 +79,17 @@ final class DocumentLibraryTest extends TestCase
             unset($d['title']);
             return $d;
         }, 'needs "title"'];
-        yield 'unknown block type' => [static fn(array $d): array => ['blocks' => [['type' => 'table']]] + $d, 'type must be one of'];
+        yield 'unknown block type' => [static fn(array $d): array => ['blocks' => [['type' => 'video']]] + $d, 'type must be one of'];
         yield 'unknown placeholder' => [static fn(array $d): array => ['blocks' => [['type' => 'paragraph', 'text' => 'Dear {patient.nickname}']]] + $d, '{patient.nickname} is not a placeholder'];
         yield 'unknown block field' => [static fn(array $d): array => ['blocks' => [['type' => 'heading', 'text' => 'Hi', 'size' => 2]]] + $d, 'unknown field "size"'];
         yield 'too many lines' => [static fn(array $d): array => ['blocks' => [['type' => 'lines', 'label' => 'Notes', 'count' => 31]]] + $d, 'count: must be a whole number'];
         yield 'empty text' => [static fn(array $d): array => ['blocks' => [['type' => 'paragraph', 'text' => '  ']]] + $d, 'text: must be text'];
         yield 'no blocks' => [static fn(array $d): array => ['blocks' => []] + $d, 'blocks: must be a list'];
         yield 'empty signers' => [static fn(array $d): array => ['blocks' => [['type' => 'signature', 'signers' => []]]] + $d, 'signers: must be a list'];
+        yield 'scale scores not one per column' => [static fn(array $d): array => ['blocks' => [['type' => 'scale', 'label' => 'Q', 'columns' => ['No', 'Yes'], 'items' => ['A'], 'scores' => [0]]]] + $d, 'scores: must be a whole number for each column'];
+        yield 'scale with one column' => [static fn(array $d): array => ['blocks' => [['type' => 'scale', 'label' => 'Q', 'columns' => ['Yes'], 'items' => ['A']]]] + $d, 'columns: must be a list of 2 to 8 texts'];
+        yield 'table with too many rows' => [static fn(array $d): array => ['blocks' => [['type' => 'table', 'label' => 'T', 'columns' => ['Name'], 'rows' => 31]]] + $d, 'rows: must be a whole number from 1 to 30'];
+        yield 'unknown placeholder in a scale item' => [static fn(array $d): array => ['blocks' => [['type' => 'scale', 'label' => 'Q', 'columns' => ['No', 'Yes'], 'items' => ['{patient.ssn}']]]] + $d, '{patient.ssn} is not a placeholder'];
         yield 'id not the file name' => [static fn(array $d): array => ['id' => 'other'] + $d, "must be the file's name"];
     }
 

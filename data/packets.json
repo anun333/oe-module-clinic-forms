@@ -10,7 +10,8 @@
         "doc:consent-to-treat",
         "doc:privacy-acknowledgment",
         "doc:financial-policy",
-        "doc:communication-consent"
+        "doc:communication-consent",
+        "doc:sliding-fee-application"
       ]
     },
     {
@@ -20,7 +21,8 @@
         "layout:DEM",
         "doc:privacy-acknowledgment",
         "doc:financial-policy",
-        "doc:communication-consent"
+        "doc:communication-consent",
+        "doc:sliding-fee-application"
       ]
     },
     {
@@ -46,6 +48,14 @@
         "layout:DEM",
         "doc:routing-slip",
         "doc:downtime-visit-note"
+      ]
+    },
+    {
+      "id": "behavioral-health-screening",
+      "title": "Depression and anxiety screening",
+      "items": [
+        "doc:phq-9",
+        "doc:gad-7"
       ]
     }
   ]

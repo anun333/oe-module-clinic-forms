@@ -11,6 +11,9 @@
  *   checklist  {"type": "checklist", "label": "...", "items": ["...", "..."]}               label optional
  *   lines      {"type": "lines", "label": "...", "count": 4}
  *   signature  {"type": "signature", "signers": ["Patient or legal representative", "Witness"]}
+ *   scale      {"type": "scale", "label": "...", "columns": ["Not at all", "Several days"], "items": ["...", "..."],
+ *               "scores": [0, 1], "total": "Total score"}     a question per row, a box per answer; scores and total optional
+ *   table      {"type": "table", "label": "...", "columns": ["Name", "Age"], "rows": 6}   a grid of blank rows
  * Text may use the placeholders in Context::KEYS, written {group.key}.
  *
  * @package   OpenHealthcare\ClinicForms
@@ -23,7 +26,7 @@ namespace OpenHealthcare\ClinicForms\Paper;
 
 final readonly class Document
 {
-    public const BLOCK_TYPES = ['heading', 'paragraph', 'fields', 'checklist', 'lines', 'signature'];
+    public const BLOCK_TYPES = ['heading', 'paragraph', 'fields', 'checklist', 'lines', 'signature', 'scale', 'table'];
 
     /**
      * @param list<array<string, mixed>> $blocks validated by DocumentLibrary

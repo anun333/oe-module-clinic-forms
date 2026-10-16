@@ -108,6 +108,29 @@ final class RendererTest extends TestCase
         self::assertSame(3, substr_count($blank, "<span class='cf-run-blank'></span>"));
     }
 
+    public function testAScaleNumbersItsQuestionsAndPrintsABoxPerAnswerWithScores(): void
+    {
+        $html = (new Renderer(new Context(self::FACILITY)))->document($this->doc([[
+            'type' => 'scale', 'label' => 'How often?', 'columns' => ['Never', 'Often & more'], 'scores' => [0, 3],
+            'items' => ['Sleeping <badly>', 'Eating'], 'total' => 'Total score',
+        ]]));
+        self::assertStringContainsString("<td class='cf-scale-item'>1. Sleeping &lt;badly&gt;</td>", $html);
+        self::assertStringContainsString("<td class='cf-scale-item'>2. Eating</td>", $html);
+        self::assertSame(4, substr_count($html, "<td class='cf-scale-box'><span class='cf-box'></span></td>"));
+        self::assertStringContainsString("Often &amp; more<div class='cf-score'>3</div>", $html);
+        self::assertStringContainsString("<span class='cf-label'>Total score</span>", $html);
+        $unscored = (new Renderer(new Context(self::FACILITY)))->document($this->doc([['type' => 'scale', 'label' => 'Q', 'columns' => ['No', 'Yes'], 'items' => ['A']]]));
+        self::assertStringNotContainsString('cf-score', $unscored);
+        self::assertStringNotContainsString('cf-total', $unscored);
+    }
+
+    public function testATablePrintsItsHeadingsAndBlankRows(): void
+    {
+        $html = (new Renderer(new Context(self::FACILITY)))->document($this->doc([['type' => 'table', 'label' => 'Household', 'columns' => ['Name', 'Age'], 'rows' => 3]]));
+        self::assertStringContainsString('<th>Name</th><th>Age</th>', $html);
+        self::assertSame(3, substr_count($html, '<tr><td></td><td></td></tr>'));
+    }
+
     public function testPlaceholdersAreFoundInOrder(): void
     {
         self::assertSame(['patient.name', 'facility.fax'], Renderer::placeholders('To {patient.name} by fax {facility.fax}; {Not.this} or {this}'));

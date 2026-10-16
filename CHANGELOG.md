@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.2.0 (2026-10-15)
+
+- **Four documents:** a Sliding Fee Discount Application (household members, income and proof, a clinic section for the poverty-guideline percentage and discount level); the PHQ-9 and GAD-7 screening questionnaires; and a Work or School Note that doesn't give the reason for the visit.
+- **Two block types** for your own documents: `scale` (a question per row, a box per answer, optional scores and total) and `table` (column headings over blank rows).
+- **Packets:** the sliding fee application joins New patient intake and Annual update; a new Depression and anxiety screening packet.
+- A document that ended at the foot of a page no longer adds an empty page.
+- Checked end to end on 8.4.1.
+
 ## 0.1.1 (2026-10-15)
 
 - **Every printed page names the patient.** A line for name, date of birth and ID (filled when a patient is chosen) repeats at the top of each page, so a loose page of a multi-page form can be matched to a chart.

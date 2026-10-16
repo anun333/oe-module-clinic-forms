@@ -156,6 +156,28 @@ final class DocumentLibrary
                         throw new \InvalidArgumentException("$at count: must be a whole number from 1 to 30");
                     }
                     break;
+                case 'scale':
+                    self::onlyKeys($block, ['type', 'label', 'columns', 'items'], ['scores', 'total'], $at);
+                    $texts[] = self::text($block['label'], "$at label");
+                    $texts = array_merge($texts, self::texts($block['columns'], "$at columns", 2, 8), self::texts($block['items'], "$at items", 1, 40));
+                    if (isset($block['scores'])) {
+                        if (!is_array($block['scores']) || !array_is_list($block['scores']) || count($block['scores']) !== count($block['columns'])
+                            || array_filter($block['scores'], static fn(mixed $s): bool => !is_int($s)) !== []) {
+                            throw new \InvalidArgumentException("$at scores: must be a whole number for each column");
+                        }
+                    }
+                    if (isset($block['total'])) {
+                        $texts[] = self::text($block['total'], "$at total");
+                    }
+                    break;
+                case 'table':
+                    self::onlyKeys($block, ['type', 'label', 'columns', 'rows'], [], $at);
+                    $texts[] = self::text($block['label'], "$at label");
+                    $texts = array_merge($texts, self::texts($block['columns'], "$at columns", 1, 8));
+                    if (!is_int($block['rows']) || $block['rows'] < 1 || $block['rows'] > 30) {
+                        throw new \InvalidArgumentException("$at rows: must be a whole number from 1 to 30");
+                    }
+                    break;
                 case 'signature':
                     self::onlyKeys($block, ['type', 'signers'], [], $at);
                     if (!is_array($block['signers']) || !array_is_list($block['signers']) || $block['signers'] === []) {
@@ -204,6 +226,19 @@ final class DocumentLibrary
                 throw new \InvalidArgumentException("$where: unknown field \"$key\"");
             }
         }
+    }
+
+    /** @return list<string> */
+    private static function texts(mixed $value, string $where, int $min, int $max): array
+    {
+        if (!is_array($value) || !array_is_list($value) || count($value) < $min || count($value) > $max) {
+            throw new \InvalidArgumentException("$where: must be a list of $min to $max texts");
+        }
+        $texts = [];
+        foreach ($value as $i => $text) {
+            $texts[] = self::text($text, "{$where}[$i]");
+        }
+        return $texts;
     }
 
     private static function text(mixed $value, string $where): string

@@ -1,0 +1,131 @@
+{
+  "id": "sliding-fee-application",
+  "title": "Sliding Fee Discount Application",
+  "category": "Front desk",
+  "about": "Household size and income for the clinic's sliding fee discount, the same facts UDS Table 4 reports by poverty level.",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "{facility.name} offers discounts based on household size and income. What you write here is kept confidential and used only to decide your discount."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Phone",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Address",
+          "value": "{patient.address}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Your household"
+    },
+    {
+      "type": "paragraph",
+      "text": "List everyone in your household: you, your spouse or partner, and anyone you support or who supports you."
+    },
+    {
+      "type": "table",
+      "label": "Household members",
+      "columns": [
+        "Name",
+        "Relationship to you",
+        "Date of birth",
+        "Monthly income before taxes",
+        "Source of income"
+      ],
+      "rows": 8
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Number of people in household"
+        },
+        {
+          "label": "Total monthly household income"
+        },
+        {
+          "label": "Total yearly household income"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Proof of income attached, for each person with income",
+      "items": [
+        "Recent pay stubs (last 30 days)",
+        "Last year's tax return",
+        "Social Security, disability or pension letter",
+        "Unemployment benefits letter",
+        "No proof available: I declare my income above is correct",
+        "No income (write below how you are supported)"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "If you have no income, how are you supported?",
+      "count": 2
+    },
+    {
+      "type": "paragraph",
+      "text": "I certify that the information above is true and complete. I will tell the clinic if my household size or income changes. I understand that a discount given on false information may be withdrawn."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or responsible party"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For clinic use"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Percent of federal poverty guideline"
+        },
+        {
+          "label": "Discount level"
+        },
+        {
+          "label": "Effective from"
+        },
+        {
+          "label": "Review by"
+        },
+        {
+          "label": "Approved by"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Proof of income",
+      "items": [
+        "Seen and copied",
+        "Self-declared",
+        "Not provided"
+      ]
+    }
+  ]
+}

@@ -2,13 +2,13 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.1.1, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.2.0, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
 - **Paperwork.** Consents, releases, referral letters and office slips, filled from the facility record and, optionally, the open patient and an Address Book entry.
 - **Paper versions of layout forms.** Demographics, History, any active encounter form (LBF) and any transaction form (Referral and the like), printed as a blank form with tick boxes, date boxes and ruled lines. Clinics without a computer in every room can do intake on paper and type it in later, in the same order.
-- **Ready-made packets.** New patient intake, annual update, telehealth, referral and a downtime kit, each opened as one document to print.
+- **Ready-made packets.** New patient intake, annual update, telehealth, referral, depression and anxiety screening, and a downtime kit, each opened as one document to print.
 
 It stores nothing and changes nothing in the database. Every page is built when it's opened, from the site's own facility, Address Book and layout settings.
 
@@ -34,14 +34,18 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Front desk | Authorization to Release Health Information | A HIPAA authorization with the elements 45 CFR 164.508 requires, separate initials for sensitive records, and a 42 CFR Part 2 note |
 | Front desk | Communication Preferences | How the clinic may contact the patient: phone, voicemail, text, email, portal |
 | Front desk | Consent for Telehealth Visits | Consent to visits by video or telephone |
+| Front desk | Sliding Fee Discount Application | Household members and income, proof attached, and a clinic section for the poverty-guideline percentage and discount level (the facts UDS Table 4 reports) |
+| Screening | Patient Health Questionnaire (PHQ-9) | Depression screening, scored 0 to 27, with an office prompt to follow the clinic's safety protocol on question 9 |
+| Screening | Generalized Anxiety Disorder Scale (GAD-7) | Anxiety screening, scored 0 to 21 |
 | Care coordination | Referral letter | To the Address Book recipient, with urgency, the question to answer and what is enclosed |
 | Care coordination | Request for Records | A request to another provider for a patient's records |
 | Office workflow | Patient Routing Slip | Travels with the patient: check-in, rooming, provider, checkout |
 | Office workflow | Staff Handoff (SBAR) | Handing a patient from one staff member, shift or site to another |
 | Office workflow | Internal Referral | To behavioral health, care management, nutrition, social work or another of the clinic's sites |
 | Downtime | Downtime Visit Note | A paper visit note for when OpenEMR is down, with a box to record when it was entered |
+| After the visit | Work or School Note | Confirms the visit and when the patient may return, without giving the reason for the visit |
 
-Each is a JSON file in `data/documents/`, the same on every OpenEMR release.
+Each is a JSON file in `data/documents/`, the same on every OpenEMR release. The PHQ-9 and GAD-7 are printed with their authors' statement that no permission is needed to reproduce them. Their answers can be typed into OpenEMR's own PHQ-9 and GAD-7 encounter forms, which ship with OpenEMR but have to be enabled under **Administration › Forms › Forms Administration**.
 
 ### The documents are starting points
 
@@ -55,7 +59,7 @@ Put your own documents in `sites/<site>/documents/clinic-forms/` (for most insta
 - Files are checked strictly. A document with an unknown field, an unknown block type or a placeholder that doesn't exist is left out, and the Clinic Forms page names the file and the mistake.
 - Your own packets go in `packets.json` in the same folder, in the format of `data/packets.json`. A packet with the id of a shipped one replaces it. A file with a mistake is left out and reported; the shipped packets stay.
 
-The format is in `src/Paper/Document.php`. Blocks are headings, paragraphs, fields, checklists, ruled lines and signature lines. Text can use these placeholders, which print as a blank line when the value isn't known:
+The format is in `src/Paper/Document.php`. Blocks are headings, paragraphs, fields, checklists, ruled lines, signature lines, scales (a question per row and a box per answer, optionally scored, as the PHQ-9 is) and tables (column headings over blank rows, as the household list is). Text can use these placeholders, which print as a blank line when the value isn't known:
 
 | Group | Placeholders |
 |---|---|

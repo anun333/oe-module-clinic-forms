@@ -1,0 +1,79 @@
+{
+  "id": "gad-7",
+  "title": "Generalized Anxiety Disorder Scale (GAD-7)",
+  "category": "Screening",
+  "about": "Anxiety screening: seven questions scored 0 to 21. The answers can be typed into OpenEMR's GAD-7 encounter form (enable it under Administration > Forms > Forms Administration).",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "Over the last 2 weeks, how often have you been bothered by the following problems?",
+      "columns": [
+        "Not at all",
+        "Several days",
+        "More than half the days",
+        "Nearly every day"
+      ],
+      "scores": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "items": [
+        "Feeling nervous, anxious, or on edge",
+        "Not being able to stop or control worrying",
+        "Worrying too much about different things",
+        "Trouble relaxing",
+        "Being so restless that it is hard to sit still",
+        "Becoming easily annoyed or irritable",
+        "Feeling afraid, as if something awful might happen"
+      ],
+      "total": "Total score (for office use)"
+    },
+    {
+      "type": "checklist",
+      "label": "If you checked off any problems, how difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?",
+      "items": [
+        "Not difficult at all",
+        "Somewhat difficult",
+        "Very difficult",
+        "Extremely difficult"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Entered into OpenEMR by"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Developed by Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc. No permission required to reproduce, translate, display or distribute."
+    }
+  ]
+}

@@ -1,6 +1,7 @@
 /* Clinic Forms: printed paperwork. Black on white, generous blanks for handwriting. */
 .cf-packet { font-family: Georgia, "Times New Roman", serif; color: #000; background: #fff; font-size: 11pt; line-height: 1.35; }
-.cf-page { padding: 0.2in 0; }
+.cf-page { padding: 0.2in 0 0; }
+.cf-frame > tbody > tr > td > :last-child, .cf-frame > tbody > tr > td > :last-child > :last-child { margin-bottom: 0; }
 .cf-page + .cf-page { break-before: page; page-break-before: always; }
 .cf-letterhead { display: flex; gap: 0.2in; align-items: center; border-bottom: 1.5pt solid #000; padding-bottom: 0.08in; margin-bottom: 0.15in; font-size: 9.5pt; }
 .cf-logo { max-height: 0.7in; max-width: 1.6in; }
@@ -49,6 +50,16 @@
 .cf-table td { padding: 0.04in 0.06in 0.04in 0; height: 0.24in; vertical-align: bottom; white-space: nowrap; }
 .cf-table .cf-wide { width: 60%; }
 .cf-under { border-bottom: 0.75pt solid #000; }
+.cf-scale, .cf-grid-block { margin: 0.1in 0; break-inside: avoid; page-break-inside: avoid; }
+.cf-scale-table td, .cf-scale-table th { white-space: normal; border-bottom: 0.5pt solid #999; vertical-align: middle; }
+.cf-scale-col { width: 0.85in; text-align: center; font-size: 8.5pt; }
+.cf-scale-box { text-align: center; }
+.cf-scale-item { padding-right: 0.1in; }
+.cf-score { font-weight: normal; font-size: 8pt; }
+.cf-total { margin-top: 0.08in; max-width: 3.5in; margin-left: auto; }
+.cf-grid { width: 100%; border-collapse: collapse; margin-top: 0.04in; }
+.cf-grid th { border: 0.75pt solid #000; font-size: 8.5pt; padding: 0.03in; text-align: left; }
+.cf-grid td { border: 0.75pt solid #000; height: 0.3in; }
 @media screen {
   .cf-packet { max-width: 8.5in; margin: 0 auto; padding: 0.3in 0.4in; box-shadow: 0 0 6px #999; }
   .cf-page + .cf-page { border-top: 2px dashed #bbb; margin-top: 0.3in; }
