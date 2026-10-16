@@ -23,6 +23,8 @@ final readonly class LayoutForm
      * @param array<string, list<string>>  $common field id => the titles of the options this site's
      *                                             patients use most, most used first; only for fields
      *                                             whose list is too long to print in full
+     * @param array<string, array<string, string>> $optionTitles list id => option id => title,
+     *                                             for reading a patient's stored answers
      */
     public function __construct(
         public string $id,
@@ -31,6 +33,7 @@ final readonly class LayoutForm
         public array $fields,
         public array $lists,
         public array $common = [],
+        public array $optionTitles = [],
     ) {
     }
 

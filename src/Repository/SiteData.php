@@ -18,6 +18,7 @@ namespace OpenHealthcare\ClinicForms\Repository;
 use OpenEMR\Common\Database\QueryUtils;
 use OpenHealthcare\ClinicForms\Paper\LayoutForm;
 use OpenHealthcare\ClinicForms\Paper\LayoutPaper;
+use OpenHealthcare\ClinicForms\Paper\OnFile;
 
 final class SiteData
 {
@@ -211,7 +212,58 @@ final class SiteData
                 }
             }
         }
-        return new LayoutForm($formId, $title, $groups, $fields, $lists, $common);
+        return new LayoutForm($formId, $title, $groups, $fields, $lists, $common, $titles);
+    }
+
+    /**
+     * What a patient has on file for each field of Demographics or History (the latest History
+     * row), for the patient to check and correct. Other forms have no single record to read.
+     *
+     * @return array<string, array<string, mixed>> field id => OnFile::value()
+     */
+    public function onFile(LayoutForm $form, int $pid): array
+    {
+        $rows = match ($form->id) {
+            'DEM' => QueryUtils::fetchRecords("SELECT * FROM patient_data WHERE pid = ?", [$pid]),
+            'HIS' => QueryUtils::fetchRecords("SELECT * FROM history_data WHERE pid = ? ORDER BY date DESC, id DESC LIMIT 1", [$pid]),
+            default => [],
+        };
+        if ($rows === []) {
+            return [];
+        }
+        $row = $rows[0];
+        $date = static fn(string $d): string => function_exists('oeFormatShortDate') ? (string)oeFormatShortDate(substr($d, 0, 10)) : substr($d, 0, 10);
+        $values = [];
+        foreach ($form->fields as $field) {
+            $raw = $row[$field['field_id']] ?? null;
+            if (!is_scalar($raw)) {
+                continue;
+            }
+            $raw = (string)$raw;
+            $record = in_array($field['data_type'], OnFile::RECORD_TYPES, true) ? $this->recordName($field['data_type'], $raw) : null;
+            $value = OnFile::value($field, $raw, $form->optionTitles[$field['list_id']] ?? [], $record, $date);
+            if ($value !== null) {
+                $values[$field['field_id']] = $value;
+            }
+        }
+        return $values;
+    }
+
+    /** The name of the provider, pharmacy, address book entry or facility a field points at. */
+    private function recordName(int $type, string $id): ?string
+    {
+        if (preg_match('/^\d+$/', $id) !== 1 || $id === '0') {
+            return null;
+        }
+        $rows = match ($type) {
+            10, 11 => QueryUtils::fetchRecords("SELECT CONCAT_WS(' ', fname, lname) AS name FROM users WHERE id = ?", [(int)$id]),
+            14 => QueryUtils::fetchRecords("SELECT COALESCE(NULLIF(organization, ''), CONCAT_WS(' ', fname, lname)) AS name FROM users WHERE id = ?", [(int)$id]),
+            12 => QueryUtils::fetchRecords("SELECT name FROM pharmacies WHERE id = ?", [(int)$id]),
+            35 => QueryUtils::fetchRecords("SELECT name FROM facility WHERE id = ?", [(int)$id]),
+            default => [],
+        };
+        $name = $rows === [] ? '' : self::s($rows[0]['name'] ?? '');
+        return $name !== '' ? $name : null;
     }
 
     /**

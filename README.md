@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.2.0, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.3.0, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -17,7 +17,7 @@ It stores nothing and changes nothing in the database. Every page is built when 
 **Miscellaneous › Clinic Forms**, just below Blank Forms.
 
 1. Pick the letterhead (any active facility; the primary business entity comes first), the paper size, and optionally a recipient from the Address Book.
-2. If a patient is open, tick **Fill in the current patient** to put their name, date of birth, chart ID, address and phone on the pages. Otherwise everything prints blank.
+2. If a patient is open, tick **Fill in the current patient** to put their name, date of birth, chart ID, address and phone on the pages. Otherwise everything prints blank. Tick **Also fill Demographics and History** as well to print those forms with what's on file, for a returning patient to check and correct (see [Check and correct](#check-and-correct)).
 3. Tick documents and forms, or click a ready-made packet, then **Open for printing**. The packet opens in a new tab with a **Print** button.
 
 A packet prints in its own order; anything ticked by hand follows, in the order of the page.
@@ -83,6 +83,16 @@ Short answers sit two to a row. Labels and list options follow the site's transl
 
 On Demographics, the fields the clinic fills rather than the patient (chart number, providers, portal login, registry and publicity codes, deceased date and others: the list is `LayoutPaper::OFFICE_FIELDS`) print last, in a **For office use** box.
 
+### Check and correct
+
+For a returning patient, Demographics and History can print filled with what's on file instead of blank. The patient crosses out what's wrong, writes the correction beside it, and fills in what's missing, so staff type in only the changes.
+
+- Text and dates are written on their lines. The options on file are ticked (X), including a long list's answer even when it isn't among the clinic's common options. Lifestyle status, quit dates and notes are filled. Exam results and the other row-per-option fields are filled row by row.
+- Providers, the pharmacy, address book entries and facilities print by name.
+- **Social Security and driver license numbers print as their last four characters only.**
+- History prints the patient's latest History record. Encounter and transaction forms have no single record to read, so they print blank.
+- The audit event for the print says which forms were filled from the chart.
+
 The form prints whatever the site's layout has in use, so a long layout makes a long form. To shorten it, hide fields under **Administration › Forms › Layouts**.
 
 ## Printing
@@ -130,7 +140,7 @@ The tests need no database: they cover the document library (every shipped docum
 
 ## Known limitations
 
-- Layout forms print blank. Filling Demographics with what's on file, for a returning patient to check and correct, isn't built yet.
+- Only Demographics and History can be filled from the chart; encounter and transaction forms print blank. Previous names, additional addresses and related persons (kept in their own tables) print blank.
 - Documents are in English. Their text doesn't go through OpenEMR's translation yet.
 - Adding your own documents and packets means writing JSON files on the server.
 - Printing only: nothing is faxed, emailed or saved to the patient's Documents, and nothing is scanned back.

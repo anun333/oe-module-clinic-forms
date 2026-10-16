@@ -109,6 +109,11 @@ foreach ($layouts as $form) {
                 </label>
                 <small class="form-text text-muted"><?php echo xlt('Otherwise everything prints blank, to fill in by hand.'); ?></small>
             </div>
+            <div class="form-check mb-2 ml-4">
+                <input class="form-check-input" type="checkbox" name="fill_layouts" value="1" id="fill_layouts">
+                <label class="form-check-label" for="fill_layouts"><?php echo xlt('Also fill Demographics and History with what is on file, for the patient to check and correct'); ?></label>
+                <small class="form-text text-muted"><?php echo xlt('Social Security and driver license numbers print as their last four characters.'); ?></small>
+            </div>
         <?php } ?>
 
         <div class="mb-2">
@@ -150,6 +155,13 @@ foreach ($layouts as $form) {
             boxes().forEach(b => { b.checked = false; });
             order.value = '';
         });
+        // Filling the forms from the chart needs the patient filled in too.
+        const fillPatient = document.getElementById('fill_patient');
+        const fillLayouts = document.getElementById('fill_layouts');
+        if (fillPatient && fillLayouts) {
+            fillLayouts.addEventListener('change', function () { if (fillLayouts.checked) { fillPatient.checked = true; } });
+            fillPatient.addEventListener('change', function () { if (!fillPatient.checked) { fillLayouts.checked = false; } });
+        }
         document.getElementById('cf-form').addEventListener('submit', function () {
             const ticked = boxes().filter(b => b.checked).map(b => b.value);
             const first = order.value === '' ? [] : order.value.split(',').filter(v => ticked.includes(v));

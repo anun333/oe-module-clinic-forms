@@ -43,6 +43,9 @@ $recipientId = (int)($_POST['recipient'] ?? 0);
 $recipient = $recipientId > 0 ? $site->recipient($recipientId) : [];
 $pid = (int)($session->get('pid') ?? 0);
 $patient = !empty($_POST['fill_patient']) && $pid > 0 ? $site->patient($pid) : [];
+// Demographics and History filled with what's on file, for the patient to check and correct.
+$fillLayouts = $patient !== [] && !empty($_POST['fill_layouts']);
+$filled = [];
 $paper = ($_POST['paper'] ?? '') === 'a4' ? 'A4' : 'letter';
 
 $logo = (new LogoService())->getLogo('core/menu/primary');
@@ -61,8 +64,12 @@ foreach ($items as $item) {
     } else {
         $form = $site->layoutForm(substr($item, 7));
         if ($form !== null) {
-            $pages[] = $renderer->layoutForm($form);
+            $values = $fillLayouts ? $site->onFile($form, $pid) : [];
+            $pages[] = $renderer->layoutForm($form, $values);
             $titles[] = $form->title;
+            if ($values !== []) {
+                $filled[] = $form->title;
+            }
         }
     }
 }
@@ -75,7 +82,8 @@ if ($patient !== []) {
         (string)$session->get('authUser'),
         (string)$session->get('authProvider'),
         1,
-        'Clinic Forms printed with patient details: ' . implode(', ', $titles),
+        'Clinic Forms printed with patient details: ' . implode(', ', $titles)
+            . ($filled !== [] ? '; filled with values on file: ' . implode(', ', $filled) : ''),
         $pid,
     );
 }

@@ -93,11 +93,18 @@ final readonly class Renderer
         return $html . $this->close();
     }
 
-    /** A blank layout form (or one with the patient's header filled), as LayoutPaper renders it. */
-    public function layoutForm(LayoutForm $form): string
+    /**
+     * A layout form as LayoutPaper renders it: blank, or (with $values) filled with what the
+     * patient has on file, to check and correct.
+     *
+     * @param array<string, array<string, mixed>> $values field id => OnFile::value()
+     */
+    public function layoutForm(LayoutForm $form, array $values = []): string
     {
-        return $this->open($form->title) . $this->letterhead() . "<h1>" . self::e($form->title) . "</h1>"
-            . $this->patientStrip() . (new LayoutPaper())->render($form) . $this->close();
+        $title = $values === [] ? $form->title : $form->title . ': ' . xl('please check and correct');
+        $intro = $values === [] ? '' : "<p class='cf-intro'>" . self::e(xl('This is what we have on file. Cross out anything that is wrong and write the correction beside it, and fill in anything missing.')) . "</p>";
+        return $this->open($title) . $this->letterhead() . "<h1>" . self::e($title) . "</h1>"
+            . $this->patientStrip() . $intro . (new LayoutPaper())->render($form, $values) . $this->close();
     }
 
     /** Name, date of birth and ID at the top of a form: filled when a patient is chosen, else blank. */

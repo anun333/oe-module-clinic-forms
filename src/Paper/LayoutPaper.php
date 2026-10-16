@@ -61,7 +61,11 @@ final class LayoutPaper
         ],
     ];
 
-    public function render(LayoutForm $form): string
+    /**
+     * @param array<string, array<string, mixed>> $values field id => what the patient has on file
+     *                                                    (OnFile::value()); empty for a blank form
+     */
+    public function render(LayoutForm $form, array $values = []): string
     {
         $office = self::OFFICE_FIELDS[$form->id] ?? [];
         $byGroup = [];
@@ -80,14 +84,14 @@ final class LayoutPaper
             }
             $html .= "<div class='cf-group'><h2>" . self::e($title) . "</h2>";
             foreach ($byGroup[$groupId] as $i => $field) {
-                $html .= $this->field($field, $form->lists[$field['list_id']] ?? [], self::label($field, $byGroup[$groupId][$i + 1] ?? null), $form->common[$field['field_id']] ?? []);
+                $html .= $this->field($field, $form->lists[$field['list_id']] ?? [], self::label($field, $byGroup[$groupId][$i + 1] ?? null), $form->common[$field['field_id']] ?? [], $values[$field['field_id']] ?? null);
             }
             $html .= "</div>";
         }
         if ($officeFields !== []) {
             $html .= "<div class='cf-group cf-office'><h2>" . self::e(xl('For office use')) . "</h2>";
             foreach ($officeFields as $i => $field) {
-                $html .= $this->field($field, $form->lists[$field['list_id']] ?? [], self::label($field, $officeFields[$i + 1] ?? null), $form->common[$field['field_id']] ?? []);
+                $html .= $this->field($field, $form->lists[$field['list_id']] ?? [], self::label($field, $officeFields[$i + 1] ?? null), $form->common[$field['field_id']] ?? [], $values[$field['field_id']] ?? null);
             }
             $html .= "</div>";
         }
@@ -121,7 +125,7 @@ final class LayoutPaper
      * @param list<string> $options
      * @param list<string> $common  for a long list, the options most used at this site
      */
-    private function field(array $field, array $options, string $label, array $common = []): string
+    private function field(array $field, array $options, string $label, array $common = [], ?array $value = null): string
     {
         $type = $field['data_type'];
         if ($type === self::STATIC_TYPE) {
@@ -130,39 +134,52 @@ final class LayoutPaper
             return $text === '' ? '' : "<p class='cf-static'>" . nl2br(self::e($text)) . "</p>";
         }
         $head = "<div class='cf-label'>" . self::e($label) . "</div>";
+        $ticked = array_map('strval', (array)($value['ticked'] ?? []));
+        $text = is_string($value['text'] ?? null) ? $value['text'] : '';
+        $note = is_string($value['note'] ?? null) ? $value['note'] : '';
         $rowTypes = [self::TEXT_LIST_TYPE, self::EXAM_TYPE, self::CHECK_TEXT_TYPE];
         if (in_array($type, $rowTypes, true) && $options !== [] && count($options) <= self::MAX_PRINTED_ROWS) {
-            return "<div class='cf-item'>" . $head . self::rows($type, $options) . "</div>";
+            $rows = is_array($value['rows'] ?? null) ? $value['rows'] : [];
+            return "<div class='cf-item'>" . $head . self::rows($type, $options, $rows) . "</div>";
         }
         if ($type === self::LIFESTYLE_TYPE) {
+            $status = $value['status'] ?? '';
+            $quit = is_string($value['date'] ?? null) ? $value['date'] : '';
             $ticks = '';
-            foreach ([xl('Current'), xl('Quit') . ' ____ / ____ / ________', xl('Never'), xl('N/A')] as $status) {
-                $ticks .= "<span class='cf-check'><span class='cf-box'></span>" . self::e($status) . "</span>";
+            foreach (['current' => xl('Current'), 'quit' => xl('Quit'), 'never' => xl('Never'), 'not_applicable' => xl('N/A')] as $key => $name) {
+                $extra = $key === 'quit' ? ' ' . ($quit !== '' ? "<span class='cf-filled'>" . self::e($quit) . "</span>" : '____ / ____ / ________') : '';
+                $ticks .= "<span class='cf-check'>" . self::box($status === $key) . self::e($name) . $extra . "</span>";
             }
             return "<div class='cf-item'>" . $head . "<div class='cf-options'>" . $ticks . "</div>"
-                . "<div class='cf-inline'><span class='cf-hint'>" . self::e(xl('Notes')) . "</span><span class='cf-blank'></span></div></div>";
+                . "<div class='cf-inline'><span class='cf-hint'>" . self::e(xl('Notes')) . "</span>" . self::blank($note) . "</div></div>";
         }
-        if (in_array($type, self::LIST_TYPES, true) && $options !== [] && count($options) <= self::MAX_PRINTED_OPTIONS) {
-            $hint = in_array($type, self::MULTI_TYPES, true) ? xl('tick all that apply') : xl('tick one');
-            $html = "<div class='cf-item cf-choices'>" . $head . "<div class='cf-hint'>" . self::e($hint) . "</div><div class='cf-options'>";
-            foreach ($options as $option) {
-                $html .= "<span class='cf-check'><span class='cf-box'></span>" . self::e($option) . "</span>";
+        if (in_array($type, self::LIST_TYPES, true) && ($options !== [] || $ticked !== [])) {
+            $long = count($options) > self::MAX_PRINTED_OPTIONS;
+            if (!$long || $common !== [] || $ticked !== []) {
+                // A long list prints the options used here, plus whatever this patient has, then Other.
+                $printed = $long ? array_values(array_unique(array_merge($common, $ticked))) : array_values(array_unique(array_merge($options, $ticked)));
+                $hint = in_array($type, self::MULTI_TYPES, true) ? xl('tick all that apply') : xl('tick one');
+                $html = "<div class='cf-item cf-choices'>" . $head . "<div class='cf-hint'>" . self::e($hint) . "</div><div class='cf-options'>";
+                foreach ($printed as $option) {
+                    $html .= "<span class='cf-check'>" . self::box(in_array($option, $ticked, true)) . self::e($option) . "</span>";
+                }
+                if ($long) {
+                    $html .= "<span class='cf-check cf-other'>" . self::box(false) . self::e(xl('Other')) . ": <span class='cf-blank'></span></span>";
+                }
+                $html .= "</div>";
+                if ($note !== '') {
+                    $html .= "<div class='cf-inline'><span class='cf-hint'>" . self::e(xl('Notes')) . "</span>" . self::blank($note) . "</div>";
+                }
+                return $html . "</div>";
             }
-            return $html . "</div></div>";
-        }
-        if (in_array($type, self::LIST_TYPES, true) && count($options) > self::MAX_PRINTED_OPTIONS && $common !== []) {
-            $hint = in_array($type, self::MULTI_TYPES, true) ? xl('tick all that apply') : xl('tick one');
-            $html = "<div class='cf-item cf-choices'>" . $head . "<div class='cf-hint'>" . self::e($hint) . "</div><div class='cf-options'>";
-            foreach ($common as $option) {
-                $html .= "<span class='cf-check'><span class='cf-box'></span>" . self::e($option) . "</span>";
-            }
-            return $html . "<span class='cf-check cf-other'><span class='cf-box'></span>" . self::e(xl('Other')) . ": <span class='cf-blank'></span></span></div></div>";
         }
         if ($type === self::DATE_TYPE) {
-            return "<div class='cf-item cf-inline'>" . $head . "<span class='cf-date'>____ / ____ / ________</span></div>";
+            return "<div class='cf-item cf-inline'>" . $head . ($text !== '' ? self::blank($text) : "<span class='cf-date'>____ / ____ / ________</span>") . "</div>";
         }
         if ($type === self::TEXTAREA_TYPE) {
-            return "<div class='cf-item'>" . $head . str_repeat("<div class='cf-line'></div>", max(3, min(12, $field['fld_rows']))) . "</div>";
+            $lines = max(3, min(12, $field['fld_rows']));
+            return "<div class='cf-item'>" . $head . ($text !== '' ? "<div class='cf-prefill cf-filled'>" . nl2br(self::e($text)) . "</div>" : '')
+                . str_repeat("<div class='cf-line'></div>", $text !== '' ? 2 : $lines) . "</div>";
         }
         if (in_array($type, self::SIGNATURE_TYPES, true)) {
             return "<div class='cf-item cf-signature'><div class='cf-sign-line'></div><div class='cf-sign-under'><span>"
@@ -171,23 +188,41 @@ final class LayoutPaper
         if ($type === self::CANVAS_TYPE) {
             return "<div class='cf-item'>" . $head . "<div class='cf-canvas'></div></div>";
         }
-        return "<div class='cf-item cf-inline'>" . $head . "<span class='cf-blank'></span></div>";
+        return "<div class='cf-item cf-inline'>" . $head . self::blank($text) . "</div>";
+    }
+
+    /** A tick box, marked when the patient has that answer on file. */
+    private static function box(bool $on): string
+    {
+        return $on ? "<span class='cf-box cf-on'>X</span>" : "<span class='cf-box'></span>";
+    }
+
+    /** A blank line, with what's on file written on it. */
+    private static function blank(string $text): string
+    {
+        return "<span class='cf-blank'>" . ($text !== '' ? "<span class='cf-filled'>" . self::e($text) . "</span>" : '') . "</span>";
     }
 
     /** @param list<string> $options */
-    private static function rows(int $type, array $options): string
+    /**
+     * @param list<string>                                  $options
+     * @param array<string, array{mark: string, note: string}> $values option title => what's on file
+     */
+    private static function rows(int $type, array $options, array $values = []): string
     {
-        $box = "<span class='cf-box'></span>";
         $html = "<table class='cf-table'>";
         if ($type === self::EXAM_TYPE) {
             $html .= "<tr><th>" . self::e(xl('Exam or Test')) . "</th><th>" . self::e(xl('N/A')) . "</th><th>"
                 . self::e(xl('Normal')) . "</th><th>" . self::e(xl('Abnormal')) . "</th><th class='cf-wide'>" . self::e(xl('Date/Notes')) . "</th></tr>";
         }
         foreach ($options as $option) {
+            $mark = $values[$option]['mark'] ?? '';
+            $note = $values[$option]['note'] ?? '';
+            $cell = "<td class='cf-wide cf-under'>" . ($note !== '' ? "<span class='cf-filled'>" . self::e($note) . "</span>" : '') . "</td>";
             $html .= match ($type) {
-                self::EXAM_TYPE => "<tr><td>" . self::e($option) . "</td><td>$box</td><td>$box</td><td>$box</td><td class='cf-wide cf-under'></td></tr>",
-                self::CHECK_TEXT_TYPE => "<tr><td>$box " . self::e($option) . "</td><td class='cf-wide cf-under'></td></tr>",
-                default => "<tr><td>" . self::e($option) . "</td><td class='cf-wide cf-under'></td></tr>",
+                self::EXAM_TYPE => "<tr><td>" . self::e($option) . "</td><td>" . self::box($mark === '0') . "</td><td>" . self::box($mark === '1') . "</td><td>" . self::box($mark === '2') . "</td>$cell</tr>",
+                self::CHECK_TEXT_TYPE => "<tr><td>" . self::box($mark !== '' && $mark !== '0') . " " . self::e($option) . "</td>$cell</tr>",
+                default => "<tr><td>" . self::e($option) . "</td>$cell</tr>",
             };
         }
         return $html . "</table>";

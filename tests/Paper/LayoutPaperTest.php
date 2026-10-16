@@ -106,6 +106,48 @@ final class LayoutPaperTest extends TestCase
         self::assertStringNotContainsString('Language 1<', $html);
     }
 
+    public function testValuesOnFileArePrintedForThePatientToCheck(): void
+    {
+        $form = new LayoutForm('DEM', 'Registration', ['1' => 'Who'], [
+            $this->field('fname', 2, 'First name'),
+            $this->field('sex', 1, 'Sex', 'sex'),
+            $this->field('DOB', 4, 'Date of birth'),
+            $this->field('language', 1, 'Language', 'language'),
+            $this->field('alcohol', 28, 'Alcohol'),
+            $this->field('exams', 23, 'Exams', 'exams'),
+            $this->field('notes', 3, 'Notes', rows: 6),
+        ], ['sex' => ['Female', 'Male'], 'language' => array_map(static fn(int $i): string => "Language $i", range(1, 30)), 'exams' => ['Breast Exam', 'ECG']],
+            ['language' => ['Language 9']]);
+        $html = (new LayoutPaper())->render($form, [
+            'fname' => ['text' => 'Ann <Q>'],
+            'sex' => ['ticked' => ['Female']],
+            'DOB' => ['text' => '08/31/1958'],
+            'language' => ['ticked' => ['Language 20']],
+            'alcohol' => ['status' => 'quit', 'date' => '01/15/2020', 'note' => 'beer'],
+            'exams' => ['rows' => ['ECG' => ['mark' => '1', 'note' => 'fine']]],
+            'notes' => ['text' => "line one\nline two"],
+        ]);
+        self::assertStringContainsString("<span class='cf-blank'><span class='cf-filled'>Ann &lt;Q&gt;</span></span>", $html);
+        self::assertStringContainsString("<span class='cf-box cf-on'>X</span>Female", $html);
+        self::assertStringContainsString("<span class='cf-box'></span>Male", $html);
+        self::assertStringContainsString("<span class='cf-filled'>08/31/1958</span>", $html);
+        self::assertStringNotContainsString('____ / ____ / ________</span></div>', substr($html, 0, (int)strpos($html, 'Alcohol')));
+        // A long list prints the site's common options and this patient's answer, ticked, then Other.
+        self::assertStringContainsString("<span class='cf-box'></span>Language 9", $html);
+        self::assertStringContainsString("<span class='cf-box cf-on'>X</span>Language 20", $html);
+        self::assertStringContainsString("<span class='cf-box cf-on'>X</span>Quit <span class='cf-filled'>01/15/2020</span>", $html);
+        self::assertStringContainsString("<span class='cf-filled'>beer</span>", $html);
+        self::assertStringContainsString("<tr><td>ECG</td><td><span class='cf-box'></span></td><td><span class='cf-box cf-on'>X</span></td><td><span class='cf-box'></span></td><td class='cf-wide cf-under'><span class='cf-filled'>fine</span></td></tr>", $html);
+        self::assertStringContainsString("<div class='cf-prefill cf-filled'>line one<br />\nline two</div>", $html);
+        self::assertSame(2, substr_count($html, "<div class='cf-line'></div>"));
+    }
+
+    public function testWithoutValuesNothingIsTicked(): void
+    {
+        $form = new LayoutForm('DEM', 'Registration', ['1' => 'Who'], [$this->field('sex', 1, 'Sex', 'sex')], ['sex' => ['Female', 'Male']]);
+        self::assertStringNotContainsString('cf-on', (new LayoutPaper())->render($form));
+    }
+
     public function testAListWithNoOptionsPrintsAsALine(): void
     {
         $html = (new LayoutPaper())->render($this->form([$this->field('x', 1, 'Missing list', 'nothing')]));
