@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.16.1 (2026-10-16)
+
+- `FOOTPRINT.md` regenerated: 0.16.0's was made before its last test was added, so its line count was 5 short and the CI check failed. No change to what prints or saves.
+
 ## 0.16.0 (2026-10-16)
 
 Two of the items left before 1.0: a way back from paper to the chart, and a copy in the chart.
