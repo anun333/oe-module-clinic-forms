@@ -4,7 +4,7 @@
 
 - **Check and correct.** A second box, *Also fill Demographics and History*, prints those forms with what the patient has on file: text and dates written in, options ticked, lifestyle status and notes, exam rows, providers, pharmacy and facility by name. A returning patient crosses out and corrects instead of filling everything in again. Social Security and driver license numbers print as their last four characters. History uses the latest History record. The audit event says which forms were filled.
 - Stored values are read as OpenEMR's own screens read them (lists, multiple choice, list with comment, lifestyle, smoking status, textbox lists, exam results, checkboxes with text), option ids without regard to case.
-- Checked end to end on 8.4.1.
+- Checked end to end on 8.4.1, and on 8.1.0 and 8.5.0 (official images).
 
 ## 0.2.0 (2026-10-15)
 
