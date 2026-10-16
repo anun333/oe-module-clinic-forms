@@ -11,15 +11,11 @@
 
 require_once __DIR__ . '/../../../../globals.php';
 
-use OpenEMR\Common\Acl\AccessDeniedHelper;
 use OpenEMR\Common\Acl\AclMain;
-use OpenEMR\Common\Csrf\CsrfUtils;
-use OpenEMR\Common\Logging\EventAuditLogger;
-use OpenEMR\Common\Session\SessionWrapperFactory;
-use OpenEMR\Core\OEGlobalsBag;
 use OpenHealthcare\ClinicForms\Office\OdtWriter;
 use OpenHealthcare\ClinicForms\Office\OfficeExport;
 use OpenHealthcare\ClinicForms\Office\TemplateFiller;
+use OpenHealthcare\ClinicForms\Compat\OpenEmr;
 use OpenHealthcare\ClinicForms\Office\TemplateLibrary;
 use OpenHealthcare\ClinicForms\Office\WordWriter;
 use OpenHealthcare\ClinicForms\Paper\Context;
@@ -30,16 +26,13 @@ use OpenHealthcare\ClinicForms\Paper\Words;
 use OpenHealthcare\ClinicForms\Repository\SiteData;
 
 if (!AclMain::aclCheckCore('patients', 'demo')) {
-    AccessDeniedHelper::denyWithTemplate('ACL check failed for patients/demo: Clinic Forms', xl('Clinic Forms'));
+    OpenEmr::deny('ACL check failed for patients/demo: Clinic Forms', xl('Clinic Forms'));
 }
-$session = SessionWrapperFactory::getInstance()->getActiveSession();
-if (!CsrfUtils::verifyCsrfToken($_POST['csrf_token_form'] ?? '', session: $session)) {
-    CsrfUtils::csrfNotVerified();
-}
+OpenEmr::requireCsrf($_POST['csrf_token_form'] ?? '');
 
-$siteDir = OEGlobalsBag::getInstance()->getString('OE_SITE_DIR');
+$siteDir = OpenEmr::siteDir();
 $site = new SiteData();
-$pid = (int)($session->get('pid') ?? 0);
+$pid = (int)(OpenEmr::session('pid') ?? 0);
 $patient = !empty($_POST['fill_patient']) && $pid > 0 ? $site->patient($pid) : [];
 $recipientId = (int)($_POST['recipient'] ?? 0);
 $today = function_exists('oeFormatShortDate') ? (string)oeFormatShortDate(date('Y-m-d')) : date('Y-m-d');
@@ -49,7 +42,7 @@ $context = new Context(
     $recipientId > 0 ? $site->recipient($recipientId) : [],
     $today,
     null,
-    $site->user((int)($session->get('authUserID') ?? 0)),
+    $site->user((int)(OpenEmr::session('authUserID') ?? 0)),
 );
 $paper = ($_POST['paper'] ?? '') === 'a4' ? 'A4' : 'letter';
 $language = Words::language($_POST['language'] ?? 'en');
@@ -103,14 +96,7 @@ if ($template !== '') {
 }
 
 if ($patient !== []) {
-    EventAuditLogger::getInstance()->newEvent(
-        'patient-record-select',
-        (string)$session->get('authUser'),
-        (string)$session->get('authProvider'),
-        1,
-        'Clinic Forms downloaded for editing (' . $ext . ') with patient details: ' . implode(', ', $titles),
-        $pid,
-    );
+    OpenEmr::audit('patient-record-select', 'Clinic Forms downloaded for editing (' . $ext . ') with patient details: ' . implode(', ', $titles), $pid);
 }
 
 $suffix = $patient !== [] ? '_' . preg_replace('/[^A-Za-z0-9-]+/', '-', $patient['id'] !== '' ? $patient['id'] : (string)$pid) : '';

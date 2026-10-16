@@ -8,10 +8,12 @@
  */
 
 use OpenEMR\Core\ModulesClassLoader;
-use OpenEMR\Core\OEGlobalsBag;
 use OpenHealthcare\ClinicForms\Bootstrap;
+use OpenHealthcare\ClinicForms\Compat\OpenEmr;
 
-$classLoader = new ModulesClassLoader(OEGlobalsBag::getInstance()->getProjectDir());
+// OEGlobalsBag is 8.0+; 7.0 keeps the project directory in $GLOBALS['fileroot'].
+$projectDir = class_exists('OpenEMR\\Core\\OEGlobalsBag') ? \OpenEMR\Core\OEGlobalsBag::getInstance()->getProjectDir() : (string)($GLOBALS['fileroot'] ?? '');
+$classLoader = new ModulesClassLoader($projectDir);
 $classLoader->registerNamespaceIfNotExists('OpenHealthcare\\ClinicForms\\', __DIR__ . DIRECTORY_SEPARATOR . 'src');
 
-(new Bootstrap(OEGlobalsBag::getInstance()->getKernel()->getEventDispatcher()))->subscribeToEvents();
+(new Bootstrap(OpenEmr::eventDispatcher()))->subscribeToEvents();

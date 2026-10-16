@@ -10,13 +10,10 @@
 
 require_once __DIR__ . '/../../../../globals.php';
 
-use OpenEMR\Common\Acl\AccessDeniedHelper;
 use OpenEMR\Common\Acl\AclMain;
-use OpenEMR\Common\Csrf\CsrfUtils;
-use OpenEMR\Common\Session\SessionWrapperFactory;
 use OpenEMR\Core\Header;
-use OpenEMR\Core\OEGlobalsBag;
 use OpenHealthcare\ClinicForms\Bootstrap;
+use OpenHealthcare\ClinicForms\Compat\OpenEmr;
 use OpenHealthcare\ClinicForms\Office\TemplateFiller;
 use OpenHealthcare\ClinicForms\Office\TemplateLibrary;
 use OpenHealthcare\ClinicForms\Paper\Context;
@@ -28,11 +25,10 @@ use OpenHealthcare\ClinicForms\Paper\Words;
 use OpenHealthcare\ClinicForms\Repository\SiteData;
 
 if (!AclMain::aclCheckCore('patients', 'demo')) {
-    AccessDeniedHelper::denyWithTemplate('ACL check failed for patients/demo: Clinic Forms', xl('Clinic Forms'));
+    OpenEmr::deny('ACL check failed for patients/demo: Clinic Forms', xl('Clinic Forms'));
 }
 
-$session = SessionWrapperFactory::getInstance()->getActiveSession();
-$siteDir = OEGlobalsBag::getInstance()->getString('OE_SITE_DIR');
+$siteDir = OpenEmr::siteDir();
 $library = DocumentLibrary::forSite($siteDir);
 $packets = Packets::forSite($library, $siteDir);
 $spanish = DocumentLibrary::forSite($siteDir, 'es');
@@ -49,16 +45,16 @@ foreach ($library->all() as $doc) {
 }
 $templates = TemplateLibrary::forSite($siteDir)->all();
 $isAdmin = AclMain::aclCheckCore('admin', 'super');
-$csrf = CsrfUtils::collectCsrfToken(session: $session);
+$csrf = OpenEmr::csrfToken();
 $flash = is_string($_GET['cf_msg'] ?? null) ? $_GET['cf_msg'] : '';
 $flashOk = ($_GET['cf_ok'] ?? '') === '1';
 $site = new SiteData();
 $facilities = $site->facilities();
 $recipients = $site->recipients();
 $layouts = $site->layoutForms();
-$pid = (int)($session->get('pid') ?? 0);
+$pid = (int)(OpenEmr::session('pid') ?? 0);
 $patient = $pid > 0 ? $site->patient($pid) : [];
-$moduleUrl = OEGlobalsBag::getInstance()->getWebRoot() . Bootstrap::MODULE_INSTALLATION_PATH;
+$moduleUrl = OpenEmr::webRoot() . Bootstrap::MODULE_INSTALLATION_PATH;
 
 $byCategory = [];
 foreach ($library->all() as $doc) {

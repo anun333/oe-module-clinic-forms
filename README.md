@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.8.0, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.9.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -184,11 +184,14 @@ As written in the code, not verified for restricted users:
 | OpenEMR | Checked | How |
 |---|---|---|
 | 8.4.1 | 2026-10-15 | Installed through Module Manager. The picker and a packet of every document, Demographics, History and Referral printed with no PHP errors, blank and filled, and printed to PDF in Chromium to check the pages. A print without the CSRF token is refused. Local documents, valid and broken, tested. |
+| 7.0.2, 7.0.3 | 2026-10-16 | Official images, fresh install: installed through Module Manager; the picker, a 32-page blank packet and a Word export, with no PHP error. On 7.0.3 also: the menu entry, a print without the CSRF token refused (403), and a Spanish packet filled from the chart with its audit event. |
 | 8.1.0, 8.2.0, 8.3.0, 8.4.0, 8.5.0 | 2026-10-15 | Official images, fresh install: installed through Module Manager; the picker loads and a blank packet of all 12 documents, Demographics, History and Referral prints all 15 pages with no PHP error. |
 
 0.1.1 was checked again on 8.1.0 and 8.5.0 the same way, and end to end on 8.4.1: layout titles, the patient line on every page, long lists against the clinic's own counts (Demographics and a synthetic encounter form, a deleted form left out, option ids in any case), clinic documents and packets valid and broken, the CSRF refusal, and one audit event for a filled print and none for a blank one.
 
-It needs PHP 8.3 or later. OpenEMR 8.0.0 and older haven't been checked.
+0.9.0 runs on OpenEMR 7.0 as well. The few OpenEMR calls that changed between 7.0 and 8.x go through one small adapter (`src/Compat/OpenEmr.php`), which uses the newer call where it exists and the 7.0 way otherwise. Checked on the official 7.0.2, 7.0.3, 8.1.0 and 8.5.0 images, and on 7.0.3 in depth: the menu entry, a refused print without the CSRF token, and a Spanish packet filled from the chart with its audit event.
+
+It needs PHP 8.2 or later (OpenEMR's 7.0.3 image runs 8.3) and PHP's zip and DOM extensions. OpenEMR 6.x and older aren't supported: their images run PHP 8.0.
 
 ## Development
 

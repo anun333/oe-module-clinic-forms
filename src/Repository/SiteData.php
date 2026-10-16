@@ -251,16 +251,13 @@ final class SiteData
                 $titles[self::s($row['list_id'] ?? '')][self::s($row['option_id'] ?? '')] = $optionTitle;
             }
         }
-        $common = [];
+        $long = [];
         foreach ($fields as $field) {
-            $options = $titles[$field['list_id']] ?? [];
-            if (count($options) > LayoutPaper::MAX_PRINTED_OPTIONS) {
-                $used = $this->mostUsed($formId, $field['field_id'], $options);
-                if ($used !== []) {
-                    $common[$field['field_id']] = $used;
-                }
+            if (count($titles[$field['list_id']] ?? []) > LayoutPaper::MAX_PRINTED_OPTIONS) {
+                $long[$field['field_id']] = $titles[$field['list_id']];
             }
         }
+        $common = $this->mostUsed($formId, $long);
         return new LayoutForm($formId, $title, $groups, $fields, $lists, $common, $titles);
     }
 
@@ -333,31 +330,39 @@ final class SiteData
     }
 
     /**
-     * The titles of the options this site's patients have for a field, most used first, for a
-     * list too long to print in full. Counts only: no patient's answer leaves this method.
+     * For each long-list field, the titles of the options this site's patients have, most used
+     * first. One query per form, so a print adds one row to OpenEMR's query audit log (which
+     * records every read of patient data) rather than one per list. Counts only: no patient's
+     * answer leaves this method.
      *
-     * @param array<string, string> $options option id => title
-     * @return list<string>
+     * @param array<string, array<string, string>> $long field id => its options (option id => title)
+     * @return array<string, list<string>>
      */
-    private function mostUsed(string $formId, string $fieldId, array $options): array
+    private function mostUsed(string $formId, array $long): array
     {
-        if (preg_match('/^\w+$/', $fieldId) !== 1) {
+        $long = array_filter($long, static fn(string $id): bool => preg_match('/^\w+$/', $id) === 1, ARRAY_FILTER_USE_KEY);
+        if ($long === []) {
             return [];
         }
         if ($formId === 'DEM' || $formId === 'HIS') {
-            // The field id is a column of the table (checked against its columns), never data.
-            if (!in_array($fieldId, $this->columns($formId === 'DEM' ? 'patient_data' : 'history_data'), true)) {
+            // Field ids are columns of the table (checked against its columns), never data.
+            $columns = $this->columns($formId === 'DEM' ? 'patient_data' : 'history_data');
+            $ids = array_values(array_filter(array_keys($long), static fn(string $id): bool => in_array($id, $columns, true)));
+            if ($ids === []) {
                 return [];
             }
-            $rows = QueryUtils::fetchRecords($formId === 'DEM'
-                ? "SELECT `$fieldId` AS value, COUNT(DISTINCT pid) AS n FROM patient_data WHERE `$fieldId` IS NOT NULL AND `$fieldId` <> '' GROUP BY `$fieldId`"
-                : "SELECT `$fieldId` AS value, COUNT(DISTINCT pid) AS n FROM history_data WHERE `$fieldId` IS NOT NULL AND `$fieldId` <> '' GROUP BY `$fieldId`");
+            $parts = array_map(static fn(string $c): string => $formId === 'DEM'
+                ? "SELECT ? AS field, `$c` AS value, COUNT(DISTINCT pid) AS n FROM patient_data WHERE `$c` IS NOT NULL AND `$c` <> '' GROUP BY `$c`"
+                : "SELECT ? AS field, `$c` AS value, COUNT(DISTINCT pid) AS n FROM history_data WHERE `$c` IS NOT NULL AND `$c` <> '' GROUP BY `$c`", $ids);
+            $rows = QueryUtils::fetchRecords(implode(' UNION ALL ', $parts), $ids);
         } elseif (str_starts_with($formId, 'LBF')) {
+            $ids = array_keys($long);
             $rows = QueryUtils::fetchRecords(
-                "SELECT d.field_value AS value, COUNT(DISTINCT f.pid) AS n FROM lbf_data AS d
+                "SELECT d.field_id AS field, d.field_value AS value, COUNT(DISTINCT f.pid) AS n FROM lbf_data AS d
                    JOIN forms AS f ON f.form_id = d.form_id AND f.formdir = ? AND f.deleted = 0
-                  WHERE d.field_id = ? AND d.field_value <> '' GROUP BY d.field_value",
-                [$formId, $fieldId],
+                  WHERE d.field_id IN (" . implode(',', array_fill(0, count($ids), '?')) . ") AND d.field_value <> ''
+                  GROUP BY d.field_id, d.field_value",
+                [$formId, ...$ids],
             );
         } else {
             return [];
@@ -365,18 +370,24 @@ final class SiteData
         // Multiple-choice answers are stored as "a|b"; count each option. Option ids are matched
         // without regard to case, as OpenEMR's own lookups (and GROUP BY) match them: a group of
         // "English" and "english" comes back under either spelling.
-        $titles = array_change_key_case($options, CASE_LOWER);
         $counts = [];
         foreach ($rows as $row) {
+            $field = self::s($row['field'] ?? '');
+            $titles = array_change_key_case($long[$field] ?? [], CASE_LOWER);
             foreach (explode('|', self::s($row['value'] ?? '')) as $optionId) {
                 $key = strtolower($optionId);
                 if (isset($titles[$key])) {
-                    $counts[$key] = ($counts[$key] ?? 0) + (int)$row['n'];
+                    $counts[$field][$key] = ($counts[$field][$key] ?? 0) + (int)$row['n'];
                 }
             }
         }
-        arsort($counts);
-        return array_map(static fn(string $key): string => $titles[$key], array_slice(array_keys($counts), 0, self::MOST_USED, false));
+        $out = [];
+        foreach ($counts as $field => $byOption) {
+            arsort($byOption);
+            $titles = array_change_key_case($long[$field], CASE_LOWER);
+            $out[$field] = array_map(static fn(string $key): string => $titles[$key], array_slice(array_keys($byOption), 0, self::MOST_USED, false));
+        }
+        return $out;
     }
 
     /** @return list<string> the table's column names */

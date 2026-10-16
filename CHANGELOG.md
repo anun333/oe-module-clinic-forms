@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.9.0 (2026-10-16)
+
+- **Runs on OpenEMR 7.0.** The calls that changed between 7.0 and 8.x (settings and web root, the session, CSRF tokens, the access-denied page, the audit logger) go through one adapter, `src/Compat/OpenEmr.php`, which uses the newer call when it exists. A print without the CSRF token is refused with 403 on every release (7.0 answered 200).
+- **PHP 8.2 or later**, down from 8.3; CI now tests 8.2 to 8.5.
+- **Fewer audit rows.** The long-list counts for a form are one query instead of one per list, so printing Demographics adds one row to OpenEMR's query audit log instead of about ten.
+- Checked on the official 7.0.2, 7.0.3, 8.1.0 and 8.5.0 images, and end to end on 8.4.1.
+
 ## 0.8.0 (2026-10-16)
 
 - **Spanish.** A language choice on the page; all 22 patient documents have Spanish versions, and the words Clinic Forms prints follow the paper's language. PHQ-9, PHQ-2 and GAD-7 use the official "Spanish for the USA" wording (phqscreeners.com), and AUDIT-C uses the WHO's Spanish AUDIT (its misprinted score for "10 o más" corrected to 4). The rest are our translations, for review. Translations are checked against their English documents (blocks, fields, items, signers, placeholders), and key legal wording is checked in Spanish. Clinics can add their own in `es/`.

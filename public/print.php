@@ -10,14 +10,10 @@
 
 require_once __DIR__ . '/../../../../globals.php';
 
-use OpenEMR\Common\Acl\AccessDeniedHelper;
 use OpenEMR\Common\Acl\AclMain;
-use OpenEMR\Common\Csrf\CsrfUtils;
-use OpenEMR\Common\Logging\EventAuditLogger;
-use OpenEMR\Common\Session\SessionWrapperFactory;
-use OpenEMR\Core\OEGlobalsBag;
 use OpenEMR\Services\LogoService;
 use OpenHealthcare\ClinicForms\Bootstrap;
+use OpenHealthcare\ClinicForms\Compat\OpenEmr;
 use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
 use OpenHealthcare\ClinicForms\Paper\Packets;
@@ -27,14 +23,11 @@ use OpenHealthcare\ClinicForms\Paper\Words;
 use OpenHealthcare\ClinicForms\Repository\SiteData;
 
 if (!AclMain::aclCheckCore('patients', 'demo')) {
-    AccessDeniedHelper::denyWithTemplate('ACL check failed for patients/demo: Clinic Forms', xl('Clinic Forms'));
+    OpenEmr::deny('ACL check failed for patients/demo: Clinic Forms', xl('Clinic Forms'));
 }
-$session = SessionWrapperFactory::getInstance()->getActiveSession();
-if (!CsrfUtils::verifyCsrfToken($_POST['csrf_token_form'] ?? '', session: $session)) {
-    CsrfUtils::csrfNotVerified();
-}
+OpenEmr::requireCsrf($_POST['csrf_token_form'] ?? '');
 
-$siteDir = OEGlobalsBag::getInstance()->getString('OE_SITE_DIR');
+$siteDir = OpenEmr::siteDir();
 $language = Words::language($_POST['language'] ?? 'en');
 $library = DocumentLibrary::forSite($siteDir, $language);
 $taglines = !empty($_POST['taglines']) ? Taglines::forSite($siteDir)->forPage($language) : [];
@@ -46,7 +39,7 @@ $items = array_values(array_filter(
 $facility = $site->facility((int)($_POST['facility'] ?? 0));
 $recipientId = (int)($_POST['recipient'] ?? 0);
 $recipient = $recipientId > 0 ? $site->recipient($recipientId) : [];
-$pid = (int)($session->get('pid') ?? 0);
+$pid = (int)(OpenEmr::session('pid') ?? 0);
 $patient = !empty($_POST['fill_patient']) && $pid > 0 ? $site->patient($pid) : [];
 // Demographics and History filled with what's on file, for the patient to check and correct.
 $fillLayouts = $patient !== [] && !empty($_POST['fill_layouts']);
@@ -82,18 +75,15 @@ foreach ($items as $item) {
 if ($patient !== []) {
     // The event the Staff Worklist and core patient pages use, so the log viewer's Patient Record
     // filter finds it.
-    EventAuditLogger::getInstance()->newEvent(
+    OpenEmr::audit(
         'patient-record-select',
-        (string)$session->get('authUser'),
-        (string)$session->get('authProvider'),
-        1,
         'Clinic Forms printed with patient details: ' . implode(', ', $titles)
             . ($filled !== [] ? '; filled with values on file: ' . implode(', ', $filled) : ''),
         $pid,
     );
 }
 $printLog = xl('Clinic Forms') . ': ' . implode(', ', $titles) . ($patient !== [] ? ' (' . xl('patient') . ' ' . ($patient['id'] ?? '') . ')' : ' (' . xl('blank') . ')');
-$moduleUrl = OEGlobalsBag::getInstance()->getWebRoot() . Bootstrap::MODULE_INSTALLATION_PATH;
+$moduleUrl = OpenEmr::webRoot() . Bootstrap::MODULE_INSTALLATION_PATH;
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo attr($language); ?>">

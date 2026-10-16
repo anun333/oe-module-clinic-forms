@@ -352,14 +352,24 @@ foreach (phpFiles($root) as $file) {
         $what = $c[1] . ' / ' . (($c[2] ?? '') !== '' ? $c[2] : 'the item\'s level');
         $checks[$what . ' (' . (($c[4] ?? '') !== '' ? $c[4] : 'view') . ')'][$rel] = true;
     }
-    if (preg_match_all("/newEvent\(\s*'([^']+)'/", $src, $m) === 0 && str_contains($src, 'newEvent(')) {
-        fail("newEvent in $rel but no event name parsed");
+    // Audit events are written through OpenEMR's EventAuditLogger, directly or through the
+    // module's Compat adapter (OpenEmr::audit), which passes its caller's event name on.
+    $isAdapter = str_ends_with($rel, 'Compat/OpenEmr.php');
+    if (preg_match_all("/(?:newEvent|OpenEmr::audit)\(\s*'([^']+)'/", $src, $m) === 0 && !$isAdapter
+        && (str_contains($src, 'newEvent(') || str_contains($src, 'OpenEmr::audit('))) {
+        fail("audit event in $rel but no event name parsed");
     }
     foreach ($m[1] as $e) {
         $events[$e][$rel] = true;
     }
     preg_match_all("/OEGlobalsBag::getInstance\(\)->get(?:Boolean|String|Int)?\('([A-Za-z0-9_]+)'\)/", $src, $m);
     foreach ($m[1] as $k) {
+        $settings[$k][$rel] = true;
+    }
+    // Through the module's Compat adapter: its named helpers read these settings.
+    preg_match_all("/OpenEmr::(?:setting\('([A-Za-z0-9_]+)'\)|(siteDir|webRoot|projectDir)\()/", $src, $m, PREG_SET_ORDER);
+    foreach ($m as $c) {
+        $k = $c[1] !== '' ? $c[1] : ['siteDir' => 'OE_SITE_DIR', 'webRoot' => 'webroot', 'projectDir' => 'fileroot'][$c[2]];
         $settings[$k][$rel] = true;
     }
 }

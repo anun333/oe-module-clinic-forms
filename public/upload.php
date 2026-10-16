@@ -9,23 +9,16 @@
 
 require_once __DIR__ . '/../../../../globals.php';
 
-use OpenEMR\Common\Acl\AccessDeniedHelper;
 use OpenEMR\Common\Acl\AclMain;
-use OpenEMR\Common\Csrf\CsrfUtils;
-use OpenEMR\Common\Logging\EventAuditLogger;
-use OpenEMR\Common\Session\SessionWrapperFactory;
-use OpenEMR\Core\OEGlobalsBag;
+use OpenHealthcare\ClinicForms\Compat\OpenEmr;
 use OpenHealthcare\ClinicForms\Office\TemplateLibrary;
 
 if (!AclMain::aclCheckCore('admin', 'super')) {
-    AccessDeniedHelper::denyWithTemplate('ACL check failed for admin/super: Clinic Forms templates', xl('Clinic Forms'));
+    OpenEmr::deny('ACL check failed for admin/super: Clinic Forms templates', xl('Clinic Forms'));
 }
-$session = SessionWrapperFactory::getInstance()->getActiveSession();
-if (!CsrfUtils::verifyCsrfToken($_POST['csrf_token_form'] ?? '', session: $session)) {
-    CsrfUtils::csrfNotVerified();
-}
+OpenEmr::requireCsrf($_POST['csrf_token_form'] ?? '');
 
-$library = TemplateLibrary::forSite(OEGlobalsBag::getInstance()->getString('OE_SITE_DIR'));
+$library = TemplateLibrary::forSite(OpenEmr::siteDir());
 $ok = false;
 if (($_POST['action'] ?? '') === 'remove') {
     $file = (string)($_POST['file'] ?? '');
@@ -48,6 +41,6 @@ if (($_POST['action'] ?? '') === 'remove') {
     }
 }
 if ($ok) {
-    EventAuditLogger::getInstance()->newEvent('other', (string)$session->get('authUser'), (string)$session->get('authProvider'), 1, 'Clinic Forms template ' . (($_POST['action'] ?? '') === 'remove' ? 'removed' : 'added') . ': ' . $message);
+    OpenEmr::audit('other', 'Clinic Forms template ' . (($_POST['action'] ?? '') === 'remove' ? 'removed' : 'added') . ': ' . $message);
 }
 header('Location: index.php?' . http_build_query(['cf_msg' => $message, 'cf_ok' => $ok ? 1 : 0]));
