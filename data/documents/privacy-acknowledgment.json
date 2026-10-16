@@ -1,0 +1,71 @@
+{
+  "id": "privacy-acknowledgment",
+  "title": "Acknowledgment of the Notice of Privacy Practices",
+  "category": "Front desk",
+  "about": "The patient's acknowledgment that they received the clinic's Notice of Privacy Practices.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "I have received a copy of the Notice of Privacy Practices of {facility.name}. It explains how my health information may be used and shared, and my rights about it."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For clinic use: if the acknowledgment was not obtained"
+    },
+    {
+      "type": "checklist",
+      "label": "Reason",
+      "items": [
+        "Patient refused to sign",
+        "Patient was unable to sign",
+        "Emergency treatment; to be obtained later",
+        "Other (describe below)"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Describe the good-faith effort made",
+      "count": 2
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Staff member"
+      ]
+    }
+  ]
+}

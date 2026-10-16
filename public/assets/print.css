@@ -1,0 +1,48 @@
+/* Clinic Forms: printed paperwork. Black on white, generous blanks for handwriting. */
+.cf-packet { font-family: Georgia, "Times New Roman", serif; color: #000; background: #fff; font-size: 11pt; line-height: 1.35; }
+.cf-page { padding: 0.2in 0; }
+.cf-page + .cf-page { break-before: page; page-break-before: always; }
+.cf-letterhead { display: flex; gap: 0.2in; align-items: center; border-bottom: 1.5pt solid #000; padding-bottom: 0.08in; margin-bottom: 0.15in; font-size: 9.5pt; }
+.cf-logo { max-height: 0.7in; max-width: 1.6in; }
+.cf-clinic { font-size: 14pt; font-weight: bold; }
+.cf-packet h1 { font-size: 15pt; margin: 0.05in 0 0.12in; }
+.cf-packet h2 { font-size: 11.5pt; margin: 0.16in 0 0.06in; border-bottom: 0.5pt solid #666; }
+.cf-packet p { margin: 0.06in 0; }
+.cf-fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(2.9in, 1fr)); gap: 0.06in 0.25in; margin: 0.08in 0; }
+.cf-field, .cf-inline { display: flex; align-items: flex-end; gap: 0.08in; }
+.cf-label { font-weight: bold; font-size: 10pt; white-space: nowrap; }
+.cf-blank, .cf-fill-in { flex: 1; border-bottom: 0.75pt solid #000; min-height: 0.24in; min-width: 1.2in; display: inline-block; }
+.cf-fill-in { min-width: 1.6in; }
+.cf-filled { font-family: Arial, Helvetica, sans-serif; }
+.cf-check { display: inline-flex; align-items: center; gap: 0.06in; margin: 0.02in 0.22in 0.02in 0; }
+.cf-checklist .cf-check { display: flex; }
+.cf-box { width: 0.14in; height: 0.14in; border: 0.75pt solid #000; display: inline-block; flex: none; }
+.cf-line { border-bottom: 0.75pt solid #000; height: 0.3in; }
+.cf-lines, .cf-item, .cf-checklist { margin: 0.08in 0; break-inside: avoid; page-break-inside: avoid; }
+.cf-hint { font-size: 8.5pt; font-style: italic; }
+.cf-options { display: flex; flex-wrap: wrap; }
+.cf-date { letter-spacing: 0.04in; white-space: nowrap; }
+.cf-canvas { border: 0.75pt solid #000; height: 2.2in; }
+.cf-static { font-style: italic; }
+.cf-signatures { margin-top: 0.3in; display: grid; grid-template-columns: 1fr 1fr; gap: 0.35in 0.4in; }
+.cf-signature { break-inside: avoid; page-break-inside: avoid; }
+.cf-sign-line { border-bottom: 0.75pt solid #000; height: 0.45in; }
+.cf-sign-under { display: flex; justify-content: space-between; font-size: 9pt; }
+/* Short answers two to a row, in reading order; tick lists, tables and long answers full width. */
+.cf-group { display: grid; grid-template-columns: 1fr 1fr; column-gap: 0.3in; align-items: end; }
+.cf-group > h2, .cf-group > .cf-item:not(.cf-inline), .cf-group > .cf-static { grid-column: 1 / -1; }
+.cf-group > .cf-inline { margin: 0.05in 0; min-width: 0; }
+.cf-group > .cf-inline .cf-label { white-space: normal; flex: 0 1 auto; max-width: 60%; }
+.cf-office { border: 1pt solid #000; padding: 0 0.1in 0.08in; margin-top: 0.2in; }
+.cf-letterhead, .cf-packet h1, .cf-packet h2 { break-after: avoid; page-break-after: avoid; }
+.cf-table { width: 100%; border-collapse: collapse; margin: 0.04in 0; }
+.cf-table th { text-align: left; font-size: 9pt; padding: 0.02in 0.06in 0.02in 0; }
+.cf-table td { padding: 0.04in 0.06in 0.04in 0; height: 0.24in; vertical-align: bottom; white-space: nowrap; }
+.cf-table .cf-wide { width: 60%; }
+.cf-under { border-bottom: 0.75pt solid #000; }
+@media screen {
+  .cf-packet { max-width: 8.5in; margin: 0 auto; padding: 0.3in 0.4in; box-shadow: 0 0 6px #999; }
+  .cf-page + .cf-page { border-top: 2px dashed #bbb; margin-top: 0.3in; }
+  .cf-toolbar { max-width: 8.5in; margin: 0.15in auto; display: flex; gap: 0.5rem; }
+}
+@media print { .cf-toolbar { display: none; } }

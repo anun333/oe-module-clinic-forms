@@ -1,0 +1,63 @@
+{
+  "id": "financial-policy",
+  "title": "Financial Policy and Assignment of Benefits",
+  "category": "Front desk",
+  "about": "Payment responsibilities, insurance billing and assignment of benefits.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "{facility.name} will bill my insurance for the services I receive. I am responsible for any copayment, coinsurance or deductible, and for services my insurance does not cover."
+    },
+    {
+      "type": "paragraph",
+      "text": "I assign to {facility.name} the insurance benefits payable for my care, and I authorize the release of the information needed to process my claims."
+    },
+    {
+      "type": "paragraph",
+      "text": "If I have difficulty paying, I may ask about payment plans and any discount program the clinic offers."
+    },
+    {
+      "type": "checklist",
+      "label": "I have been told about",
+      "items": [
+        "The clinic's payment policy",
+        "Payment plans",
+        "The clinic's discount or sliding fee program, if it has one"
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or responsible party"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "about": "Ready-made selections on the Clinic Forms page. Each item is doc:<document id> or layout:<form id> (DEM is the Demographics registration form). Printed in this order.",
+  "packets": [
+    {
+      "id": "new-patient",
+      "title": "New patient intake",
+      "items": [
+        "layout:DEM",
+        "layout:HIS",
+        "doc:consent-to-treat",
+        "doc:privacy-acknowledgment",
+        "doc:financial-policy",
+        "doc:communication-consent"
+      ]
+    },
+    {
+      "id": "annual-update",
+      "title": "Annual update",
+      "items": [
+        "layout:DEM",
+        "doc:privacy-acknowledgment",
+        "doc:financial-policy",
+        "doc:communication-consent"
+      ]
+    },
+    {
+      "id": "telehealth",
+      "title": "Telehealth",
+      "items": [
+        "doc:telehealth-consent",
+        "doc:communication-consent"
+      ]
+    },
+    {
+      "id": "referral",
+      "title": "Referral",
+      "items": [
+        "doc:referral-letter",
+        "doc:release-of-information"
+      ]
+    },
+    {
+      "id": "downtime",
+      "title": "Downtime kit",
+      "items": [
+        "layout:DEM",
+        "doc:routing-slip",
+        "doc:downtime-visit-note"
+      ]
+    }
+  ]
+}

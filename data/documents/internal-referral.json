@@ -1,0 +1,93 @@
+{
+  "id": "internal-referral",
+  "title": "Internal Referral",
+  "category": "Office workflow",
+  "about": "A referral inside the clinic or to another of its sites: behavioral health, care management, nutrition, social work.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "Referred by"
+        },
+        {
+          "label": "Site"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Refer to",
+      "items": [
+        "Behavioral health (warm handoff today)",
+        "Behavioral health (schedule)",
+        "Care management",
+        "Nutrition",
+        "Social work or benefits help",
+        "Pharmacy",
+        "Another site of the clinic (write below)"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Urgency",
+      "items": [
+        "Today",
+        "This week",
+        "Routine"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Reason and what the patient agreed to",
+      "count": 4
+    },
+    {
+      "type": "checklist",
+      "label": "Patient",
+      "items": [
+        "Agrees to the referral",
+        "Prefers a call at the number below"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Best phone",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Best time to call"
+        }
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Referring staff member"
+      ]
+    }
+  ]
+}

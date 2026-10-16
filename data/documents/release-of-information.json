@@ -1,0 +1,179 @@
+{
+  "id": "release-of-information",
+  "title": "Authorization to Release Health Information",
+  "category": "Front desk",
+  "about": "A HIPAA authorization to disclose health information, with the elements 45 CFR 164.508 requires.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Who may release the information"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "From",
+          "value": "{facility.name}"
+        },
+        {
+          "label": "Address",
+          "value": "{facility.address}"
+        },
+        {
+          "label": "Phone",
+          "value": "{facility.phone}"
+        },
+        {
+          "label": "Fax",
+          "value": "{facility.fax}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Who may receive it"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name or organization",
+          "value": "{recipient.organization}"
+        },
+        {
+          "label": "Person",
+          "value": "{recipient.name}"
+        },
+        {
+          "label": "Address",
+          "value": "{recipient.address}"
+        },
+        {
+          "label": "Phone",
+          "value": "{recipient.phone}"
+        },
+        {
+          "label": "Fax",
+          "value": "{recipient.fax}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "What may be released"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "The entire record",
+        "Records from these dates only (write below)",
+        "Visit notes",
+        "Problem and medication lists",
+        "Laboratory results",
+        "Imaging reports",
+        "Immunization record",
+        "Other (write below)"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Dates or other details",
+      "count": 2
+    },
+    {
+      "type": "paragraph",
+      "text": "Some information needs your separate permission. Initial each one you allow."
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "____ HIV/AIDS testing or treatment",
+        "____ Mental health treatment (not psychotherapy notes, which need a separate authorization)",
+        "____ Substance use disorder treatment records (records covered by 42 CFR Part 2 need a Part 2 consent)",
+        "____ Genetic testing",
+        "____ Sexual and reproductive health"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Purpose"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "At my request",
+        "Continuing care",
+        "Insurance or benefits",
+        "Legal",
+        "Other (write below)"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Other purpose",
+      "count": 1
+    },
+    {
+      "type": "heading",
+      "text": "How long this authorization lasts"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "It expires on this date or event"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Your rights"
+    },
+    {
+      "type": "paragraph",
+      "text": "You may revoke this authorization at any time by writing to {facility.name}, except for information already released because of it. The Notice of Privacy Practices explains how."
+    },
+    {
+      "type": "paragraph",
+      "text": "Your treatment, payment, enrollment or eligibility for benefits will not depend on whether you sign this authorization."
+    },
+    {
+      "type": "paragraph",
+      "text": "Information released under this authorization may be disclosed again by the person who receives it, and may then no longer be protected by federal privacy law."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
+      ]
+    }
+  ]
+}

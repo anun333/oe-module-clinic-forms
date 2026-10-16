@@ -1,0 +1,71 @@
+{
+  "id": "communication-consent",
+  "title": "Communication Preferences",
+  "category": "Front desk",
+  "about": "How the clinic may contact the patient: phone, voicemail, text message, email and the patient portal.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "{facility.name} may contact me in the ways I tick below, for appointment reminders, test results and other messages about my care."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Phone",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Mobile phone for text messages"
+        },
+        {
+          "label": "Email"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "You may",
+      "items": [
+        "Call me",
+        "Leave a detailed voicemail",
+        "Send text messages",
+        "Send email",
+        "Use the patient portal",
+        "Speak with this person about my care (write below)"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Name and phone of that person",
+      "count": 1
+    },
+    {
+      "type": "paragraph",
+      "text": "I understand that email and text messages may not be secure, and I accept that risk for the messages I have allowed. Message and data rates may apply. I may change these choices at any time."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative"
+      ]
+    }
+  ]
+}

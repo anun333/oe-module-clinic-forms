@@ -1,0 +1,122 @@
+{
+  "id": "downtime-visit-note",
+  "title": "Downtime Visit Note",
+  "category": "Downtime",
+  "about": "A paper visit note for when OpenEMR is unavailable, to be entered once it is back.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date and time",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "Provider"
+        },
+        {
+          "label": "Visit type"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Blood pressure"
+        },
+        {
+          "label": "Pulse"
+        },
+        {
+          "label": "Temperature"
+        },
+        {
+          "label": "Respirations"
+        },
+        {
+          "label": "Oxygen saturation"
+        },
+        {
+          "label": "Weight"
+        },
+        {
+          "label": "Height"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Reason for visit",
+      "count": 2
+    },
+    {
+      "type": "lines",
+      "label": "History and examination",
+      "count": 6
+    },
+    {
+      "type": "lines",
+      "label": "Assessment and diagnoses",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "Plan",
+      "count": 4
+    },
+    {
+      "type": "lines",
+      "label": "Medications given or prescribed (name, dose, route, time)",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "Orders and referrals",
+      "count": 2
+    },
+    {
+      "type": "checklist",
+      "label": "For entry later",
+      "items": [
+        "Entered into OpenEMR",
+        "Charges entered",
+        "Paper scanned into the chart"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Entered by"
+        },
+        {
+          "label": "Date entered"
+        }
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Provider"
+      ]
+    }
+  ]
+}

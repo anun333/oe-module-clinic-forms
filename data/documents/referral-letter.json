@@ -1,0 +1,125 @@
+{
+  "id": "referral-letter",
+  "title": "Referral letter",
+  "category": "Care coordination",
+  "about": "A referral letter to a provider or organization in the Address Book.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "To",
+          "value": "{recipient.name}"
+        },
+        {
+          "label": "Organization",
+          "value": "{recipient.organization}"
+        },
+        {
+          "label": "Specialty",
+          "value": "{recipient.specialty}"
+        },
+        {
+          "label": "Address",
+          "value": "{recipient.address}"
+        },
+        {
+          "label": "Phone",
+          "value": "{recipient.phone}"
+        },
+        {
+          "label": "Fax",
+          "value": "{recipient.fax}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Patient"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Phone",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Address",
+          "value": "{patient.address}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Referral"
+    },
+    {
+      "type": "checklist",
+      "label": "Urgency",
+      "items": [
+        "Routine",
+        "Soon (within two weeks)",
+        "Urgent (within two days)"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Requested",
+      "items": [
+        "Consultation and recommendations",
+        "Consultation and treatment",
+        "Evaluation for a procedure",
+        "Other (write below)"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Reason for referral and question to answer",
+      "count": 5
+    },
+    {
+      "type": "lines",
+      "label": "Relevant history, medications and allergies",
+      "count": 4
+    },
+    {
+      "type": "checklist",
+      "label": "Enclosed",
+      "items": [
+        "Visit note",
+        "Problem and medication lists",
+        "Laboratory results",
+        "Imaging reports",
+        "Insurance information",
+        "Authorization to release information"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Please send your report to {facility.name}, fax {facility.fax}, phone {facility.phone}."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Referring provider"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "id": "records-request",
+  "title": "Request for Records",
+  "category": "Care coordination",
+  "about": "A request to another provider for a patient's records, with the patient's signature.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "To",
+          "value": "{recipient.organization}"
+        },
+        {
+          "label": "Attention",
+          "value": "{recipient.name}"
+        },
+        {
+          "label": "Fax",
+          "value": "{recipient.fax}"
+        },
+        {
+          "label": "Phone",
+          "value": "{recipient.phone}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "{facility.name} is now caring for the patient below. Please send the records ticked below to us at fax {facility.fax}, or to {facility.address}."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Last two years of visit notes",
+        "Problem and medication lists",
+        "Immunization record",
+        "Laboratory results",
+        "Imaging reports",
+        "Specialist reports",
+        "Other (write below)"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Other",
+      "count": 1
+    },
+    {
+      "type": "paragraph",
+      "text": "The patient's authorization is below, or attached."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,138 @@
+{
+  "id": "routing-slip",
+  "title": "Patient Routing Slip",
+  "category": "Office workflow",
+  "about": "Travels with the patient through the visit: check-in, rooming, provider, checkout.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "Appointment time"
+        },
+        {
+          "label": "Provider"
+        },
+        {
+          "label": "Room"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Check-in"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Identity and date of birth checked",
+        "Demographics and insurance confirmed",
+        "Forms given: consent, privacy notice, history",
+        "Copay collected"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Arrived at"
+        },
+        {
+          "label": "Staff initials"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Rooming"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Vital signs",
+        "Medications reviewed",
+        "Allergies reviewed",
+        "Screenings due (write below)"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Roomed at"
+        },
+        {
+          "label": "Staff initials"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Screenings due, and notes for the provider",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Provider"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Orders placed",
+        "Referral needed",
+        "Follow-up visit needed",
+        "Patient education given"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Instructions for checkout",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Checkout"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Next appointment made",
+        "Referral sent",
+        "Visit summary given",
+        "Balance discussed"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Left at"
+        },
+        {
+          "label": "Staff initials"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "id": "staff-handoff",
+  "title": "Staff Handoff (SBAR)",
+  "category": "Office workflow",
+  "about": "Hands a patient's care from one staff member, shift or site to another: situation, background, assessment, recommendation.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date and time",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "From"
+        },
+        {
+          "label": "To"
+        },
+        {
+          "label": "Callback number"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Situation: what is happening now",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "Background: relevant history, medications, allergies",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "Assessment: what I think is going on",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "Recommendation: what needs to happen, and by when",
+      "count": 3
+    },
+    {
+      "type": "checklist",
+      "label": "Receiver",
+      "items": [
+        "Read back and understood",
+        "Questions answered"
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Person handing off",
+        "Person receiving"
+      ]
+    }
+  ]
+}

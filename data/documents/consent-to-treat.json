@@ -1,0 +1,55 @@
+{
+  "id": "consent-to-treat",
+  "title": "Consent to Treatment",
+  "category": "Front desk",
+  "about": "General consent for examination and treatment at the clinic.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "I consent to examination, testing and treatment by the providers and staff of {facility.name}, as they judge necessary for my care. This includes routine procedures, laboratory tests, immunizations and medications."
+    },
+    {
+      "type": "paragraph",
+      "text": "I understand that I may ask questions about any treatment, that I may refuse any treatment, and that I will be asked for separate written consent before any procedure that requires it."
+    },
+    {
+      "type": "paragraph",
+      "text": "This consent stays in effect until I withdraw it in writing."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative",
+        "Witness"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
+      ]
+    }
+  ]
+}
