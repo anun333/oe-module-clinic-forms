@@ -25,6 +25,15 @@ namespace OpenHealthcare\ClinicForms\Paper;
 
 final class LayoutPaper
 {
+    public function __construct(private readonly string $language = 'en')
+    {
+    }
+
+    private function t(string $english): string
+    {
+        return Words::t($english, $this->language);
+    }
+
     /** Data types whose answer is one or more options of the field's list. */
     private const LIST_TYPES = [1, 21, 26, 27, 32, 33, 36, 43, 46];
     /** Data types that hold more than one tick (the rest are "choose one"). */
@@ -89,7 +98,7 @@ final class LayoutPaper
             $html .= "</div>";
         }
         if ($officeFields !== []) {
-            $html .= "<div class='cf-group cf-office'><h2>" . self::e(xl('For office use')) . "</h2>";
+            $html .= "<div class='cf-group cf-office'><h2>" . self::e($this->t('For office use')) . "</h2>";
             foreach ($officeFields as $i => $field) {
                 $html .= $this->field($field, $form->lists[$field['list_id']] ?? [], self::label($field, $officeFields[$i + 1] ?? null), $form->common[$field['field_id']] ?? [], $values[$field['field_id']] ?? null);
             }
@@ -140,35 +149,35 @@ final class LayoutPaper
         $rowTypes = [self::TEXT_LIST_TYPE, self::EXAM_TYPE, self::CHECK_TEXT_TYPE];
         if (in_array($type, $rowTypes, true) && $options !== [] && count($options) <= self::MAX_PRINTED_ROWS) {
             $rows = is_array($value['rows'] ?? null) ? $value['rows'] : [];
-            return "<div class='cf-item'>" . $head . self::rows($type, $options, $rows) . "</div>";
+            return "<div class='cf-item'>" . $head . $this->rows($type, $options, $rows) . "</div>";
         }
         if ($type === self::LIFESTYLE_TYPE) {
             $status = $value['status'] ?? '';
             $quit = is_string($value['date'] ?? null) ? $value['date'] : '';
             $ticks = '';
-            foreach (['current' => xl('Current'), 'quit' => xl('Quit'), 'never' => xl('Never'), 'not_applicable' => xl('N/A')] as $key => $name) {
+            foreach (['current' => $this->t('Current'), 'quit' => $this->t('Quit'), 'never' => $this->t('Never'), 'not_applicable' => $this->t('N/A')] as $key => $name) {
                 $extra = $key === 'quit' ? ' ' . ($quit !== '' ? "<span class='cf-filled'>" . self::e($quit) . "</span>" : '____ / ____ / ________') : '';
                 $ticks .= "<span class='cf-check'>" . self::box($status === $key) . self::e($name) . $extra . "</span>";
             }
             return "<div class='cf-item'>" . $head . "<div class='cf-options'>" . $ticks . "</div>"
-                . "<div class='cf-inline'><span class='cf-hint'>" . self::e(xl('Notes')) . "</span>" . self::blank($note) . "</div></div>";
+                . "<div class='cf-inline'><span class='cf-hint'>" . self::e($this->t('Notes')) . "</span>" . self::blank($note) . "</div></div>";
         }
         if (in_array($type, self::LIST_TYPES, true) && ($options !== [] || $ticked !== [])) {
             $long = count($options) > self::MAX_PRINTED_OPTIONS;
             if (!$long || $common !== [] || $ticked !== []) {
                 // A long list prints the options used here, plus whatever this patient has, then Other.
                 $printed = $long ? array_values(array_unique(array_merge($common, $ticked))) : array_values(array_unique(array_merge($options, $ticked)));
-                $hint = in_array($type, self::MULTI_TYPES, true) ? xl('tick all that apply') : xl('tick one');
+                $hint = in_array($type, self::MULTI_TYPES, true) ? $this->t('tick all that apply') : $this->t('tick one');
                 $html = "<div class='cf-item cf-choices'>" . $head . "<div class='cf-hint'>" . self::e($hint) . "</div><div class='cf-options'>";
                 foreach ($printed as $option) {
                     $html .= "<span class='cf-check'>" . self::box(in_array($option, $ticked, true)) . self::e($option) . "</span>";
                 }
                 if ($long) {
-                    $html .= "<span class='cf-check cf-other'>" . self::box(false) . self::e(xl('Other')) . ": <span class='cf-blank'></span></span>";
+                    $html .= "<span class='cf-check cf-other'>" . self::box(false) . self::e($this->t('Other')) . ": <span class='cf-blank'></span></span>";
                 }
                 $html .= "</div>";
                 if ($note !== '') {
-                    $html .= "<div class='cf-inline'><span class='cf-hint'>" . self::e(xl('Notes')) . "</span>" . self::blank($note) . "</div>";
+                    $html .= "<div class='cf-inline'><span class='cf-hint'>" . self::e($this->t('Notes')) . "</span>" . self::blank($note) . "</div>";
                 }
                 return $html . "</div>";
             }
@@ -183,7 +192,7 @@ final class LayoutPaper
         }
         if (in_array($type, self::SIGNATURE_TYPES, true)) {
             return "<div class='cf-item cf-signature'><div class='cf-sign-line'></div><div class='cf-sign-under'><span>"
-                . self::e($label) . "</span><span>" . self::e(xl('Date')) . "</span></div></div>";
+                . self::e($label) . "</span><span>" . self::e($this->t('Date')) . "</span></div></div>";
         }
         if ($type === self::CANVAS_TYPE) {
             return "<div class='cf-item'>" . $head . "<div class='cf-canvas'></div></div>";
@@ -208,12 +217,12 @@ final class LayoutPaper
      * @param list<string>                                  $options
      * @param array<string, array{mark: string, note: string}> $values option title => what's on file
      */
-    private static function rows(int $type, array $options, array $values = []): string
+    private function rows(int $type, array $options, array $values = []): string
     {
         $html = "<table class='cf-table'>";
         if ($type === self::EXAM_TYPE) {
-            $html .= "<tr><th>" . self::e(xl('Exam or Test')) . "</th><th>" . self::e(xl('N/A')) . "</th><th>"
-                . self::e(xl('Normal')) . "</th><th>" . self::e(xl('Abnormal')) . "</th><th class='cf-wide'>" . self::e(xl('Date/Notes')) . "</th></tr>";
+            $html .= "<tr><th>" . self::e($this->t('Exam or Test')) . "</th><th>" . self::e($this->t('N/A')) . "</th><th>"
+                . self::e($this->t('Normal')) . "</th><th>" . self::e($this->t('Abnormal')) . "</th><th class='cf-wide'>" . self::e($this->t('Date/Notes')) . "</th></tr>";
         }
         foreach ($options as $option) {
             $mark = $values[$option]['mark'] ?? '';

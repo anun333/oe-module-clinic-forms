@@ -1,0 +1,68 @@
+{
+  "id": "phq-2",
+  "title": "Cuestionario sobre la salud del paciente (PHQ-2)",
+  "category": "Detección",
+  "about": "Detección de depresión con dos preguntas, con puntuación de 0 a 6. Una puntuación de 3 o más es el punto habitual para aplicar el PHQ-9.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Fecha"
+        }
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "Durante las últimas 2 semanas, ¿qué tan seguido ha tenido molestias debido a los siguientes problemas?",
+      "columns": [
+        "Ningún día",
+        "Varios días",
+        "Más de la mitad de los días",
+        "Casi todos los días"
+      ],
+      "scores": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "items": [
+        "Poco interés o placer en hacer cosas",
+        "Se ha sentido decaído(a), deprimido(a) o sin esperanzas"
+      ],
+      "total": "Puntuación total (para uso de la oficina)"
+    },
+    {
+      "type": "heading",
+      "text": "Para uso de la oficina"
+    },
+    {
+      "type": "paragraph",
+      "text": "Un total de 3 o más es el punto de corte habitual para aplicar el PHQ-9 completo."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Revisado por"
+        },
+        {
+          "label": "Registrado en OpenEMR por"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Elaborado por los doctores Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke y colegas, mediante una subvención educativa otorgada por Pfizer Inc. No se requiere permiso para reproducir, traducir, presentar o distribuir."
+    }
+  ]
+}

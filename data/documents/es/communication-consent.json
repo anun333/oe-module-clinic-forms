@@ -1,0 +1,71 @@
+{
+  "id": "communication-consent",
+  "title": "Preferencias de comunicación",
+  "category": "Recepción",
+  "about": "Cómo puede comunicarse la clínica con el paciente: teléfono, buzón de voz, mensajes de texto, correo electrónico y portal del paciente.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "{facility.name} puede comunicarse conmigo de las formas que marco abajo, para recordarme citas, darme resultados de pruebas y otros mensajes sobre mi atención."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Teléfono",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Teléfono celular para mensajes de texto"
+        },
+        {
+          "label": "Correo electrónico"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Pueden",
+      "items": [
+        "Llamarme",
+        "Dejar un mensaje de voz detallado",
+        "Enviarme mensajes de texto",
+        "Enviarme correos electrónicos",
+        "Usar el portal del paciente",
+        "Hablar con esta persona sobre mi atención (escriba abajo)"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Nombre y teléfono de esa persona",
+      "count": 1
+    },
+    {
+      "type": "paragraph",
+      "text": "Entiendo que el correo electrónico y los mensajes de texto pueden no ser seguros, y acepto ese riesgo para los mensajes que he permitido. Pueden aplicarse cargos por mensajes y datos. Puedo cambiar estas opciones en cualquier momento."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o representante legal"
+      ]
+    }
+  ]
+}

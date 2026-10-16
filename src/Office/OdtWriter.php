@@ -23,6 +23,11 @@ final class OdtWriter implements OfficeWriter
     private const BLANK = '______________________________';
 
     private string $body = '';
+
+    /** @param string $dateLabel the word printed under a signature line beside it */
+    public function __construct(private readonly string $dateLabel = 'Date')
+    {
+    }
     /** @var array<string, string> extra automatic styles (table columns), by name */
     private array $columns = [];
 
@@ -85,7 +90,7 @@ final class OdtWriter implements OfficeWriter
     public function signatures(array $signers): void
     {
         foreach ($signers as $signer) {
-            $this->body .= $this->p('Sign', '') . $this->p('SignUnder', self::e($signer) . '<text:tab/>' . self::e('Date'));
+            $this->body .= $this->p('Sign', '') . $this->p('SignUnder', self::e($signer) . '<text:tab/>' . self::e($this->dateLabel));
         }
     }
 

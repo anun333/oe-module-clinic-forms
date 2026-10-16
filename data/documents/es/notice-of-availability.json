@@ -1,0 +1,15 @@
+{
+  "id": "notice-of-availability",
+  "title": "Ayuda gratuita con el idioma y servicios para personas con discapacidades",
+  "category": "Privacidad y derechos del paciente",
+  "about": "El aviso de disponibilidad que exige la Sección 1557 (45 CFR 92.11), con todos los avisos breves: inglés, español y los idiomas que agregue la clínica (taglines.json). Colóquelo en letra de 20 puntos, entréguelo cada año y agregue los 15 idiomas más hablados en su estado.",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "{facility.name} ofrece ayuda gratuita a los pacientes y al público. Ofrecemos servicios gratuitos de asistencia lingüística, como intérpretes calificados e información en otros idiomas. También ofrecemos ayudas y servicios auxiliares gratuitos, como información en letra grande o en braille. Pregunte en la recepción o llame al {facility.phone} (TTY: 711)."
+    },
+    {
+      "type": "taglines"
+    }
+  ]
+}

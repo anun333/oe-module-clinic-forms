@@ -1,0 +1,88 @@
+{
+  "id": "audit-c",
+  "title": "Prueba de detección del consumo de alcohol (AUDIT-C)",
+  "category": "Detección",
+  "about": "Las tres primeras preguntas del AUDIT de la Organización Mundial de la Salud, con puntuación de 0 a 12.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Fecha"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "1. ¿Con qué frecuencia consume alguna bebida alcohólica?",
+      "items": [
+        "Nunca (0)",
+        "Una o menos veces al mes (1)",
+        "De 2 a 4 veces al mes (2)",
+        "De 2 a 3 veces a la semana (3)",
+        "4 o más veces a la semana (4)"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "2. ¿Cuántas consumiciones de bebidas alcohólicas suele realizar en un día de consumo normal?",
+      "items": [
+        "1 o 2 (0)",
+        "3 o 4 (1)",
+        "5 o 6 (2)",
+        "7, 8 o 9 (3)",
+        "10 o más (4)"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "3. ¿Con qué frecuencia toma 6 o más bebidas alcohólicas en un solo día?",
+      "items": [
+        "Nunca (0)",
+        "Menos de una vez al mes (1)",
+        "Mensualmente (2)",
+        "Semanalmente (3)",
+        "A diario o casi a diario (4)"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Puntuación total (para uso de la oficina)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Para uso de la oficina"
+    },
+    {
+      "type": "paragraph",
+      "text": "Puntos de corte habituales para un resultado positivo: 4 o más en hombres, 3 o más en mujeres."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Revisado por"
+        },
+        {
+          "label": "Registrado en OpenEMR por"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Tomado del Cuestionario de Identificación de los Trastornos debidos al Consumo de Alcohol (AUDIT), Organización Mundial de la Salud."
+    }
+  ]
+}

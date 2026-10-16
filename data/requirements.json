@@ -59,7 +59,14 @@
             "revoke",
             "writing",
             "already released"
-          ]
+          ],
+          "es": {
+            "all": [
+              "revocar",
+              "escribiendo",
+              "ya se haya divulgado"
+            ]
+          }
         },
         {
           "name": "Treatment, payment, enrollment or eligibility don't depend on signing",
@@ -70,7 +77,16 @@
             "enrollment",
             "eligibility",
             "will not depend"
-          ]
+          ],
+          "es": {
+            "all": [
+              "tratamiento",
+              "pago",
+              "inscripción",
+              "elegibilidad",
+              "no dependerán"
+            ]
+          }
         },
         {
           "name": "Information disclosed may be disclosed again and lose its protection",
@@ -78,14 +94,25 @@
           "all": [
             "disclosed again",
             "no longer be protected"
-          ]
+          ],
+          "es": {
+            "all": [
+              "volver a divulgarla",
+              "ya no esté protegida"
+            ]
+          }
         },
         {
           "name": "The patient gets a copy",
           "cite": "164.508(c)(4)",
           "any": [
             "copy of this authorization"
-          ]
+          ],
+          "es": {
+            "any": [
+              "copia de esta autorización"
+            ]
+          }
         }
       ]
     },
@@ -214,14 +241,27 @@
             "feeling down, depressed, or hopeless",
             "thoughts that you would be better off dead",
             "how difficult have these problems"
-          ]
+          ],
+          "es": {
+            "all": [
+              "poco interés o placer en hacer cosas",
+              "se ha sentido decaído(a), deprimido(a) o sin esperanzas",
+              "pensamientos de que estaría mejor muerto(a)",
+              "qué tanta dificultad le han dado estos problemas"
+            ]
+          }
         },
         {
           "name": "The authors' reproduction statement",
           "cite": "instrument",
           "any": [
             "no permission required to reproduce"
-          ]
+          ],
+          "es": {
+            "any": [
+              "no se requiere permiso para reproducir"
+            ]
+          }
         }
       ]
     },
@@ -235,14 +275,26 @@
             "feeling nervous, anxious, or on edge",
             "feeling afraid, as if something awful might happen",
             "how difficult have these problems"
-          ]
+          ],
+          "es": {
+            "all": [
+              "se ha sentido nervioso(a), ansioso(a) o con los nervios de punta",
+              "ha tenido miedo de que algo terrible fuera a pasar",
+              "qué tanta dificultad le han dado estos problemas"
+            ]
+          }
         },
         {
           "name": "The authors' reproduction statement",
           "cite": "instrument",
           "any": [
             "no permission required to reproduce"
-          ]
+          ],
+          "es": {
+            "any": [
+              "no se requiere permiso para reproducir"
+            ]
+          }
         }
       ]
     },
@@ -254,7 +306,12 @@
           "cite": "164.520(b)(1)(i)",
           "any": [
             "THIS NOTICE DESCRIBES HOW MEDICAL INFORMATION ABOUT YOU MAY BE USED AND DISCLOSED AND HOW YOU CAN GET ACCESS TO THIS INFORMATION. PLEASE REVIEW IT CAREFULLY."
-          ]
+          ],
+          "es": {
+            "any": [
+              "ESTE AVISO DESCRIBE CÓMO SE PUEDE USAR Y DIVULGAR SU INFORMACIÓN MÉDICA Y CÓMO PUEDE USTED OBTENER ACCESO A ESTA INFORMACIÓN."
+            ]
+          }
         },
         {
           "name": "Treatment, payment and operations, each with an example",
@@ -311,7 +368,14 @@
             "proceedings against you",
             "court order",
             "subpoena"
-          ]
+          ],
+          "es": {
+            "all": [
+              "procedimientos civiles, penales, administrativos o legislativos contra usted",
+              "orden judicial",
+              "citación"
+            ]
+          }
         },
         {
           "name": "Part 2 records and fundraising: a chance to say no first",
@@ -397,7 +461,14 @@
             "complain",
             "department of health and human services",
             "not retaliate"
-          ]
+          ],
+          "es": {
+            "all": [
+              "queja",
+              "departamento de salud y servicios humanos",
+              "no tomaremos represalias"
+            ]
+          }
         },
         {
           "name": "Contact person or office, and phone",
@@ -637,7 +708,12 @@
           "all": [
             "my treating providers, health plans, third-party payers, and people helping to operate this program",
             "person or organization"
-          ]
+          ],
+          "es": {
+            "all": [
+              "mis proveedores que me tratan, mis planes de salud, terceros pagadores y las personas que ayudan a operar este programa"
+            ]
+          }
         },
         {
           "name": "Redisclosure under HIPAA, but not in proceedings against the patient",
@@ -690,14 +766,25 @@
           "all": [
             "shared again",
             "no longer be protected by 42 cfr part 2"
-          ]
+          ],
+          "es": {
+            "all": [
+              "volver a compartirlos",
+              "ya no estén protegidos por 42 cfr parte 2"
+            ]
+          }
         },
         {
           "name": "Consequences of refusing to sign",
           "cite": "2.31(a)(10)(ii)",
           "any": [
             "if you do not sign"
-          ]
+          ],
+          "es": {
+            "any": [
+              "si no firma"
+            ]
+          }
         },
         {
           "name": "Counseling notes need a separate consent",
@@ -732,7 +819,12 @@
           "cite": "chapter 9",
           "any": [
             "no one will be denied care because they cannot pay"
-          ]
+          ],
+          "es": {
+            "any": [
+              "a nadie se le negará la atención por no poder pagar"
+            ]
+          }
         },
         {
           "name": "How to apply",
@@ -759,7 +851,12 @@
           "cite": "instrument",
           "any": [
             "no permission required to reproduce"
-          ]
+          ],
+          "es": {
+            "any": [
+              "no se requiere permiso para reproducir"
+            ]
+          }
         }
       ]
     },
@@ -773,7 +870,14 @@
             "how often do you have a drink containing alcohol",
             "how many standard drinks containing alcohol do you have on a typical day",
             "how often do you have six or more drinks on one occasion"
-          ]
+          ],
+          "es": {
+            "all": [
+              "con qué frecuencia consume alguna bebida alcohólica",
+              "cuántas consumiciones de bebidas alcohólicas",
+              "con qué frecuencia toma 6 o más bebidas alcohólicas en un solo día"
+            ]
+          }
         },
         {
           "name": "Answers scored 0 to 4",
@@ -783,7 +887,160 @@
             "4 or more times a week (4)",
             "10 or more (4)",
             "daily or almost daily (4)"
+          ],
+          "es": {
+            "all": [
+              "nunca (0)",
+              "4 o más veces a la semana (4)",
+              "10 o más (4)",
+              "a diario o casi a diario (4)"
+            ]
+          }
+        }
+      ]
+    },
+    "notice-of-nondiscrimination": {
+      "source": "Section 1557 notice of nondiscrimination, 45 CFR 92.10(a)(1)",
+      "elements": [
+        {
+          "name": "No discrimination on race, color, national origin (including limited English proficiency and primary language), sex, age or disability",
+          "cite": "92.10(a)(1)(i)",
+          "all": [
+            "race, color, national origin",
+            "limited english proficiency and primary language",
+            "sex",
+            "age",
+            "disability"
+          ],
+          "es": {
+            "all": [
+              "raza, color, origen nacional",
+              "dominio limitado del inglés",
+              "sexo",
+              "edad",
+              "discapacidad"
+            ]
+          }
+        },
+        {
+          "name": "Free, timely reasonable modifications and auxiliary aids, including interpreters and alternate formats",
+          "cite": "92.10(a)(1)(ii)",
+          "all": [
+            "free help",
+            "reasonable changes",
+            "sign language interpreters",
+            "large print",
+            "braille"
+          ],
+          "es": {
+            "all": [
+              "ayuda gratuita",
+              "cambios razonables",
+              "intérpretes de lenguaje de señas",
+              "letra grande",
+              "braille"
+            ]
+          }
+        },
+        {
+          "name": "Free, timely language assistance: interpretation and translated documents",
+          "cite": "92.10(a)(1)(iii)",
+          "all": [
+            "free language help",
+            "interpreters",
+            "translated"
+          ],
+          "es": {
+            "all": [
+              "ayuda gratuita con el idioma",
+              "intérpretes",
+              "traducidos"
+            ]
+          }
+        },
+        {
+          "name": "How to get that help",
+          "cite": "92.10(a)(1)(iv)",
+          "all": [
+            "how to get this help",
+            "{facility.phone}"
+          ],
+          "es": {
+            "all": [
+              "cómo obtener esta ayuda",
+              "{facility.phone}"
+            ]
+          }
+        },
+        {
+          "name": "Section 1557 Coordinator contact (if applicable)",
+          "cite": "92.10(a)(1)(v)",
+          "any": [
+            "section 1557 coordinator"
+          ],
+          "es": {
+            "any": [
+              "coordinador de la sección 1557"
+            ]
+          }
+        },
+        {
+          "name": "Grievance procedure and how to file",
+          "cite": "92.10(a)(1)(vi)",
+          "all": [
+            "grievance",
+            "procedure"
+          ],
+          "es": {
+            "all": [
+              "queja formal",
+              "procedimiento"
+            ]
+          }
+        },
+        {
+          "name": "How to file a complaint with OCR",
+          "cite": "92.10(a)(1)(vii)",
+          "all": [
+            "office for civil rights",
+            "ocrportal.hhs.gov",
+            "1-800-368-1019"
+          ],
+          "es": {
+            "all": [
+              "oficina de derechos civiles",
+              "ocrportal.hhs.gov",
+              "1-800-368-1019"
+            ]
+          }
+        },
+        {
+          "name": "The website with this information",
+          "cite": "92.10(a)(1)(viii)",
+          "any": [
+            "{facility.website}"
           ]
+        }
+      ]
+    },
+    "notice-of-availability": {
+      "source": "Section 1557 notice of availability, 45 CFR 92.11(a)",
+      "elements": [
+        {
+          "name": "Free language assistance and free auxiliary aids and services, to patients and the public",
+          "cite": "92.11(a)",
+          "all": [
+            "free language assistance services",
+            "free auxiliary aids and services",
+            "public"
+          ],
+          "es": {
+            "all": [
+              "servicios gratuitos de asistencia lingüística",
+              "ayudas y servicios auxiliares gratuitos",
+              "público"
+            ]
+          }
         }
       ]
     }

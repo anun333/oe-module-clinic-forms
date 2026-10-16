@@ -1,0 +1,63 @@
+{
+  "id": "financial-policy",
+  "title": "Política financiera y cesión de beneficios",
+  "category": "Recepción",
+  "about": "Responsabilidades de pago, facturación al seguro y cesión de beneficios.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "{facility.name} le cobrará a mi seguro por mi atención. Yo pagaré cualquier copago, coseguro o deducible. También pagaré la atención que mi seguro no cubra."
+    },
+    {
+      "type": "paragraph",
+      "text": "Cedo a {facility.name} los beneficios de mi seguro por mi atención. Permito que la clínica comparta la información necesaria para tramitar mis reclamos."
+    },
+    {
+      "type": "paragraph",
+      "text": "Si me cuesta pagar, puedo preguntar por planes de pago y por cualquier programa de descuentos que ofrezca la clínica."
+    },
+    {
+      "type": "checklist",
+      "label": "Me informaron sobre",
+      "items": [
+        "La política de pagos de la clínica",
+        "Los planes de pago",
+        "El programa de descuentos o de tarifa variable de la clínica, si lo tiene"
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o persona responsable"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si firma un representante: nombre"
+        },
+        {
+          "label": "Relación o autoridad legal"
+        }
+      ]
+    }
+  ]
+}

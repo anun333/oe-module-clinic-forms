@@ -1,0 +1,55 @@
+{
+  "id": "consent-to-treat",
+  "title": "Consentimiento para recibir tratamiento",
+  "category": "Recepción",
+  "about": "Consentimiento general para exámenes y tratamiento en la clínica.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Acepto que los proveedores y el personal de {facility.name} me examinen, me hagan pruebas y me den tratamiento cuando lo crean necesario para mi atención. Esto incluye pruebas de rutina, análisis de laboratorio, vacunas y medicinas."
+    },
+    {
+      "type": "paragraph",
+      "text": "Puedo hacer preguntas sobre cualquier tratamiento. Puedo decir que no a cualquier tratamiento. Antes de algunos procedimientos, me pedirán que firme un consentimiento aparte."
+    },
+    {
+      "type": "paragraph",
+      "text": "Este consentimiento dura hasta que lo retire por escrito."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o representante legal",
+        "Testigo"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si firma un representante: nombre"
+        },
+        {
+          "label": "Relación o autoridad legal"
+        }
+      ]
+    }
+  ]
+}

@@ -19,6 +19,19 @@
 .cf-checklist .cf-check { display: flex; }
 .cf-box { width: 0.14in; height: 0.14in; border: 0.75pt solid #000; display: inline-block; flex: none; }
 .cf-on { font: bold 9pt/0.14in Arial, Helvetica, sans-serif; text-align: center; }
+.cf-taglines { margin-top: 0.18in; border-top: 0.5pt solid #999; padding-top: 0.04in; font-family: Arial, Helvetica, sans-serif; font-size: 7.5pt; break-inside: avoid; page-break-inside: avoid; }
+.cf-taglines p { margin: 0.02in 0; }
+.cf-taglines-full { border-top: none; font-size: 11pt; }
+/* Notices for posting: 20-point sans serif at least (45 CFR 92.10(a)(2)(iv), 92.11(c)(4)). */
+.cf-poster .cf-packet, .cf-poster { font-family: Arial, Helvetica, sans-serif; font-size: 20pt; }
+.cf-poster h1 { font-size: 28pt; }
+.cf-poster h2 { font-size: 22pt; }
+.cf-poster .cf-letterhead, .cf-poster .cf-taglines, .cf-poster .cf-taglines-full { font-size: 20pt; }
+.cf-poster .cf-clinic { font-size: 24pt; }
+.cf-poster .cf-label, .cf-poster .cf-blank, .cf-poster .cf-field, .cf-poster .cf-hint { font-size: 20pt; white-space: normal; }
+.cf-poster .cf-fields { grid-template-columns: 1fr; }
+/* A notice for posting never carries a patient's name. */
+.cf-poster .cf-frame > thead { display: none; }
 .cf-intro { font-style: italic; margin: 0.05in 0 0.1in; }
 .cf-prefill { border-bottom: 0.75pt solid #000; padding: 0.03in 0; min-height: 0.24in; }
 .cf-line { border-bottom: 0.75pt solid #000; height: 0.3in; }

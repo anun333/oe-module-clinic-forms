@@ -1,0 +1,79 @@
+{
+  "id": "gad-7",
+  "title": "Escala del trastorno de ansiedad generalizada (GAD-7)",
+  "category": "Detección",
+  "about": "Detección de ansiedad: siete preguntas con puntuación de 0 a 21. Las respuestas se pueden registrar en el formulario GAD-7 de OpenEMR (actívelo en Administración > Formularios > Administración de formularios).",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Fecha"
+        }
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "Durante las últimas 2 semanas, ¿qué tan seguido ha tenido molestias debido a los siguientes problemas?",
+      "columns": [
+        "Ningún día",
+        "Varios días",
+        "Más de la mitad de los días",
+        "Casi todos los días"
+      ],
+      "scores": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "items": [
+        "Se ha sentido nervioso(a), ansioso(a) o con los nervios de punta",
+        "No ha sido capaz de parar o controlar su preocupación",
+        "Se ha preocupado demasiado por motivos diferentes",
+        "Ha tenido dificultad para relajarse",
+        "Se ha sentido tan inquieto(a) que no ha podido quedarse quieto(a)",
+        "Se ha molestado o irritado fácilmente",
+        "Ha tenido miedo de que algo terrible fuera a pasar"
+      ],
+      "total": "Puntuación total (para uso de la oficina)"
+    },
+    {
+      "type": "checklist",
+      "label": "Si marcó cualquiera de los problemas, ¿qué tanta dificultad le han dado estos problemas para hacer su trabajo, encargarse de las tareas del hogar, o llevarse bien con otras personas?",
+      "items": [
+        "No ha sido difícil",
+        "Un poco difícil",
+        "Muy difícil",
+        "Extremadamente difícil"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Para uso de la oficina"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Revisado por"
+        },
+        {
+          "label": "Registrado en OpenEMR por"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Elaborado por los doctores Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke y colegas, mediante una subvención educativa otorgada por Pfizer Inc. No se requiere permiso para reproducir, traducir, presentar o distribuir."
+    }
+  ]
+}

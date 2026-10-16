@@ -1,0 +1,63 @@
+{
+  "id": "notice-of-nondiscrimination",
+  "title": "Aviso de no discriminación",
+  "category": "Privacidad y derechos del paciente",
+  "about": "El aviso que exige la Sección 1557 (45 CFR 92.10): no discriminación, ayuda gratuita para personas con discapacidades y para quienes hablan otros idiomas, cómo obtenerla y cómo presentar una queja. Colóquelo en letra de 20 puntos y entréguelo cada año; anote al Coordinador de la Sección 1557.",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "{facility.name} cumple las leyes federales de derechos civiles. No discriminamos por motivos de raza, color, origen nacional, sexo, edad o discapacidad. El origen nacional incluye el dominio limitado del inglés y el idioma principal."
+    },
+    {
+      "type": "paragraph",
+      "text": "Damos ayuda gratuita y oportuna a las personas con discapacidades para que puedan hablar con nosotros y participar en igualdad de condiciones. Esto incluye cambios razonables en nuestras reglas y prácticas, e intérpretes de lenguaje de señas calificados. También incluye información en otros formatos, como letra grande, braille y formatos electrónicos accesibles."
+    },
+    {
+      "type": "paragraph",
+      "text": "Damos ayuda gratuita con el idioma, de manera oportuna, a las personas cuyo primer idioma no es el inglés. Esto incluye intérpretes calificados. También incluye documentos traducidos a otros idiomas, en papel o en formato electrónico."
+    },
+    {
+      "type": "heading",
+      "text": "Cómo obtener esta ayuda"
+    },
+    {
+      "type": "paragraph",
+      "text": "Pregunte en la recepción o llame al {facility.phone} (TTY: 711)."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Coordinador de la Sección 1557"
+        },
+        {
+          "label": "Teléfono del coordinador"
+        },
+        {
+          "label": "Correo electrónico del coordinador"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Si cree que lo discriminamos"
+    },
+    {
+      "type": "paragraph",
+      "text": "Puede presentar una queja formal ante nuestro Coordinador de la Sección 1557 en persona, por correo, por teléfono o por correo electrónico. Pídanos nuestro procedimiento de quejas. El coordinador puede ayudarle a presentarla."
+    },
+    {
+      "type": "paragraph",
+      "text": "También puede presentar una queja de derechos civiles ante el Departamento de Salud y Servicios Humanos de los EE. UU., Oficina de Derechos Civiles. Preséntela en línea en ocrportal.hhs.gov. O envíela por correo a 200 Independence Avenue, SW, Room 509F, HHH Building, Washington, D.C. 20201. O llame al 1-800-368-1019 (TDD: 1-800-537-7697)."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Este aviso también está en nuestro sitio web",
+          "value": "{facility.website}"
+        }
+      ]
+    }
+  ]
+}

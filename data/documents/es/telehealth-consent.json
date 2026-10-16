@@ -1,0 +1,68 @@
+{
+  "id": "telehealth-consent",
+  "title": "Consentimiento para consultas de telesalud",
+  "category": "Recepción",
+  "about": "Consentimiento para consultas por video o por teléfono.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "{facility.name} ofrece consultas por video o por teléfono. Entiendo que:"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Una consulta de telesalud puede no reemplazar un examen en persona, y es posible que me pidan que vaya a la clínica.",
+        "La consulta es privada, y debo tenerla en un lugar donde nadie me pueda escuchar.",
+        "Los problemas técnicos pueden interrumpir la consulta; si pasa, la clínica me volverá a llamar o cambiará la cita.",
+        "Mi seguro puede cubrir la telesalud de forma distinta a una consulta en la oficina.",
+        "Puedo rechazar la telesalud y pedir una consulta en persona."
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Teléfono al que llamar si falla el video",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Lugar habitual durante las consultas (ciudad y estado)"
+        }
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o representante legal"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si firma un representante: nombre"
+        },
+        {
+          "label": "Relación o autoridad legal"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "id": "records-access-request",
+  "title": "Solicitud para ver u obtener una copia de mi expediente médico",
+  "category": "Privacidad y derechos del paciente",
+  "about": "Solicitud del paciente de su propio expediente, en papel o electrónico, para él o para alguien que indique. HIPAA, derecho de acceso, 45 CFR 164.524.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Teléfono",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Dirección",
+          "value": "{patient.address}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Qué quiere"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Mi expediente completo",
+        "Solo algunos registros o fechas (escriba abajo)",
+        "Notas de consultas",
+        "Resultados de laboratorio",
+        "Informes de imágenes",
+        "Registro de vacunas",
+        "Registros de facturación"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Qué registros o fechas",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Cómo lo quiere"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Verlo aquí, en persona",
+        "Copia en papel",
+        "Copia electrónica en el portal del paciente",
+        "Copia electrónica por correo electrónico",
+        "Copia electrónica en una memoria USB o en un disco"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Correo electrónico"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "El correo electrónico no siempre es seguro. Si lo pide por correo electrónico, podemos enviarlo sin cifrar, y otras personas podrían leerlo en el camino."
+    },
+    {
+      "type": "heading",
+      "text": "Adónde enviarlo"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Yo lo recogeré",
+        "Envíenmelo por correo a la dirección de arriba",
+        "Envíenlo a la persona o lugar indicados abajo"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Enviar a: persona u organización"
+        },
+        {
+          "label": "Enviar a: dirección o correo electrónico"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Le responderemos en un plazo de 30 días, por lo general antes. Si necesitamos más tiempo, le diremos por escrito el motivo. Podemos cobrar una tarifa justa basada en el costo de las copias, los materiales y el envío, y le diremos la tarifa antes de hacer la copia."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o representante legal"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si firma un representante: nombre"
+        },
+        {
+          "label": "Relación o autoridad legal"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Para uso de la clínica"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Fecha en que se recibió"
+        },
+        {
+          "label": "Identidad verificada por"
+        },
+        {
+          "label": "Fecha de entrega o envío"
+        },
+        {
+          "label": "Cargo"
+        }
+      ]
+    }
+  ]
+}

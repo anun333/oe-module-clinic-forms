@@ -22,6 +22,8 @@ use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
 use OpenHealthcare\ClinicForms\Paper\Packets;
 use OpenHealthcare\ClinicForms\Paper\Renderer;
+use OpenHealthcare\ClinicForms\Paper\Taglines;
+use OpenHealthcare\ClinicForms\Paper\Words;
 use OpenHealthcare\ClinicForms\Repository\SiteData;
 
 if (!AclMain::aclCheckCore('patients', 'demo')) {
@@ -32,7 +34,10 @@ if (!CsrfUtils::verifyCsrfToken($_POST['csrf_token_form'] ?? '', session: $sessi
     CsrfUtils::csrfNotVerified();
 }
 
-$library = DocumentLibrary::forSite(OEGlobalsBag::getInstance()->getString('OE_SITE_DIR'));
+$siteDir = OEGlobalsBag::getInstance()->getString('OE_SITE_DIR');
+$language = Words::language($_POST['language'] ?? 'en');
+$library = DocumentLibrary::forSite($siteDir, $language);
+$taglines = !empty($_POST['taglines']) ? Taglines::forSite($siteDir)->forPage($language) : [];
 $site = new SiteData();
 $items = array_values(array_filter(
     explode(',', (string)($_POST['order'] ?? '')),
@@ -50,7 +55,7 @@ $paper = ($_POST['paper'] ?? '') === 'a4' ? 'A4' : 'letter';
 
 $logo = (new LogoService())->getLogo('core/menu/primary');
 $today = function_exists('oeFormatShortDate') ? (string)oeFormatShortDate(date('Y-m-d')) : date('Y-m-d');
-$renderer = new Renderer(new Context($facility, $patient, $recipient, $today, $logo !== '' ? $logo : null));
+$renderer = new Renderer(new Context($facility, $patient, $recipient, $today, $logo !== '' ? $logo : null), $language, $taglines);
 
 $pages = [];
 $titles = [];
@@ -91,7 +96,7 @@ $printLog = xl('Clinic Forms') . ': ' . implode(', ', $titles) . ($patient !== [
 $moduleUrl = OEGlobalsBag::getInstance()->getWebRoot() . Bootstrap::MODULE_INSTALLATION_PATH;
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="<?php echo attr($language); ?>">
 <head>
     <meta charset="utf-8">
     <title><?php echo text(xl('Clinic Forms') . ': ' . implode(', ', $titles)); ?></title>

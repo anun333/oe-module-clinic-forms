@@ -1,0 +1,17 @@
+{
+  "id": "notice-of-availability",
+  "title": "Free Language Help and Services for People with Disabilities",
+  "category": "Privacy and patient rights",
+  "about": "The notice of availability Section 1557 requires (45 CFR 92.11), with every tagline: English, Spanish and the clinic's own languages (taglines.json). Post it in 20-point type, give it out each year, and add your state's 15 most spoken languages.",
+  "audience": "patient",
+  "poster": true,
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "{facility.name} gives free help to patients and the public. We offer free language assistance services, such as qualified interpreters and information in other languages. We also offer free auxiliary aids and services, such as information in large print or braille. Ask at the front desk or call {facility.phone} (TTY: 711)."
+    },
+    {
+      "type": "taglines"
+    }
+  ]
+}

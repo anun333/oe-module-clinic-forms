@@ -1,0 +1,125 @@
+{
+  "id": "restriction-request",
+  "title": "Solicitud para limitar cómo se comparte mi información",
+  "category": "Privacidad y derechos del paciente",
+  "about": "Solicitud del paciente para limitar el uso o la divulgación, incluido no informar a su plan de salud de la atención que pagó completa. HIPAA, 45 CFR 164.522(a).",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Teléfono",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Dirección",
+          "value": "{patient.address}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Qué quiere que limitemos"
+    },
+    {
+      "type": "lines",
+      "label": "Información que se debe limitar",
+      "count": 2
+    },
+    {
+      "type": "checklist",
+      "label": "Limitar cómo se usa o se comparte para",
+      "items": [
+        "Tratamiento",
+        "Pago",
+        "Dirigir nuestra clínica (operaciones)",
+        "Compartirla con familiares o amigos que participan en mi atención"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "No compartirla con"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Atención que usted pagó de su bolsillo"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Pagué esta atención completa de mi bolsillo. No la compartan con mi plan de salud."
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Fecha del servicio"
+        },
+        {
+          "label": "Atención o artículo"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "No estamos obligados a aceptar la mayoría de las solicitudes, y le avisaremos si no las aceptamos. Debemos aceptar no compartir con su plan de salud, para fines de pago o de nuestras operaciones, la atención que usted pagó completa, salvo que una ley nos obligue a hacerlo."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o representante legal"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si firma un representante: nombre"
+        },
+        {
+          "label": "Relación o autoridad legal"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Para uso de la clínica"
+    },
+    {
+      "type": "checklist",
+      "label": "Decisión",
+      "items": [
+        "Aceptada",
+        "No aceptada (se le avisó al paciente)"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Fecha"
+        },
+        {
+          "label": "Por"
+        }
+      ]
+    }
+  ]
+}

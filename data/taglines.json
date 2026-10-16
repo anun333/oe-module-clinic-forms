@@ -1,0 +1,7 @@
+{
+  "about": "Language assistance taglines (45 CFR 92.11), printed on patient pages. Add the other languages your state needs (at least its 15 most spoken by people with limited English) in sites/<site>/documents/clinic-forms/taglines.json, in this format, using HHS's translations. TTY 711 reaches the relay service anywhere in the US.",
+  "taglines": {
+    "en": "ATTENTION: If you speak English, free language assistance services and free auxiliary aids and services are available to you. Call {facility.phone} (TTY: 711).",
+    "es": "ATENCIÓN: Si habla español, tiene a su disposición servicios gratuitos de asistencia lingüística y ayudas y servicios auxiliares gratuitos. Llame al {facility.phone} (TTY: 711)."
+  }
+}

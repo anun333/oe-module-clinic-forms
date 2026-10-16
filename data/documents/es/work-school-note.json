@@ -1,0 +1,78 @@
+{
+  "id": "work-school-note",
+  "title": "Nota para el trabajo o la escuela",
+  "category": "Después de la consulta",
+  "about": "Confirma una consulta y cuándo puede regresar el paciente, sin decir por qué lo atendieron.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Fecha",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Fecha de la consulta"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "El paciente indicado arriba fue atendido en {facility.name}. Para proteger su privacidad, esta nota no indica el motivo de la consulta."
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Puede regresar al trabajo o a la escuela en la fecha indicada abajo",
+        "Puede regresar con las restricciones indicadas abajo",
+        "Debe quedarse en casa hasta una nueva consulta",
+        "Vino acompañando a un familiar"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Puede regresar el"
+        },
+        {
+          "label": "Justificado desde"
+        },
+        {
+          "label": "Justificado hasta"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Restricciones o notas",
+      "count": 3
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Profesional clínico"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del profesional clínico (en letra de molde)"
+        },
+        {
+          "label": "Teléfono de la clínica",
+          "value": "{facility.phone}"
+        }
+      ]
+    }
+  ]
+}

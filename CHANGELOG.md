@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.8.0 (2026-10-16)
+
+- **Spanish.** A language choice on the page; all 22 patient documents have Spanish versions, and the words Clinic Forms prints follow the paper's language. PHQ-9, PHQ-2 and GAD-7 use the official "Spanish for the USA" wording (phqscreeners.com), and AUDIT-C uses the WHO's Spanish AUDIT (its misprinted score for "10 o más" corrected to 4). The rest are our translations, for review. Translations are checked against their English documents (blocks, fields, items, signers, placeholders), and key legal wording is checked in Spanish. Clinics can add their own in `es/`.
+- **Section 1557.** A Notice of Nondiscrimination (45 CFR 92.10) and the notice of availability (92.11), in English and Spanish, print as 20-point posters with no patient line. Patient documents and intake forms carry the language assistance taglines, English and Spanish shipped, with the state's other languages added in `taglines.json`.
+- Not used: OpenEMR's own Spanish layout labels, which translate "Ethnicity" as "Raza".
+- Checked end to end on 8.4.1 (Spanish print and Word export, taglines, posters), and on 8.1.0 and 8.5.0 (official images).
+
 ## 0.7.0 (2026-10-16)
 
 - **A short UDS form**: the Demographics fields UDS Tables 3A, 3B and 4 read, and nothing else, with the site's own lists, so the paper matches what staff type in. It uses the UDS Report module's fields when the site has them (and drops OpenEMR's older free-text housing and farmworker fields then), and "check and correct" fills it too. New packet: Annual update (short, with UDS questions).

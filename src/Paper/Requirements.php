@@ -39,6 +39,9 @@ final readonly class Requirements
             }
             foreach ($rule['elements'] as $i => $e) {
                 $checks = array_intersect(array_keys($e), ['any', 'all', 'signature', 'forbid']);
+                if (isset($e['es']) && (!is_array($e['es']) || count(array_intersect(array_keys($e['es']), ['any', 'all'])) !== 1)) {
+                    throw new \InvalidArgumentException("data/requirements.json $id elements[$i] es: needs any or all");
+                }
                 if (!is_string($e['name'] ?? null) || !is_string($e['cite'] ?? null) || count($checks) !== 1) {
                     throw new \InvalidArgumentException("data/requirements.json $id elements[$i]: needs a name, a cite and one of any, all, signature or forbid");
                 }
@@ -70,6 +73,15 @@ final readonly class Requirements
         $hasSignature = array_filter($doc->blocks, static fn(array $b): bool => $b['type'] === 'signature') !== [];
         $missing = [];
         foreach ($rule['elements'] as $e) {
+            if ($doc->language !== 'en' && (isset($e['any']) || isset($e['all']))) {
+                // Wording is checked in the document's own language where the rule gives it ("es":
+                // {"any": [...]}); otherwise the translation check (Translation) covers the element.
+                $translated = $e[$doc->language] ?? null;
+                if (!is_array($translated)) {
+                    continue;
+                }
+                $e = ['name' => $e['name'], 'cite' => $e['cite']] + $translated;
+            }
             $ok = match (true) {
                 isset($e['any']) => array_filter($e['any'], static fn(string $p): bool => str_contains($text, mb_strtolower($p))) !== [],
                 isset($e['all']) => array_filter($e['all'], static fn(string $p): bool => !str_contains($text, mb_strtolower($p))) === [],

@@ -1,0 +1,85 @@
+{
+  "id": "phq-9",
+  "title": "Cuestionario sobre la salud del paciente (PHQ-9)",
+  "category": "Detección",
+  "about": "Detección de depresión: nueve preguntas con puntuación de 0 a 27. Las respuestas se pueden registrar en el formulario PHQ-9 de OpenEMR (actívelo en Administración > Formularios > Administración de formularios).",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Fecha"
+        }
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "Durante las últimas 2 semanas, ¿qué tan seguido ha tenido molestias debido a los siguientes problemas?",
+      "columns": [
+        "Ningún día",
+        "Varios días",
+        "Más de la mitad de los días",
+        "Casi todos los días"
+      ],
+      "scores": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "items": [
+        "Poco interés o placer en hacer cosas",
+        "Se ha sentido decaído(a), deprimido(a) o sin esperanzas",
+        "Ha tenido dificultad para quedarse o permanecer dormido(a), o ha dormido demasiado",
+        "Se ha sentido cansado(a) o con poca energía",
+        "Sin apetito o ha comido en exceso",
+        "Se ha sentido mal con usted mismo(a) – o que es un fracaso o que ha quedado mal con usted mismo(a) o con su familia",
+        "Ha tenido dificultad para concentrarse en ciertas actividades, tales como leer el periódico o ver la televisión",
+        "¿Se ha movido o hablado tan lento que otras personas podrían haberlo notado? o lo contrario – muy inquieto(a) o agitado(a) que ha estado moviéndose mucho más de lo normal",
+        "Pensamientos de que estaría mejor muerto(a) o de lastimarse de alguna manera"
+      ],
+      "total": "Puntuación total (para uso de la oficina)"
+    },
+    {
+      "type": "checklist",
+      "label": "Si marcó cualquiera de los problemas, ¿qué tanta dificultad le han dado estos problemas para hacer su trabajo, encargarse de las tareas del hogar, o llevarse bien con otras personas?",
+      "items": [
+        "No ha sido difícil",
+        "Un poco difícil",
+        "Muy difícil",
+        "Extremadamente difícil"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Para uso de la oficina"
+    },
+    {
+      "type": "paragraph",
+      "text": "Si la pregunta 9 tiene una respuesta distinta de \"Ningún día\", siga el protocolo de seguridad de la clínica antes de que el paciente se vaya."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Revisado por"
+        },
+        {
+          "label": "Registrado en OpenEMR por"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Elaborado por los doctores Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke y colegas, mediante una subvención educativa otorgada por Pfizer Inc. No se requiere permiso para reproducir, traducir, presentar o distribuir."
+    }
+  ]
+}

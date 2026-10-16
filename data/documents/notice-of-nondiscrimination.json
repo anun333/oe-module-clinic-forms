@@ -1,0 +1,65 @@
+{
+  "id": "notice-of-nondiscrimination",
+  "title": "Notice of Nondiscrimination",
+  "category": "Privacy and patient rights",
+  "about": "The notice Section 1557 requires (45 CFR 92.10): no discrimination, free help for people with disabilities and for people who speak other languages, how to get it, and how to complain. Post it in 20-point type and give it out each year; fill in the Section 1557 Coordinator.",
+  "audience": "patient",
+  "poster": true,
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "{facility.name} follows federal civil rights laws. We do not discriminate on the basis of race, color, national origin, sex, age, or disability. National origin includes limited English proficiency and primary language."
+    },
+    {
+      "type": "paragraph",
+      "text": "We give free help to people with disabilities, in a timely way, so they can talk with us and take part equally. This includes reasonable changes to our rules and practices, and qualified sign language interpreters. It also includes information in other formats, such as large print, braille and accessible electronic formats."
+    },
+    {
+      "type": "paragraph",
+      "text": "We give free language help to people whose first language is not English, in a timely way. This includes qualified interpreters. It also includes documents translated into other languages, on paper or electronically."
+    },
+    {
+      "type": "heading",
+      "text": "How to get this help"
+    },
+    {
+      "type": "paragraph",
+      "text": "Ask at the front desk, or call {facility.phone} (TTY: 711)."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Section 1557 Coordinator"
+        },
+        {
+          "label": "Coordinator phone"
+        },
+        {
+          "label": "Coordinator email"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "If you think we discriminated against you"
+    },
+    {
+      "type": "paragraph",
+      "text": "You can file a grievance with our Section 1557 Coordinator in person, by mail, by phone or by email. Ask us for our grievance procedure. The coordinator can help you file it."
+    },
+    {
+      "type": "paragraph",
+      "text": "You can also file a civil rights complaint with the U.S. Department of Health and Human Services, Office for Civil Rights. File online at ocrportal.hhs.gov. Or mail it to 200 Independence Avenue, SW, Room 509F, HHH Building, Washington, D.C. 20201. Or call 1-800-368-1019 (TDD: 1-800-537-7697)."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "This notice is also on our website",
+          "value": "{facility.website}"
+        }
+      ]
+    }
+  ]
+}

@@ -14,8 +14,14 @@ namespace OpenHealthcare\ClinicForms\Paper;
 
 final readonly class Renderer
 {
-    public function __construct(private Context $context)
+    /** @param list<string> $taglines language assistance taglines, one per language, printed on patient pages */
+    public function __construct(private Context $context, private string $language = 'en', private array $taglines = [])
     {
+    }
+
+    private function t(string $english): string
+    {
+        return Words::t($english, $this->language);
     }
 
     /** The placeholders in a text, without braces, in order. @return list<string> */
@@ -32,8 +38,8 @@ final readonly class Renderer
         $lines = array_filter([
             $f->value('facility.address'),
             implode(' · ', array_filter([
-                $f->value('facility.phone') !== '' ? xl('Phone') . ' ' . $f->value('facility.phone') : '',
-                $f->value('facility.fax') !== '' ? xl('Fax') . ' ' . $f->value('facility.fax') : '',
+                $f->value('facility.phone') !== '' ? $this->t('Phone') . ' ' . $f->value('facility.phone') : '',
+                $f->value('facility.fax') !== '' ? $this->t('Fax') . ' ' . $f->value('facility.fax') : '',
             ])),
             implode(' · ', array_filter([$f->value('facility.email'), $f->value('facility.website')])),
         ]);
@@ -52,9 +58,11 @@ final readonly class Renderer
      * Opens a document's page: a table whose header row repeats at the top of every printed page
      * (browsers repeat a table's thead), so a loose page still names the patient.
      */
-    private function open(string $title): string
+    private function open(string $title, bool $poster = false): string
     {
-        return "<section class='cf-page'><table class='cf-frame'><thead><tr><td>" . $this->running($title) . "</td></tr></thead><tbody><tr><td>";
+        // A notice for posting goes on a wall: it never carries the patient line.
+        $head = $poster ? '' : "<thead><tr><td>" . $this->running($title) . "</td></tr></thead>";
+        return "<section class='cf-page" . ($poster ? " cf-poster" : '') . "' lang='" . self::e($this->language) . "'><table class='cf-frame'>" . $head . "<tbody><tr><td>";
     }
 
     private function close(): string
@@ -66,7 +74,7 @@ final readonly class Renderer
     public function running(string $title): string
     {
         $parts = '';
-        foreach (['patient.name' => xl('Patient'), 'patient.dob' => xl('DOB'), 'patient.id' => xl('ID')] as $key => $label) {
+        foreach (['patient.name' => $this->t('Patient'), 'patient.dob' => $this->t('DOB'), 'patient.id' => $this->t('ID')] as $key => $label) {
             $value = $this->context->value($key);
             $parts .= "<span class='cf-run-item'><span class='cf-run-label'>" . self::e($label) . "</span> "
                 . ($value !== '' ? "<span class='cf-filled'>" . self::e($value) . "</span>" : "<span class='cf-run-blank'></span>") . "</span>";
@@ -76,7 +84,7 @@ final readonly class Renderer
 
     public function document(Document $doc): string
     {
-        $html = $this->open($doc->title) . $this->letterhead() . "<h1>" . $this->text($doc->title) . "</h1>";
+        $html = $this->open($doc->title, $doc->poster) . $this->letterhead() . "<h1>" . $this->text($doc->title) . "</h1>";
         foreach ($doc->blocks as $block) {
             $html .= match ($block['type']) {
                 'heading' => "<h2>" . $this->text($block['text']) . "</h2>",
@@ -87,10 +95,30 @@ final readonly class Renderer
                 'signature' => $this->signatures($block['signers']),
                 'scale' => $this->scale($block['label'], $block['columns'], $block['items'], $block['scores'] ?? null, $block['total'] ?? null),
                 'table' => $this->table($block['label'], $block['columns'], $block['rows']),
+                'taglines' => $this->taglines(true),
                 default => '',
             };
         }
+        // Patient documents carry the language assistance taglines (45 CFR 92.11(c)(5)), unless
+        // the document is the taglines notice itself.
+        $hasBlock = array_filter($doc->blocks, static fn(array $b): bool => $b['type'] === 'taglines') !== [];
+        if ($doc->audience === 'patient' && !$hasBlock) {
+            $html .= $this->taglines(false);
+        }
         return $html . $this->close();
+    }
+
+    /** The language assistance taglines: a small block at a page's end, or the whole notice. */
+    public function taglines(bool $full): string
+    {
+        if ($this->taglines === []) {
+            return '';
+        }
+        $html = "<div class='cf-taglines" . ($full ? " cf-taglines-full" : '') . "'>";
+        foreach ($this->taglines as $tagline) {
+            $html .= "<p>" . $this->text($tagline, false) . "</p>";
+        }
+        return $html . "</div>";
     }
 
     /**
@@ -101,19 +129,19 @@ final readonly class Renderer
      */
     public function layoutForm(LayoutForm $form, array $values = []): string
     {
-        $title = $values === [] ? $form->title : $form->title . ': ' . xl('please check and correct');
-        $intro = $values === [] ? '' : "<p class='cf-intro'>" . self::e(xl('This is what we have on file. Cross out anything that is wrong and write the correction beside it, and fill in anything missing.')) . "</p>";
+        $title = $values === [] ? $form->title : $form->title . ': ' . $this->t('please check and correct');
+        $intro = $values === [] ? '' : "<p class='cf-intro'>" . self::e($this->t('This is what we have on file. Cross out anything that is wrong and write the correction beside it, and fill in anything missing.')) . "</p>";
         return $this->open($title) . $this->letterhead() . "<h1>" . self::e($title) . "</h1>"
-            . $this->patientStrip() . $intro . (new LayoutPaper())->render($form, $values) . $this->close();
+            . $this->patientStrip() . $intro . (new LayoutPaper($this->language))->render($form, $values) . $this->taglines(false) . $this->close();
     }
 
     /** Name, date of birth and ID at the top of a form: filled when a patient is chosen, else blank. */
     public function patientStrip(): string
     {
         return $this->fields([
-            ['label' => xl('Patient name'), 'value' => '{patient.name}'],
-            ['label' => xl('Date of birth'), 'value' => '{patient.dob}'],
-            ['label' => xl('Patient ID'), 'value' => '{patient.id}'],
+            ['label' => $this->t('Patient name'), 'value' => '{patient.name}'],
+            ['label' => $this->t('Date of birth'), 'value' => '{patient.dob}'],
+            ['label' => $this->t('Patient ID'), 'value' => '{patient.id}'],
         ]);
     }
 
@@ -187,7 +215,7 @@ final readonly class Renderer
         $html = "<div class='cf-signatures'>";
         foreach ($signers as $signer) {
             $html .= "<div class='cf-signature'><div class='cf-sign-line'></div>"
-                . "<div class='cf-sign-under'><span>" . $this->text($signer) . "</span><span>" . self::e(xl('Date')) . "</span></div></div>";
+                . "<div class='cf-sign-under'><span>" . $this->text($signer) . "</span><span>" . self::e($this->t('Date')) . "</span></div></div>";
         }
         return $html . "</div>";
     }

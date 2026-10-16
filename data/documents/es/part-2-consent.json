@@ -1,0 +1,148 @@
+{
+  "id": "part-2-consent",
+  "title": "Consentimiento para compartir registros de tratamiento de trastornos por consumo de sustancias",
+  "category": "Privacidad y derechos del paciente",
+  "about": "Consentimiento para usar o compartir registros protegidos por 42 CFR Parte 2, incluido el consentimiento único para tratamiento, pago y operaciones de atención médica, con todos los elementos de 42 CFR 2.31.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "La ley federal (42 CFR Parte 2) protege los registros de tratamiento de trastornos por consumo de sustancias. Este formulario le permite elegir quién puede usarlos y compartirlos."
+    },
+    {
+      "type": "heading",
+      "text": "Quién puede compartir mis registros"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Programa o proveedor",
+          "value": "{facility.name}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Qué se puede compartir"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Todos mis registros de tratamiento de trastornos por consumo de sustancias",
+        "Diagnóstico y plan de tratamiento",
+        "Medicamentos, incluidos los medicamentos para el trastorno por consumo de opioides",
+        "Asistencia y progreso",
+        "Resultados de laboratorio, incluidas las pruebas de drogas",
+        "Otro (escriba abajo)"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Otra información o fechas",
+      "count": 1
+    },
+    {
+      "type": "paragraph",
+      "text": "Este consentimiento no cubre las notas de consejería sobre el trastorno por consumo de sustancias. Esas necesitan un consentimiento aparte."
+    },
+    {
+      "type": "heading",
+      "text": "Quién puede recibirlos y para qué"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Para tratamiento, pago y operaciones de atención médica, ahora y en el futuro: mis proveedores que me tratan, mis planes de salud, terceros pagadores y las personas que ayudan a operar este programa",
+        "Solo la persona u organización indicada abajo, para el propósito indicado abajo"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Persona u organización"
+        },
+        {
+          "label": "Propósito (o: a petición mía)"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Si mis registros van a un proveedor de atención médica, a un plan de salud o a su socio comercial para tratamiento, pago u operaciones de atención médica, pueden volver a compartirlos según lo permitan las reglas de HIPAA. No pueden usarlos en procedimientos civiles, penales, administrativos o legislativos contra mí."
+    },
+    {
+      "type": "paragraph",
+      "text": "Quien reciba registros compartidos con este consentimiento puede volver a compartirlos, y es posible que entonces ya no estén protegidos por 42 CFR Parte 2."
+    },
+    {
+      "type": "paragraph",
+      "text": "Si no firma, no podemos compartir estos registros para los propósitos indicados. Eso puede hacer más difícil que sus otros proveedores coordinen su atención, y es posible que no se le pueda cobrar esta atención a su plan de salud."
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "No quiero que {facility.name} se comunique conmigo para recaudar fondos."
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Cuánto dura este consentimiento"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Termina en esta fecha o con este evento (para tratamiento, pago y operaciones, puede escribir: fin del tratamiento, o ninguno)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Su derecho a revocar"
+    },
+    {
+      "type": "paragraph",
+      "text": "Puede revocar este consentimiento en cualquier momento escribiendo a {facility.name}, salvo por lo que ya se haya hecho debido a él."
+    },
+    {
+      "type": "paragraph",
+      "text": "Este consentimiento no se puede usar en juicios ni en otros procedimientos legales contra usted. Para eso se necesita un consentimiento aparte."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente",
+        "Padre, madre, tutor o representante autorizado, si se requiere"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si firma un representante: nombre"
+        },
+        {
+          "label": "Relación o autoridad legal"
+        }
+      ]
+    }
+  ]
+}

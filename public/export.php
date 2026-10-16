@@ -25,6 +25,8 @@ use OpenHealthcare\ClinicForms\Office\WordWriter;
 use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
 use OpenHealthcare\ClinicForms\Paper\Packets;
+use OpenHealthcare\ClinicForms\Paper\Taglines;
+use OpenHealthcare\ClinicForms\Paper\Words;
 use OpenHealthcare\ClinicForms\Repository\SiteData;
 
 if (!AclMain::aclCheckCore('patients', 'demo')) {
@@ -50,6 +52,8 @@ $context = new Context(
     $site->user((int)($session->get('authUserID') ?? 0)),
 );
 $paper = ($_POST['paper'] ?? '') === 'a4' ? 'A4' : 'letter';
+$language = Words::language($_POST['language'] ?? 'en');
+$taglines = !empty($_POST['taglines']) ? Taglines::forSite($siteDir)->forPage($language) : [];
 
 /** Ends with a short plain message, for a request that can't produce a file. */
 function clinicFormsRefuse(int $status, string $message): never
@@ -77,8 +81,8 @@ if ($template !== '') {
     $titles = [TemplateLibrary::displayName($template)];
     $stem = pathinfo($template, PATHINFO_FILENAME);
 } else {
-    $writer = ($_POST['format'] ?? '') === 'odt' ? new OdtWriter() : new WordWriter();
-    $library = DocumentLibrary::forSite($siteDir);
+    $writer = ($_POST['format'] ?? '') === 'odt' ? new OdtWriter(Words::t('Date', $language)) : new WordWriter(Words::t('Date', $language));
+    $library = DocumentLibrary::forSite($siteDir, $language);
     $documents = [];
     foreach (explode(',', (string)($_POST['order'] ?? '')) as $item) {
         if (Packets::isItem($item) && str_starts_with($item, 'doc:')) {
@@ -91,7 +95,7 @@ if ($template !== '') {
     if ($documents === []) {
         clinicFormsRefuse(400, xl('Tick at least one document. Layout forms (Demographics, History and the like) print from the browser only.'));
     }
-    $out = (new OfficeExport($context))->write($documents, $writer, $paper);
+    $out = (new OfficeExport($context, $language, $taglines))->write($documents, $writer, $paper);
     $ext = $writer->extension();
     $mime = $writer->mimeType();
     $titles = array_map(static fn($d): string => $d->title, $documents);

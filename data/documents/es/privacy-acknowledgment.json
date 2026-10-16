@@ -1,0 +1,71 @@
+{
+  "id": "privacy-acknowledgment",
+  "title": "Acuse de recibo del Aviso de prácticas de privacidad",
+  "category": "Recepción",
+  "about": "Constancia de que el paciente recibió el Aviso de prácticas de privacidad de la clínica.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Recibí una copia del Aviso de prácticas de privacidad de {facility.name}. Explica cómo se puede usar y compartir mi información de salud, y mis derechos sobre ella."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o representante legal"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si firma un representante: nombre"
+        },
+        {
+          "label": "Relación o autoridad legal"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Para uso de la clínica: si no se obtuvo el acuse de recibo"
+    },
+    {
+      "type": "checklist",
+      "label": "Motivo",
+      "items": [
+        "El paciente se negó a firmar",
+        "El paciente no pudo firmar",
+        "Tratamiento de emergencia; se obtendrá después",
+        "Otro (describa abajo)"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Describa el esfuerzo de buena fe que se hizo",
+      "count": 2
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Miembro del personal"
+      ]
+    }
+  ]
+}

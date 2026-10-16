@@ -89,7 +89,7 @@ final class RendererTest extends TestCase
             foreach ([$blank, $filled] as $renderer) {
                 $html = $renderer->document($doc);
                 self::assertDoesNotMatchRegularExpression('/\{[a-z]+\.[a-z]+\}/', $html, $doc->id);
-                self::assertStringStartsWith("<section class='cf-page'>", $html);
+                self::assertStringStartsWith("<section class='cf-page", $html);
                 self::assertStringEndsWith('</section>', $html);
             }
         }

@@ -30,23 +30,26 @@ final class DocumentLibrary
     /**
      * @param ?string $localDir   the clinic's own documents, or null for none
      * @param string  $localLabel how messages name the clinic's folder
+     * @param string  $language   the language to print in: a document with a translation in
+     *                            <dir>/<language>/ uses it, any other stays in English
      */
     public function __construct(
         private readonly string $dir,
         private readonly ?string $localDir = null,
         private readonly string $localLabel = 'sites/default/' . self::LOCAL_FOLDER,
+        private readonly string $language = 'en',
     ) {
     }
 
-    public static function shipped(): self
+    public static function shipped(string $language = 'en'): self
     {
-        return new self(dirname(__DIR__, 2) . '/data/documents');
+        return new self(dirname(__DIR__, 2) . '/data/documents', null, 'sites/default/' . self::LOCAL_FOLDER, $language);
     }
 
     /** The shipped documents plus the clinic's own, from the site directory (OE_SITE_DIR). */
-    public static function forSite(string $siteDir): self
+    public static function forSite(string $siteDir, string $language = 'en'): self
     {
-        return new self(dirname(__DIR__, 2) . '/data/documents', $siteDir . '/' . self::LOCAL_FOLDER, 'sites/' . basename($siteDir) . '/' . self::LOCAL_FOLDER);
+        return new self(dirname(__DIR__, 2) . '/data/documents', $siteDir . '/' . self::LOCAL_FOLDER, 'sites/' . basename($siteDir) . '/' . self::LOCAL_FOLDER, $language);
     }
 
     /** @return array<string, Document> */
@@ -69,6 +72,33 @@ final class DocumentLibrary
                     $docs[$doc->id] = $doc;
                 }
             }
+            if ($this->language !== 'en') {
+                $sources = [[$this->dir . '/' . $this->language, 'data/documents/' . $this->language, 'shipped']];
+                if ($this->localDir !== null) {
+                    $sources[] = [$this->localDir . '/' . $this->language, $this->localLabel . '/' . $this->language, 'clinic'];
+                }
+                foreach ($sources as [$dir, $label, $source]) {
+                    foreach (glob($dir . '/*.json') ?: [] as $file) {
+                        $english = $docs[basename($file, '.json')] ?? null;
+                        try {
+                            if ($english === null) {
+                                throw new \InvalidArgumentException("$label/" . basename($file) . ': a translation of a document that does not exist');
+                            }
+                            $doc = self::read($file, $label, $source, $english, $this->language);
+                        } catch (\InvalidArgumentException $e) {
+                            if ($source === 'shipped') {
+                                throw $e;
+                            }
+                            $this->problems[] = $e->getMessage();
+                            continue;
+                        }
+                        foreach (Translation::differences($english, $doc) as $difference) {
+                            $this->problems[] = "$label/" . basename($file) . ': ' . $difference;
+                        }
+                        $docs[$doc->id] = $doc;
+                    }
+                }
+            }
             uasort($docs, static fn(Document $a, Document $b): int => [$a->category, $a->title] <=> [$b->category, $b->title]);
             $this->documents = $docs;
         }
@@ -87,8 +117,17 @@ final class DocumentLibrary
         return $this->all()[$id] ?? null;
     }
 
-    /** @param string $source 'shipped' or 'clinic' */
-    public static function read(string $file, string $label = 'data/documents', string $source = 'shipped'): Document
+    /** Whether a document has a translation into the library's language. */
+    public function isTranslated(string $id): bool
+    {
+        return ($this->all()[$id] ?? null)?->language === $this->language;
+    }
+
+    /**
+     * @param string    $source   'shipped' or 'clinic'
+     * @param ?Document $english  for a translation, the English document it translates
+     */
+    public static function read(string $file, string $label = 'data/documents', string $source = 'shipped', ?Document $english = null, string $language = 'en'): Document
     {
         $where = $label . '/' . basename($file);
         try {
@@ -99,7 +138,20 @@ final class DocumentLibrary
         if (!is_array($data)) {
             throw new \InvalidArgumentException("$where: must be an object");
         }
-        self::onlyKeys($data, ['id', 'title', 'category', 'about', 'audience', 'blocks'], ['code', 'validated'], $where);
+        if ($english !== null) {
+            // A translation takes its audience, code and validated flag from the English document.
+            self::onlyKeys($data, ['id', 'title', 'category', 'about', 'blocks'], [], $where);
+            $data['audience'] = $english->audience;
+            if ($english->code !== null) {
+                $data['code'] = $english->code;
+            }
+            $data['validated'] = $english->validated;
+            $data['poster'] = $english->poster;
+        }
+        self::onlyKeys($data, ['id', 'title', 'category', 'about', 'audience', 'blocks'], ['code', 'validated', 'poster'], $where);
+        if (isset($data['poster']) && !is_bool($data['poster'])) {
+            throw new \InvalidArgumentException("$where poster: must be true or false");
+        }
         if (!is_string($data['audience']) || !in_array($data['audience'], Document::AUDIENCES, true)) {
             throw new \InvalidArgumentException("$where audience: must be one of " . implode(', ', Document::AUDIENCES));
         }
@@ -195,6 +247,9 @@ final class DocumentLibrary
                         throw new \InvalidArgumentException("$at rows: must be a whole number from 1 to 30");
                     }
                     break;
+                case 'taglines':
+                    self::onlyKeys($block, ['type'], [], $at);
+                    break;
                 case 'signature':
                     self::onlyKeys($block, ['type', 'signers'], [], $at);
                     if (!is_array($block['signers']) || !array_is_list($block['signers']) || $block['signers'] === []) {
@@ -226,6 +281,8 @@ final class DocumentLibrary
             $data['audience'],
             $code,
             ($data['validated'] ?? false) === true,
+            $language,
+            ($data['poster'] ?? false) === true,
         );
     }
 

@@ -23,6 +23,8 @@ use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
 use OpenHealthcare\ClinicForms\Paper\Packets;
 use OpenHealthcare\ClinicForms\Paper\Requirements;
+use OpenHealthcare\ClinicForms\Paper\Taglines;
+use OpenHealthcare\ClinicForms\Paper\Words;
 use OpenHealthcare\ClinicForms\Repository\SiteData;
 
 if (!AclMain::aclCheckCore('patients', 'demo')) {
@@ -33,7 +35,9 @@ $session = SessionWrapperFactory::getInstance()->getActiveSession();
 $siteDir = OEGlobalsBag::getInstance()->getString('OE_SITE_DIR');
 $library = DocumentLibrary::forSite($siteDir);
 $packets = Packets::forSite($library, $siteDir);
-$problems = array_merge($library->problems(), $packets->problems);
+$spanish = DocumentLibrary::forSite($siteDir, 'es');
+$taglines = Taglines::forSite($siteDir);
+$problems = array_merge($library->problems(), $packets->problems, $spanish->problems(), $taglines->problems);
 // A clinic's own version of a document the law says what goes in: say what its wording doesn't show.
 $requirements = Requirements::shipped();
 foreach ($library->all() as $doc) {
@@ -62,6 +66,7 @@ foreach ($library->all() as $doc) {
         'value' => 'doc:' . $doc->id,
         'title' => $doc->title . ($doc->source === 'clinic' ? ' (' . xl('local version') . ')' : ''),
         'about' => $doc->about,
+        'es' => $spanish->isTranslated($doc->id),
     ];
 }
 foreach ($layouts as $form) {
@@ -105,6 +110,15 @@ foreach ($layouts as $form) {
                 </select>
             </div>
             <div class="form-group col-md-2">
+                <label for="language"><?php echo xlt('Language'); ?></label>
+                <select class="form-control" name="language" id="language">
+                    <?php foreach (Words::LANGUAGES as $code => $name) { ?>
+                        <option value="<?php echo attr($code); ?>"><?php echo text($name); ?></option>
+                    <?php } ?>
+                </select>
+                <small class="form-text text-muted"><?php echo xlt('Documents marked ES print in Spanish; the rest stay in English.'); ?></small>
+            </div>
+            <div class="form-group col-md-2">
                 <label for="paper"><?php echo xlt('Paper'); ?></label>
                 <select class="form-control" name="paper" id="paper">
                     <option value="letter"><?php echo xlt('Letter'); ?></option>
@@ -137,6 +151,12 @@ foreach ($layouts as $form) {
             </div>
         <?php } ?>
 
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" name="taglines" value="1" id="taglines" checked>
+            <label class="form-check-label" for="taglines"><?php echo xlt('Add the language assistance taglines to patient pages'); ?>
+                (<?php echo text(implode(', ', array_keys($taglines->taglines))); ?>)</label>
+            <small class="form-text text-muted"><?php echo xlt('Section 1557 (45 CFR 92.11) asks for them on intake, consent and privacy forms, in English and the 15 languages most spoken in your state. Add yours in taglines.json in your Clinic Forms folder.'); ?></small>
+        </div>
         <div class="mb-2">
             <span class="mr-2"><?php echo xlt('Ready-made'); ?>:</span>
             <?php foreach ($packets->packets as $p) { ?>
@@ -150,7 +170,7 @@ foreach ($layouts as $form) {
                 <?php foreach ($items as $item) { ?>
                     <div class="form-check">
                         <input class="form-check-input cf-item" type="checkbox" name="items[]" value="<?php echo attr($item['value']); ?>" id="<?php echo attr('i-' . $item['value']); ?>">
-                        <label class="form-check-label" for="<?php echo attr('i-' . $item['value']); ?>"><?php echo text($item['title']); ?>
+                        <label class="form-check-label" for="<?php echo attr('i-' . $item['value']); ?>"><?php echo text($item['title']); ?><?php echo !empty($item['es']) ? ' <span class="badge badge-info">ES</span>' : ''; ?>
                             <span class="cf-about">— <?php echo text($item['about']); ?></span></label>
                     </div>
                 <?php } ?>

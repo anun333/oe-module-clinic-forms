@@ -1,0 +1,123 @@
+{
+  "id": "amendment-request",
+  "title": "Solicitud para corregir mi expediente médico",
+  "category": "Privacidad y derechos del paciente",
+  "about": "Solicitud del paciente para corregir o completar su expediente. HIPAA, derecho a enmendar, 45 CFR 164.526.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Teléfono",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Dirección",
+          "value": "{patient.address}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Qué hay que corregir"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Fecha del registro (consulta, prueba o carta)"
+        },
+        {
+          "label": "Qué registro"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Qué está mal o qué falta",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "Qué debería decir",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "Por qué",
+      "count": 2
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "A quién más hay que avisarle de la corrección (nombre y dirección)"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Le responderemos en un plazo de 60 días. Si necesitamos más tiempo, le diremos por escrito el motivo. Si le decimos que no, le diremos por escrito el motivo. Usted podrá entonces enviarnos una declaración de que no está de acuerdo, y la agregaremos a su expediente."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o representante legal"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si firma un representante: nombre"
+        },
+        {
+          "label": "Relación o autoridad legal"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Para uso de la clínica"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Fecha en que se recibió"
+        },
+        {
+          "label": "Fecha de respuesta"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Decisión",
+      "items": [
+        "Corregido como se pidió",
+        "Corregido en parte (explique abajo)",
+        "No corregido: no creamos este registro",
+        "No corregido: no forma parte del expediente",
+        "No corregido: el registro está correcto y completo"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Notas",
+      "count": 2
+    }
+  ]
+}

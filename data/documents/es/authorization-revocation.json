@@ -1,0 +1,90 @@
+{
+  "id": "authorization-revocation",
+  "title": "Cancelación de mi autorización para divulgar información",
+  "category": "Privacidad y derechos del paciente",
+  "about": "Retira una autorización que el paciente firmó antes. HIPAA, 45 CFR 164.508(b)(5).",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Teléfono",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Dirección",
+          "value": "{patient.address}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Quiero cancelar (revocar) la autorización que se describe abajo."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Fecha en que la firmé"
+        },
+        {
+          "label": "A quién permitía divulgar mi información"
+        },
+        {
+          "label": "A quién permitía recibirla"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Esto se aplica desde que {facility.name} lo recibe. No deshace lo que ya se hizo debido a la autorización."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o representante legal"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si firma un representante: nombre"
+        },
+        {
+          "label": "Relación o autoridad legal"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Para uso de la clínica"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Fecha en que se recibió"
+        },
+        {
+          "label": "Por"
+        },
+        {
+          "label": "A quién más se le avisó"
+        }
+      ]
+    }
+  ]
+}

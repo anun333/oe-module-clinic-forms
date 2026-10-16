@@ -14,13 +14,20 @@ namespace OpenHealthcare\ClinicForms\Office;
 
 use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\Document;
+use OpenHealthcare\ClinicForms\Paper\Words;
 
 final readonly class OfficeExport
 {
     private const BLANK = '__________';
 
-    public function __construct(private Context $context)
+    /** @param list<string> $taglines language assistance taglines, printed at the end of patient documents */
+    public function __construct(private Context $context, private string $language = 'en', private array $taglines = [])
     {
+    }
+
+    private function t(string $english): string
+    {
+        return Words::t($english, $this->language);
     }
 
     /** @param list<Document> $documents */
@@ -51,11 +58,23 @@ final readonly class OfficeExport
                         isset($block['total']) ? $this->text($block['total']) : null,
                     ),
                     'table' => $writer->table($this->text($block['label']), array_map($this->text(...), $block['columns']), $block['rows']),
+                    'taglines' => $this->taglines($writer),
                     default => null,
                 };
             }
+            $hasBlock = array_filter($doc->blocks, static fn(array $b): bool => $b['type'] === 'taglines') !== [];
+            if ($doc->audience === 'patient' && !$hasBlock) {
+                $this->taglines($writer);
+            }
         }
         return $writer->file($this->running(), $paper);
+    }
+
+    private function taglines(OfficeWriter $writer): void
+    {
+        foreach ($this->taglines as $tagline) {
+            $writer->paragraph($this->text($tagline));
+        }
     }
 
     /** The line at the top of every page: patient name, date of birth and ID, or blanks to fill in. */
@@ -64,7 +83,7 @@ final readonly class OfficeExport
         $parts = [];
         foreach (['patient.name' => 'Patient', 'patient.dob' => 'DOB', 'patient.id' => 'ID'] as $key => $label) {
             $value = $this->context->value($key);
-            $parts[] = xl($label) . ': ' . ($value !== '' ? $value : '____________________');
+            $parts[] = $this->t($label) . ': ' . ($value !== '' ? $value : '____________________');
         }
         return implode('     ', $parts);
     }
@@ -76,8 +95,8 @@ final readonly class OfficeExport
         return array_values(array_filter([
             $c->value('facility.address'),
             implode(' · ', array_filter([
-                $c->value('facility.phone') !== '' ? xl('Phone') . ' ' . $c->value('facility.phone') : '',
-                $c->value('facility.fax') !== '' ? xl('Fax') . ' ' . $c->value('facility.fax') : '',
+                $c->value('facility.phone') !== '' ? $this->t('Phone') . ' ' . $c->value('facility.phone') : '',
+                $c->value('facility.fax') !== '' ? $this->t('Fax') . ' ' . $c->value('facility.fax') : '',
             ])),
             implode(' · ', array_filter([$c->value('facility.email'), $c->value('facility.website')])),
         ]));

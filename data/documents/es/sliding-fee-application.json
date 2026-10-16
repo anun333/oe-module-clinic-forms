@@ -1,0 +1,131 @@
+{
+  "id": "sliding-fee-application",
+  "title": "Solicitud de descuento de tarifa variable",
+  "category": "Recepción",
+  "about": "Tamaño del hogar e ingresos para el descuento de tarifa variable de la clínica, los mismos datos que la Tabla 4 del UDS reporta por nivel de pobreza.",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "{facility.name} ofrece descuentos según el tamaño del hogar y los ingresos. Lo que escriba aquí se mantiene confidencial y solo se usa para decidir su descuento."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Teléfono",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Dirección",
+          "value": "{patient.address}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Su hogar"
+    },
+    {
+      "type": "paragraph",
+      "text": "Anote a todas las personas de su hogar: usted, su cónyuge o pareja, y cualquier persona que usted mantenga o que lo mantenga a usted."
+    },
+    {
+      "type": "table",
+      "label": "Miembros del hogar",
+      "columns": [
+        "Nombre",
+        "Relación con usted",
+        "Fecha de nacimiento",
+        "Ingreso mensual antes de impuestos",
+        "Fuente de ingresos"
+      ],
+      "rows": 8
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Número de personas en el hogar"
+        },
+        {
+          "label": "Ingreso mensual total del hogar"
+        },
+        {
+          "label": "Ingreso anual total del hogar"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Comprobante de ingresos adjunto, de cada persona con ingresos",
+      "items": [
+        "Talones de pago recientes (últimos 30 días)",
+        "Declaración de impuestos del año pasado",
+        "Carta del Seguro Social, de discapacidad o de pensión",
+        "Carta de beneficios de desempleo",
+        "No tengo comprobante: declaro que mis ingresos anotados arriba son correctos",
+        "Sin ingresos (escriba abajo cómo se mantiene)"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Si no tiene ingresos, ¿cómo se mantiene?",
+      "count": 2
+    },
+    {
+      "type": "paragraph",
+      "text": "Certifico que la información anterior es verdadera y completa. Le avisaré a la clínica si cambia el tamaño de mi hogar o mis ingresos. Entiendo que se puede retirar un descuento que se haya dado con información falsa."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o persona responsable"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Para uso de la clínica"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Porcentaje de la guía federal de pobreza"
+        },
+        {
+          "label": "Nivel de descuento"
+        },
+        {
+          "label": "Vigente desde"
+        },
+        {
+          "label": "Revisar antes de"
+        },
+        {
+          "label": "Aprobado por"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Comprobante de ingresos",
+      "items": [
+        "Visto y copiado",
+        "Declarado por el paciente",
+        "No entregado"
+      ]
+    }
+  ]
+}

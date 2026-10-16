@@ -1,0 +1,155 @@
+{
+  "id": "notice-of-privacy-practices",
+  "title": "Aviso de prácticas de privacidad",
+  "category": "Privacidad y derechos del paciente",
+  "about": "El aviso que recibe cada paciente: cómo usa y comparte la clínica la información de salud, y los derechos del paciente. HIPAA, 45 CFR 164.520, con las declaraciones de 42 CFR Parte 2 que los avisos deben incluir desde el 16 de febrero de 2026.",
+  "blocks": [
+    {
+      "type": "heading",
+      "text": "ESTE AVISO DESCRIBE CÓMO SE PUEDE USAR Y DIVULGAR SU INFORMACIÓN MÉDICA Y CÓMO PUEDE USTED OBTENER ACCESO A ESTA INFORMACIÓN. LÉALO CON ATENCIÓN."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Fecha de entrada en vigor"
+        },
+        {
+          "label": "Preguntas: contacto de privacidad"
+        },
+        {
+          "label": "Teléfono",
+          "value": "{facility.phone}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Sus derechos"
+    },
+    {
+      "type": "paragraph",
+      "text": "Usted tiene derecho a obtener una copia de su expediente médico. Pídanosla, por escrito si se lo pedimos. Le daremos una copia en papel o electrónica en un plazo de 30 días, por lo general antes. Podemos cobrar una tarifa justa basada en el costo."
+    },
+    {
+      "type": "paragraph",
+      "text": "Usted tiene derecho a pedirnos que corrijamos su expediente si cree que está mal o que le falta algo. Podemos decir que no. Si lo hacemos, le diremos por escrito el motivo en un plazo de 60 días."
+    },
+    {
+      "type": "paragraph",
+      "text": "Usted tiene derecho a pedirnos que nos comuniquemos con usted de cierta forma o en cierto lugar, por ejemplo a otro número de teléfono o a otra dirección. Aceptaremos todas las solicitudes razonables."
+    },
+    {
+      "type": "paragraph",
+      "text": "Usted tiene derecho a pedirnos que limitemos lo que usamos o compartimos. No estamos obligados a aceptar. Pero si usted paga un servicio completo de su bolsillo, puede pedirnos que no lo compartamos con su plan de salud para fines de pago o de nuestras operaciones. Lo aceptaremos, salvo que una ley nos obligue a compartirlo."
+    },
+    {
+      "type": "paragraph",
+      "text": "Usted tiene derecho a obtener una lista de las personas con quienes compartimos su información en los últimos seis años. La lista no incluye lo que compartimos para tratamiento, pago y nuestras operaciones, ni algunos otros casos. Una lista al año es gratis. Podemos cobrar una tarifa justa basada en el costo por más listas."
+    },
+    {
+      "type": "paragraph",
+      "text": "Usted tiene derecho a recibir una copia en papel de este aviso en cualquier momento, aunque haya aceptado recibirlo por correo electrónico."
+    },
+    {
+      "type": "paragraph",
+      "text": "Usted tiene derecho a elegir a alguien que actúe en su nombre, como un tutor legal o alguien con su poder notarial médico."
+    },
+    {
+      "type": "heading",
+      "text": "Cómo usamos y compartimos su información"
+    },
+    {
+      "type": "paragraph",
+      "text": "Tratamiento. Usamos su información y la compartimos con otras personas que lo atienden. Por ejemplo, un médico que lo trata por una lesión puede preguntarle a otro médico sobre su salud."
+    },
+    {
+      "type": "paragraph",
+      "text": "Pago. Usamos y compartimos su información para cobrar a los planes de salud y a otros. Por ejemplo, le damos a su plan de salud datos sobre su consulta para que la pague."
+    },
+    {
+      "type": "paragraph",
+      "text": "Operaciones de atención médica. Usamos su información para dirigir nuestra clínica, mejorar su atención y comunicarnos con usted cuando sea necesario. Por ejemplo, la usamos para revisar la calidad de la atención que damos."
+    },
+    {
+      "type": "heading",
+      "text": "Otras formas en que podemos compartir su información sin su permiso por escrito"
+    },
+    {
+      "type": "paragraph",
+      "text": "Cuando la ley lo permite o lo exige, podemos compartir su información:"
+    },
+    {
+      "type": "paragraph",
+      "text": "Para la salud y la seguridad públicas, como prevenir enfermedades, reportar problemas con medicinas, reportar sospechas de abuso, negligencia o violencia doméstica, y prevenir una amenaza grave para la salud o la seguridad de cualquier persona."
+    },
+    {
+      "type": "paragraph",
+      "text": "Para investigaciones que cumplen las reglas de la ley, con organizaciones de donación de órganos y tejidos, y con un médico forense o director de funeraria."
+    },
+    {
+      "type": "paragraph",
+      "text": "Con agencias del gobierno cuando la ley lo exige, incluido el Departamento de Salud y Servicios Humanos. También para reclamos de compensación laboral, para las fuerzas del orden, para la supervisión de la salud, y para servicios militares, de seguridad nacional y de protección."
+    },
+    {
+      "type": "paragraph",
+      "text": "Para responder a una orden judicial o administrativa, o a una citación."
+    },
+    {
+      "type": "paragraph",
+      "text": "Con familiares, amigos cercanos u otras personas que participan en su atención, y para ayuda en casos de desastre, a menos que usted nos diga que no lo hagamos."
+    },
+    {
+      "type": "paragraph",
+      "text": "Podemos comunicarnos con usted para recaudar fondos para la clínica. Usted puede pedirnos que no volvamos a comunicarnos con usted."
+    },
+    {
+      "type": "heading",
+      "text": "Cuándo necesitamos su permiso por escrito"
+    },
+    {
+      "type": "paragraph",
+      "text": "No usaremos ni compartiremos su información con fines de mercadeo, no la venderemos ni compartiremos la mayoría de las notas de psicoterapia sin su permiso por escrito. Otros usos y formas de compartir que no se describen aquí también necesitan su permiso por escrito. Usted puede retirar (revocar) su permiso por escrito en cualquier momento, salvo por lo que ya hicimos debido a él."
+    },
+    {
+      "type": "heading",
+      "text": "Leyes más estrictas"
+    },
+    {
+      "type": "paragraph",
+      "text": "Algunas leyes dan más protección a cierta información. Entre ellas están las reglas federales para los registros de tratamiento de trastornos por consumo de sustancias (42 CFR Parte 2) y, en muchos estados, las reglas sobre el VIH, la salud mental y los resultados de pruebas genéticas. Cuando se aplica una ley más estricta, la cumplimos."
+    },
+    {
+      "type": "paragraph",
+      "text": "Los registros de tratamiento de trastornos por consumo de sustancias que recibimos de programas cubiertos por 42 CFR Parte 2, o los testimonios sobre lo que dicen, no se usarán ni se compartirán en procedimientos civiles, penales, administrativos o legislativos contra usted. Las únicas excepciones son su consentimiento por escrito, o una orden judicial dictada después de que usted o quien tiene los registros haya recibido aviso y la oportunidad de ser escuchado. La orden judicial debe venir con una citación u otro requisito legal antes de que se usen o compartan los registros."
+    },
+    {
+      "type": "paragraph",
+      "text": "Si usamos registros de tratamiento de trastornos por consumo de sustancias para recaudar fondos para la clínica, primero le daremos una oportunidad clara de decir que no a cualquier contacto para recaudar fondos."
+    },
+    {
+      "type": "heading",
+      "text": "Nuestras responsabilidades"
+    },
+    {
+      "type": "paragraph",
+      "text": "La ley nos exige mantener privada su información de salud, darle este aviso de nuestras obligaciones legales y prácticas de privacidad, y avisarle si una violación de seguridad pone su información en riesgo."
+    },
+    {
+      "type": "paragraph",
+      "text": "Debemos cumplir las obligaciones y prácticas de privacidad de este aviso y darle una copia."
+    },
+    {
+      "type": "paragraph",
+      "text": "Podemos cambiar los términos de este aviso, y los cambios se aplicarán a toda la información que tenemos sobre usted. El nuevo aviso estará disponible si lo pide, en nuestra oficina y en nuestro sitio web."
+    },
+    {
+      "type": "heading",
+      "text": "Quejas"
+    },
+    {
+      "type": "paragraph",
+      "text": "Si cree que hemos violado sus derechos, puede presentar una queja ante nuestro contacto de privacidad indicado arriba. También puede presentar una queja ante el Departamento de Salud y Servicios Humanos de los EE. UU., Oficina de Derechos Civiles: 200 Independence Avenue, S.W., Washington, D.C. 20201; teléfono 1-877-696-6775; o www.hhs.gov/ocr/privacy/hipaa/complaints/. No tomaremos represalias contra usted por presentar una queja."
+    }
+  ]
+}

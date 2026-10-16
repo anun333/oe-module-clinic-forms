@@ -23,6 +23,11 @@ final class WordWriter implements OfficeWriter
 
     private string $body = '';
 
+    /** @param string $dateLabel the word printed under a signature line beside it */
+    public function __construct(private readonly string $dateLabel = 'Date')
+    {
+    }
+
     public function extension(): string
     {
         return 'docx';
@@ -94,7 +99,7 @@ final class WordWriter implements OfficeWriter
     {
         foreach ($signers as $signer) {
             $this->body .= $this->p('', self::border() . '<w:spacing w:before="560" w:after="0"/><w:ind w:right="4320"/><w:keepNext/>');
-            $this->body .= $this->p($this->run($signer, size: 18) . $this->run("\t" . 'Date', size: 18), '<w:tabs><w:tab w:val="right" w:pos="6192"/></w:tabs><w:spacing w:after="120"/>');
+            $this->body .= $this->p($this->run($signer, size: 18) . $this->run("\t" . $this->dateLabel, size: 18), '<w:tabs><w:tab w:val="right" w:pos="6192"/></w:tabs><w:spacing w:after="120"/>');
         }
     }
 

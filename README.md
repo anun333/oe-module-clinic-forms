@@ -2,13 +2,14 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.7.0, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.8.0, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
 - **Paperwork.** Consents, releases, referral letters and office slips, filled from the facility record and, optionally, the open patient and an Address Book entry.
 - **Paper versions of layout forms.** Demographics, History, any active encounter form (LBF) and any transaction form (Referral and the like), printed as a blank form with tick boxes, date boxes and ruled lines. A short **UDS form** prints only the Demographics fields health center reporting reads (sex, gender identity and sexual orientation, race, ethnicity, language, household size and income, housing, agricultural work, military service), with the site's own answer lists. Clinics without a computer in every room can do intake on paper and type it in later, in the same order.
 - **Ready-made packets.** New patient intake, annual update, telehealth, referral, depression and anxiety screening, and a downtime kit, each opened as one document to print.
+- **Spanish.** Every patient document prints in Spanish too, with the language assistance notices Section 1557 requires (see [Spanish and language assistance](#spanish-and-language-assistance)).
 - **Word and LibreOffice.** Any document downloads as a filled Word (.docx) or LibreOffice (.odt) file to edit before printing, and a clinic can write its own letters and forms in Word or LibreOffice and have them filled in (see [Word and LibreOffice](#word-and-libreoffice)).
 
 It stores nothing and changes nothing in the database. Every page is built when it's opened, from the site's own facility, Address Book and layout settings.
@@ -54,6 +55,8 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Privacy and patient rights | Request to Limit How My Information Is Shared | Restrictions (164.522(a)), including self-paid care kept from the health plan | — |
 | Privacy and patient rights | Revoking My Authorization to Release Information | Revocation (164.508(b)(5)) | — |
 | Privacy and patient rights | Consent to Share Substance Use Disorder Treatment Records | 42 CFR Part 2 consent with every element of 2.31, including the single consent for treatment, payment and operations | 64292-6 |
+| Privacy and patient rights | Notice of Nondiscrimination | The Section 1557 notice (45 CFR 92.10), as a 20-point poster; fill in the Section 1557 Coordinator | — |
+| Privacy and patient rights | Free Language Help and Services for People with Disabilities | The Section 1557 notice of availability (92.11) with every tagline, as a 20-point poster | — |
 | After the visit | Work or School Note | Confirms the visit and when the patient may return, without giving the reason for the visit | — |
 
 Each is a JSON file in `data/documents/`, the same on every OpenEMR release. The PHQ-9 and GAD-7 are printed with their authors' statement that no permission is needed to reproduce them. Their answers can be typed into OpenEMR's own PHQ-9 and GAD-7 encounter forms, which ship with OpenEMR but have to be enabled under **Administration › Forms › Forms Administration**.
@@ -86,6 +89,31 @@ The format is in `src/Paper/Document.php`. Blocks are headings, paragraphs, fiel
 | `recipient` | `{recipient.name}` `{recipient.organization}` `{recipient.specialty}` `{recipient.address}` `{recipient.phone}` `{recipient.fax}` `{recipient.email}` |
 | `user` | `{user.name}` (the person printing) |
 | `clinic` | `{clinic.today}` |
+
+## Spanish and language assistance
+
+Choose **Español** as the language at the top of the Clinic Forms page. Documents marked **ES** print in Spanish; staff documents and the rest stay in English. The words Clinic Forms prints itself (Phone, Date, the patient line) follow the paper's language, not the language you use OpenEMR in. Word and LibreOffice downloads follow it too.
+
+- **All 22 patient documents** have Spanish versions in `data/documents/es/`.
+- **The validated questionnaires use their official Spanish wording.** PHQ-9, PHQ-2 and GAD-7 are the "Spanish for the USA" versions from phqscreeners.com. AUDIT-C is from the WHO's Spanish AUDIT manual.
+- **The other translations are ours.** Have a qualified translator review them before use, as you would the English.
+- **Nothing gets dropped in translation.** Each translation is checked against its English document: the same blocks, fields, items, signature lines and placeholders. The key legal wording is checked in Spanish too.
+- **Your own translations:** put them in `sites/<site>/documents/clinic-forms/es/`, with the English document's id. The page warns if one doesn't match its English document.
+- **Layout forms (Demographics, History) still print with your site's labels.** OpenEMR's own Spanish translation renders "Ethnicity" as "Raza", which means race, so it isn't used for intake forms.
+
+**Section 1557 language assistance (45 CFR 92.10 and 92.11).**
+
+- **Taglines on every patient page.** With *Add the language assistance taglines* ticked (the default), every patient document and intake form ends with short notices, in English and Spanish, saying that free language help and disability aids are available. They come first in the paper's own language. The rule asks for them on the notice of privacy practices, intake and consent forms, billing communications and complaint forms.
+- **Your state's languages.** The rule asks for English and at least the 15 languages most spoken by people with limited English in your state. Clinic Forms ships English and Spanish. Add the others, with HHS's translations, in `sites/<site>/documents/clinic-forms/taglines.json`:
+
+  ```json
+  {"taglines": {"vi": "CHÚ Ý: … Gọi số {facility.phone} (TTY: 711).", "zh-Hant": "注意：… {facility.phone} (TTY: 711)。"}}
+  ```
+- **The two notices** print as posters in 20-point sans serif, as the rule requires for posting:
+  - the **Notice of Nondiscrimination**;
+  - **Free Language Help and Services for People with Disabilities**, the notice of availability, which lists every tagline.
+
+  A poster never carries the patient line.
 
 ## Word and LibreOffice
 
@@ -175,7 +203,8 @@ The tests need no database: they cover the document library (every shipped docum
 ## Known limitations
 
 - Only Demographics and History can be filled from the chart; encounter and transaction forms print blank. Previous names, additional addresses and related persons (kept in their own tables) print blank.
-- Documents are in English. Their text doesn't go through OpenEMR's translation yet.
+- Spanish is the only translation. The reading-level check measures the English only (its formula is for English). Layout forms print with the site's labels in either language.
+- Word and LibreOffice downloads of posters use the normal type size; print posters from the browser.
 - Adding your own documents and packets means writing JSON files on the server.
 - Nothing is faxed, emailed or saved to the patient's Documents, and nothing is scanned back.
 - Word and LibreOffice downloads use plain tick boxes (☐) and no logo, and layout forms aren't included. Placeholders in footnotes and comments of your own documents aren't filled.
