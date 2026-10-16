@@ -113,6 +113,7 @@ final class Instrument
                 $problems[] = "question $n, \"{$q['text']}\", is extra to the instrument and scored, which changes the total";
             }
         }
+        $answerProblems = [];  // what differs => the question numbers it differs in
         $extra = array_map('intval', array_keys($reference['accepted']['extra'] ?? []));
         $ours = array_values(array_filter($ours, static fn(int $i): bool => !in_array($i + 1, $extra, true), ARRAY_FILTER_USE_KEY));
         if (count($ours) !== count($theirs)) {
@@ -137,13 +138,17 @@ final class Instrument
             foreach ($refAnswers as $j => $refAnswer) {
                 $a = $q['answers'][$j];
                 if (!self::same($a['text'], (string)$refAnswer['text'])) {
-                    $problems[] = sprintf('question %d, answer %d is "%s" where the instrument has "%s"', $n, $j + 1, $a['text'], $refAnswer['text']);
+                    $answerProblems[sprintf('answer %d is "%s" where the instrument has "%s"', $j + 1, $a['text'], $refAnswer['text'])][] = $n;
                 }
                 $refScore = isset($refAnswer['score']) && is_numeric($refAnswer['score']) ? (float)$refAnswer['score'] : null;
                 if ($refScore !== $a['score']) {
-                    $problems[] = sprintf('question %d, "%s" scores %s where the instrument scores %s', $n, $a['text'], self::points($a['score']), self::points($refScore));
+                    $answerProblems[sprintf('"%s" scores %s where the instrument scores %s', $a['text'], self::points($a['score']), self::points($refScore))][] = $n;
                 }
             }
+        }
+        // One changed column of a scale differs in every row: say it once, for the questions it affects.
+        foreach ($answerProblems as $what => $numbers) {
+            $problems[] = self::questionNumbers($numbers) . ', ' . $what;
         }
         $total = self::totalRange($ours);
         $refTotal = $reference['total'] ?? null;
@@ -162,6 +167,28 @@ final class Instrument
             }
         }
         return $problems;
+    }
+
+    /**
+     * A clinic's own version of a validated instrument, checked like the shipped one: its own file
+     * with a shipped instrument's id (a copy of the PHQ-9 is still the PHQ-9, whether or not it says
+     * "validated"), or its own document marked validated with a LOINC code there is a reference for.
+     * Empty for shipped documents and for anything there is no reference to check against.
+     *
+     * @return list<string>
+     */
+    public static function localDifferences(Document $doc, ?Document $shipped = null): array
+    {
+        if ($doc->source !== 'clinic') {
+            return [];
+        }
+        $validated = $doc->validated || ($shipped?->validated ?? false);
+        $code = ($shipped?->validated ?? false) ? $shipped->code : $doc->code;
+        if (!$validated || ($code['system'] ?? '') !== Loinc::SYSTEM) {
+            return [];
+        }
+        $reference = self::reference((string)($code['code'] ?? ''));
+        return $reference === null ? [] : self::differences($doc, $reference);
     }
 
     /**
@@ -265,6 +292,19 @@ final class Instrument
         $n = $m[0];
         sort($n);
         return $n;
+    }
+
+    /** "question 3", "questions 1 to 9", "questions 2, 5 and 7" */
+    private static function questionNumbers(array $n): string
+    {
+        if (count($n) === 1) {
+            return "question $n[0]";
+        }
+        if ($n === range($n[0], $n[0] + count($n) - 1)) {
+            return "questions $n[0] to " . end($n);
+        }
+        $last = array_pop($n);
+        return 'questions ' . implode(', ', $n) . " and $last";
     }
 
     private static function answerLabel(array $a): string

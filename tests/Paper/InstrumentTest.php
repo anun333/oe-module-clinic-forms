@@ -161,6 +161,39 @@ final class InstrumentTest extends TestCase
         self::assertStringContainsString('scores 1/2/3/4 where the English scores 0/1/2/3', $problems[0]);
     }
 
+    public function testAClinicsOwnVersionIsCheckedToo(): void
+    {
+        // A clinic's copy is still the instrument, even without "validated": AMRS's PHQ-9 scores 1 as "7 or less days".
+        $site = sys_get_temp_dir() . '/cf-inst-' . bin2hex(random_bytes(4));
+        $folder = $site . '/' . DocumentLibrary::LOCAL_FOLDER;
+        mkdir($folder, 0777, true);
+        $data = json_decode((string)file_get_contents(dirname(__DIR__, 2) . '/data/documents/phq-9.json'), true);
+        try {
+            file_put_contents("$folder/phq-9.json", json_encode($data));
+            $exact = DocumentLibrary::forSite($site)->get('phq-9');
+            self::assertSame('clinic', $exact?->source);
+            self::assertSame([], Instrument::localDifferences($exact, DocumentLibrary::shipped()->get('phq-9')));
+
+            unset($data['validated']);
+            foreach ($data['blocks'] as &$b) {
+                if ($b['type'] === 'scale') {
+                    $b['columns'][1] = '7 or less days of the last 2 weeks';
+                }
+            }
+            unset($b);
+            file_put_contents("$folder/phq-9.json", json_encode($data));
+            $changed = DocumentLibrary::forSite($site)->get('phq-9');
+            $problems = Instrument::localDifferences($changed, DocumentLibrary::shipped()->get('phq-9'));
+            self::assertSame(['questions 1 to 9, answer 2 is "7 or less days of the last 2 weeks" where the instrument has "Several days"'], $problems, 'one changed column, said once');
+            self::assertSame([], Instrument::localDifferences(DocumentLibrary::shipped()->get('phq-9')), 'the shipped one is the tests\' business, not the page\'s');
+        } finally {
+            array_map('unlink', glob("$folder/*") ?: []);
+            rmdir($folder);
+            rmdir(dirname($folder));
+            rmdir($site);
+        }
+    }
+
     public function testWordingAllowsSpellingButNotAnotherQuestion(): void
     {
         self::assertTrue(Instrument::same('How often do you have six or more drinks on one occasion?', 'How often do you have 6 or more drinks on 1 occasion?'));

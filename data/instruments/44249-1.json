@@ -277,7 +277,7 @@
         },
         {
             "score": 10,
-            "meaning": "moderate depression"
+            "meaning": "moderate depression; 88% sensitivity and 88% specificity for major depression"
         },
         {
             "score": 15,
@@ -292,7 +292,7 @@
         "citation": "Kroenke K, Spitzer RL, Williams JBW. The PHQ-9: validity of a brief depression severity measure. J Gen Intern Med. 2001;16(9):606-613.",
         "pmid": "11556941",
         "doi": "10.1046/j.1525-1497.2001.016009606.x",
-        "stated": "Abstract: \"PHQ-9 scores of 5, 10, 15, and 20 represented mild, moderate, moderately severe, and severe depression, respectively.\""
+        "stated": "Abstract: \"a PHQ-9 score > or =10 had a sensitivity of 88% and a specificity of 88% for major depression. PHQ-9 scores of 5, 10, 15, and 20 represented mild, moderate, moderately severe, and severe depression, respectively.\""
     },
     "accepted": {
         "questions": {

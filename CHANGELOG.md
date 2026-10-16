@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.15.0 (2026-10-16)
+
+- **The PHQ-9 and GAD-7 print what a score means.** Their office-use section gives the published severity bands, in English and Spanish:
+  - PHQ-9: 5, 10, 15 and 20 for mild, moderate, moderately severe and severe depression, and 10 or more finding major depression with 88% sensitivity and specificity (Kroenke 2001);
+  - GAD-7: 5, 10 and 15 for mild, moderate and severe anxiety, with 10 as the usual point to assess for generalized anxiety disorder (Spitzer 2006).
+
+  The instrument check holds the printed numbers to the papers.
+- **A clinic's own version of a validated instrument is checked.** This covers its own file with a shipped instrument's id, even without "validated", and its own validated document with a LOINC code there is a reference for. The Clinic Forms page names what differs: questions, answers, points, the total range, or a printed cut-off. A clinic's own Spanish version is held to its English.
+  - A changed column of a scale is named once, for the questions it affects ("questions 1 to 9, answer 2 is…").
+- **Documents changed in this release:** PHQ-9 and GAD-7 (version 2, English and Spanish).
+
 ## 0.14.0 (2026-10-16)
 
 **Validated instruments are now checked for what makes their scores valid, not only their wording.**

@@ -10,7 +10,7 @@
     "display": "PHQ-9 quick depression assessment panel [Reported.PHQ]"
   },
   "validated": true,
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "instrument",
@@ -80,6 +80,10 @@
     {
       "type": "heading",
       "text": "For office use"
+    },
+    {
+      "type": "paragraph",
+      "text": "Published severity (Kroenke 2001): 5 or more, mild; 10 or more, moderate; 15 or more, moderately severe; 20 or more, severe depression. A total of 10 or more found major depression with 88% sensitivity and 88% specificity."
     },
     {
       "type": "paragraph",

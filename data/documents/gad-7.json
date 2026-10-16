@@ -10,7 +10,7 @@
     "display": "Generalized anxiety disorder 7 item (GAD-7)"
   },
   "validated": true,
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "instrument",
@@ -78,6 +78,10 @@
     {
       "type": "heading",
       "text": "For office use"
+    },
+    {
+      "type": "paragraph",
+      "text": "Published severity (Spitzer 2006): 5 or more, mild; 10 or more, moderate; 15 or more, severe anxiety. A total of 10 or more is the usual point to assess for generalized anxiety disorder."
     },
     {
       "type": "fields",

@@ -18,6 +18,7 @@ use OpenHealthcare\ClinicForms\Office\TemplateFiller;
 use OpenHealthcare\ClinicForms\Office\TemplateLibrary;
 use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
+use OpenHealthcare\ClinicForms\Paper\Instrument;
 use OpenHealthcare\ClinicForms\Paper\Pack;
 use OpenHealthcare\ClinicForms\Paper\Packets;
 use OpenHealthcare\ClinicForms\Paper\Requirements;
@@ -57,6 +58,24 @@ foreach ($library->all() as $doc) {
     if ($missing !== []) {
         $problems[] = $doc->title . ' (' . xl('local version') . '): ' . xl('could not find') . ' ' . implode('; ', $missing)
             . '. ' . xl('Check that it has these') . ' (' . $requirements->source($doc->id) . ').';
+    }
+}
+// A clinic's own version of a validated instrument (PHQ-9…): say where it departs from the published one,
+// since a changed question, answer or score changes what the score means.
+$shippedDocs = DocumentLibrary::shipped('en', $packId)->all();
+foreach ($library->all() as $doc) {
+    $differs = Instrument::localDifferences($doc, $shippedDocs[$doc->id] ?? null);
+    if ($differs !== []) {
+        $problems[] = $doc->title . ' (' . xl('local version') . '): ' . xl('differs from the published instrument, so its score may not mean what the published cut-offs say') . ': ' . implode('; ', $differs) . '.';
+    }
+}
+foreach ($spanish->all() as $id => $es) {
+    $en = $library->get($id);
+    if ($es->source === 'clinic' && $es->language === 'es' && $en !== null && ($en->validated || ($shippedDocs[$id]->validated ?? false))) {
+        $differs = Instrument::translationDifferences($en, $es);
+        if ($differs !== []) {
+            $problems[] = $es->title . ' (' . xl('local Spanish version') . '): ' . xl('differs from the English instrument') . ': ' . implode('; ', $differs) . '.';
+        }
     }
 }
 $templates = TemplateLibrary::forSite($siteDir)->all();

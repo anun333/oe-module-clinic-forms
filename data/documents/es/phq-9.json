@@ -1,6 +1,6 @@
 {
   "id": "phq-9",
-  "translates": "b113d5e895f5f6df",
+  "translates": "5d0fc3a48952e121",
   "title": "Cuestionario sobre la salud del paciente (PHQ-9)",
   "category": "Detección",
   "about": "Detección de depresión: nueve preguntas con puntuación de 0 a 27. Las respuestas se pueden registrar en el formulario PHQ-9 de OpenEMR (actívelo en Administración > Formularios > Administración de formularios).",
@@ -62,6 +62,10 @@
     {
       "type": "heading",
       "text": "Para uso de la oficina"
+    },
+    {
+      "type": "paragraph",
+      "text": "Gravedad publicada (Kroenke 2001): 5 o más, leve; 10 o más, moderada; 15 o más, moderadamente grave; 20 o más, depresión grave. Un total de 10 o más detectó la depresión mayor con una sensibilidad del 88% y una especificidad del 88%."
     },
     {
       "type": "paragraph",

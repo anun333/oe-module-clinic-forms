@@ -1,6 +1,6 @@
 {
   "id": "gad-7",
-  "translates": "c36a3bec30045bdd",
+  "translates": "7d1f44457b8015a6",
   "title": "Escala del trastorno de ansiedad generalizada (GAD-7)",
   "category": "Detección",
   "about": "Detección de ansiedad: siete preguntas con puntuación de 0 a 21. Las respuestas se pueden registrar en el formulario GAD-7 de OpenEMR (actívelo en Administración > Formularios > Administración de formularios).",
@@ -60,6 +60,10 @@
     {
       "type": "heading",
       "text": "Para uso de la oficina"
+    },
+    {
+      "type": "paragraph",
+      "text": "Gravedad publicada (Spitzer 2006): 5 o más, leve; 10 o más, moderada; 15 o más, ansiedad grave. Un total de 10 o más es el punto habitual para evaluar un trastorno de ansiedad generalizada."
     },
     {
       "type": "fields",

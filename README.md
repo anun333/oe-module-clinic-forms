@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.14.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.15.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -83,6 +83,8 @@ The format, and the rules every document follows, are in [docs/](docs/README.md)
   - the published cut-offs, each with its paper (PubMed id) and the sentence that states it.
 
   The tests fail if a document's questions, their order, its answers, the points for each, its total range or a cut-off it prints differ, or if a translation changes any of them. A difference that is deliberate is listed in the reference with its reason (GAD-7's question 2 and PHQ-9's closing question follow Pfizer's printed form, not LOINC's coding of it). `tools/instrument-references.php` refreshes the references from LOINC (a free LOINC account) and keeps what was written by hand.
+
+  A clinic's own version of one of these instruments is checked the same way. That means its own file with the instrument's id, or its own document marked validated with a LOINC code there is a reference for. The Clinic Forms page names each question, answer or point that differs, because a score from a changed form may not mean what the published cut-offs say. The PHQ-9 and GAD-7 print their published severity bands in the office-use section, and the check holds those numbers to the papers.
 - **Plain language.** Every patient document reads at an 8th-grade level or below (Flesch-Kincaid), as AHRQ's health literacy toolkit advises; the tests measure it. Validated instruments (PHQ-9, GAD-7) keep their published wording and are exempt.
 - Each document says who reads it (patient, staff or provider) and whether its wording is a validated instrument's.
 - **Each document has a version**, printed small at the foot of every page with its id (`consent-to-treat v1`) and recorded in the audit event, so a signed copy names the wording the patient signed. A version means one wording: the tests fail if a document's wording changes without its version being raised.
