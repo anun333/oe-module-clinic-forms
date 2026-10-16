@@ -125,6 +125,19 @@ final class SiteData
     }
 
     /** @return array<string, string> the Context patient values, or [] when there is no such patient */
+    /**
+     * The id of the Documents category a saved copy goes in: the one with this name, else the top of
+     * the category tree, which every install has.
+     */
+    public function documentCategory(string $name): ?int
+    {
+        $rows = QueryUtils::fetchRecords("SELECT id FROM categories WHERE name = ? ORDER BY id LIMIT 1", [$name]);
+        if ($rows === []) {
+            $rows = QueryUtils::fetchRecords("SELECT id FROM categories WHERE parent = 0 ORDER BY id LIMIT 1");
+        }
+        return isset($rows[0]['id']) ? (int)$rows[0]['id'] : null;
+    }
+
     public function patient(int $pid): array
     {
         $rows = QueryUtils::fetchRecords(

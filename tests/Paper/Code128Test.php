@@ -56,7 +56,7 @@ final class Code128Test extends TestCase
                 // Rendered at about 300 dpi, as a scanner would see a printed page.
                 exec(escapeshellarg($rsvg) . ' --dpi-x 300 --dpi-y 300 -b white -o ' . escapeshellarg("$dir/c.png") . ' ' . escapeshellarg("$dir/c.svg"), $out, $status);
                 self::assertSame(0, $status, 'rsvg-convert renders the SVG');
-                $read = trim((string)shell_exec(escapeshellarg($zbar) . ' --quiet --raw -Sdisable -Scode128.enable ' . escapeshellarg("$dir/c.png")));
+                $read = trim((string)shell_exec(escapeshellarg($zbar) . ' --quiet --raw -Sdisable -Scode128.enable ' . escapeshellarg("$dir/c.png") . ' 2>/dev/null'));
                 self::assertSame($text, $read, "zbar reads \"$text\" back");
             } finally {
                 array_map('unlink', glob("$dir/*") ?: []);

@@ -21,6 +21,7 @@ declare(strict_types=1);
 
 namespace OpenHealthcare\ClinicForms\Compat;
 
+use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Csrf\CsrfUtils;
 use OpenEMR\Common\Logging\EventAuditLogger;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -116,6 +117,29 @@ final class OpenEmr
         echo '<!DOCTYPE html><html><head><title>' . htmlspecialchars($title, ENT_QUOTES) . '</title></head><body><h1>'
             . htmlspecialchars(xl('Not authorized'), ENT_QUOTES) . '</h1></body></html>';
         exit;
+    }
+
+    /** Whether the logged-in user may add to patients' Documents (OpenEMR's own check for uploading). */
+    public static function canWriteDocuments(): bool
+    {
+        return (bool)AclMain::aclCheckCore('patients', 'docs', '', ['write', 'addonly']);
+    }
+
+    /**
+     * Files a copy in the patient's Documents through OpenEMR's own Document class, as the patient
+     * portal does with its PDFs. @return array{0: ?int, 1: string} the new document's id, or null and why not
+     */
+    public static function saveDocument(int $pid, int $categoryId, string $filename, string $mimeType, string $data): array
+    {
+        if (!class_exists(\Document::class)) {
+            return [null, 'OpenEMR\'s document storage is not available'];
+        }
+        $document = new \Document();
+        $error = $document->createDocument((string)$pid, $categoryId, $filename, $mimeType, $data);
+        if (!empty($error)) {
+            return [null, (string)$error];
+        }
+        return [(int)$document->get_id(), ''];
     }
 
     /** Writes an event to OpenEMR's audit log as the logged-in user. */

@@ -33,6 +33,11 @@ $out = $root . '/FOOTPRINT.md';
  *
  * @return list<string>
  */
+/** Calls to OpenEMR classes that write, and what they write. */
+const CORE_CLASS_WRITES = [
+    '->createDocument(' => "`documents` and `categories_to_documents`, and the file in the site's documents folder, through `Document::createDocument()`",
+];
+
 function stringLiterals(string $php): array
 {
     $items = [];
@@ -333,13 +338,16 @@ preg_match("/->label\s*=\s*xlt?\('([^']+)'\)/", $bootstrap, $menuLabel);
 // --- permission checks, audit events, settings ------------------------------
 // Read from the source as written. This lists the checks the code makes; it
 // does not show that they behave correctly for a given user.
-$aclPattern = "/aclCheckCore\(\s*'([^']+)'\s*,\s*(?:'([^']*)'|(\\$\w+))(?:\s*,\s*(?:'[^']*'|\\$\w+(?:\s*\?\?\s*'[^']*')?))?(?:\s*,\s*'([^']+)')?/";
+// The level is a string ('write') or a list of levels any of which will do (['write', 'addonly']).
+$aclPattern = "/aclCheckCore\(\s*'([^']+)'\s*,\s*(?:'([^']*)'|(\\$\w+))(?:\s*,\s*(?:'[^']*'|\\$\w+(?:\s*\?\?\s*'[^']*')?))?(?:\s*,\s*(?:'([^']+)'|\[([^\]]+)\]))?/";
 if (!preg_match($aclPattern, "aclCheckCore('patients', 'med', '', 'write')", $t) || ($t[4] ?? '') !== 'write'
+    || !preg_match($aclPattern, "aclCheckCore('patients', 'docs', '', ['write', 'addonly'])", $t) || str_replace(["'", ' '], '', $t[5] ?? '') !== 'write,addonly'
     || !preg_match($aclPattern, "aclCheckCore('sensitivities', \$s, \$username ?? '')", $t) || ($t[3] ?? '') !== '$s') {
     fail('permission-check extractor self-test failed');
 }
 $checks = [];
 $events = [];
+$classWrites = [];
 $settings = [];
 foreach (phpFiles($root) as $file) {
     $src = (string) file_get_contents($file);
@@ -350,7 +358,8 @@ foreach (phpFiles($root) as $file) {
     }
     foreach ($m as $c) {
         $what = $c[1] . ' / ' . (($c[2] ?? '') !== '' ? $c[2] : 'the item\'s level');
-        $checks[$what . ' (' . (($c[4] ?? '') !== '' ? $c[4] : 'view') . ')'][$rel] = true;
+        $level = ($c[4] ?? '') !== '' ? $c[4] : (($c[5] ?? '') !== '' ? implode(' or ', array_map(fn($l) => trim($l, " '\""), explode(',', $c[5]))) : 'view');
+        $checks[$what . ' (' . $level . ')'][$rel] = true;
     }
     // Audit events are written through OpenEMR's EventAuditLogger, directly or through the
     // module's Compat adapter (OpenEmr::audit), which passes its caller's event name on.
@@ -361,6 +370,12 @@ foreach (phpFiles($root) as $file) {
     }
     foreach ($m[1] as $e) {
         $events[$e][$rel] = true;
+    }
+    // Rows and files written through OpenEMR's own classes rather than the module's SQL.
+    foreach (CORE_CLASS_WRITES as $call => $what) {
+        if (str_contains($src, $call)) {
+            $classWrites[$what][$rel] = true;
+        }
     }
     preg_match_all("/OEGlobalsBag::getInstance\(\)->get(?:Boolean|String|Int)?\('([A-Za-z0-9_]+)'\)/", $src, $m);
     foreach ($m[1] as $k) {
@@ -550,6 +565,12 @@ foreach (array_unique(array_merge(array_keys($reads), array_keys($writes))) as $
     $md[] = "| `$t` | $r | $w | $owner |";
 }
 $md[] = '';
+// Core classes known to write, found above, so the summary can't understate writes either.
+$classWriteLines = array_map(
+    fn(string $what, array $files): string => $what . ' (in ' . implode(', ', array_map(fn($f) => "`$f`", array_keys($files))) . ')',
+    array_keys($classWrites),
+    $classWrites,
+);
 // Core functions known to write, so the summary line can't understate writes.
 $writerFunctions = ['setUserSetting' => 'user_settings', 'sqlInsert' => 'a core table', 'sqlStatement' => 'a core table'];
 $viaFunctions = array_intersect_key($writerFunctions, $coreFunctions);
@@ -558,7 +579,8 @@ $md[] = ($writes === []
     : ($coreWrites === []
     ? '**In its own SQL it writes only to its own tables.**'
     : '**In its own SQL it writes to OpenEMR core tables:** ' . implode(', ', array_map(fn($t) => "`$t`", $coreWrites)) . '.'))
-    . ($viaFunctions === [] ? '' : ' Through OpenEMR functions it also writes ' . implode(', ', array_map(fn($f, $t) => "`$t` (`$f()`)", array_keys($viaFunctions), $viaFunctions)) . '.');
+    . ($viaFunctions === [] ? '' : ' Through OpenEMR functions it also writes ' . implode(', ', array_map(fn($f, $t) => "`$t` (`$f()`)", array_keys($viaFunctions), $viaFunctions)) . '.')
+    . ($classWriteLines === [] ? '' : ' Through OpenEMR\'s own classes it writes ' . implode('; ', $classWriteLines) . '.');
 $md[] = '';
 $md[] = '## OpenEMR functions it calls';
 $md[] = '';

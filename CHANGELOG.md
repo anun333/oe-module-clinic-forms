@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.16.0 (2026-10-16)
+
+Two of the items left before 1.0: a way back from paper to the chart, and a copy in the chart.
+
+- **The chart number at the foot of every printed page.**
+  - Printed with a patient, each page carries the patient's chart number (`pubpid`, the number OpenEMR's own patient barcode labels encode) as a Code 128 barcode, beside the document's id and version.
+  - The encoder is written here, with no new dependency. Its test reads the barcodes back with zbar, an independent reader, and CI installs zbar for it.
+  - End to end on OpenEMR 8.4.1, a filled print of every document, printed to PDF by Chromium and read at 300 dpi, carried the chart number on every page except the two posters (53 of 56).
+- **A box for a patient label** (`"label_box": true` in `settings.json`), the size of a standard label, at the top of a blank document's first page. Off unless set.
+- **PDF, and Save a PDF copy in the patient chart.**
+  - The ticked documents download as one PDF, or are filed, filled for the patient, in the patient's Documents. They go under *Medical Record* (or `"documents_category"` in `settings.json`), through OpenEMR's own `Document` class, as the Patient Portal's PDFs are.
+  - The PDF repeats the patient line and title at the top of every page, and the version and barcode at the foot.
+  - It's written with the mPDF that OpenEMR ships: the printed page's flexbox-and-table layout doesn't suit mPDF, so it has its own writer, beside the Word and LibreOffice ones.
+  - Saving needs `patients/docs` write or add-only, and writes a `patient-record-insert` audit event naming each document's version.
+  - Checked on OpenEMR 7.0.3, 8.4.1 and 8.5.0. On 8.4.1, the stored copy, read back through OpenEMR's document viewer (OpenEMR encrypts it on disk), had the documents and a barcode a scanner reads.
+- **`FOOTPRINT.md`:**
+  - It now names writes made through OpenEMR's own classes (`documents` and `categories_to_documents`, through `Document::createDocument()`), not only the module's own SQL.
+  - It reads a permission check that accepts a list of levels.
+- **Documents changed in this release:** none.
+
 ## 0.15.0 (2026-10-16)
 
 - **The PHQ-9 and GAD-7 print what a score means.** Their office-use section gives the published severity bands, in English and Spanish:

@@ -22,14 +22,14 @@ jobs:
     - uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php }}
-        extensions: dom, zip
+        extensions: dom, zip, gd, mbstring
         coverage: none
     - name: Validate composer.json
       run: composer validate --strict --no-check-lock
     - name: Install dependencies
       run: composer install --no-interaction --no-progress
-    - name: Barcode reader for the scan test
-      run: sudo apt-get update -qq && sudo apt-get install -y -qq zbar-tools librsvg2-bin
+    - name: Barcode reader and PDF tools for the scan tests
+      run: sudo apt-get update -qq && sudo apt-get install -y -qq zbar-tools librsvg2-bin poppler-utils
     - name: Tests
       run: vendor/bin/phpunit
     - name: FOOTPRINT.md matches the source

@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.15.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.16.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -11,8 +11,9 @@ It does three things:
 - **Ready-made packets.** New patient intake, annual update, telehealth, referral, depression and anxiety screening, and a downtime kit, each opened as one document to print.
 - **Spanish.** Every patient document prints in Spanish too, with the language assistance notices Section 1557 requires (see [Spanish and language assistance](#spanish-and-language-assistance)).
 - **Word and LibreOffice.** Any document downloads as a filled Word (.docx) or LibreOffice (.odt) file to edit before printing, and a clinic can write its own letters and forms in Word or LibreOffice and have them filled in (see [Word and LibreOffice](#word-and-libreoffice)).
+- **A PDF, and a copy in the chart.** The ticked documents download as one PDF, or are saved, filled for the patient, as a PDF in the patient's **Documents** (see [The chart number on every page, and a copy in the chart](#the-chart-number-on-every-page-and-a-copy-in-the-chart)).
 
-It stores nothing and changes nothing in the database. Every page is built when it's opened, from the site's own facility, Address Book and layout settings.
+It changes nothing in the database except when staff save a PDF copy to a patient's Documents, which goes through OpenEMR's own document storage. Every page is built when it's opened, from the site's own facility, Address Book and layout settings.
 
 ## Using it
 
@@ -196,6 +197,15 @@ For a returning patient, Demographics and History can print filled with what's o
 
 The form prints whatever the site's layout has in use, so a long layout makes a long form. To shorten it, hide fields under **Administration › Forms › Layouts**.
 
+## The chart number on every page, and a copy in the chart
+
+- **A barcode at the foot of every page.** Printed with a patient, each page carries the patient's chart number (the "External ID", `pubpid`) as a Code 128 barcode, beside the document's id and version. OpenEMR's own patient barcode labels encode the same number. A scanned page can then be filed to the right chart by its barcode, and a loose page still says whose it is. Blank prints and posters carry none.
+- **A box for a patient label.** For clinics that stick patient labels on paper, `"label_box": true` in `settings.json` prints a box the size of a standard label (2⅝ by 1 inch) at the top of each blank document's first page.
+- **A copy in the chart.** With a patient chosen, **Save a PDF copy in the patient chart** files the ticked documents, filled for that patient, as one PDF in their **Documents**, under *Medical Record* (or the category named by `"documents_category"` in `settings.json`). It goes through OpenEMR's own `Document` class, as the Patient Portal's PDFs do, so it's stored and encrypted like any other document. The audit log records it with each document's version.
+  - **PDF** downloads the same file without saving it.
+  - Both use the mPDF that OpenEMR ships; the buttons are hidden where it's missing.
+  - The PDF carries the patient line and the document's title at the top of every page, and its version and the barcode at the foot, as the printed page does.
+
 ## Printing
 
 Printing is the browser's own: no print server and nothing to install. When **Administration › Config › Logging › Printing Log Option** is on, the Print button goes through OpenEMR's print logging, like the rest of OpenEMR.
@@ -214,8 +224,9 @@ As written in the code, not verified for restricted users:
 
 - The menu entry, the page, printing and downloading need **Patients › Demographics** (`patients/demo`), view.
 - Adding and removing your own Word and LibreOffice documents needs **Administration › Superuser** (`admin/super`).
+- Saving a PDF copy in a patient's chart needs **Patients › Documents** (`patients/docs`), write or add-only, as uploading a document does.
 - Printing, downloading and adding accept only a form posted from the Clinic Forms page (CSRF token).
-- Printing or downloading with a patient's details filled in writes a `patient-record-select` event to OpenEMR's audit log, naming the patient and the documents. Blank printing writes nothing. Adding or removing a document writes an `other` event.
+- Printing or downloading with a patient's details filled in writes a `patient-record-select` event to OpenEMR's audit log, naming the patient and the documents. Blank printing writes nothing. Adding or removing a document writes an `other` event. Saving a PDF copy to Documents writes a `patient-record-insert` event naming the file, the document's id, its category and each document's version.
 
 [FOOTPRINT.md](FOOTPRINT.md), generated from the source, lists everything it reads, the OpenEMR functions it calls and what it hooks.
 
@@ -250,8 +261,8 @@ The tests need no database: they cover the document library (every shipped docum
 - Spanish is the only translation. The reading-level check measures the English only (its formula is for English). Layout forms print with the site's labels in either language.
 - Word and LibreOffice downloads of posters use the normal type size; print posters from the browser.
 - Adding your own documents and packets means writing JSON files on the server.
-- Nothing is faxed, emailed or saved to the patient's Documents, and nothing is scanned back.
-- Word and LibreOffice downloads use plain tick boxes (☐) and no logo, and layout forms aren't included. Placeholders in footnotes and comments of your own documents aren't filled.
+- Nothing is faxed or emailed. Scanned pages aren't filed automatically: the barcode is there for a scanning workflow, not read by the module.
+- Word, LibreOffice and PDF files use plain tick boxes (☐) and no logo, and layout forms aren't included. Placeholders in footnotes and comments of your own documents aren't filled.
 - Questionnaires and Patient Portal document templates don't print from here.
 
 ## License

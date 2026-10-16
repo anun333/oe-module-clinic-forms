@@ -151,6 +151,11 @@ final class MetadataTest extends TestCase
         file_put_contents($this->site . '/' . DocumentLibrary::LOCAL_FOLDER . '/settings.json', '{"label_box": "yes"}');
         self::assertStringContainsString('"label_box" must be true or false', Settings::forSite($this->site)->problems[0] ?? '');
         self::assertFalse(Settings::forSite($this->site)->labelBox);
+        self::assertSame('Medical Record', Settings::forSite(null)->documentsCategory, 'a saved PDF goes under Medical Record unless the clinic says');
+        file_put_contents($this->site . '/' . DocumentLibrary::LOCAL_FOLDER . '/settings.json', '{"documents_category": " Clinic paperwork "}');
+        self::assertSame('Clinic paperwork', Settings::forSite($this->site)->documentsCategory);
+        file_put_contents($this->site . '/' . DocumentLibrary::LOCAL_FOLDER . '/settings.json', '{"documents_category": ""}');
+        self::assertStringContainsString('"documents_category" must be the name of a Documents category', Settings::forSite($this->site)->problems[0] ?? '');
     }
 
     public function testPacksCarryTheirIsoCodes(): void

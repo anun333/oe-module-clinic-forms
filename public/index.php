@@ -14,6 +14,7 @@ use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Core\Header;
 use OpenHealthcare\ClinicForms\Bootstrap;
 use OpenHealthcare\ClinicForms\Compat\OpenEmr;
+use OpenHealthcare\ClinicForms\Office\PdfWriter;
 use OpenHealthcare\ClinicForms\Office\TemplateFiller;
 use OpenHealthcare\ClinicForms\Office\TemplateLibrary;
 use OpenHealthcare\ClinicForms\Paper\Context;
@@ -22,6 +23,7 @@ use OpenHealthcare\ClinicForms\Paper\Instrument;
 use OpenHealthcare\ClinicForms\Paper\Pack;
 use OpenHealthcare\ClinicForms\Paper\Packets;
 use OpenHealthcare\ClinicForms\Paper\Requirements;
+use OpenHealthcare\ClinicForms\Paper\Settings;
 use OpenHealthcare\ClinicForms\Paper\Taglines;
 use OpenHealthcare\ClinicForms\Paper\Words;
 use OpenHealthcare\ClinicForms\Repository\SiteData;
@@ -79,6 +81,9 @@ foreach ($spanish->all() as $id => $es) {
     }
 }
 $templates = TemplateLibrary::forSite($siteDir)->all();
+$pdfAvailable = PdfWriter::available();
+$canSaveDocuments = OpenEmr::canWriteDocuments();
+$documentsCategory = Settings::forSite($siteDir)->documentsCategory;
 $isAdmin = AclMain::aclCheckCore('admin', 'super');
 $csrf = OpenEmr::csrfToken();
 $flash = is_string($_GET['cf_msg'] ?? null) ? $_GET['cf_msg'] : '';
@@ -283,7 +288,14 @@ foreach ($layouts as $form) {
             <span class="ml-3 mr-1"><?php echo xlt('or edit first'); ?>:</span>
             <button type="submit" class="btn btn-secondary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="docx"><?php echo xlt('Word'); ?> (.docx)</button>
             <button type="submit" class="btn btn-secondary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="odt"><?php echo xlt('LibreOffice'); ?> (.odt)</button>
+            <?php if ($pdfAvailable) { ?>
+                <button type="submit" class="btn btn-secondary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="pdf"><?php echo xlt('PDF'); ?></button>
+            <?php } ?>
             <small class="form-text text-muted"><?php echo xlt('The ticked documents as one file to edit in Word, LibreOffice or Google Docs. Layout forms print from the browser only.'); ?></small>
+            <?php if ($pdfAvailable && $patient !== [] && $canSaveDocuments) { ?>
+                <button type="submit" class="btn btn-outline-primary mt-2" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="pdf-documents"><?php echo xlt('Save a PDF copy in the patient chart'); ?></button>
+                <small class="form-text text-muted"><?php echo xlt('The ticked documents, filled for this patient, filed under Documents'); ?> (<?php echo text($documentsCategory); ?>).</small>
+            <?php } ?>
         </div>
     </form>
 
