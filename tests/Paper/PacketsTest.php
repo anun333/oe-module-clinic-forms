@@ -57,6 +57,57 @@ final class PacketsTest extends TestCase
         $this->read(['packets' => [['id' => 'p', 'title' => 'P', 'items' => ['layout:DEM'], 'colour' => 'red']]]);
     }
 
+    public function testAClinicPacketIsAddedAndOneWithAShippedIdReplacesIt(): void
+    {
+        $site = $this->site(['packets' => [
+            ['id' => 'telehealth', 'title' => 'Our telehealth', 'items' => ['doc:telehealth-consent']],
+            ['id' => 'sports-physical', 'title' => 'Sports physical', 'items' => ['layout:DEM', 'doc:consent-to-treat']],
+        ]]);
+        $packets = Packets::forSite(DocumentLibrary::shipped(), $site);
+        $byId = array_column($packets->packets, null, 'id');
+        self::assertSame('Our telehealth', $byId['telehealth']['title']);
+        self::assertSame('clinic', $byId['telehealth']['source'] ?? null);
+        self::assertSame('clinic', $byId['sports-physical']['source'] ?? null);
+        self::assertArrayNotHasKey('source', $byId['new-patient']);
+        self::assertSame([], $packets->problems);
+    }
+
+    public function testABrokenClinicFileIsReportedAndTheShippedPacketsStay(): void
+    {
+        $site = $this->site(['packets' => [['id' => 'x', 'title' => 'X', 'items' => ['doc:not-a-document']]]]);
+        $packets = Packets::forSite(DocumentLibrary::shipped(), $site);
+        self::assertSame(['sites/' . basename($site) . '/documents/clinic-forms/packets.json packets[0] items[0]: no document not-a-document'], $packets->problems);
+        self::assertSame(array_column(Packets::shipped(DocumentLibrary::shipped())->packets, 'id'), array_column($packets->packets, 'id'));
+    }
+
+    public function testNoClinicFileIsNotAProblem(): void
+    {
+        $packets = Packets::forSite(DocumentLibrary::shipped(), sys_get_temp_dir() . '/cf-no-such-site');
+        self::assertSame([], $packets->problems);
+        self::assertNotSame([], $packets->packets);
+    }
+
+    public function testAnUnknownTopLevelFieldIsRefused(): void
+    {
+        $this->expectExceptionMessage('needs "packets", a list');
+        $this->read(['packets' => [], 'colour' => 'red']);
+    }
+
+    /** @param array<string, mixed> $data the clinic's packets.json */
+    private function site(array $data): string
+    {
+        $site = sys_get_temp_dir() . '/cf-site-' . bin2hex(random_bytes(4));
+        mkdir($site . '/documents/clinic-forms', 0777, true);
+        file_put_contents($site . '/documents/clinic-forms/packets.json', json_encode($data, JSON_THROW_ON_ERROR));
+        register_shutdown_function(static function () use ($site): void {
+            @unlink($site . '/documents/clinic-forms/packets.json');
+            @rmdir($site . '/documents/clinic-forms');
+            @rmdir($site . '/documents');
+            @rmdir($site);
+        });
+        return $site;
+    }
+
     /** @param array<string, mixed> $data */
     private function read(array $data): void
     {

@@ -95,6 +95,19 @@ final class RendererTest extends TestCase
         }
     }
 
+    public function testEveryPrintedPageCarriesThePatientLine(): void
+    {
+        $doc = $this->doc([['type' => 'paragraph', 'text' => 'Hello']]);
+        $filled = (new Renderer(new Context(self::FACILITY, ['name' => 'Jane Q Sample', 'dob' => '01/02/1980', 'id' => 'SYN-1'])))->document($doc);
+        // The line sits in the frame's thead, which browsers repeat at the top of every printed page.
+        self::assertSame(1, preg_match("#<thead><tr><td><div class='cf-running'>(.*?)</div></td></tr></thead>#", $filled, $m));
+        self::assertStringContainsString("<span class='cf-filled'>Jane Q Sample</span>", $m[1]);
+        self::assertStringContainsString("<span class='cf-filled'>SYN-1</span>", $m[1]);
+        self::assertStringContainsString("<span class='cf-run-title'>Sample</span>", $m[1]);
+        $blank = (new Renderer(new Context(self::FACILITY)))->document($doc);
+        self::assertSame(3, substr_count($blank, "<span class='cf-run-blank'></span>"));
+    }
+
     public function testPlaceholdersAreFoundInOrder(): void
     {
         self::assertSame(['patient.name', 'facility.fax'], Renderer::placeholders('To {patient.name} by fax {facility.fax}; {Not.this} or {this}'));

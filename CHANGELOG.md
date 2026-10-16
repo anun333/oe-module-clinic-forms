@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.1.1 (2026-10-15)
+
+- **Every printed page names the patient.** A line for name, date of birth and ID (filled when a patient is chosen) repeats at the top of each page, so a loose page of a multi-page form can be matched to a chart.
+- **Long lists print useful choices.** A list of more than 24 options (language, country, religion) printed as a blank line. It now prints the options this clinic's patients have, most used first, and an Other line. Counts only; no patient's answer is read.
+- **Clinic packets.** `packets.json` in `sites/<site>/documents/clinic-forms/` adds packets or replaces shipped ones; a file with a mistake is reported and the shipped packets stay.
+- Checked on OpenEMR 8.1.0 and 8.5.0 (official images) and end to end on 8.4.1.
+
 ## 0.1.0 (2026-10-15)
 
 First version.

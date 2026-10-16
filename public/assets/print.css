@@ -29,6 +29,15 @@
 .cf-sign-line { border-bottom: 0.75pt solid #000; height: 0.45in; }
 .cf-sign-under { display: flex; justify-content: space-between; font-size: 9pt; }
 /* Short answers two to a row, in reading order; tick lists, tables and long answers full width. */
+/* The patient line repeats at the top of every printed page (the frame's thead); on screen it's hidden. */
+.cf-frame { width: 100%; border-collapse: collapse; }
+.cf-frame > thead > tr > td, .cf-frame > tbody > tr > td { padding: 0; }
+.cf-running { display: flex; gap: 0.2in; align-items: flex-end; font-family: Arial, Helvetica, sans-serif; font-size: 8pt; border-bottom: 0.5pt solid #666; padding-bottom: 0.03in; margin-bottom: 0.08in; }
+.cf-run-item { display: inline-flex; align-items: flex-end; gap: 0.04in; }
+.cf-run-label { font-weight: bold; }
+.cf-run-blank { display: inline-block; width: 1.3in; border-bottom: 0.5pt solid #000; height: 0.16in; }
+.cf-run-title { margin-left: auto; font-style: italic; }
+@media screen { .cf-frame > thead { display: none; } }
 .cf-group { display: grid; grid-template-columns: 1fr 1fr; column-gap: 0.3in; align-items: end; }
 .cf-group > h2, .cf-group > .cf-item:not(.cf-inline), .cf-group > .cf-static { grid-column: 1 / -1; }
 .cf-group > .cf-inline { margin: 0.05in 0; min-width: 0; }

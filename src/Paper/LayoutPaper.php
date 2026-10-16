@@ -38,8 +38,12 @@ final class LayoutPaper
     private const STATIC_TYPE = 31;
     private const SIGNATURE_TYPES = [41, 42];
     private const CANVAS_TYPE = 40;
-    /** A list printed in full only up to this many options; longer ones print as a line. */
-    private const MAX_PRINTED_OPTIONS = 24;
+    /**
+     * A list printed in full only up to this many options. A longer one prints the options this
+     * site's patients use most (LayoutForm::$common) and an "Other" line, or just a line when
+     * there's no usage to go on (a new site).
+     */
+    public const MAX_PRINTED_OPTIONS = 24;
     /** A list with a row per option is printed in full up to this many rows. */
     private const MAX_PRINTED_ROWS = 40;
 
@@ -76,14 +80,14 @@ final class LayoutPaper
             }
             $html .= "<div class='cf-group'><h2>" . self::e($title) . "</h2>";
             foreach ($byGroup[$groupId] as $i => $field) {
-                $html .= $this->field($field, $form->lists[$field['list_id']] ?? [], self::label($field, $byGroup[$groupId][$i + 1] ?? null));
+                $html .= $this->field($field, $form->lists[$field['list_id']] ?? [], self::label($field, $byGroup[$groupId][$i + 1] ?? null), $form->common[$field['field_id']] ?? []);
             }
             $html .= "</div>";
         }
         if ($officeFields !== []) {
             $html .= "<div class='cf-group cf-office'><h2>" . self::e(xl('For office use')) . "</h2>";
             foreach ($officeFields as $i => $field) {
-                $html .= $this->field($field, $form->lists[$field['list_id']] ?? [], self::label($field, $officeFields[$i + 1] ?? null));
+                $html .= $this->field($field, $form->lists[$field['list_id']] ?? [], self::label($field, $officeFields[$i + 1] ?? null), $form->common[$field['field_id']] ?? []);
             }
             $html .= "</div>";
         }
@@ -115,8 +119,9 @@ final class LayoutPaper
     /**
      * @param array{field_id: string, group_id: string, title: string, data_type: int, list_id: string, fld_rows: int, description: string} $field
      * @param list<string> $options
+     * @param list<string> $common  for a long list, the options most used at this site
      */
-    private function field(array $field, array $options, string $label): string
+    private function field(array $field, array $options, string $label, array $common = []): string
     {
         $type = $field['data_type'];
         if ($type === self::STATIC_TYPE) {
@@ -144,6 +149,14 @@ final class LayoutPaper
                 $html .= "<span class='cf-check'><span class='cf-box'></span>" . self::e($option) . "</span>";
             }
             return $html . "</div></div>";
+        }
+        if (in_array($type, self::LIST_TYPES, true) && count($options) > self::MAX_PRINTED_OPTIONS && $common !== []) {
+            $hint = in_array($type, self::MULTI_TYPES, true) ? xl('tick all that apply') : xl('tick one');
+            $html = "<div class='cf-item cf-choices'>" . $head . "<div class='cf-hint'>" . self::e($hint) . "</div><div class='cf-options'>";
+            foreach ($common as $option) {
+                $html .= "<span class='cf-check'><span class='cf-box'></span>" . self::e($option) . "</span>";
+            }
+            return $html . "<span class='cf-check cf-other'><span class='cf-box'></span>" . self::e(xl('Other')) . ": <span class='cf-blank'></span></span></div></div>";
         }
         if ($type === self::DATE_TYPE) {
             return "<div class='cf-item cf-inline'>" . $head . "<span class='cf-date'>____ / ____ / ________</span></div>";

@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.1.0, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.1.1, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -21,6 +21,8 @@ It stores nothing and changes nothing in the database. Every page is built when 
 3. Tick documents and forms, or click a ready-made packet, then **Open for printing**. The packet opens in a new tab with a **Print** button.
 
 A packet prints in its own order; anything ticked by hand follows, in the order of the page.
+
+Every printed page starts with a line for the patient's name, date of birth and ID, filled in when a patient is chosen, so a page that comes loose can still be matched to a chart.
 
 ## The documents
 
@@ -51,6 +53,7 @@ Put your own documents in `sites/<site>/documents/clinic-forms/` (for most insta
 
 - A file with a new id adds a document. A file with the id of a shipped document replaces it, so the clinic's edited consent prints instead of the module's.
 - Files are checked strictly. A document with an unknown field, an unknown block type or a placeholder that doesn't exist is left out, and the Clinic Forms page names the file and the mistake.
+- Your own packets go in `packets.json` in the same folder, in the format of `data/packets.json`. A packet with the id of a shipped one replaces it. A file with a mistake is left out and reported; the shipped packets stay.
 
 The format is in `src/Paper/Document.php`. Blocks are headings, paragraphs, fields, checklists, ruled lines and signature lines. Text can use these placeholders, which print as a blank line when the value isn't known:
 
@@ -65,7 +68,8 @@ The format is in `src/Paper/Document.php`. Blocks are headings, paragraphs, fiel
 
 Each group of the layout becomes a heading, and each field in use a labelled blank shaped for its type:
 
-- lists, checkboxes and radio buttons print their options as tick boxes, marked "tick one" or "tick all that apply" (lists of more than 24 options print as a line);
+- lists, checkboxes and radio buttons print their options as tick boxes, marked "tick one" or "tick all that apply";
+- a list of more than 24 options (language, country, religion) prints the options this clinic's patients actually have, up to 12, most used first, and an **Other** line. Only counts are read, never a patient's answer. A clinic with no patients yet gets a line to write on;
 - exam results, textbox lists and checkboxes with text print a row per option, as OpenEMR's own blank forms do;
 - lifestyle fields print Current / Quit (with a date) / Never / N/A;
 - dates print as day, month and year boxes, text areas as ruled lines, signatures as a signature line;
@@ -106,6 +110,8 @@ As written in the code, not verified for restricted users:
 | 8.4.1 | 2026-10-15 | Installed through Module Manager. The picker and a packet of every document, Demographics, History and Referral printed with no PHP errors, blank and filled, and printed to PDF in Chromium to check the pages. A print without the CSRF token is refused. Local documents, valid and broken, tested. |
 | 8.1.0, 8.2.0, 8.3.0, 8.4.0, 8.5.0 | 2026-10-15 | Official images, fresh install: installed through Module Manager; the picker loads and a blank packet of all 12 documents, Demographics, History and Referral prints all 15 pages with no PHP error. |
 
+0.1.1 was checked again on 8.1.0 and 8.5.0 the same way, and end to end on 8.4.1: layout titles, the patient line on every page, long lists against the clinic's own counts (Demographics and a synthetic encounter form, a deleted form left out, option ids in any case), clinic documents and packets valid and broken, the CSRF refusal, and one audit event for a filled print and none for a blank one.
+
 It needs PHP 8.3 or later. OpenEMR 8.0.0 and older haven't been checked.
 
 ## Development
@@ -120,11 +126,9 @@ The tests need no database: they cover the document library (every shipped docum
 
 ## Known limitations
 
-- Pages after the first don't repeat the patient's name, so keep a multi-page form together (or write the name on each page).
-- Lists of more than 24 options (language, country) print as a line to write in.
 - Layout forms print blank. Filling Demographics with what's on file, for a returning patient to check and correct, isn't built yet.
 - Documents are in English. Their text doesn't go through OpenEMR's translation yet.
-- Adding your own documents means writing JSON files on the server, and packets can't be added yet.
+- Adding your own documents and packets means writing JSON files on the server.
 - Printing only: nothing is faxed, emailed or saved to the patient's Documents, and nothing is scanned back.
 - Questionnaires and Patient Portal document templates don't print from here.
 

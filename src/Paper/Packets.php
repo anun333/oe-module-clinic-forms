@@ -5,6 +5,10 @@
  * layout:<form id> items. Document ids are checked against the library; layout ids are
  * checked against the site's forms when the packet is printed, since sites differ.
  *
+ * A clinic's own packets go in sites/<site>/documents/clinic-forms/packets.json, in the same
+ * format. One with the id of a shipped packet replaces it. A clinic file with a mistake is
+ * left out and reported on the page, as clinic documents are.
+ *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
  */
@@ -15,8 +19,11 @@ namespace OpenHealthcare\ClinicForms\Paper;
 
 final readonly class Packets
 {
-    /** @param list<array{id: string, title: string, items: list<string>}> $packets */
-    public function __construct(public array $packets)
+    /**
+     * @param list<array{id: string, title: string, items: list<string>, source?: string}> $packets
+     * @param list<string>                                                                  $problems
+     */
+    public function __construct(public array $packets, public array $problems = [])
     {
     }
 
@@ -25,16 +32,36 @@ final readonly class Packets
         return self::read(dirname(__DIR__, 2) . '/data/packets.json', $library);
     }
 
-    public static function read(string $file, DocumentLibrary $library): self
+    /** The shipped packets plus the clinic's own, from the site directory (OE_SITE_DIR). */
+    public static function forSite(DocumentLibrary $library, string $siteDir): self
     {
-        $where = 'data/' . basename($file);
+        $packets = self::shipped($library)->packets;
+        $file = $siteDir . '/' . DocumentLibrary::LOCAL_FOLDER . '/packets.json';
+        if (!is_file($file)) {
+            return new self($packets);
+        }
+        try {
+            $local = self::read($file, $library, 'sites/' . basename($siteDir) . '/' . DocumentLibrary::LOCAL_FOLDER)->packets;
+        } catch (\InvalidArgumentException $e) {
+            return new self($packets, [$e->getMessage()]);
+        }
+        $byId = array_column($packets, null, 'id');
+        foreach ($local as $packet) {
+            $byId[$packet['id']] = $packet + ['source' => 'clinic'];
+        }
+        return new self(array_values($byId));
+    }
+
+    public static function read(string $file, DocumentLibrary $library, string $label = 'data'): self
+    {
+        $where = $label . '/' . basename($file);
         try {
             $data = json_decode((string)file_get_contents($file), true, 16, JSON_THROW_ON_ERROR);
         } catch (\JsonException $e) {
             throw new \InvalidArgumentException("$where: not valid JSON ({$e->getMessage()})", 0, $e);
         }
-        if (!is_array($data) || !isset($data['packets']) || !is_array($data['packets']) || !array_is_list($data['packets'])) {
-            throw new \InvalidArgumentException("$where: needs a list of packets");
+        if (!is_array($data) || array_diff(array_keys($data), ['about', 'packets']) !== [] || !isset($data['packets']) || !is_array($data['packets']) || !array_is_list($data['packets'])) {
+            throw new \InvalidArgumentException("$where: needs \"packets\", a list (\"about\" is the only other field)");
         }
         $packets = [];
         $seen = [];

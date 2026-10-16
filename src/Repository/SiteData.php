@@ -17,11 +17,18 @@ namespace OpenHealthcare\ClinicForms\Repository;
 
 use OpenEMR\Common\Database\QueryUtils;
 use OpenHealthcare\ClinicForms\Paper\LayoutForm;
+use OpenHealthcare\ClinicForms\Paper\LayoutPaper;
 
 final class SiteData
 {
     /** Address Book types that make sense as the recipient of a letter or referral. */
     public const RECIPIENT_TYPES = ['external_provider', 'external_org', 'spe', 'ccda', 'emr_direct', 'ord_img', 'ord_lab', 'ord_imm'];
+
+    /** How many of a long list's most used options print. */
+    public const MOST_USED = 12;
+
+    /** @var array<string, list<string>> table => columns, read once */
+    private array $columns = [];
 
     /** @return list<array{id: int, name: string}> active facilities, the primary business entity first */
     public function facilities(): array
@@ -182,15 +189,88 @@ final class SiteData
             }
         }
         $lists = [];
+        /** @var array<string, array<string, string>> $titles list id => option id => title */
+        $titles = [];
         foreach (array_chunk(array_keys($listIds), 200) as $chunk) {
             foreach (QueryUtils::fetchRecords(
-                "SELECT list_id, title FROM list_options WHERE activity = 1 AND list_id IN (" . implode(',', array_fill(0, count($chunk), '?')) . ") ORDER BY list_id, seq, title",
+                "SELECT list_id, option_id, title FROM list_options WHERE activity = 1 AND list_id IN (" . implode(',', array_fill(0, count($chunk), '?')) . ") ORDER BY list_id, seq, title",
                 $chunk,
             ) as $row) {
-                $lists[self::s($row['list_id'] ?? '')][] = function_exists('xl_list_label') ? (string)xl_list_label(self::s($row['title'] ?? '')) : self::s($row['title'] ?? '');
+                $optionTitle = function_exists('xl_list_label') ? (string)xl_list_label(self::s($row['title'] ?? '')) : self::s($row['title'] ?? '');
+                $lists[self::s($row['list_id'] ?? '')][] = $optionTitle;
+                $titles[self::s($row['list_id'] ?? '')][self::s($row['option_id'] ?? '')] = $optionTitle;
             }
         }
-        return new LayoutForm($formId, $title, $groups, $fields, $lists);
+        $common = [];
+        foreach ($fields as $field) {
+            $options = $titles[$field['list_id']] ?? [];
+            if (count($options) > LayoutPaper::MAX_PRINTED_OPTIONS) {
+                $used = $this->mostUsed($formId, $field['field_id'], $options);
+                if ($used !== []) {
+                    $common[$field['field_id']] = $used;
+                }
+            }
+        }
+        return new LayoutForm($formId, $title, $groups, $fields, $lists, $common);
+    }
+
+    /**
+     * The titles of the options this site's patients have for a field, most used first, for a
+     * list too long to print in full. Counts only: no patient's answer leaves this method.
+     *
+     * @param array<string, string> $options option id => title
+     * @return list<string>
+     */
+    private function mostUsed(string $formId, string $fieldId, array $options): array
+    {
+        if (preg_match('/^\w+$/', $fieldId) !== 1) {
+            return [];
+        }
+        if ($formId === 'DEM' || $formId === 'HIS') {
+            // The field id is a column of the table (checked against its columns), never data.
+            if (!in_array($fieldId, $this->columns($formId === 'DEM' ? 'patient_data' : 'history_data'), true)) {
+                return [];
+            }
+            $rows = QueryUtils::fetchRecords($formId === 'DEM'
+                ? "SELECT `$fieldId` AS value, COUNT(DISTINCT pid) AS n FROM patient_data WHERE `$fieldId` IS NOT NULL AND `$fieldId` <> '' GROUP BY `$fieldId`"
+                : "SELECT `$fieldId` AS value, COUNT(DISTINCT pid) AS n FROM history_data WHERE `$fieldId` IS NOT NULL AND `$fieldId` <> '' GROUP BY `$fieldId`");
+        } elseif (str_starts_with($formId, 'LBF')) {
+            $rows = QueryUtils::fetchRecords(
+                "SELECT d.field_value AS value, COUNT(DISTINCT f.pid) AS n FROM lbf_data AS d
+                   JOIN forms AS f ON f.form_id = d.form_id AND f.formdir = ? AND f.deleted = 0
+                  WHERE d.field_id = ? AND d.field_value <> '' GROUP BY d.field_value",
+                [$formId, $fieldId],
+            );
+        } else {
+            return [];
+        }
+        // Multiple-choice answers are stored as "a|b"; count each option. Option ids are matched
+        // without regard to case, as OpenEMR's own lookups (and GROUP BY) match them: a group of
+        // "English" and "english" comes back under either spelling.
+        $titles = array_change_key_case($options, CASE_LOWER);
+        $counts = [];
+        foreach ($rows as $row) {
+            foreach (explode('|', self::s($row['value'] ?? '')) as $optionId) {
+                $key = strtolower($optionId);
+                if (isset($titles[$key])) {
+                    $counts[$key] = ($counts[$key] ?? 0) + (int)$row['n'];
+                }
+            }
+        }
+        arsort($counts);
+        return array_map(static fn(string $key): string => $titles[$key], array_slice(array_keys($counts), 0, self::MOST_USED, false));
+    }
+
+    /** @return list<string> the table's column names */
+    private function columns(string $table): array
+    {
+        if (!isset($this->columns[$table])) {
+            $this->columns[$table] = array_map(
+                static fn(array $row): string => self::s($row['Field'] ?? ''),
+                QueryUtils::fetchRecords($table === 'patient_data' ? "SHOW COLUMNS FROM patient_data" : "SHOW COLUMNS FROM history_data"),
+            );
+        }
+        return $this->columns[$table];
     }
 
     private static function label(string $text): string

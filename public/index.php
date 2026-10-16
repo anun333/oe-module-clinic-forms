@@ -26,8 +26,10 @@ if (!AclMain::aclCheckCore('patients', 'demo')) {
 }
 
 $session = SessionWrapperFactory::getInstance()->getActiveSession();
-$library = DocumentLibrary::forSite(OEGlobalsBag::getInstance()->getString('OE_SITE_DIR'));
-$packets = Packets::shipped($library);
+$siteDir = OEGlobalsBag::getInstance()->getString('OE_SITE_DIR');
+$library = DocumentLibrary::forSite($siteDir);
+$packets = Packets::forSite($library, $siteDir);
+$problems = array_merge($library->problems(), $packets->problems);
 $site = new SiteData();
 $facilities = $site->facilities();
 $recipients = $site->recipients();
@@ -63,10 +65,10 @@ foreach ($layouts as $form) {
     <h1 class="h4"><?php echo xlt('Clinic Forms'); ?></h1>
     <p class="text-muted"><?php echo xlt('Print paperwork with the clinic details filled in, and blank paper versions of layout forms for intake by hand and entry later.'); ?>
         <?php echo xlt('Consents and releases are starting points: have them reviewed for your state before use.'); ?></p>
-    <?php if ($library->problems() !== []) { ?>
+    <?php if ($problems !== []) { ?>
         <div class="alert alert-warning">
-            <?php echo xlt('Some local documents have a mistake and were left out'); ?>:
-            <ul class="mb-0"><?php foreach ($library->problems() as $problem) { ?><li><?php echo text($problem); ?></li><?php } ?></ul>
+            <?php echo xlt('Some local documents or packets have a mistake and were left out'); ?>:
+            <ul class="mb-0"><?php foreach ($problems as $problem) { ?><li><?php echo text($problem); ?></li><?php } ?></ul>
         </div>
     <?php } ?>
 

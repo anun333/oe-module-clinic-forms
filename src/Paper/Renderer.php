@@ -48,9 +48,35 @@ final readonly class Renderer
         return $html . "</div></header>";
     }
 
+    /**
+     * Opens a document's page: a table whose header row repeats at the top of every printed page
+     * (browsers repeat a table's thead), so a loose page still names the patient.
+     */
+    private function open(string $title): string
+    {
+        return "<section class='cf-page'><table class='cf-frame'><thead><tr><td>" . $this->running($title) . "</td></tr></thead><tbody><tr><td>";
+    }
+
+    private function close(): string
+    {
+        return "</td></tr></tbody></table></section>";
+    }
+
+    /** The line at the top of every printed page: patient name, date of birth, ID, and the document. */
+    public function running(string $title): string
+    {
+        $parts = '';
+        foreach (['patient.name' => xl('Patient'), 'patient.dob' => xl('DOB'), 'patient.id' => xl('ID')] as $key => $label) {
+            $value = $this->context->value($key);
+            $parts .= "<span class='cf-run-item'><span class='cf-run-label'>" . self::e($label) . "</span> "
+                . ($value !== '' ? "<span class='cf-filled'>" . self::e($value) . "</span>" : "<span class='cf-run-blank'></span>") . "</span>";
+        }
+        return "<div class='cf-running'>" . $parts . "<span class='cf-run-title'>" . self::e($title) . "</span></div>";
+    }
+
     public function document(Document $doc): string
     {
-        $html = "<section class='cf-page'>" . $this->letterhead() . "<h1>" . $this->text($doc->title) . "</h1>";
+        $html = $this->open($doc->title) . $this->letterhead() . "<h1>" . $this->text($doc->title) . "</h1>";
         foreach ($doc->blocks as $block) {
             $html .= match ($block['type']) {
                 'heading' => "<h2>" . $this->text($block['text']) . "</h2>",
@@ -62,14 +88,14 @@ final readonly class Renderer
                 default => '',
             };
         }
-        return $html . "</section>";
+        return $html . $this->close();
     }
 
     /** A blank layout form (or one with the patient's header filled), as LayoutPaper renders it. */
     public function layoutForm(LayoutForm $form): string
     {
-        return "<section class='cf-page'>" . $this->letterhead() . "<h1>" . self::e($form->title) . "</h1>"
-            . $this->patientStrip() . (new LayoutPaper())->render($form) . "</section>";
+        return $this->open($form->title) . $this->letterhead() . "<h1>" . self::e($form->title) . "</h1>"
+            . $this->patientStrip() . (new LayoutPaper())->render($form) . $this->close();
     }
 
     /** Name, date of birth and ID at the top of a form: filled when a patient is chosen, else blank. */

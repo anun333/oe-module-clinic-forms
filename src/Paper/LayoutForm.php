@@ -20,6 +20,9 @@ final readonly class LayoutForm
      * @param list<array{field_id: string, group_id: string, title: string, data_type: int, list_id: string, fld_rows: int, description: string}> $fields
      *                                             the fields in use (uor > 0), in the layout's order
      * @param array<string, list<string>>  $lists  list id => its active options' titles, in order
+     * @param array<string, list<string>>  $common field id => the titles of the options this site's
+     *                                             patients use most, most used first; only for fields
+     *                                             whose list is too long to print in full
      */
     public function __construct(
         public string $id,
@@ -27,6 +30,7 @@ final readonly class LayoutForm
         public array $groups,
         public array $fields,
         public array $lists,
+        public array $common = [],
     ) {
     }
 

@@ -95,6 +95,17 @@ final class LayoutPaperTest extends TestCase
         self::assertStringContainsString("<span class='cf-blank'></span>", $html);
     }
 
+    public function testALongListPrintsTheOptionsMostUsedHereAndAnOtherLine(): void
+    {
+        $options = array_map(static fn(int $i): string => "Language $i", range(1, 30));
+        $form = new LayoutForm('DEM', 'Registration', ['1' => 'Group'], [$this->field('language', 1, 'Language', 'language')], ['language' => $options], ['language' => ['Language 9', 'Language 2']]);
+        $html = (new LayoutPaper())->render($form);
+        self::assertSame(3, substr_count($html, "<span class='cf-box'></span>"));
+        self::assertLessThan(strpos($html, 'Language 2<'), strpos($html, 'Language 9<'));
+        self::assertStringContainsString("<span class='cf-check cf-other'><span class='cf-box'></span>Other: <span class='cf-blank'></span></span>", $html);
+        self::assertStringNotContainsString('Language 1<', $html);
+    }
+
     public function testAListWithNoOptionsPrintsAsALine(): void
     {
         $html = (new LayoutPaper())->render($this->form([$this->field('x', 1, 'Missing list', 'nothing')]));
