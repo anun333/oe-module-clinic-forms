@@ -436,6 +436,21 @@ foreach (phpFiles($root) as $file) {
     }
 }
 
+// --- files it writes ---------------------------------------------------------
+// Calls that create, replace or delete files, as written in the source. The sheet says where
+// they are; the README says what they write.
+$filePattern = '/\b(file_put_contents|unlink|rename|mkdir|move_uploaded_file|tempnam)\s*\(/';
+if (!preg_match($filePattern, 'file_put_contents($f, $x)') || preg_match($filePattern, '$this->unlinkLater')) {
+    fail('file-write detector self-test failed');
+}
+$fileWrites = [];
+foreach (phpFiles($root) as $file) {
+    if (preg_match_all($filePattern, (string) file_get_contents($file), $m)) {
+        $fileWrites[substr($file, strlen($root) + 1)] = array_values(array_unique($m[1]));
+    }
+}
+ksort($fileWrites);
+
 // --- composition ------------------------------------------------------------
 $kinds = [];
 $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root, FilesystemIterator::SKIP_DOTS));
@@ -571,6 +586,12 @@ $md[] = '';
 $md[] = $settings === []
     ? '- None.'
     : implode("\n", array_map(fn($k, $f) => "- `$k` (" . implode(', ', array_map(fn($x) => "`$x`", array_keys($f))) . ')', array_keys($settings), $settings));
+$md[] = '';
+$md[] = '## Files it writes';
+$md[] = '';
+$md[] = $fileWrites === []
+    ? '- None.'
+    : implode("\n", array_map(fn($f, $c) => "- `$f`: " . implode(', ', array_map(fn($x) => "`$x()`", $c)), array_keys($fileWrites), $fileWrites));
 $md[] = '';
 $md[] = '## Outbound network';
 $md[] = '';

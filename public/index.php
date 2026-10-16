@@ -17,6 +17,9 @@ use OpenEMR\Common\Session\SessionWrapperFactory;
 use OpenEMR\Core\Header;
 use OpenEMR\Core\OEGlobalsBag;
 use OpenHealthcare\ClinicForms\Bootstrap;
+use OpenHealthcare\ClinicForms\Office\TemplateFiller;
+use OpenHealthcare\ClinicForms\Office\TemplateLibrary;
+use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
 use OpenHealthcare\ClinicForms\Paper\Packets;
 use OpenHealthcare\ClinicForms\Repository\SiteData;
@@ -30,6 +33,11 @@ $siteDir = OEGlobalsBag::getInstance()->getString('OE_SITE_DIR');
 $library = DocumentLibrary::forSite($siteDir);
 $packets = Packets::forSite($library, $siteDir);
 $problems = array_merge($library->problems(), $packets->problems);
+$templates = TemplateLibrary::forSite($siteDir)->all();
+$isAdmin = AclMain::aclCheckCore('admin', 'super');
+$csrf = CsrfUtils::collectCsrfToken(session: $session);
+$flash = is_string($_GET['cf_msg'] ?? null) ? $_GET['cf_msg'] : '';
+$flashOk = ($_GET['cf_ok'] ?? '') === '1';
 $site = new SiteData();
 $facilities = $site->facilities();
 $recipients = $site->recipients();
@@ -65,6 +73,9 @@ foreach ($layouts as $form) {
     <h1 class="h4"><?php echo xlt('Clinic Forms'); ?></h1>
     <p class="text-muted"><?php echo xlt('Print paperwork with the clinic details filled in, and blank paper versions of layout forms for intake by hand and entry later.'); ?>
         <?php echo xlt('Consents and releases are starting points: have them reviewed for your state before use.'); ?></p>
+    <?php if ($flash !== '') { ?>
+        <div class="alert <?php echo $flashOk ? 'alert-success' : 'alert-warning'; ?>"><?php echo text($flash); ?></div>
+    <?php } ?>
     <?php if ($problems !== []) { ?>
         <div class="alert alert-warning">
             <?php echo xlt('Some local documents or packets have a mistake and were left out'); ?>:
@@ -73,7 +84,7 @@ foreach ($layouts as $form) {
     <?php } ?>
 
     <form method="post" action="<?php echo attr($moduleUrl . '/public/print.php'); ?>" target="_blank" id="cf-form">
-        <input type="hidden" name="csrf_token_form" value="<?php echo attr(CsrfUtils::collectCsrfToken(session: $session)); ?>">
+        <input type="hidden" name="csrf_token_form" value="<?php echo attr($csrf); ?>">
         <div class="form-row">
             <div class="form-group col-md-4">
                 <label for="facility"><?php echo xlt('Letterhead'); ?></label>
@@ -135,9 +146,57 @@ foreach ($layouts as $form) {
                 <?php } ?>
             </div>
         <?php } ?>
+        <?php if ($templates !== []) { ?>
+            <div class="cf-cat"><h2 class="h6"><?php echo xlt('Your Word and LibreOffice documents'); ?></h2>
+                <p class="cf-about"><?php echo xlt('Downloaded filled with the letterhead, recipient and patient chosen above, to edit and print in Word or LibreOffice.'); ?></p>
+                <?php foreach ($templates as $t) { ?>
+                    <button type="submit" class="btn btn-sm btn-outline-secondary mb-1" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="template" value="<?php echo attr($t['file']); ?>">
+                        <?php echo text($t['name']); ?> (.<?php echo text($t['format']); ?>)
+                    </button>
+                <?php } ?>
+            </div>
+        <?php } ?>
         <input type="hidden" name="order" id="cf-order" value="">
-        <button type="submit" class="btn btn-primary mt-3"><?php echo xlt('Open for printing'); ?></button>
+        <div class="mt-3">
+            <button type="submit" class="btn btn-primary"><?php echo xlt('Open for printing'); ?></button>
+            <span class="ml-3 mr-1"><?php echo xlt('or edit first'); ?>:</span>
+            <button type="submit" class="btn btn-secondary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="docx"><?php echo xlt('Word'); ?> (.docx)</button>
+            <button type="submit" class="btn btn-secondary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="odt"><?php echo xlt('LibreOffice'); ?> (.odt)</button>
+            <small class="form-text text-muted"><?php echo xlt('The ticked documents as one file to edit in Word, LibreOffice or Google Docs. Layout forms print from the browser only.'); ?></small>
+        </div>
     </form>
+
+    <?php if ($isAdmin) { ?>
+        <details class="mt-4 mb-4">
+            <summary><?php echo xlt('Add your own Word or LibreOffice documents'); ?></summary>
+            <p class="mt-2"><?php echo xlt('Write a letter or form in Word or LibreOffice, type placeholders where details should go, and add it here. Staff then download it filled in.'); ?>
+                <?php echo xlt('Placeholders are written with braces, for example'); ?> <code>{patient.name}</code> <?php echo xlt('or'); ?> <code>{recipient.address}</code>.</p>
+            <form method="post" action="<?php echo attr($moduleUrl . '/public/upload.php'); ?>" enctype="multipart/form-data" class="form-inline mb-2">
+                <input type="hidden" name="csrf_token_form" value="<?php echo attr($csrf); ?>">
+                <input type="hidden" name="action" value="add">
+                <input type="file" name="template" accept=".docx,.odt" class="form-control-file mr-2" required>
+                <button type="submit" class="btn btn-sm btn-primary"><?php echo xlt('Add'); ?></button>
+            </form>
+            <?php foreach ($templates as $t) { ?>
+                <form method="post" action="<?php echo attr($moduleUrl . '/public/upload.php'); ?>" class="d-inline-block mr-2 mb-1">
+                    <input type="hidden" name="csrf_token_form" value="<?php echo attr($csrf); ?>">
+                    <input type="hidden" name="action" value="remove">
+                    <input type="hidden" name="file" value="<?php echo attr($t['file']); ?>">
+                    <button type="submit" class="btn btn-sm btn-outline-danger"><?php echo xlt('Remove'); ?> <?php echo text($t['name']); ?></button>
+                </form>
+            <?php } ?>
+            <table class="table table-sm mt-3 small">
+                <tr><th><?php echo xlt('Placeholder'); ?></th><th><?php echo xlt('OpenEMR template tag that also works'); ?></th></tr>
+                <?php
+                $coreTags = array_flip(TemplateFiller::CORE_TAGS);
+                foreach (Context::KEYS as $group => $keys) {
+                    foreach ($keys as $key) { ?>
+                        <tr><td><code>{<?php echo text($group . '.' . $key); ?>}</code></td><td><?php echo isset($coreTags[$group . '.' . $key]) ? '<code>{' . text($coreTags[$group . '.' . $key]) . '}</code>' : ''; ?></td></tr>
+                    <?php }
+                } ?>
+            </table>
+        </details>
+    <?php } ?>
 </div>
 <script>
     // A ready-made packet keeps its own order; anything ticked by hand follows in page order.

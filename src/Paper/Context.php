@@ -18,8 +18,9 @@ final readonly class Context
     /** The placeholders a document may use, by group. */
     public const KEYS = [
         'facility' => ['name', 'address', 'phone', 'fax', 'email', 'website', 'npi'],
-        'patient' => ['name', 'dob', 'id', 'address', 'phone'],
+        'patient' => ['name', 'dob', 'id', 'address', 'street', 'city', 'state', 'zip', 'phone', 'sex', 'allergies', 'medications', 'problems'],
         'recipient' => ['name', 'organization', 'specialty', 'address', 'phone', 'fax', 'email'],
+        'user' => ['name'],
         'clinic' => ['today'],
     ];
 
@@ -29,6 +30,7 @@ final readonly class Context
      * @param array<string, string> $recipient keys from KEYS['recipient']; empty when none is chosen
      * @param string                $today     the date printed for {clinic.today}, as the site formats dates
      * @param ?string               $logoUrl   the clinic's logo, or null for none
+     * @param array<string, string> $user      keys from KEYS['user']: the person printing
      */
     public function __construct(
         public array $facility,
@@ -36,6 +38,7 @@ final readonly class Context
         public array $recipient = [],
         public string $today = '',
         public ?string $logoUrl = null,
+        public array $user = [],
     ) {
     }
 
@@ -47,6 +50,7 @@ final readonly class Context
             'facility' => $this->facility[$key] ?? '',
             'patient' => $this->patient[$key] ?? '',
             'recipient' => $this->recipient[$key] ?? '',
+            'user' => $this->user[$key] ?? '',
             'clinic' => $key === 'today' ? $this->today : '',
             default => '',
         };

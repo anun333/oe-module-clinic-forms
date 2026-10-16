@@ -31,7 +31,9 @@ final class ContextTest extends TestCase
         self::assertTrue(Context::isKnown('facility.npi'));
         self::assertTrue(Context::isKnown('clinic.today'));
         self::assertFalse(Context::isKnown('patient.ssn'));
-        self::assertFalse(Context::isKnown('user.name'));
+        self::assertTrue(Context::isKnown('user.name'));
+        self::assertTrue(Context::isKnown('patient.medications'));
+        self::assertFalse(Context::isKnown('user.password'));
         self::assertFalse(Context::isKnown('facility'));
     }
 }

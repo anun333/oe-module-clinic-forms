@@ -2,13 +2,14 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.3.0, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.4.0, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
 - **Paperwork.** Consents, releases, referral letters and office slips, filled from the facility record and, optionally, the open patient and an Address Book entry.
 - **Paper versions of layout forms.** Demographics, History, any active encounter form (LBF) and any transaction form (Referral and the like), printed as a blank form with tick boxes, date boxes and ruled lines. Clinics without a computer in every room can do intake on paper and type it in later, in the same order.
 - **Ready-made packets.** New patient intake, annual update, telehealth, referral, depression and anxiety screening, and a downtime kit, each opened as one document to print.
+- **Word and LibreOffice.** Any document downloads as a filled Word (.docx) or LibreOffice (.odt) file to edit before printing, and a clinic can write its own letters and forms in Word or LibreOffice and have them filled in (see [Word and LibreOffice](#word-and-libreoffice)).
 
 It stores nothing and changes nothing in the database. Every page is built when it's opened, from the site's own facility, Address Book and layout settings.
 
@@ -64,9 +65,24 @@ The format is in `src/Paper/Document.php`. Blocks are headings, paragraphs, fiel
 | Group | Placeholders |
 |---|---|
 | `facility` | `{facility.name}` `{facility.address}` `{facility.phone}` `{facility.fax}` `{facility.email}` `{facility.website}` `{facility.npi}` |
-| `patient` | `{patient.name}` `{patient.dob}` `{patient.id}` `{patient.address}` `{patient.phone}` |
+| `patient` | `{patient.name}` `{patient.dob}` `{patient.id}` `{patient.address}` `{patient.street}` `{patient.city}` `{patient.state}` `{patient.zip}` `{patient.phone}` `{patient.sex}` `{patient.allergies}` `{patient.medications}` `{patient.problems}` (current allergies, medications and problems, as OpenEMR's issue lists hold them) |
 | `recipient` | `{recipient.name}` `{recipient.organization}` `{recipient.specialty}` `{recipient.address}` `{recipient.phone}` `{recipient.fax}` `{recipient.email}` |
+| `user` | `{user.name}` (the person printing) |
 | `clinic` | `{clinic.today}` |
+
+## Word and LibreOffice
+
+**Edit before printing.** Tick documents and click **Word (.docx)** or **LibreOffice (.odt)** instead of *Open for printing*. You get one file with the same letterhead, recipient and patient details the printed packet would have, to change before printing: a referral letter's wording, a note's restrictions. It opens in Word, LibreOffice and Google Docs, and every page carries the patient line in its header. Layout forms (Demographics and the like) print from the browser only.
+
+**Your own documents, written in Word or LibreOffice.** Write a letter or form as you normally would, type placeholders where details belong, and an administrator adds it under **Add your own Word or LibreOffice documents** at the foot of the Clinic Forms page. It then appears under *Your Word and LibreOffice documents*, and staff download it filled with the letterhead, recipient and patient chosen at the top of the page.
+
+- Placeholders are the ones in the table above (`{recipient.name}`, `{patient.medications}`, `{user.name}`…). The tags OpenEMR's own Document Templates use for the same facts also work (`{PatientName}`, `{PatientDOB}`, `{Address}`, `{Medications}`…), so an existing template can be added as it is. The page lists every placeholder and its OpenEMR equivalent.
+- Formatting is kept. Word and LibreOffice often store a typed placeholder in pieces (after an edit, a spelling check, a change of font); those are found and filled too. Placeholders in the body, tables, text boxes, headers and footers are filled.
+- When it's added, the page lists the placeholders the document uses, and names any that Clinic Forms won't fill (a typo, or an OpenEMR tag such as `{DOS}`), which are left as typed.
+- Only real Word or LibreOffice files of up to 5 MB are accepted. They're kept in `sites/<site>/documents/clinic-forms/`, so module updates leave them alone; adding a file with the same name replaces it.
+- Nothing is stored when a filled document is downloaded: it's built and sent.
+
+OpenEMR's Document Templates (Administration › Documents) remain as they are. These add the clinic letterhead, an Address Book recipient and the person printing, which those templates can't fill, and keep `&` as `&` (OpenEMR's templates print it as "[and]").
 
 ## Paper versions of layout forms
 
@@ -111,9 +127,10 @@ Run it in the OpenEMR directory. It installs into `interface/modules/custom_modu
 
 As written in the code, not verified for restricted users:
 
-- The menu entry and both pages need **Patients › Demographics** (`patients/demo`), view.
-- The print page accepts only a form posted from the Clinic Forms page (CSRF token).
-- Printing with a patient's details filled in writes a `patient-record-select` event to OpenEMR's audit log, naming the patient and the documents. Blank printing writes nothing.
+- The menu entry, the page, printing and downloading need **Patients › Demographics** (`patients/demo`), view.
+- Adding and removing your own Word and LibreOffice documents needs **Administration › Superuser** (`admin/super`).
+- Printing, downloading and adding accept only a form posted from the Clinic Forms page (CSRF token).
+- Printing or downloading with a patient's details filled in writes a `patient-record-select` event to OpenEMR's audit log, naming the patient and the documents. Blank printing writes nothing. Adding or removing a document writes an `other` event.
 
 [FOOTPRINT.md](FOOTPRINT.md), generated from the source, lists everything it reads, the OpenEMR functions it calls and what it hooks.
 
@@ -143,7 +160,8 @@ The tests need no database: they cover the document library (every shipped docum
 - Only Demographics and History can be filled from the chart; encounter and transaction forms print blank. Previous names, additional addresses and related persons (kept in their own tables) print blank.
 - Documents are in English. Their text doesn't go through OpenEMR's translation yet.
 - Adding your own documents and packets means writing JSON files on the server.
-- Printing only: nothing is faxed, emailed or saved to the patient's Documents, and nothing is scanned back.
+- Nothing is faxed, emailed or saved to the patient's Documents, and nothing is scanned back.
+- Word and LibreOffice downloads use plain tick boxes (☐) and no logo, and layout forms aren't included. Placeholders in footnotes and comments of your own documents aren't filled.
 - Questionnaires and Patient Portal document templates don't print from here.
 
 ## License

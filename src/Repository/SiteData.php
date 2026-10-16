@@ -101,19 +101,50 @@ final class SiteData
     /** @return array<string, string> the Context patient values, or [] when there is no such patient */
     public function patient(int $pid): array
     {
-        $rows = QueryUtils::fetchRecords("SELECT fname, mname, lname, DOB, pubpid, street, city, state, postal_code, phone_home, phone_cell FROM patient_data WHERE pid = ?", [$pid]);
+        $rows = QueryUtils::fetchRecords(
+            "SELECT p.fname, p.mname, p.lname, p.DOB, p.pubpid, p.street, p.city, p.state, p.postal_code, p.phone_home, p.phone_cell, COALESCE(s.title, p.sex) AS sex
+               FROM patient_data AS p LEFT JOIN list_options AS s ON s.list_id = 'sex' AND s.option_id = p.sex AND s.activity = 1
+              WHERE p.pid = ?",
+            [$pid],
+        );
         if ($rows === []) {
             return [];
         }
         $p = $rows[0];
         $dob = self::s($p['DOB'] ?? '');
+        $issues = ['allergy' => [], 'medication' => [], 'medical_problem' => []];
+        // Current issues, as OpenEMR's own document templates list them: no end date.
+        foreach (QueryUtils::fetchRecords(
+            "SELECT type, title FROM lists WHERE pid = ? AND activity = 1 AND enddate IS NULL AND type IN ('allergy', 'medication', 'medical_problem') ORDER BY begdate, id",
+            [$pid],
+        ) as $issue) {
+            $issues[self::s($issue['type'] ?? '')][] = self::s($issue['title'] ?? '');
+        }
         return [
             'name' => trim(implode(' ', array_filter([self::s($p['fname'] ?? ''), self::s($p['mname'] ?? ''), self::s($p['lname'] ?? '')]))),
             'dob' => $dob !== '' && function_exists('oeFormatShortDate') ? (string)oeFormatShortDate($dob) : $dob,
             'id' => self::s($p['pubpid'] ?? ''),
             'address' => self::address(self::s($p['street'] ?? ''), '', self::s($p['city'] ?? ''), self::s($p['state'] ?? ''), self::s($p['postal_code'] ?? '')),
+            'street' => self::s($p['street'] ?? ''),
+            'city' => self::s($p['city'] ?? ''),
+            'state' => self::s($p['state'] ?? ''),
+            'zip' => self::s($p['postal_code'] ?? ''),
             'phone' => self::s($p['phone_cell'] ?? '') !== '' ? self::s($p['phone_cell'] ?? '') : self::s($p['phone_home'] ?? ''),
+            'sex' => self::s($p['sex'] ?? ''),
+            'allergies' => implode('; ', array_filter($issues['allergy'])),
+            'medications' => implode('; ', array_filter($issues['medication'])),
+            'problems' => implode('; ', array_filter($issues['medical_problem'])),
         ];
+    }
+
+    /** @return array<string, string> the Context user values for the person printing */
+    public function user(int $id): array
+    {
+        $rows = QueryUtils::fetchRecords("SELECT fname, lname FROM users WHERE id = ?", [$id]);
+        if ($rows === []) {
+            return [];
+        }
+        return ['name' => trim(self::s($rows[0]['fname'] ?? '') . ' ' . self::s($rows[0]['lname'] ?? ''))];
     }
 
     /**
