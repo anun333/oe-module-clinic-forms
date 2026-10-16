@@ -1,0 +1,250 @@
+{
+  "id": "part-2-notice",
+  "title": "Notice of Privacy Practices for Substance Use Disorder Records",
+  "category": "Privacy and patient rights",
+  "about": "The notice 42 CFR 2.22 requires a Part 2 program to give each patient, with every element of 2.22(b). Fill in the contact and effective date; give it at the first visit and post it.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "57017-6",
+    "display": "Privacy policy Organization Document"
+  },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "42 CFR Part 2 notice to patients, 42 CFR 2.22",
+    "url": "https://www.ecfr.gov/current/title-42/section-2.22"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "text": "Notice of Privacy Practices of {facility.name}"
+    },
+    {
+      "type": "paragraph",
+      "text": "This notice describes:"
+    },
+    {
+      "type": "paragraph",
+      "text": "• HOW HEALTH INFORMATION ABOUT YOU MAY BE USED AND DISCLOSED"
+    },
+    {
+      "type": "paragraph",
+      "text": "• YOUR RIGHTS WITH RESPECT TO YOUR HEALTH INFORMATION"
+    },
+    {
+      "type": "paragraph",
+      "text": "• HOW TO FILE A COMPLAINT CONCERNING A VIOLATION OF THE PRIVACY OR SECURITY OF YOUR HEALTH INFORMATION, OR OF YOUR RIGHTS CONCERNING YOUR INFORMATION"
+    },
+    {
+      "type": "paragraph",
+      "text": "YOU HAVE A RIGHT TO A COPY OF THIS NOTICE (IN PAPER OR ELECTRONIC FORM) AND TO DISCUSS IT WITH THE PERSON NAMED BELOW, AT THE PHONE AND EMAIL BELOW, IF YOU HAVE ANY QUESTIONS."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Privacy contact (name or title)"
+        },
+        {
+          "label": "Phone",
+          "value": "{facility.phone}"
+        },
+        {
+          "label": "Email",
+          "value": "{facility.email}"
+        },
+        {
+          "label": "This notice takes effect on"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Federal law protects your records"
+    },
+    {
+      "type": "paragraph",
+      "text": "Federal law protects the privacy of records of substance use disorder treatment. The law is 42 CFR Part 2. It covers your records from {facility.name}."
+    },
+    {
+      "type": "paragraph",
+      "text": "In most cases we need your written consent to use or share them. If a state law protects you more, we follow it."
+    },
+    {
+      "type": "heading",
+      "text": "When we may use or share your records without your consent"
+    },
+    {
+      "type": "paragraph",
+      "text": "The law lets us use or share your records without your written consent only in these cases. We share only what is needed."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Inside our program. Our staff who need the records to care for you may share them with each other. So may the group that runs our program."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Service groups. We may share with groups that do work for us, such as a lab or a billing service. They must sign an agreement to protect your records."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Emergencies. We may share with medical staff who treat you in an emergency, when we cannot ask you first."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Research. We may share for research only if strict rules are met, such as a review board's approval."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Audits and reviews. We may let auditors or reviewers see records. They must agree in writing to keep them private."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Public health. We may give records to a public health office only after we remove anything that could identify you."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Child abuse. We must report suspected child abuse or neglect as state law requires. The rest of your records stay protected."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Crimes at our clinic. If someone commits or threatens a crime here or against our staff, we may tell the police. We share only the facts of what happened."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Cause of death. We may report a cause of death when a law requires it."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Court orders. We may share records when a court order allows it under this law. The order must come with a subpoena or a similar demand."
+    },
+    {
+      "type": "paragraph",
+      "text": "• The federal government. The U.S. Department of Health and Human Services may look at our records to check that we follow this law."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Payment, if you cannot act. If a health problem keeps you from acting for yourself, our program director may agree to share records only to get paid by your health plan."
+    },
+    {
+      "type": "heading",
+      "text": "When we need your written consent"
+    },
+    {
+      "type": "paragraph",
+      "text": "We need your written consent for anything else. For example, we need it to send your records to your employer, a family member, or a lawyer."
+    },
+    {
+      "type": "paragraph",
+      "text": "You may sign one consent for all future uses and sharing for treatment, payment, and health care operations. Health care operations are the work that runs our program, such as quality checks."
+    },
+    {
+      "type": "paragraph",
+      "text": "We will use or share your records in ways not described in this notice only with your written consent."
+    },
+    {
+      "type": "paragraph",
+      "text": "You may take back (revoke) your consent in writing at any time, as 42 CFR 2.31 and 2.35 allow. This does not undo what we already did because of it."
+    },
+    {
+      "type": "paragraph",
+      "text": "If you sign a consent for treatment, payment, and health care operations, the groups that receive your records may share them again, without your consent, as the HIPAA rules allow."
+    },
+    {
+      "type": "paragraph",
+      "text": "If we raise money for our program, we may use your records only after you have a clear chance to say no. You may tell us at any time not to contact you about fundraising."
+    },
+    {
+      "type": "heading",
+      "text": "Court cases"
+    },
+    {
+      "type": "paragraph",
+      "text": "Your records, or testimony about what is in them, will not be used in any civil, administrative, criminal, or legislative case against you. This can happen only with your specific written consent or a court order."
+    },
+    {
+      "type": "paragraph",
+      "text": "A court order to use your records can come only after you or the record holder get notice and a chance to be heard, where the law requires it."
+    },
+    {
+      "type": "paragraph",
+      "text": "A court order must come with a subpoena or a similar legal demand before your records are used or shared."
+    },
+    {
+      "type": "heading",
+      "text": "Your rights"
+    },
+    {
+      "type": "paragraph",
+      "text": "• You may ask us to limit what we share with your consent for treatment, payment, and health care operations."
+    },
+    {
+      "type": "paragraph",
+      "text": "• You may ask us not to share with your health plan care you paid for in full yourself. We must agree."
+    },
+    {
+      "type": "paragraph",
+      "text": "• You may ask for a list of who we shared your electronic records with in the past 3 years, and of other sharing done with your consent."
+    },
+    {
+      "type": "paragraph",
+      "text": "• You may ask for a list of who received your records through a group that passes records on for us in the past 3 years."
+    },
+    {
+      "type": "paragraph",
+      "text": "• You may ask for a paper or electronic copy of this notice."
+    },
+    {
+      "type": "paragraph",
+      "text": "• You may talk about this notice with the privacy contact named above."
+    },
+    {
+      "type": "paragraph",
+      "text": "• You may tell us not to contact you about fundraising."
+    },
+    {
+      "type": "paragraph",
+      "text": "To use a right, ask at the front desk or write to the privacy contact."
+    },
+    {
+      "type": "heading",
+      "text": "Our duties"
+    },
+    {
+      "type": "paragraph",
+      "text": "The law requires us to keep your records private and to give you this notice. We must tell you if a breach puts your records at risk."
+    },
+    {
+      "type": "paragraph",
+      "text": "We must follow the notice that is in effect now."
+    },
+    {
+      "type": "paragraph",
+      "text": "We may change this notice, and the change may apply to all the records we keep. If we change it, we will post the new notice here and on our website, and give you a copy if you ask."
+    },
+    {
+      "type": "heading",
+      "text": "Complaints"
+    },
+    {
+      "type": "paragraph",
+      "text": "If you think we did not protect your privacy, you may complain to us and to the Secretary of the U.S. Department of Health and Human Services. To complain to us, tell or write to the privacy contact named above."
+    },
+    {
+      "type": "paragraph",
+      "text": "We will not treat you differently or take action against you for filing a complaint."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "I received a copy of this notice (patient or legal representative)"
+      ]
+    }
+  ]
+}

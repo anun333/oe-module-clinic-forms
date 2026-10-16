@@ -1,0 +1,66 @@
+{
+  "id": "missed-appointment-policy",
+  "title": "Missed Appointments",
+  "category": "Front desk",
+  "about": "The clinic's policy on missed and late appointments, for the patient to keep. Edit the times to match your clinic.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "When you miss a visit, another patient could have had that time. Please help us keep visits open for everyone."
+    },
+    {
+      "type": "paragraph",
+      "text": "• If you cannot come, call us at {facility.phone} as soon as you know. Please call at least one day before if you can."
+    },
+    {
+      "type": "paragraph",
+      "text": "• If you are more than 15 minutes late, we may ask you to wait for an open time or to come another day."
+    },
+    {
+      "type": "paragraph",
+      "text": "• If you miss several visits without calling, we will talk with you about what would help. We may then offer you same-day visits only."
+    },
+    {
+      "type": "paragraph",
+      "text": "• We will remind you of your visits by the ways you choose. Please keep your phone number up to date."
+    },
+    {
+      "type": "paragraph",
+      "text": "If something makes it hard to get here, such as a ride or child care, please tell us. We may be able to help."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative"
+      ]
+    }
+  ]
+}

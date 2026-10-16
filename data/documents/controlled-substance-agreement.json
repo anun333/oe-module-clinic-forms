@@ -1,0 +1,100 @@
+{
+  "id": "controlled-substance-agreement",
+  "title": "Controlled Medicine Agreement",
+  "category": "After the visit",
+  "about": "An agreement between a patient and clinician about a controlled medicine (an opioid, a sedative or a stimulant): how it is taken, kept and refilled, and what the clinic will do.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "94136-9",
+    "display": "Controlled Substance Agreement"
+  },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Medicine"
+        },
+        {
+          "label": "Clinician",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Pharmacy (name and phone)"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "This medicine can help. It can also cause harm, such as addiction or an overdose. This agreement helps us use it safely together."
+    },
+    {
+      "type": "checklist",
+      "label": "I agree to",
+      "items": [
+        "Take this medicine only as my clinician tells me.",
+        "Get this medicine only from my clinician here, and tell them if another clinician gives me any.",
+        "Use only the pharmacy above, unless we agree to change it.",
+        "Keep my medicine locked up and away from children and others.",
+        "Never share, sell or trade my medicine.",
+        "Tell my clinician about all the other medicines I take, and about alcohol or drug use.",
+        "Not drive or use machines if the medicine makes me sleepy.",
+        "Come to my visits, and give a urine or other test when asked."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "If my medicine is lost or stolen, it may not be replaced early. The clinic may check records of my prescriptions from other places."
+    },
+    {
+      "type": "checklist",
+      "label": "My clinic agrees to",
+      "items": [
+        "Work with me on a plan for my health, not only my medicine.",
+        "Talk with me before changing my dose.",
+        "Not stop my medicine all at once without a plan, unless it is not safe to go on.",
+        "Offer help if I have trouble with the medicine, including treatment for addiction.",
+        "Offer naloxone, a medicine that can reverse an overdose."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "We will look at this agreement together at least once a year."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative",
+        "Clinician"
+      ]
+    }
+  ]
+}

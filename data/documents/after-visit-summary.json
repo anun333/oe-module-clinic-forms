@@ -1,0 +1,113 @@
+{
+  "id": "after-visit-summary",
+  "title": "Visit Summary and Instructions",
+  "category": "After the visit",
+  "about": "What was found and what to do next, for the patient to take home: reasons, findings, medicines changed, instructions, tests and the next visit.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "103796-9",
+    "display": "Outpatient Instructions"
+  },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date of visit"
+        },
+        {
+          "label": "Clinician",
+          "value": "{provider.name}"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Why you came today",
+      "count": 2
+    },
+    {
+      "type": "lines",
+      "label": "What we found",
+      "count": 3
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Your medicines on file",
+          "value": "{patient.medications}"
+        },
+        {
+          "label": "Allergies",
+          "value": "{patient.allergies}"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "label": "Medicines started, changed or stopped today",
+      "columns": [
+        "Medicine",
+        "How to take it",
+        "Started, changed or stopped"
+      ],
+      "rows": 5
+    },
+    {
+      "type": "lines",
+      "label": "What to do at home",
+      "count": 4
+    },
+    {
+      "type": "lines",
+      "label": "Tests or referrals ordered",
+      "count": 2
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Next visit"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Call us or get care right away if",
+      "count": 2
+    },
+    {
+      "type": "paragraph",
+      "text": "If you have questions, call {facility.phone}. In an emergency, call your local emergency number."
+    }
+  ]
+}

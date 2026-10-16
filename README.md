@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.12.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.13.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -34,6 +34,9 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Front desk | Acknowledgment of the Notice of Privacy Practices | Receipt of the Notice, with a clinic-use section for when it wasn't obtained | 57016-8 | US |
 | Front desk | Financial Policy and Assignment of Benefits | Payment responsibilities, insurance billing and assignment of benefits | 59284-0 | any |
 | Front desk | Authorization to Release Health Information | A HIPAA authorization with the elements 45 CFR 164.508 requires, separate initials for sensitive records, and a 42 CFR Part 2 note | 64292-6 | US |
+| Front desk | Your Rights and Responsibilities | What patients can expect, and what the clinic asks of them | — | any |
+| Front desk | Missed Appointments | The missed and late appointment policy, with help offered (rides, child care) | — | any |
+| Front desk | Language Help and Interpreter Request | The patient's languages and the help they want, with a staff section for what was arranged | — | any |
 | Front desk | Communication Preferences | How the clinic may contact the patient: phone, voicemail, text, email, portal | 59284-0 | any |
 | Front desk | Consent for Telehealth Visits | Consent to visits by video or telephone | 59284-0 | any |
 | Front desk | We Offer Discounts Based on Income | A notice to post or hand out: the sliding fee discount, who qualifies, and that no one is turned away; the clinic writes in its own schedule | — | US |
@@ -47,6 +50,7 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Office workflow | Patient Routing Slip | Travels with the patient: check-in, rooming, provider, checkout | — | any |
 | Office workflow | Staff Handoff (SBAR) | Handing a patient from one staff member, shift or site to another | — | any |
 | Office workflow | Internal Referral | To behavioral health, care management, nutrition, social work or another of the clinic's sites | 57133-1 | any |
+| Downtime | Encounter Form (Superbill) | One visit's charges on paper: CPT or HCPCS services, ICD-10-CM diagnoses, sliding fee level, payment | — | US |
 | Downtime | Downtime Visit Note | A paper visit note for when OpenEMR is down, with a box to record when it was entered | 11506-3 | any |
 | Privacy and patient rights | Notice of Privacy Practices | The notice itself (45 CFR 164.520), with the 42 CFR Part 2 statements required from February 16, 2026; fill in the effective date and privacy contact | 57017-6 | US |
 | Privacy and patient rights | Request to See or Get a Copy of My Health Record | Right of access (164.524): paper or electronic, to the patient or a person they name | — | US |
@@ -55,8 +59,16 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Privacy and patient rights | Request to Limit How My Information Is Shared | Restrictions (164.522(a)), including self-paid care kept from the health plan | — | US |
 | Privacy and patient rights | Revoking My Authorization to Release Information | Revocation (164.508(b)(5)) | — | US |
 | Privacy and patient rights | Consent to Share Substance Use Disorder Treatment Records | 42 CFR Part 2 consent with every element of 2.31, including the single consent for treatment, payment and operations | 64292-6 | US |
+| Privacy and patient rights | Notice of Privacy Practices for Substance Use Disorder Records | The notice 42 CFR 2.22 (2024) requires of a Part 2 program, element by element; fill in the contact and effective date | 57017-6 | US |
+| Privacy and patient rights | Revoking My Consent to Share Substance Use Disorder Records | Takes back a Part 2 consent, in writing (2.31(a)(6)) | — | US |
+| Privacy and patient rights | Personal Representative | Who the law lets act for the patient (power of attorney, guardian, parent, executor), the paper that shows it, and the clinic's check of identity and authority (164.502(g), 164.514(h)) | — | US |
+| Privacy and patient rights | Patient Concern or Grievance | A concern or grievance, including unfair treatment, with what 45 CFR 92.8(c) asks the record to hold | — | US |
 | Privacy and patient rights | Notice of Nondiscrimination | The Section 1557 notice (45 CFR 92.10), as a 20-point poster; fill in the Section 1557 Coordinator | — | US |
 | Privacy and patient rights | Free Language Help and Services for People with Disabilities | The Section 1557 notice of availability (92.11) with every tagline, as a 20-point poster | — | US |
+| After the visit | Your Test Results | A results letter: each result and what it means, what to do next, signed by the clinician | — | any |
+| After the visit | Visit Summary and Instructions | What was found, medicines on file and changed today, what to do at home, tests ordered, the next visit | 103796-9 | any |
+| After the visit | Consent for a Procedure | Informed consent for one procedure: why, benefits, risks, other choices, questions answered | 64293-4 | any |
+| After the visit | Controlled Medicine Agreement | Patient and clinician agree how a controlled medicine is taken, kept and refilled, and what the clinic will do (taper plans, help with addiction, naloxone) | 94136-9 | any |
 | After the visit | Work or School Note | Confirms the visit and when the patient may return, without giving the reason for the visit | — | any |
 
 The format, and the rules every document follows, are in [docs/](docs/README.md). Each is a JSON file, the same on every OpenEMR release: in `data/documents/` if it applies anywhere, or in `data/packs/us/documents/` if it belongs to United States law or programmes (the **Pack** column; see [Country packs](#country-packs)). The short UDS form is the US pack's too. The PHQ-9 and GAD-7 are printed with their authors' statement that no permission is needed to reproduce them. Their answers can be typed into OpenEMR's own PHQ-9 and GAD-7 encounter forms, which ship with OpenEMR but have to be enabled under **Administration › Forms › Forms Administration**.
@@ -111,7 +123,7 @@ The format is in `src/Paper/Document.php`. Blocks are headings, paragraphs, fiel
 
 Choose **Español** as the language at the top of the Clinic Forms page. Documents marked **ES** print in Spanish; staff documents and the rest stay in English. The words Clinic Forms prints itself (Phone, Date, the patient line) follow the paper's language, not the language you use OpenEMR in. Word and LibreOffice downloads follow it too.
 
-- **All 22 patient documents** have Spanish versions, in the `es/` folder beside each (`data/documents/es/`, `data/packs/us/documents/es/`).
+- **22 of the 33 patient documents** have Spanish versions, in the `es/` folder beside each (`data/documents/es/`, `data/packs/us/documents/es/`). The 11 added in 0.13.0, and the work or school note changed in 0.10.0, print in English until the next language update.
 - **The validated questionnaires use their official Spanish wording.** PHQ-9, PHQ-2 and GAD-7 are the "Spanish for the USA" versions from phqscreeners.com. AUDIT-C is from the WHO's Spanish AUDIT manual.
 - **The other translations are ours.** Have a qualified translator review them before use, as you would the English.
 - **Nothing gets dropped in translation.** Each translation is checked against its English document: the same blocks, fields, items, signature lines and placeholders. The key legal wording is checked in Spanish too.

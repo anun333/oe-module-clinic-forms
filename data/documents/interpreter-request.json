@@ -1,0 +1,112 @@
+{
+  "id": "interpreter-request",
+  "title": "Language Help and Interpreter Request",
+  "category": "Front desk",
+  "about": "Records the patient's languages and the help they want (an interpreter, sign language, written translation, large print), with a staff section for what was arranged.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Language I prefer to speak"
+        },
+        {
+          "label": "Language I prefer to read"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "I would like (tick all that apply)",
+      "items": [
+        "An interpreter for my visits",
+        "A sign language interpreter",
+        "Written information in my language",
+        "Large print or braille",
+        "Someone to read forms with me"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "For",
+      "items": [
+        "All my visits",
+        "Only the visit on the date below"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date of visit"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "You do not need to bring someone to interpret for you. Please do not ask a child to interpret. We will arrange it."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For clinic use"
+    },
+    {
+      "type": "checklist",
+      "label": "Interpreter arranged",
+      "items": [
+        "In person",
+        "By phone",
+        "By video",
+        "Staff who speaks the language"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Interpreter name or ID"
+        },
+        {
+          "label": "Date"
+        },
+        {
+          "label": "Arranged by"
+        }
+      ]
+    }
+  ]
+}

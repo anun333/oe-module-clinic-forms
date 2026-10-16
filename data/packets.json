@@ -8,6 +8,8 @@
         "layout:DEM",
         "layout:HIS",
         "doc:consent-to-treat",
+        "doc:patient-rights",
+        "doc:missed-appointment-policy",
         "doc:financial-policy",
         "doc:communication-consent"
       ]

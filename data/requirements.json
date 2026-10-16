@@ -132,6 +132,41 @@
           }
         }
       ]
+    },
+    "procedure-consent": {
+      "source": "Informed consent: the procedure, why it is done, its benefits, risks and other choices, and a chance to ask questions",
+      "elements": [
+        {
+          "name": "What the procedure is and why",
+          "cite": "informed consent",
+          "all": [
+            "procedure (in plain words)",
+            "why it is being done"
+          ]
+        },
+        {
+          "name": "Benefits, risks and other choices, including none",
+          "cite": "informed consent",
+          "all": [
+            "benefits",
+            "risks",
+            "other choices, including not having it"
+          ]
+        },
+        {
+          "name": "Questions answered; may change their mind",
+          "cite": "informed consent",
+          "all": [
+            "questions were answered",
+            "change my mind"
+          ]
+        },
+        {
+          "name": "Signature",
+          "cite": "informed consent",
+          "signature": true
+        }
+      ]
     }
   }
 }

@@ -1,0 +1,103 @@
+{
+  "id": "procedure-consent",
+  "title": "Consent for a Procedure",
+  "category": "After the visit",
+  "about": "Informed consent for one procedure: what it is, why, its benefits and risks, and the other choices, explained and signed before it starts.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "64293-4",
+    "display": "Procedure Consent Document"
+  },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Procedure (in plain words)"
+        },
+        {
+          "label": "Body part and side"
+        },
+        {
+          "label": "Clinician doing it",
+          "value": "{provider.name}"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Why it is being done",
+      "count": 2
+    },
+    {
+      "type": "lines",
+      "label": "How it may help (benefits)",
+      "count": 2
+    },
+    {
+      "type": "lines",
+      "label": "Risks and possible problems",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "Other choices, including not having it",
+      "count": 2
+    },
+    {
+      "type": "checklist",
+      "label": "I understand that",
+      "items": [
+        "My clinician explained the procedure, how it may help, its risks, and my other choices.",
+        "I could ask questions, and my questions were answered.",
+        "I may change my mind at any time before it starts.",
+        "No one can promise how it will turn out.",
+        "Tissue or fluid taken out may be tested, then thrown away."
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Interpreter, if used (name or ID)"
+        }
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative",
+        "Clinician",
+        "Witness"
+      ]
+    }
+  ]
+}

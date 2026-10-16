@@ -1,0 +1,109 @@
+{
+  "id": "patient-rights",
+  "title": "Your Rights and Responsibilities",
+  "category": "Front desk",
+  "about": "What patients can expect from the clinic, and what the clinic asks of them. Give it at the first visit and post it.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "At {facility.name}, you have the right to:"
+    },
+    {
+      "type": "paragraph",
+      "text": "• Be treated with respect, kindness and fairness."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Have your health information kept private."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Get information about your health and care in words you understand."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Have an interpreter or help with reading if you need it."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Take part in decisions about your care."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Say yes or no to any test or treatment."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Know the names of the people who care for you."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Ask for another opinion."
+    },
+    {
+      "type": "paragraph",
+      "text": "• See your health record and get a copy."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Know about costs before your care when we can tell you."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Make a complaint and get an answer, without being treated differently."
+    },
+    {
+      "type": "paragraph",
+      "text": "We ask you to:"
+    },
+    {
+      "type": "paragraph",
+      "text": "• Tell us the truth about your health, your medicines and your past care."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Tell us when your address, phone or insurance changes."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Follow the care plan you agree to, or tell us if you cannot."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Come to your visits, or call us if you cannot."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Treat staff and other patients with respect."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Pay your bills or talk with us about a payment plan."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Ask questions when you do not understand."
+    },
+    {
+      "type": "paragraph",
+      "text": "Questions or concerns? Ask at the front desk or call {facility.phone}."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "I received a copy (patient or legal representative)"
+      ]
+    }
+  ]
+}

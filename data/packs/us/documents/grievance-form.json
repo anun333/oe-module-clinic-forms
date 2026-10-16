@@ -1,0 +1,129 @@
+{
+  "id": "grievance-form",
+  "title": "Patient Concern or Grievance",
+  "category": "Privacy and patient rights",
+  "about": "For a patient to raise a concern or a grievance, including unfair treatment. Keeps what 45 CFR 92.8(c) asks a Section 1557 grievance record to hold; keep it three years after it is resolved.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "Section 1557 grievance procedures and records, 45 CFR 92.8(c)",
+    "url": "https://www.ecfr.gov/current/title-45/section-92.8"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "Tell us about a problem so we can fix it. You may leave your name off, but then we cannot reply to you."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Your name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Phone or email to reach you",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Today's date",
+          "value": "{clinic.today}"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "What it is about (tick all that apply)",
+      "items": [
+        "My care or treatment",
+        "How staff treated me",
+        "Waiting or getting an appointment",
+        "A bill or cost",
+        "The privacy of my information",
+        "Language help or an interpreter",
+        "Access or help for a disability",
+        "I was treated unfairly because of my race, color, national origin, language, sex, age or disability"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date it happened"
+        },
+        {
+          "label": "Where (site or department)"
+        },
+        {
+          "label": "Who was involved, if you know"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "What happened",
+      "count": 6
+    },
+    {
+      "type": "lines",
+      "label": "What would you like us to do?",
+      "count": 3
+    },
+    {
+      "type": "paragraph",
+      "text": "We keep your name private, except as the law requires or to look into your concern. We will not treat you differently for telling us."
+    },
+    {
+      "type": "paragraph",
+      "text": "Our Section 1557 Coordinator handles concerns about unfair treatment. You can also file a civil rights complaint with the U.S. Department of Health and Human Services, Office for Civil Rights, at ocrportal.hhs.gov or 1-800-368-1019."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Person filing (optional)"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For clinic use"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Received by"
+        },
+        {
+          "label": "Date received"
+        },
+        {
+          "label": "Grievance number"
+        },
+        {
+          "label": "Unfair treatment alleged? Basis"
+        },
+        {
+          "label": "Date resolved"
+        },
+        {
+          "label": "Response sent (date and how)"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Resolution",
+      "count": 3
+    },
+    {
+      "type": "paragraph",
+      "text": "Keep this record for at least three years after the grievance is resolved."
+    }
+  ]
+}

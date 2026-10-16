@@ -1,0 +1,113 @@
+{
+  "id": "superbill",
+  "title": "Encounter Form (Superbill)",
+  "category": "Downtime",
+  "about": "Charges for one visit on paper: services by CPT or HCPCS code, diagnoses by ICD-10-CM, the sliding fee level and what was paid. For downtime, or clinics that bill from paper.",
+  "audience": "staff",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date of service"
+        },
+        {
+          "label": "Rendering provider",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "NPI",
+          "value": "{provider.npi}"
+        },
+        {
+          "label": "Place of service"
+        },
+        {
+          "label": "Primary insurance"
+        },
+        {
+          "label": "Member ID"
+        },
+        {
+          "label": "Sliding fee level"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "label": "Services (CPT or HCPCS)",
+      "columns": [
+        "Code",
+        "Modifier",
+        "Description",
+        "Units",
+        "Diagnosis pointer",
+        "Charge"
+      ],
+      "rows": 10
+    },
+    {
+      "type": "table",
+      "label": "Diagnoses (ICD-10-CM)",
+      "columns": [
+        "Pointer",
+        "Code",
+        "Description"
+      ],
+      "rows": 4
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Total charges"
+        },
+        {
+          "label": "Paid today"
+        },
+        {
+          "label": "Balance"
+        },
+        {
+          "label": "Next visit"
+        },
+        {
+          "label": "Referral or orders"
+        }
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Provider"
+      ]
+    }
+  ]
+}

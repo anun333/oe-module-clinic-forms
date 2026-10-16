@@ -1,0 +1,98 @@
+{
+  "id": "results-letter",
+  "title": "Your Test Results",
+  "category": "After the visit",
+  "about": "A letter to the patient with test results and what to do next, signed by the clinician.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "To",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Address",
+          "value": "{patient.address}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Here are the results of your recent tests."
+    },
+    {
+      "type": "table",
+      "label": "Results",
+      "columns": [
+        "Test",
+        "Date",
+        "Result",
+        "What it means"
+      ],
+      "rows": 6
+    },
+    {
+      "type": "checklist",
+      "label": "What to do next",
+      "items": [
+        "Your results are normal. You do not need to do anything.",
+        "Your results need follow-up. Please call us to make a visit.",
+        "Please repeat the test on or after the date below.",
+        "Keep taking your medicines as you do now.",
+        "We changed a medicine. See the notes below."
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Repeat test on or after"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Notes",
+      "count": 3
+    },
+    {
+      "type": "paragraph",
+      "text": "If you have questions, please call us at {facility.phone}."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Clinician"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Clinician name (printed)",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Credentials",
+          "value": "{provider.credentials}"
+        }
+      ]
+    }
+  ]
+}

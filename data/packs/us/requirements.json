@@ -911,6 +911,277 @@
           }
         }
       ]
+    },
+    "part-2-notice": {
+      "source": "42 CFR Part 2 notice to patients, 42 CFR 2.22 (as revised in 2024)",
+      "elements": [
+        {
+          "name": "Federal law protects the records",
+          "cite": "2.22(a)",
+          "any": [
+            "federal law protects the privacy of records of substance use disorder"
+          ]
+        },
+        {
+          "name": "The required header, with the right to a copy and a contact",
+          "cite": "2.22(b)(1)(i)",
+          "all": [
+            "notice of privacy practices of",
+            "how health information about you may be used and disclosed",
+            "your rights with respect to your health information",
+            "how to file a complaint concerning a violation",
+            "you have a right to a copy of this notice"
+          ]
+        },
+        {
+          "name": "Each purpose allowed without written consent",
+          "cite": "2.22(b)(1)(ii)(A)",
+          "all": [
+            "without your written consent",
+            "emergenc",
+            "research",
+            "audit",
+            "public health",
+            "child abuse",
+            "crime",
+            "cause of death",
+            "court order",
+            "department of health and human services"
+          ]
+        },
+        {
+          "name": "A more protective law is followed",
+          "cite": "2.22(b)(1)(ii)(B)",
+          "any": [
+            "if a state law protects you more"
+          ]
+        },
+        {
+          "name": "An example of sharing that needs written consent",
+          "cite": "2.22(b)(1)(ii)(D)",
+          "any": [
+            "for example, we need it"
+          ]
+        },
+        {
+          "name": "One consent may cover treatment, payment and health care operations",
+          "cite": "2.22(b)(1)(ii)(E)",
+          "any": [
+            "one consent for all future uses"
+          ]
+        },
+        {
+          "name": "Other uses only with written consent",
+          "cite": "2.22(b)(1)(ii)(F)",
+          "any": [
+            "not described in this notice only with your written consent"
+          ]
+        },
+        {
+          "name": "Consent may be revoked as 2.31 and 2.35 provide",
+          "cite": "2.22(b)(1)(ii)(G)",
+          "all": [
+            "revoke",
+            "2.31",
+            "2.35"
+          ]
+        },
+        {
+          "name": "Records not used in proceedings against the patient without consent or a court order; notice and a chance to be heard; a subpoena with the order",
+          "cite": "2.22(b)(1)(ii)(H)",
+          "all": [
+            "civil, administrative, criminal, or legislative",
+            "chance to be heard",
+            "subpoena"
+          ]
+        },
+        {
+          "name": "Records shared with consent may be shared again as HIPAA allows",
+          "cite": "2.22(b)(1)(iii)(A)",
+          "any": [
+            "may share them again"
+          ]
+        },
+        {
+          "name": "Fundraising only after a chance to say no",
+          "cite": "2.22(b)(1)(iii)(B)",
+          "any": [
+            "chance to say no"
+          ]
+        },
+        {
+          "name": "The patient's rights",
+          "cite": "2.22(b)(1)(iv)",
+          "all": [
+            "limit what we share",
+            "paid for in full",
+            "past 3 years",
+            "group that passes records on",
+            "copy of this notice",
+            "talk about this notice",
+            "not to contact you about fundraising"
+          ]
+        },
+        {
+          "name": "The program's duties, including breach notice and changes to the notice",
+          "cite": "2.22(b)(1)(v)",
+          "all": [
+            "keep your records private",
+            "breach",
+            "follow the notice that is in effect",
+            "may change this notice"
+          ]
+        },
+        {
+          "name": "Complaints to the program and the Secretary, without retaliation",
+          "cite": "2.22(b)(1)(vi)",
+          "all": [
+            "complain to us and to the secretary",
+            "will not treat you differently"
+          ]
+        },
+        {
+          "name": "A contact person or office with phone and email",
+          "cite": "2.22(b)(1)(vii)",
+          "all": [
+            "privacy contact",
+            "phone",
+            "email"
+          ]
+        },
+        {
+          "name": "The effective date",
+          "cite": "2.22(b)(1)(viii)",
+          "any": [
+            "takes effect on"
+          ]
+        }
+      ]
+    },
+    "part-2-consent-revocation": {
+      "source": "42 CFR 2.31(a)(6), revoking a Part 2 consent",
+      "elements": [
+        {
+          "name": "Revocation in writing, identifying the consent",
+          "cite": "2.31(a)(6)",
+          "all": [
+            "revoke",
+            "in writing",
+            "date i signed it"
+          ]
+        },
+        {
+          "name": "Does not undo what was done in reliance",
+          "cite": "2.31(a)(6)",
+          "any": [
+            "does not undo"
+          ]
+        },
+        {
+          "name": "Signature",
+          "cite": "2.31(a)(8)",
+          "signature": true
+        }
+      ]
+    },
+    "personal-representative": {
+      "source": "HIPAA personal representatives, 45 CFR 164.502(g); verification, 164.514(h)",
+      "elements": [
+        {
+          "name": "The kinds of legal authority: adults, minors, deceased patients",
+          "cite": "164.502(g)(2)-(4)",
+          "all": [
+            "power of attorney",
+            "guardian",
+            "parent",
+            "executor"
+          ]
+        },
+        {
+          "name": "Minors' own care may stay private as state law allows",
+          "cite": "164.502(g)(3)",
+          "any": [
+            "some care the child can agree to alone"
+          ]
+        },
+        {
+          "name": "The paper that shows the authority",
+          "cite": "164.514(h)(1)(ii)",
+          "any": [
+            "copy of the paper"
+          ]
+        },
+        {
+          "name": "Identity and authority checked",
+          "cite": "164.514(h)(1)(i)",
+          "all": [
+            "photo id",
+            "authority paper seen"
+          ]
+        },
+        {
+          "name": "Signature",
+          "cite": "164.514(h)",
+          "signature": true
+        }
+      ]
+    },
+    "grievance-form": {
+      "source": "Section 1557 grievance procedures and records, 45 CFR 92.8(c)",
+      "elements": [
+        {
+          "name": "The grievance itself",
+          "cite": "92.8(c)(2)",
+          "any": [
+            "what happened"
+          ]
+        },
+        {
+          "name": "Name and contact, if given",
+          "cite": "92.8(c)(2)",
+          "all": [
+            "your name",
+            "reach you"
+          ]
+        },
+        {
+          "name": "The alleged action and basis of discrimination",
+          "cite": "92.8(c)(2)",
+          "all": [
+            "race, color, national origin",
+            "sex, age or disability"
+          ]
+        },
+        {
+          "name": "Date filed and date resolved",
+          "cite": "92.8(c)(2)",
+          "all": [
+            "date received",
+            "date resolved"
+          ]
+        },
+        {
+          "name": "The resolution",
+          "cite": "92.8(c)(2)",
+          "any": [
+            "resolution"
+          ]
+        },
+        {
+          "name": "Kept three years after resolution",
+          "cite": "92.8(c)(2)",
+          "any": [
+            "three years"
+          ]
+        },
+        {
+          "name": "The complainant's identity kept confidential",
+          "cite": "92.8(c)(3)",
+          "any": [
+            "keep your name private"
+          ]
+        }
+      ]
     }
   }
 }

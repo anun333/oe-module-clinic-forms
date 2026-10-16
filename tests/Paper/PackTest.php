@@ -91,13 +91,13 @@ final class PackTest extends TestCase
     {
         $core = Packets::shipped(DocumentLibrary::shipped('en', null), null);
         $byId = array_column($core->packets, 'items', 'id');
-        self::assertSame(['layout:DEM', 'layout:HIS', 'doc:consent-to-treat', 'doc:financial-policy', 'doc:communication-consent'], $byId['new-patient']);
+        self::assertSame(['layout:DEM', 'layout:HIS', 'doc:consent-to-treat', 'doc:patient-rights', 'doc:missed-appointment-policy', 'doc:financial-policy', 'doc:communication-consent'], $byId['new-patient']);
         self::assertArrayNotHasKey('annual-update-short', $byId, 'the UDS packet is the US pack\'s');
         $us = array_column(Packets::shipped(DocumentLibrary::shipped())->packets, 'items', 'id');
         self::assertContains('doc:notice-of-privacy-practices', $us['new-patient'], 'the US pack replaces the core packet');
         self::assertContains('layout:UDS', $us['annual-update-short']);
 
-        self::assertSame(['audit-c', 'gad-7', 'phq-2', 'phq-9'], self::sorted(array_keys(Requirements::shipped(null)->documents)));
+        self::assertSame(['audit-c', 'gad-7', 'phq-2', 'phq-9', 'procedure-consent'], self::sorted(array_keys(Requirements::shipped(null)->documents)));
         self::assertArrayHasKey('release-of-information', Requirements::shipped()->documents);
         self::assertSame([], Taglines::forSite(null, null)->taglines, 'taglines are Section 1557, so the US pack\'s');
         self::assertSame(['en', 'es'], array_keys(Taglines::forSite(null)->taglines));
@@ -141,14 +141,16 @@ final class PackTest extends TestCase
         }
     }
 
-    public function testEveryPackDocumentIsTranslatedWhereItsCoreDocumentsAre(): void
+    public function testThePacksSpanishIsUsedLikeTheCores(): void
     {
-        // The US pack's patient documents have Spanish, as the core's do (or are out of date).
+        // Spanish in the US pack's folder translates the pack's documents, as the core's does its own.
         $spanish = DocumentLibrary::shipped('es');
-        foreach (DocumentLibrary::shipped()->all() as $id => $doc) {
-            if ($doc->audience === 'patient') {
-                self::assertTrue($spanish->isTranslated($id) || isset($spanish->outOfDate()[$id]), "$id has Spanish");
-            }
+        self::assertTrue($spanish->isTranslated('notice-of-privacy-practices'));
+        self::assertTrue($spanish->isTranslated('consent-to-treat'));
+        foreach (glob(dirname(__DIR__, 2) . '/data/packs/us/documents/es/*.json') ?: [] as $file) {
+            $id = basename($file, '.json');
+            self::assertNotNull(DocumentLibrary::shipped('en', 'us')->get($id), "$id translates a document that exists");
+            self::assertSame('patient', $spanish->get($id)?->audience, "$id: only patient documents are translated");
         }
         self::assertInstanceOf(Document::class, $spanish->get('notice-of-privacy-practices'));
     }

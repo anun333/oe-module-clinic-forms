@@ -1,5 +1,29 @@
 # Changelog
 
+## 0.13.0 (2026-10-16)
+
+12 new documents, completing the documents planned for 1.0. 40 documents in all: 22 core, 18 in the US pack.
+
+- **US pack:**
+  - **Notice of Privacy Practices for Substance Use Disorder Records**, with every element 42 CFR 2.22 requires since the 2024 revision: the required header, each use allowed without consent, the court-order limits, the patient's rights and the program's duties.
+  - **Revoking a Part 2 consent** (2.31(a)(6)).
+  - **Personal Representative** (45 CFR 164.502(g), with the identity and authority check of 164.514(h)).
+  - **Patient Concern or Grievance** (what 45 CFR 92.8(c) asks the record to hold).
+  - **Encounter Form (Superbill)**.
+  - Each rule-based document is held to its elements in `requirements.json`.
+- **Core:**
+  - Your Rights and Responsibilities;
+  - Missed Appointments;
+  - Language Help and Interpreter Request;
+  - Consent for a Procedure (LOINC 64293-4, held to its informed-consent elements);
+  - Controlled Medicine Agreement (94136-9);
+  - Your Test Results;
+  - Visit Summary and Instructions (103796-9).
+- LOINC codes were checked as active on LOINC's own terminology server.
+- **Packets:** patient rights and the missed appointment policy join the new-patient packets. The US pack adds a substance use treatment intake packet.
+- **No Spanish yet** for the 11 new patient documents: they print in English until the language pass. The tests list them as incomplete rather than failing.
+- **Documents changed in this release:** 12 new, each at version 1. No existing document's version moved.
+
 ## 0.12.0 (2026-10-16)
 
 - **Every document has a version, status, source and licence.** The version prints small at the foot of every page with the document's id (`consent-to-treat v1`), in Word and LibreOffice downloads too, and goes in the audit event, so a signed copy names the wording signed. `data/document-versions.json` records each version's wording, and the tests fail when a document's wording changes without a new version (`tools/document-versions.php`). The source says whether the wording is ours, written to a rule (linked), or a published instrument; the licence names its holder, terms and the permission they give.

@@ -8,6 +8,8 @@
         "layout:DEM",
         "layout:HIS",
         "doc:consent-to-treat",
+        "doc:patient-rights",
+        "doc:missed-appointment-policy",
         "doc:notice-of-privacy-practices",
         "doc:privacy-acknowledgment",
         "doc:financial-policy",
@@ -43,6 +45,15 @@
       "items": [
         "doc:referral-letter",
         "doc:release-of-information"
+      ]
+    },
+    {
+      "id": "substance-use-intake",
+      "title": "Substance use treatment intake (42 CFR Part 2)",
+      "items": [
+        "doc:part-2-notice",
+        "doc:part-2-consent",
+        "doc:personal-representative"
       ]
     }
   ]

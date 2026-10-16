@@ -1,0 +1,138 @@
+{
+  "id": "personal-representative",
+  "title": "Personal Representative",
+  "category": "Privacy and patient rights",
+  "about": "Records who the law lets act for a patient on health care and health information, and the papers that show it. HIPAA, 45 CFR 164.502(g); identity and authority checked under 164.514(h).",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "HIPAA personal representatives, 45 CFR 164.502(g), and verification, 164.514(h)",
+    "url": "https://www.ecfr.gov/current/title-45/section-164.502"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "GPL-3.0-or-later, as the module. Adapt it for your clinic."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "A personal representative is someone the law lets make health care decisions for you. We treat them as you for your health information."
+    },
+    {
+      "type": "paragraph",
+      "text": "This is often a health care power of attorney, a guardian, the parent of a child, or the person in charge of the estate of someone who has died."
+    },
+    {
+      "type": "heading",
+      "text": "The representative"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name"
+        },
+        {
+          "label": "Relationship to the patient"
+        },
+        {
+          "label": "Phone"
+        },
+        {
+          "label": "Address"
+        },
+        {
+          "label": "Email"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Their legal authority (tick one)",
+      "items": [
+        "Health care power of attorney or health care agent",
+        "Guardian or conservator named by a court",
+        "Parent or legal guardian of a child under 18",
+        "Executor or administrator of the estate of a patient who has died",
+        "Other legal authority (write below)"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Other authority, and any limits on it",
+      "count": 2
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Starts"
+        },
+        {
+          "label": "Ends (if known)"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Please bring a copy of the paper that gives this authority, such as the power of attorney or the court order. We keep a copy in your record."
+    },
+    {
+      "type": "paragraph",
+      "text": "For a child, some care the child can agree to alone may stay private, as state law allows. Then the parent may not see those records."
+    },
+    {
+      "type": "paragraph",
+      "text": "If you only want us to talk with a family member or friend, you do not need this form. Ask us for a release form instead."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Representative"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For clinic use"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Photo ID seen (type)"
+        },
+        {
+          "label": "Authority paper seen"
+        },
+        {
+          "label": "Copy in the record"
+        },
+        {
+          "label": "Checked by"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    }
+  ]
+}
