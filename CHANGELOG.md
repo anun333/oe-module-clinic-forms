@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.13.1 (2026-10-16)
+
+- `FOOTPRINT.md` regenerated: the 0.13.0 tag carried one made before its last edits, so its CI check failed. No change to what prints.
+
 ## 0.13.0 (2026-10-16)
 
 12 new documents, completing the documents planned for 1.0. 40 documents in all: 22 core, 18 in the US pack.
