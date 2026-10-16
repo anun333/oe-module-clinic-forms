@@ -3,6 +3,7 @@
   "title": "Request for Records",
   "category": "Care coordination",
   "about": "A request to another provider for a patient's records, with the patient's signature.",
+  "audience": "provider",
   "blocks": [
     {
       "type": "fields",

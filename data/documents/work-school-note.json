@@ -3,6 +3,7 @@
   "title": "Work or School Note",
   "category": "After the visit",
   "about": "Confirms a visit and when the patient may return, without saying why they were seen.",
+  "audience": "patient",
   "blocks": [
     {
       "type": "fields",

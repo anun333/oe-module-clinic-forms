@@ -99,7 +99,24 @@ final class DocumentLibrary
         if (!is_array($data)) {
             throw new \InvalidArgumentException("$where: must be an object");
         }
-        self::onlyKeys($data, ['id', 'title', 'category', 'about', 'blocks'], [], $where);
+        self::onlyKeys($data, ['id', 'title', 'category', 'about', 'audience', 'blocks'], ['code', 'validated'], $where);
+        if (!is_string($data['audience']) || !in_array($data['audience'], Document::AUDIENCES, true)) {
+            throw new \InvalidArgumentException("$where audience: must be one of " . implode(', ', Document::AUDIENCES));
+        }
+        $code = null;
+        if (isset($data['code'])) {
+            if (!is_array($data['code'])) {
+                throw new \InvalidArgumentException("$where code: must be an object with system, code and display");
+            }
+            self::onlyKeys($data['code'], ['system', 'code', 'display'], [], "$where code");
+            if ($data['code']['system'] !== Loinc::SYSTEM || !is_string($data['code']['code']) || !Loinc::isValid($data['code']['code'])) {
+                throw new \InvalidArgumentException("$where code: must be a LOINC code (system " . Loinc::SYSTEM . ") with a correct check digit");
+            }
+            $code = ['system' => Loinc::SYSTEM, 'code' => $data['code']['code'], 'display' => self::text($data['code']['display'], "$where code display")];
+        }
+        if (isset($data['validated']) && !is_bool($data['validated'])) {
+            throw new \InvalidArgumentException("$where validated: must be true or false");
+        }
         $id = self::text($data['id'], "$where id");
         if ($id . '.json' !== basename($file) || preg_match('/^[a-z0-9]+(-[a-z0-9]+)*$/', $id) !== 1) {
             throw new \InvalidArgumentException("$where id: must be the file's name, lower case words joined by hyphens");
@@ -206,6 +223,9 @@ final class DocumentLibrary
             $blocks,
             array_values(array_intersect(array_keys($uses), ['patient', 'recipient'])),
             $source,
+            $data['audience'],
+            $code,
+            ($data['validated'] ?? false) === true,
         );
     }
 

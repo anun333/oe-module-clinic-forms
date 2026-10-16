@@ -3,6 +3,12 @@
   "title": "Downtime Visit Note",
   "category": "Downtime",
   "about": "A paper visit note for when OpenEMR is unavailable, to be entered once it is back.",
+  "audience": "staff",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "11506-3",
+    "display": "Progress Note"
+  },
   "blocks": [
     {
       "type": "fields",

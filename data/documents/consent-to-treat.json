@@ -3,6 +3,12 @@
   "title": "Consent to Treatment",
   "category": "Front desk",
   "about": "General consent for examination and treatment at the clinic.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "59284-0",
+    "display": "Consent Document"
+  },
   "blocks": [
     {
       "type": "fields",
@@ -23,15 +29,15 @@
     },
     {
       "type": "paragraph",
-      "text": "I consent to examination, testing and treatment by the providers and staff of {facility.name}, as they judge necessary for my care. This includes routine procedures, laboratory tests, immunizations and medications."
+      "text": "I agree to be examined, tested and treated by the providers and staff of {facility.name} when they think it is needed for my care. This includes routine tests, lab work, shots and medicines."
     },
     {
       "type": "paragraph",
-      "text": "I understand that I may ask questions about any treatment, that I may refuse any treatment, and that I will be asked for separate written consent before any procedure that requires it."
+      "text": "I may ask questions about any treatment. I may say no to any treatment. Before some procedures, I will be asked to sign a separate consent."
     },
     {
       "type": "paragraph",
-      "text": "This consent stays in effect until I withdraw it in writing."
+      "text": "This consent lasts until I take it back in writing."
     },
     {
       "type": "signature",

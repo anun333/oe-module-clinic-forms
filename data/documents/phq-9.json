@@ -3,6 +3,13 @@
   "title": "Patient Health Questionnaire (PHQ-9)",
   "category": "Screening",
   "about": "Depression screening: nine questions scored 0 to 27. The answers can be typed into OpenEMR's PHQ-9 encounter form (enable it under Administration > Forms > Forms Administration).",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "44249-1",
+    "display": "PHQ-9 quick depression assessment panel [Reported.PHQ]"
+  },
+  "validated": true,
   "blocks": [
     {
       "type": "fields",

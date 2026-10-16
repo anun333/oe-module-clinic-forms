@@ -3,6 +3,12 @@
   "title": "Internal Referral",
   "category": "Office workflow",
   "about": "A referral inside the clinic or to another of its sites: behavioral health, care management, nutrition, social work.",
+  "audience": "staff",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "57133-1",
+    "display": "Referral Note"
+  },
   "blocks": [
     {
       "type": "fields",

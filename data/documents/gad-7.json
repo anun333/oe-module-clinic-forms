@@ -3,6 +3,13 @@
   "title": "Generalized Anxiety Disorder Scale (GAD-7)",
   "category": "Screening",
   "about": "Anxiety screening: seven questions scored 0 to 21. The answers can be typed into OpenEMR's GAD-7 encounter form (enable it under Administration > Forms > Forms Administration).",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "69737-5",
+    "display": "Generalized anxiety disorder 7 item (GAD-7)"
+  },
+  "validated": true,
   "blocks": [
     {
       "type": "fields",

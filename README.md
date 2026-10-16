@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.4.0, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.5.0, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -27,26 +27,33 @@ Every printed page starts with a line for the patient's name, date of birth and 
 
 ## The documents
 
-| Category | Document | What it is |
-|---|---|---|
-| Front desk | Consent to Treatment | General consent for examination and treatment |
-| Front desk | Acknowledgment of the Notice of Privacy Practices | Receipt of the Notice, with a clinic-use section for when it wasn't obtained |
-| Front desk | Financial Policy and Assignment of Benefits | Payment responsibilities, insurance billing and assignment of benefits |
-| Front desk | Authorization to Release Health Information | A HIPAA authorization with the elements 45 CFR 164.508 requires, separate initials for sensitive records, and a 42 CFR Part 2 note |
-| Front desk | Communication Preferences | How the clinic may contact the patient: phone, voicemail, text, email, portal |
-| Front desk | Consent for Telehealth Visits | Consent to visits by video or telephone |
-| Front desk | Sliding Fee Discount Application | Household members and income, proof attached, and a clinic section for the poverty-guideline percentage and discount level (the facts UDS Table 4 reports) |
-| Screening | Patient Health Questionnaire (PHQ-9) | Depression screening, scored 0 to 27, with an office prompt to follow the clinic's safety protocol on question 9 |
-| Screening | Generalized Anxiety Disorder Scale (GAD-7) | Anxiety screening, scored 0 to 21 |
-| Care coordination | Referral letter | To the Address Book recipient, with urgency, the question to answer and what is enclosed |
-| Care coordination | Request for Records | A request to another provider for a patient's records |
-| Office workflow | Patient Routing Slip | Travels with the patient: check-in, rooming, provider, checkout |
-| Office workflow | Staff Handoff (SBAR) | Handing a patient from one staff member, shift or site to another |
-| Office workflow | Internal Referral | To behavioral health, care management, nutrition, social work or another of the clinic's sites |
-| Downtime | Downtime Visit Note | A paper visit note for when OpenEMR is down, with a box to record when it was entered |
-| After the visit | Work or School Note | Confirms the visit and when the patient may return, without giving the reason for the visit |
+| Category | Document | What it is | LOINC |
+|---|---|---|---|
+| Front desk | Consent to Treatment | General consent for examination and treatment | 59284-0 |
+| Front desk | Acknowledgment of the Notice of Privacy Practices | Receipt of the Notice, with a clinic-use section for when it wasn't obtained | 57016-8 |
+| Front desk | Financial Policy and Assignment of Benefits | Payment responsibilities, insurance billing and assignment of benefits | 59284-0 |
+| Front desk | Authorization to Release Health Information | A HIPAA authorization with the elements 45 CFR 164.508 requires, separate initials for sensitive records, and a 42 CFR Part 2 note | 64292-6 |
+| Front desk | Communication Preferences | How the clinic may contact the patient: phone, voicemail, text, email, portal | 59284-0 |
+| Front desk | Consent for Telehealth Visits | Consent to visits by video or telephone | 59284-0 |
+| Front desk | Sliding Fee Discount Application | Household members and income, proof attached, and a clinic section for the poverty-guideline percentage and discount level (the facts UDS Table 4 reports) | — |
+| Screening | Patient Health Questionnaire (PHQ-9) | Depression screening, scored 0 to 27, with an office prompt to follow the clinic's safety protocol on question 9 | 44249-1 |
+| Screening | Generalized Anxiety Disorder Scale (GAD-7) | Anxiety screening, scored 0 to 21 | 69737-5 |
+| Care coordination | Referral letter | To the Address Book recipient, with urgency, the question to answer and what is enclosed | 57133-1 |
+| Care coordination | Request for Records | A request to another provider for a patient's records | — |
+| Office workflow | Patient Routing Slip | Travels with the patient: check-in, rooming, provider, checkout | — |
+| Office workflow | Staff Handoff (SBAR) | Handing a patient from one staff member, shift or site to another | — |
+| Office workflow | Internal Referral | To behavioral health, care management, nutrition, social work or another of the clinic's sites | 57133-1 |
+| Downtime | Downtime Visit Note | A paper visit note for when OpenEMR is down, with a box to record when it was entered | 11506-3 |
+| After the visit | Work or School Note | Confirms the visit and when the patient may return, without giving the reason for the visit | — |
 
 Each is a JSON file in `data/documents/`, the same on every OpenEMR release. The PHQ-9 and GAD-7 are printed with their authors' statement that no permission is needed to reproduce them. Their answers can be typed into OpenEMR's own PHQ-9 and GAD-7 encounter forms, which ship with OpenEMR but have to be enabled under **Administration › Forms › Forms Administration**.
+
+### Standards the documents follow
+
+- **LOINC document codes** where an exact one exists (the table above), as OpenEMR's own C-CDA referral uses 57133-1. Each code is checked by its LOINC check digit; a document with no exact code is left uncoded rather than mislabeled.
+- **What the law says goes in.** `data/requirements.json` lists, for the documents a rule governs, each required element and its citation: the HIPAA authorization (45 CFR 164.508(c)), the privacy notice acknowledgment (164.520(c)(2)(ii)), the sliding fee application (HRSA Compliance Manual, chapter 9), the work or school note's minimum necessary (164.502(b)), and the PHQ-9 and GAD-7 wording. The tests fail if a shipped document loses one. A clinic's own version of one of these documents is checked too, and the Clinic Forms page names anything it can't find (by wording, so check before relying on the warning).
+- **Plain language.** Every patient document reads at an 8th-grade level or below (Flesch-Kincaid), as AHRQ's health literacy toolkit advises; the tests measure it. Validated instruments (PHQ-9, GAD-7) keep their published wording and are exempt.
+- Each document says who reads it (patient, staff or provider) and whether its wording is a validated instrument's.
 
 ### The documents are starting points
 

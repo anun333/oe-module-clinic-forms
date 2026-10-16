@@ -3,6 +3,7 @@
   "title": "Sliding Fee Discount Application",
   "category": "Front desk",
   "about": "Household size and income for the clinic's sliding fee discount, the same facts UDS Table 4 reports by poverty level.",
+  "audience": "patient",
   "blocks": [
     {
       "type": "paragraph",

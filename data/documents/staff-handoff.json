@@ -3,6 +3,7 @@
   "title": "Staff Handoff (SBAR)",
   "category": "Office workflow",
   "about": "Hands a patient's care from one staff member, shift or site to another: situation, background, assessment, recommendation.",
+  "audience": "staff",
   "blocks": [
     {
       "type": "fields",

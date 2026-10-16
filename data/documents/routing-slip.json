@@ -3,6 +3,7 @@
   "title": "Patient Routing Slip",
   "category": "Office workflow",
   "about": "Travels with the patient through the visit: check-in, rooming, provider, checkout.",
+  "audience": "staff",
   "blocks": [
     {
       "type": "fields",

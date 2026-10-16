@@ -16,6 +16,10 @@
  *   table      {"type": "table", "label": "...", "columns": ["Name", "Age"], "rows": 6}   a grid of blank rows
  * Text may use the placeholders in Context::KEYS, written {group.key}.
  *
+ * Every document also says who reads it ("audience": patient, staff or provider) and may carry a
+ * LOINC document code ("code": {"system": "http://loinc.org", "code": "57133-1", "display": "Referral Note"})
+ * and "validated": true for a validated instrument (PHQ-9…) whose wording must not be changed.
+ *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
  */
@@ -27,11 +31,15 @@ namespace OpenHealthcare\ClinicForms\Paper;
 final readonly class Document
 {
     public const BLOCK_TYPES = ['heading', 'paragraph', 'fields', 'checklist', 'lines', 'signature', 'scale', 'table'];
+    public const AUDIENCES = ['patient', 'staff', 'provider'];
 
     /**
      * @param list<array<string, mixed>> $blocks validated by DocumentLibrary
      * @param list<string>               $uses   the context groups its placeholders use (patient, recipient)
      * @param string                     $source 'shipped' with the module, or 'clinic' (the site's own folder)
+     * @param string                     $audience who reads it: patient, staff or provider
+     * @param ?array{system: string, code: string, display: string} $code its LOINC document code, if it has one
+     * @param bool                       $validated a validated instrument: its wording must not be changed
      */
     public function __construct(
         public string $id,
@@ -41,6 +49,9 @@ final readonly class Document
         public array $blocks,
         public array $uses,
         public string $source = 'shipped',
+        public string $audience = 'patient',
+        public ?array $code = null,
+        public bool $validated = false,
     ) {
     }
 

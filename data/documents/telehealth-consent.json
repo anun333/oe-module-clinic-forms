@@ -3,6 +3,12 @@
   "title": "Consent for Telehealth Visits",
   "category": "Front desk",
   "about": "Consent to visits by video or telephone.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "59284-0",
+    "display": "Consent Document"
+  },
   "blocks": [
     {
       "type": "fields",

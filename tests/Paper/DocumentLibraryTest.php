@@ -90,6 +90,10 @@ final class DocumentLibraryTest extends TestCase
         yield 'scale with one column' => [static fn(array $d): array => ['blocks' => [['type' => 'scale', 'label' => 'Q', 'columns' => ['Yes'], 'items' => ['A']]]] + $d, 'columns: must be a list of 2 to 8 texts'];
         yield 'table with too many rows' => [static fn(array $d): array => ['blocks' => [['type' => 'table', 'label' => 'T', 'columns' => ['Name'], 'rows' => 31]]] + $d, 'rows: must be a whole number from 1 to 30'];
         yield 'unknown placeholder in a scale item' => [static fn(array $d): array => ['blocks' => [['type' => 'scale', 'label' => 'Q', 'columns' => ['No', 'Yes'], 'items' => ['{patient.ssn}']]]] + $d, '{patient.ssn} is not a placeholder'];
+        yield 'unknown audience' => [static fn(array $d): array => ['audience' => 'everyone'] + $d, 'audience: must be one of patient, staff, provider'];
+        yield 'LOINC code with a wrong check digit' => [static fn(array $d): array => $d + ['code' => ['system' => 'http://loinc.org', 'code' => '57133-2', 'display' => 'Referral Note']], 'code: must be a LOINC code'];
+        yield 'code from another system' => [static fn(array $d): array => $d + ['code' => ['system' => 'http://snomed.info/sct', 'code' => '57133-1', 'display' => 'x']], 'code: must be a LOINC code'];
+        yield 'validated not a boolean' => [static fn(array $d): array => $d + ['validated' => 'yes'], 'validated: must be true or false'];
         yield 'id not the file name' => [static fn(array $d): array => ['id' => 'other'] + $d, "must be the file's name"];
     }
 
@@ -141,7 +145,18 @@ final class DocumentLibraryTest extends TestCase
         self::assertSame([], $library->problems());
     }
 
-    public function testInvalidJsonIsRefused(): void
+    public function testShippedDocumentsCarryTheirAudienceAndCodes(): void
+    {
+        $library = DocumentLibrary::shipped();
+        self::assertSame(['system' => 'http://loinc.org', 'code' => '57133-1', 'display' => 'Referral Note'], $library->get('referral-letter')?->code);
+        self::assertSame('provider', $library->get('referral-letter')?->audience);
+        self::assertSame('staff', $library->get('routing-slip')?->audience);
+        self::assertTrue($library->get('phq-9')?->validated);
+        self::assertFalse($library->get('consent-to-treat')?->validated);
+        self::assertNull($library->get('sliding-fee-application')?->code);
+    }
+
+        public function testInvalidJsonIsRefused(): void
     {
         file_put_contents($this->dir . '/bad.json', '{"id": "bad",');
         $this->expectExceptionMessage('data/documents/bad.json: not valid JSON');
@@ -156,6 +171,7 @@ final class DocumentLibraryTest extends TestCase
             'title' => 'Sample',
             'category' => 'Front desk',
             'about' => 'A sample.',
+            'audience' => 'patient',
             'blocks' => [
                 ['type' => 'paragraph', 'text' => 'I, {patient.name}, agree.'],
                 ['type' => 'signature', 'signers' => ['Patient']],

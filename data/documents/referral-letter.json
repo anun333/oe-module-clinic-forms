@@ -3,6 +3,12 @@
   "title": "Referral letter",
   "category": "Care coordination",
   "about": "A referral letter to a provider or organization in the Address Book.",
+  "audience": "provider",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "57133-1",
+    "display": "Referral Note"
+  },
   "blocks": [
     {
       "type": "fields",

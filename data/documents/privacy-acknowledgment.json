@@ -3,6 +3,12 @@
   "title": "Acknowledgment of the Notice of Privacy Practices",
   "category": "Front desk",
   "about": "The patient's acknowledgment that they received the clinic's Notice of Privacy Practices.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "57016-8",
+    "display": "Privacy policy acknowledgment Document"
+  },
   "blocks": [
     {
       "type": "fields",

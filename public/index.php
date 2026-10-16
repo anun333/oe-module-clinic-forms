@@ -22,6 +22,7 @@ use OpenHealthcare\ClinicForms\Office\TemplateLibrary;
 use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
 use OpenHealthcare\ClinicForms\Paper\Packets;
+use OpenHealthcare\ClinicForms\Paper\Requirements;
 use OpenHealthcare\ClinicForms\Repository\SiteData;
 
 if (!AclMain::aclCheckCore('patients', 'demo')) {
@@ -33,6 +34,15 @@ $siteDir = OEGlobalsBag::getInstance()->getString('OE_SITE_DIR');
 $library = DocumentLibrary::forSite($siteDir);
 $packets = Packets::forSite($library, $siteDir);
 $problems = array_merge($library->problems(), $packets->problems);
+// A clinic's own version of a document the law says what goes in: say what its wording doesn't show.
+$requirements = Requirements::shipped();
+foreach ($library->all() as $doc) {
+    $missing = $doc->source === 'clinic' ? $requirements->missing($doc) : [];
+    if ($missing !== []) {
+        $problems[] = $doc->title . ' (' . xl('local version') . '): ' . xl('could not find') . ' ' . implode('; ', $missing)
+            . '. ' . xl('Check that it has these') . ' (' . $requirements->source($doc->id) . ').';
+    }
+}
 $templates = TemplateLibrary::forSite($siteDir)->all();
 $isAdmin = AclMain::aclCheckCore('admin', 'super');
 $csrf = CsrfUtils::collectCsrfToken(session: $session);
@@ -78,7 +88,7 @@ foreach ($layouts as $form) {
     <?php } ?>
     <?php if ($problems !== []) { ?>
         <div class="alert alert-warning">
-            <?php echo xlt('Some local documents or packets have a mistake and were left out'); ?>:
+            <?php echo xlt('Some local documents or packets need attention'); ?>:
             <ul class="mb-0"><?php foreach ($problems as $problem) { ?><li><?php echo text($problem); ?></li><?php } ?></ul>
         </div>
     <?php } ?>

@@ -3,6 +3,12 @@
   "title": "Communication Preferences",
   "category": "Front desk",
   "about": "How the clinic may contact the patient: phone, voicemail, text message, email and the patient portal.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "59284-0",
+    "display": "Consent Document"
+  },
   "blocks": [
     {
       "type": "fields",

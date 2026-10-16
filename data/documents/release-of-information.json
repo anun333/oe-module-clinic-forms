@@ -3,6 +3,12 @@
   "title": "Authorization to Release Health Information",
   "category": "Front desk",
   "about": "A HIPAA authorization to disclose health information, with the elements 45 CFR 164.508 requires.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "64292-6",
+    "display": "Release of Information Consent Document"
+  },
   "blocks": [
     {
       "type": "fields",
@@ -148,15 +154,15 @@
     },
     {
       "type": "paragraph",
-      "text": "You may revoke this authorization at any time by writing to {facility.name}, except for information already released because of it. The Notice of Privacy Practices explains how."
+      "text": "You may revoke (cancel) this authorization at any time by writing to {facility.name}. This does not undo anything already released because of it. The Notice of Privacy Practices explains how."
     },
     {
       "type": "paragraph",
-      "text": "Your treatment, payment, enrollment or eligibility for benefits will not depend on whether you sign this authorization."
+      "text": "Signing is your choice. Your treatment, payment, enrollment or eligibility for benefits will not depend on whether you sign."
     },
     {
       "type": "paragraph",
-      "text": "Information released under this authorization may be disclosed again by the person who receives it, and may then no longer be protected by federal privacy law."
+      "text": "Information released under this authorization may be disclosed again by the person who receives it. It may then no longer be protected by federal privacy law. You will be given a copy of this authorization."
     },
     {
       "type": "signature",

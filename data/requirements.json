@@ -1,0 +1,68 @@
+{
+  "about": "What some documents must contain, by law or policy, checked by tests on the shipped documents and as warnings on a clinic's own versions. Each element is found by wording: any (one phrase), all (every phrase), signature (a signature block) or forbid (text that must not appear). Phrases are matched without regard to case.",
+  "documents": {
+    "release-of-information": {
+      "source": "HIPAA authorization, 45 CFR 164.508(c)",
+      "elements": [
+        {"name": "What information may be used or disclosed", "cite": "164.508(c)(1)(i)", "any": ["what may be released"]},
+        {"name": "Who may disclose it", "cite": "164.508(c)(1)(ii)", "any": ["who may release"]},
+        {"name": "Who may receive it", "cite": "164.508(c)(1)(iii)", "any": ["who may receive"]},
+        {"name": "The purpose of each use or disclosure", "cite": "164.508(c)(1)(iv)", "any": ["purpose"]},
+        {"name": "An expiration date or event", "cite": "164.508(c)(1)(v)", "any": ["expires", "expiration"]},
+        {"name": "Signature and date", "cite": "164.508(c)(1)(vi)", "signature": true},
+        {"name": "A representative's authority, when one signs", "cite": "164.508(c)(1)(vi)", "any": ["legal authority"]},
+        {"name": "The right to revoke in writing, its exceptions, and how", "cite": "164.508(c)(2)(i)", "all": ["revoke", "writing", "already released"]},
+        {"name": "Treatment, payment, enrollment or eligibility don't depend on signing", "cite": "164.508(c)(2)(ii)", "all": ["treatment", "payment", "enrollment", "eligibility", "will not depend"]},
+        {"name": "Information disclosed may be disclosed again and lose its protection", "cite": "164.508(c)(2)(iii)", "all": ["disclosed again", "no longer be protected"]},
+        {"name": "The patient gets a copy", "cite": "164.508(c)(4)", "any": ["copy of this authorization"]}
+      ]
+    },
+    "privacy-acknowledgment": {
+      "source": "Notice of Privacy Practices acknowledgment, 45 CFR 164.520(c)(2)(ii)",
+      "elements": [
+        {"name": "Written acknowledgment of receiving the notice", "cite": "164.520(c)(2)(ii)", "all": ["received a copy", "notice of privacy practices"]},
+        {"name": "Signature", "cite": "164.520(c)(2)(ii)", "signature": true},
+        {"name": "If not obtained: the good-faith effort and the reason", "cite": "164.520(c)(2)(ii)", "all": ["good-faith effort", "reason"]}
+      ]
+    },
+    "sliding-fee-application": {
+      "source": "HRSA Health Center Program Compliance Manual, chapter 9 (Sliding Fee Discount Program)",
+      "elements": [
+        {"name": "Household (family) size", "cite": "chapter 9", "all": ["household", "number of people"]},
+        {"name": "Household income", "cite": "chapter 9", "any": ["household income"]},
+        {"name": "Proof of income, or a self-declaration", "cite": "chapter 9", "all": ["proof of income", "declare"]},
+        {"name": "The patient's attestation and signature", "cite": "chapter 9", "signature": true},
+        {"name": "Poverty-guideline percentage and discount level recorded", "cite": "chapter 9", "all": ["federal poverty guideline", "discount level"]}
+      ]
+    },
+    "financial-policy": {
+      "source": "Assignment of benefits and authorization to bill (payer requirements; 45 CFR 164.506 permits the disclosure)",
+      "elements": [
+        {"name": "Assignment of insurance benefits", "cite": "payer agreements", "all": ["assign", "benefits"]},
+        {"name": "Authorization to release what claims need", "cite": "payer agreements", "any": ["process my claims"]},
+        {"name": "Signature", "cite": "payer agreements", "signature": true}
+      ]
+    },
+    "work-school-note": {
+      "source": "Minimum necessary, 45 CFR 164.502(b)",
+      "elements": [
+        {"name": "No diagnosis, medications, allergies or problems", "cite": "164.502(b)", "forbid": ["{patient.problems}", "{patient.medications}", "{patient.allergies}", "diagnosis:"]},
+        {"name": "Says the reason for the visit is left out", "cite": "164.502(b)", "any": ["doesn't give the reason"]}
+      ]
+    },
+    "phq-9": {
+      "source": "PHQ-9 (Kroenke, Spitzer and Williams); validated wording",
+      "elements": [
+        {"name": "The nine questions and the difficulty question", "cite": "instrument", "all": ["little interest or pleasure", "feeling down, depressed, or hopeless", "thoughts that you would be better off dead", "how difficult have these problems"]},
+        {"name": "The authors' reproduction statement", "cite": "instrument", "any": ["no permission required to reproduce"]}
+      ]
+    },
+    "gad-7": {
+      "source": "GAD-7 (Spitzer, Kroenke, Williams and Löwe); validated wording",
+      "elements": [
+        {"name": "The seven questions and the difficulty question", "cite": "instrument", "all": ["feeling nervous, anxious, or on edge", "feeling afraid, as if something awful might happen", "how difficult have these problems"]},
+        {"name": "The authors' reproduction statement", "cite": "instrument", "any": ["no permission required to reproduce"]}
+      ]
+    }
+  }
+}
