@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 0.1.0 (2026-10-15)
 
 First version.
 
@@ -10,3 +10,4 @@ First version.
 - A site folder for the clinic's own documents (`sites/<site>/documents/clinic-forms/`), which can add to or replace the shipped ones and survives module updates.
 - Printing through OpenEMR's print log; an audit event when patient details are printed.
 - `FOOTPRINT.md`, generated from the source and checked in CI.
+- Checked on OpenEMR 8.1.0 to 8.5.0 (official images) and 8.4.1 in depth.

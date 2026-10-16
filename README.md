@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.1.0, a pre-release.** Tested only on OpenEMR 8.4.1, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.1.0, a pre-release.** Checked on OpenEMR 8.1.0 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -104,8 +104,9 @@ As written in the code, not verified for restricted users:
 | OpenEMR | Checked | How |
 |---|---|---|
 | 8.4.1 | 2026-10-15 | Installed through Module Manager. The picker and a packet of every document, Demographics, History and Referral printed with no PHP errors, blank and filled, and printed to PDF in Chromium to check the pages. A print without the CSRF token is refused. Local documents, valid and broken, tested. |
+| 8.1.0, 8.2.0, 8.3.0, 8.4.0, 8.5.0 | 2026-10-15 | Official images, fresh install: installed through Module Manager; the picker loads and a blank packet of all 12 documents, Demographics, History and Referral prints all 15 pages with no PHP error. |
 
-It needs PHP 8.3 or later. Other releases haven't been checked yet.
+It needs PHP 8.3 or later. OpenEMR 8.0.0 and older haven't been checked.
 
 ## Development
 
@@ -119,10 +120,13 @@ The tests need no database: they cover the document library (every shipped docum
 
 ## Known limitations
 
-- Layout forms print blank. Filling a Demographics form with what's already on file, for a patient to check and correct, is not built yet.
+- Pages after the first don't repeat the patient's name, so keep a multi-page form together (or write the name on each page).
+- Lists of more than 24 options (language, country) print as a line to write in.
+- Layout forms print blank. Filling Demographics with what's on file, for a returning patient to check and correct, isn't built yet.
 - Documents are in English. Their text doesn't go through OpenEMR's translation yet.
-- Questionnaires and document templates (Patient Portal templates) don't print from here.
-- Nothing is scanned back. Paper is typed in, or scanned into Documents as usual.
+- Adding your own documents means writing JSON files on the server, and packets can't be added yet.
+- Printing only: nothing is faxed, emailed or saved to the patient's Documents, and nothing is scanned back.
+- Questionnaires and Patient Portal document templates don't print from here.
 
 ## License
 
