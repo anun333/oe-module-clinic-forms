@@ -18,6 +18,7 @@ use OpenHealthcare\ClinicForms\Office\TemplateFiller;
 use OpenHealthcare\ClinicForms\Office\TemplateLibrary;
 use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
+use OpenHealthcare\ClinicForms\Paper\Pack;
 use OpenHealthcare\ClinicForms\Paper\Packets;
 use OpenHealthcare\ClinicForms\Paper\Requirements;
 use OpenHealthcare\ClinicForms\Paper\Taglines;
@@ -29,13 +30,28 @@ if (!AclMain::aclCheckCore('patients', 'demo')) {
 }
 
 $siteDir = OpenEmr::siteDir();
-$library = DocumentLibrary::forSite($siteDir);
-$packets = Packets::forSite($library, $siteDir);
-$spanish = DocumentLibrary::forSite($siteDir, 'es');
-$taglines = Taglines::forSite($siteDir);
+$site = new SiteData();
+$facilities = $site->facilities();
+// The country pack (settings.json, else the first facility's country; blank is the US), and the
+// region of the first facility. Printing uses the region of the facility chosen.
+[$pack, $packNotes] = Pack::forSite($siteDir, $facilities[0]['country'] ?? '');
+$packId = $pack?->id;
+$region = $pack?->region($facilities[0]['state'] ?? '');
+$library = DocumentLibrary::forSite($siteDir, 'en', $packId, $region);
+$packets = Packets::forSite($library, $siteDir, $packId);
+$spanish = DocumentLibrary::forSite($siteDir, 'es', $packId, $region);
+$taglines = Taglines::forSite($siteDir, $packId);
 $problems = array_merge($library->problems(), $packets->problems, $spanish->problems(), $taglines->problems);
+// Which of each facility's state languages the taglines don't cover yet (Section 1557).
+$taglineGaps = [];
+foreach ($facilities as $f) {
+    $code = $pack?->region($f['state']);
+    if ($code !== null && $taglines->taglines !== [] && !isset($taglineGaps[$code])) {
+        $taglineGaps[$code] = ['name' => $pack->regions[$code]['name']] + $pack->taglineGaps($code, array_keys($taglines->taglines));
+    }
+}
 // A clinic's own version of a document the law says what goes in: say what its wording doesn't show.
-$requirements = Requirements::shipped();
+$requirements = Requirements::shipped($packId);
 foreach ($library->all() as $doc) {
     $missing = $doc->source === 'clinic' ? $requirements->missing($doc) : [];
     if ($missing !== []) {
@@ -48,14 +64,12 @@ $isAdmin = AclMain::aclCheckCore('admin', 'super');
 $csrf = OpenEmr::csrfToken();
 $flash = is_string($_GET['cf_msg'] ?? null) ? $_GET['cf_msg'] : '';
 $flashOk = ($_GET['cf_ok'] ?? '') === '1';
-$site = new SiteData();
-$facilities = $site->facilities();
 $recipients = $site->recipients();
 // Letters are signed by the clinician printing them, or else the patient's own provider.
 $providers = $site->providers();
 $providerIds = array_column($providers, 'id');
 $userId = (int)(OpenEmr::session('authUserID') ?? 0);
-$layouts = $site->layoutForms();
+$layouts = $site->layoutForms($pack?->layouts ?? []);
 $pid = (int)(OpenEmr::session('pid') ?? 0);
 $patient = $pid > 0 ? $site->patient($pid) : [];
 $signer = in_array($userId, $providerIds, true) ? $userId : ($pid > 0 && in_array($site->patientProvider($pid), $providerIds, true) ? $site->patientProvider($pid) : 0);
@@ -90,6 +104,19 @@ foreach ($layouts as $form) {
     <h1 class="h4"><?php echo xlt('Clinic Forms'); ?></h1>
     <p class="text-muted"><?php echo xlt('Print paperwork with the clinic details filled in, and blank paper versions of layout forms for intake by hand and entry later.'); ?>
         <?php echo xlt('Consents and releases are starting points: have them reviewed for your state before use.'); ?></p>
+    <p class="cf-about" id="cf-pack">
+        <?php if ($pack !== null) { ?>
+            <?php echo xlt('Country pack'); ?>: <strong><?php echo text($pack->name); ?></strong><?php echo $region !== null ? ' (' . text($pack->regions[$region]['name']) . ')' : ''; ?>.
+            <?php echo xlt('Its documents follow the law and programmes of that country; the others apply anywhere.'); ?>
+        <?php } else { ?>
+            <?php echo xlt('No country pack: only the documents that apply anywhere are offered.'); ?>
+        <?php } ?>
+        <?php echo xlt('To choose another, put'); ?> <code><?php echo text('{"country": "us"}'); ?></code> <?php echo xlt('or'); ?> <code><?php echo text('{"country": "none"}'); ?></code>
+        <?php echo xlt('in settings.json in your Clinic Forms folder.'); ?>
+    </p>
+    <?php if ($packNotes !== []) { ?>
+        <div class="alert alert-info"><?php foreach ($packNotes as $note) { ?><div><?php echo text($note); ?></div><?php } ?></div>
+    <?php } ?>
     <?php if ($flash !== '') { ?>
         <div class="alert <?php echo $flashOk ? 'alert-success' : 'alert-warning'; ?>"><?php echo text($flash); ?></div>
     <?php } ?>
@@ -129,8 +156,8 @@ foreach ($layouts as $form) {
             <div class="form-group col-md-2">
                 <label for="paper"><?php echo xlt('Paper'); ?></label>
                 <select class="form-control" name="paper" id="paper">
-                    <option value="letter"><?php echo xlt('Letter'); ?></option>
-                    <option value="a4">A4</option>
+                    <option value="letter"<?php echo ($pack?->paper ?? 'a4') === 'letter' ? ' selected' : ''; ?>><?php echo xlt('Letter'); ?></option>
+                    <option value="a4"<?php echo ($pack?->paper ?? 'a4') === 'a4' ? ' selected' : ''; ?>>A4</option>
                 </select>
             </div>
             <div class="form-group col-md-6">
@@ -169,12 +196,28 @@ foreach ($layouts as $form) {
             </div>
         <?php } ?>
 
+        <?php if ($taglines->taglines !== []) { ?>
         <div class="form-check mb-2">
             <input class="form-check-input" type="checkbox" name="taglines" value="1" id="taglines" checked>
             <label class="form-check-label" for="taglines"><?php echo xlt('Add the language assistance taglines to patient pages'); ?>
                 (<?php echo text(implode(', ', array_keys($taglines->taglines))); ?>)</label>
-            <small class="form-text text-muted"><?php echo xlt('Section 1557 (45 CFR 92.11) asks for them on intake, consent and privacy forms, in English and the 15 languages most spoken in your state. Add yours in taglines.json in your Clinic Forms folder.'); ?></small>
+            <?php if ($packId === 'us') { ?>
+                <small class="form-text text-muted"><?php echo xlt('Section 1557 (45 CFR 92.11) asks for them on intake, consent and privacy forms, in English and the 15 languages most spoken in your state. Add yours in taglines.json in your Clinic Forms folder.'); ?></small>
+            <?php } ?>
+            <?php foreach ($taglineGaps as $gap) { ?>
+                <small class="form-text text-muted cf-tagline-gap">
+                    <?php echo text($gap['name']); ?>:
+                    <?php if ($gap['missing'] !== []) { ?>
+                        <?php echo xlt('no tagline yet for'); ?> <?php echo text(implode(', ', $gap['missing'])); ?>.
+                    <?php } ?>
+                    <?php if ($gap['groups'] !== []) { ?>
+                        <?php echo xlt('The Census counts these as groups, so check the HHS list for which language'); ?>: <?php echo text(implode('; ', $gap['groups'])); ?>.
+                    <?php } ?>
+                    <?php echo xlt('From the Census Bureau (American Community Survey 2019-2023); HHS publishes the list the rule uses.'); ?>
+                </small>
+            <?php } ?>
         </div>
+        <?php } ?>
         <div class="mb-2">
             <span class="mr-2"><?php echo xlt('Ready-made'); ?>:</span>
             <?php foreach ($packets->packets as $p) { ?>

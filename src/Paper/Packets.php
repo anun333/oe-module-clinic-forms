@@ -27,15 +27,25 @@ final readonly class Packets
     {
     }
 
-    public static function shipped(DocumentLibrary $library): self
+    /** The core packets and a pack's (the US pack unless another id, or null for none), the pack's replacing the core's by id. */
+    public static function shipped(DocumentLibrary $library, ?string $pack = Pack::DEFAULT): self
     {
-        return self::read(dirname(__DIR__, 2) . '/data/packets.json', $library);
+        $packets = self::read(dirname(__DIR__, 2) . '/data/packets.json', $library)->packets;
+        $file = $pack === null ? null : Pack::get($pack)->dir . '/packets.json';
+        if ($file !== null && is_file($file)) {
+            $byId = array_column($packets, null, 'id');
+            foreach (self::read($file, $library, "data/packs/$pack")->packets as $packet) {
+                $byId[$packet['id']] = $packet;
+            }
+            $packets = array_values($byId);
+        }
+        return new self($packets);
     }
 
     /** The shipped packets plus the clinic's own, from the site directory (OE_SITE_DIR). */
-    public static function forSite(DocumentLibrary $library, string $siteDir): self
+    public static function forSite(DocumentLibrary $library, string $siteDir, ?string $pack = Pack::DEFAULT): self
     {
-        $packets = self::shipped($library)->packets;
+        $packets = self::shipped($library, $pack)->packets;
         $file = $siteDir . '/' . DocumentLibrary::LOCAL_FOLDER . '/packets.json';
         if (!is_file($file)) {
             return new self($packets);

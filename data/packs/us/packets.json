@@ -1,0 +1,49 @@
+{
+  "about": "The US pack's packets, replacing the core ones with the same id.",
+  "packets": [
+    {
+      "id": "new-patient",
+      "title": "New patient intake",
+      "items": [
+        "layout:DEM",
+        "layout:HIS",
+        "doc:consent-to-treat",
+        "doc:notice-of-privacy-practices",
+        "doc:privacy-acknowledgment",
+        "doc:financial-policy",
+        "doc:communication-consent",
+        "doc:sliding-fee-application",
+        "doc:notice-of-nondiscrimination"
+      ]
+    },
+    {
+      "id": "annual-update",
+      "title": "Annual update",
+      "items": [
+        "layout:DEM",
+        "doc:privacy-acknowledgment",
+        "doc:financial-policy",
+        "doc:communication-consent",
+        "doc:sliding-fee-application",
+        "doc:notice-of-nondiscrimination"
+      ]
+    },
+    {
+      "id": "annual-update-short",
+      "title": "Annual update (short, with UDS questions)",
+      "items": [
+        "layout:UDS",
+        "doc:sliding-fee-application",
+        "doc:communication-consent"
+      ]
+    },
+    {
+      "id": "referral",
+      "title": "Referral",
+      "items": [
+        "doc:referral-letter",
+        "doc:release-of-information"
+      ]
+    }
+  ]
+}

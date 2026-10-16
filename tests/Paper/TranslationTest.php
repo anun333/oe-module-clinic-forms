@@ -63,7 +63,7 @@ final class TranslationTest extends TestCase
 
     public function testEveryShippedTranslationSaysWhichEnglishItTranslates(): void
     {
-        $files = glob(dirname(__DIR__, 2) . '/data/documents/es/*.json') ?: [];
+        $files = array_merge(glob(dirname(__DIR__, 2) . '/data/documents/es/*.json') ?: [], glob(dirname(__DIR__, 2) . '/data/packs/*/documents/es/*.json') ?: []);
         self::assertGreaterThanOrEqual(22, count($files));
         foreach ($files as $file) {
             $data = json_decode((string)file_get_contents($file), true, 64, JSON_THROW_ON_ERROR);
@@ -176,7 +176,9 @@ final class TranslationTest extends TestCase
     private static function shippedSpanish(string $id): Document
     {
         $english = DocumentLibrary::shipped()->get($id) ?? throw new \LogicException($id);
-        return DocumentLibrary::read(dirname(__DIR__, 2) . "/data/documents/es/$id.json", 'data/documents/es', 'shipped', $english, 'es');
+        $file = dirname(__DIR__, 2) . "/data/documents/es/$id.json";
+        $file = is_file($file) ? $file : dirname(__DIR__, 2) . "/data/packs/us/documents/es/$id.json";
+        return DocumentLibrary::read($file, 'data/documents/es', 'shipped', $english, 'es');
     }
 
     public function testSpanishVersionsKeepTheirRequiredWording(): void

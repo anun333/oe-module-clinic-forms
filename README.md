@@ -2,12 +2,12 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.10.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.11.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
 - **Paperwork.** Consents, releases, referral letters and office slips, filled from the facility record and, optionally, the open patient and an Address Book entry.
-- **Paper versions of layout forms.** Demographics, History, any active encounter form (LBF) and any transaction form (Referral and the like), printed as a blank form with tick boxes, date boxes and ruled lines. A short **UDS form** prints only the Demographics fields health center reporting reads (sex, gender identity and sexual orientation, race, ethnicity, language, household size and income, housing, agricultural work, military service), with the site's own answer lists. Clinics without a computer in every room can do intake on paper and type it in later, in the same order.
+- **Paper versions of layout forms.** Demographics, History, any active encounter form (LBF) and any transaction form (Referral and the like), printed as a blank form with tick boxes, date boxes and ruled lines. With the US pack, a short **UDS form** prints only the Demographics fields health center reporting reads (sex, gender identity and sexual orientation, race, ethnicity, language, household size and income, housing, agricultural work, military service), with the site's own answer lists. Clinics without a computer in every room can do intake on paper and type it in later, in the same order.
 - **Ready-made packets.** New patient intake, annual update, telehealth, referral, depression and anxiety screening, and a downtime kit, each opened as one document to print.
 - **Spanish.** Every patient document prints in Spanish too, with the language assistance notices Section 1557 requires (see [Spanish and language assistance](#spanish-and-language-assistance)).
 - **Word and LibreOffice.** Any document downloads as a filled Word (.docx) or LibreOffice (.odt) file to edit before printing, and a clinic can write its own letters and forms in Word or LibreOffice and have them filled in (see [Word and LibreOffice](#word-and-libreoffice)).
@@ -28,43 +28,43 @@ Every printed page starts with a line for the patient's name, date of birth and 
 
 ## The documents
 
-| Category | Document | What it is | LOINC |
-|---|---|---|---|
-| Front desk | Consent to Treatment | General consent for examination and treatment | 59284-0 |
-| Front desk | Acknowledgment of the Notice of Privacy Practices | Receipt of the Notice, with a clinic-use section for when it wasn't obtained | 57016-8 |
-| Front desk | Financial Policy and Assignment of Benefits | Payment responsibilities, insurance billing and assignment of benefits | 59284-0 |
-| Front desk | Authorization to Release Health Information | A HIPAA authorization with the elements 45 CFR 164.508 requires, separate initials for sensitive records, and a 42 CFR Part 2 note | 64292-6 |
-| Front desk | Communication Preferences | How the clinic may contact the patient: phone, voicemail, text, email, portal | 59284-0 |
-| Front desk | Consent for Telehealth Visits | Consent to visits by video or telephone | 59284-0 |
-| Front desk | We Offer Discounts Based on Income | A notice to post or hand out: the sliding fee discount, who qualifies, and that no one is turned away; the clinic writes in its own schedule | — |
-| Front desk | Sliding Fee Discount Application | Household members and income, proof attached, and a clinic section for the poverty-guideline percentage and discount level (the facts UDS Table 4 reports) | — |
-| Screening | Patient Health Questionnaire (PHQ-2) | The two-question depression screen, scored 0 to 6 | 55757-9 |
-| Screening | Alcohol Use Screen (AUDIT-C) | The WHO AUDIT's first three questions, scored 0 to 12 | 72109-2 |
-| Screening | Patient Health Questionnaire (PHQ-9) | Depression screening, scored 0 to 27, with an office prompt to follow the clinic's safety protocol on question 9 | 44249-1 |
-| Screening | Generalized Anxiety Disorder Scale (GAD-7) | Anxiety screening, scored 0 to 21 | 69737-5 |
-| Care coordination | Referral letter | To the Address Book recipient, with urgency, the question to answer and what is enclosed | 57133-1 |
-| Care coordination | Request for Records | A request to another provider for a patient's records | — |
-| Office workflow | Patient Routing Slip | Travels with the patient: check-in, rooming, provider, checkout | — |
-| Office workflow | Staff Handoff (SBAR) | Handing a patient from one staff member, shift or site to another | — |
-| Office workflow | Internal Referral | To behavioral health, care management, nutrition, social work or another of the clinic's sites | 57133-1 |
-| Downtime | Downtime Visit Note | A paper visit note for when OpenEMR is down, with a box to record when it was entered | 11506-3 |
-| Privacy and patient rights | Notice of Privacy Practices | The notice itself (45 CFR 164.520), with the 42 CFR Part 2 statements required from February 16, 2026; fill in the effective date and privacy contact | 57017-6 |
-| Privacy and patient rights | Request to See or Get a Copy of My Health Record | Right of access (164.524): paper or electronic, to the patient or a person they name | — |
-| Privacy and patient rights | Request to Correct My Health Record | Right to amend (164.526) | — |
-| Privacy and patient rights | Request for a List of Disclosures | Accounting of disclosures (164.528) | — |
-| Privacy and patient rights | Request to Limit How My Information Is Shared | Restrictions (164.522(a)), including self-paid care kept from the health plan | — |
-| Privacy and patient rights | Revoking My Authorization to Release Information | Revocation (164.508(b)(5)) | — |
-| Privacy and patient rights | Consent to Share Substance Use Disorder Treatment Records | 42 CFR Part 2 consent with every element of 2.31, including the single consent for treatment, payment and operations | 64292-6 |
-| Privacy and patient rights | Notice of Nondiscrimination | The Section 1557 notice (45 CFR 92.10), as a 20-point poster; fill in the Section 1557 Coordinator | — |
-| Privacy and patient rights | Free Language Help and Services for People with Disabilities | The Section 1557 notice of availability (92.11) with every tagline, as a 20-point poster | — |
-| After the visit | Work or School Note | Confirms the visit and when the patient may return, without giving the reason for the visit | — |
+| Category | Document | What it is | LOINC | Pack |
+|---|---|---|---|---|
+| Front desk | Consent to Treatment | General consent for examination and treatment | 59284-0 | any |
+| Front desk | Acknowledgment of the Notice of Privacy Practices | Receipt of the Notice, with a clinic-use section for when it wasn't obtained | 57016-8 | US |
+| Front desk | Financial Policy and Assignment of Benefits | Payment responsibilities, insurance billing and assignment of benefits | 59284-0 | any |
+| Front desk | Authorization to Release Health Information | A HIPAA authorization with the elements 45 CFR 164.508 requires, separate initials for sensitive records, and a 42 CFR Part 2 note | 64292-6 | US |
+| Front desk | Communication Preferences | How the clinic may contact the patient: phone, voicemail, text, email, portal | 59284-0 | any |
+| Front desk | Consent for Telehealth Visits | Consent to visits by video or telephone | 59284-0 | any |
+| Front desk | We Offer Discounts Based on Income | A notice to post or hand out: the sliding fee discount, who qualifies, and that no one is turned away; the clinic writes in its own schedule | — | US |
+| Front desk | Sliding Fee Discount Application | Household members and income, proof attached, and a clinic section for the poverty-guideline percentage and discount level (the facts UDS Table 4 reports) | — | US |
+| Screening | Patient Health Questionnaire (PHQ-2) | The two-question depression screen, scored 0 to 6 | 55757-9 | any |
+| Screening | Alcohol Use Screen (AUDIT-C) | The WHO AUDIT's first three questions, scored 0 to 12 | 72109-2 | any |
+| Screening | Patient Health Questionnaire (PHQ-9) | Depression screening, scored 0 to 27, with an office prompt to follow the clinic's safety protocol on question 9 | 44249-1 | any |
+| Screening | Generalized Anxiety Disorder Scale (GAD-7) | Anxiety screening, scored 0 to 21 | 69737-5 | any |
+| Care coordination | Referral letter | To the Address Book recipient, with urgency, the question to answer and what is enclosed | 57133-1 | any |
+| Care coordination | Request for Records | A request to another provider for a patient's records | — | any |
+| Office workflow | Patient Routing Slip | Travels with the patient: check-in, rooming, provider, checkout | — | any |
+| Office workflow | Staff Handoff (SBAR) | Handing a patient from one staff member, shift or site to another | — | any |
+| Office workflow | Internal Referral | To behavioral health, care management, nutrition, social work or another of the clinic's sites | 57133-1 | any |
+| Downtime | Downtime Visit Note | A paper visit note for when OpenEMR is down, with a box to record when it was entered | 11506-3 | any |
+| Privacy and patient rights | Notice of Privacy Practices | The notice itself (45 CFR 164.520), with the 42 CFR Part 2 statements required from February 16, 2026; fill in the effective date and privacy contact | 57017-6 | US |
+| Privacy and patient rights | Request to See or Get a Copy of My Health Record | Right of access (164.524): paper or electronic, to the patient or a person they name | — | US |
+| Privacy and patient rights | Request to Correct My Health Record | Right to amend (164.526) | — | US |
+| Privacy and patient rights | Request for a List of Disclosures | Accounting of disclosures (164.528) | — | US |
+| Privacy and patient rights | Request to Limit How My Information Is Shared | Restrictions (164.522(a)), including self-paid care kept from the health plan | — | US |
+| Privacy and patient rights | Revoking My Authorization to Release Information | Revocation (164.508(b)(5)) | — | US |
+| Privacy and patient rights | Consent to Share Substance Use Disorder Treatment Records | 42 CFR Part 2 consent with every element of 2.31, including the single consent for treatment, payment and operations | 64292-6 | US |
+| Privacy and patient rights | Notice of Nondiscrimination | The Section 1557 notice (45 CFR 92.10), as a 20-point poster; fill in the Section 1557 Coordinator | — | US |
+| Privacy and patient rights | Free Language Help and Services for People with Disabilities | The Section 1557 notice of availability (92.11) with every tagline, as a 20-point poster | — | US |
+| After the visit | Work or School Note | Confirms the visit and when the patient may return, without giving the reason for the visit | — | any |
 
-Each is a JSON file in `data/documents/`, the same on every OpenEMR release. The PHQ-9 and GAD-7 are printed with their authors' statement that no permission is needed to reproduce them. Their answers can be typed into OpenEMR's own PHQ-9 and GAD-7 encounter forms, which ship with OpenEMR but have to be enabled under **Administration › Forms › Forms Administration**.
+Each is a JSON file, the same on every OpenEMR release: in `data/documents/` if it applies anywhere, or in `data/packs/us/documents/` if it belongs to United States law or programmes (the **Pack** column; see [Country packs](#country-packs)). The short UDS form is the US pack's too. The PHQ-9 and GAD-7 are printed with their authors' statement that no permission is needed to reproduce them. Their answers can be typed into OpenEMR's own PHQ-9 and GAD-7 encounter forms, which ship with OpenEMR but have to be enabled under **Administration › Forms › Forms Administration**.
 
 ### Standards the documents follow
 
 - **LOINC document codes** where an exact one exists (the table above), as OpenEMR's own C-CDA referral uses 57133-1. Each code is checked by its LOINC check digit; a document with no exact code is left uncoded rather than mislabeled.
-- **What the law says goes in.** `data/requirements.json` lists, for the documents a rule governs, each required element and its citation: the Notice of Privacy Practices (164.520(b)(1), element by element), the patient-rights requests (164.522, 164.524, 164.526, 164.528, 164.508(b)(5)), the Part 2 consent (42 CFR 2.31), the HIPAA authorization (45 CFR 164.508(c)), the privacy notice acknowledgment (164.520(c)(2)(ii)), the sliding fee application (HRSA Compliance Manual, chapter 9), the work or school note's minimum necessary (164.502(b)), and the PHQ-9 and GAD-7 wording. The tests fail if a shipped document loses one. A clinic's own version of one of these documents is checked too, and the Clinic Forms page names anything it can't find (by wording, so check before relying on the warning).
+- **What the law says goes in.** `data/requirements.json` (the instruments' wording) and the US pack's `data/packs/us/requirements.json` list, for the documents a rule governs, each required element and its citation: the Notice of Privacy Practices (164.520(b)(1), element by element), the patient-rights requests (164.522, 164.524, 164.526, 164.528, 164.508(b)(5)), the Part 2 consent (42 CFR 2.31), the HIPAA authorization (45 CFR 164.508(c)), the privacy notice acknowledgment (164.520(c)(2)(ii)), the sliding fee application (HRSA Compliance Manual, chapter 9), the work or school note's minimum necessary (164.502(b)), and the PHQ-9 and GAD-7 wording. The tests fail if a shipped document loses one. A clinic's own version of one of these documents is checked too, and the Clinic Forms page names anything it can't find (by wording, so check before relying on the warning).
 - **Plain language.** Every patient document reads at an 8th-grade level or below (Flesch-Kincaid), as AHRQ's health literacy toolkit advises; the tests measure it. Validated instruments (PHQ-9, GAD-7) keep their published wording and are exempt.
 - Each document says who reads it (patient, staff or provider) and whether its wording is a validated instrument's.
 
@@ -72,12 +72,23 @@ Each is a JSON file in `data/documents/`, the same on every OpenEMR release. The
 
 They are written to be plain and complete, not as legal advice. Consent, release and financial wording varies by state and by payer, and some states have their own required forms (minors' consent, mental health, HIV testing). Read them with whoever reviews your clinic's forms before using them, and replace any of them with your own (see the next section).
 
+### Country packs
+
+The documents that work anywhere (consent to treatment, the screening questionnaires, letters, office slips) are the core. A **country pack** adds the documents of one country's law and programmes, and can replace a core document with its own version. Clinic Forms ships one pack, the **United States**: the HIPAA privacy set, 42 CFR Part 2, the Section 1557 notices and taglines, the HRSA sliding fee documents and the UDS form, with their legal checks and the packets that use them.
+
+- **Which pack.** `settings.json` in your Clinic Forms folder (below) says `{"country": "us"}`, or `{"country": "none"}` for the core alone. Without it, the country typed for your first facility under **Administration › Facilities** decides: blank (as a default install leaves it) or a US spelling (US, USA, United States) means the US pack. Another country gets the core alone and a note on the page.
+- **Regions.** The facility's State picks its region. For now that drives the tagline check: the page lists, for each facility's state, which of the 15 languages the Census counts there have no tagline yet (Census groups such as "Amharic, Somali, or other Afro-Asiatic languages" are named for you to check against HHS's list). A region can also carry documents of its own (`data/packs/us/regions/<code>/documents/`); none ship yet.
+- **Order.** Core, then the pack, then the region, then your own folder: each replaces the one before with the same id. A translation made for the replaced version is out of date, and prints in English.
+- **Paper.** The pack says the paper the picker starts on (Letter for the US; A4 without a pack).
+- **Another country.** A pack is a folder in `data/packs/<two-letter code>/` with `pack.json` (name, the facility country names that choose it, paper, layout forms), `documents/`, and optionally `requirements.json`, `packets.json`, `taglines.json` and `regions.json`. The format is in `src/Paper/Pack.php`.
+
 ### Your own documents
 
 Put your own documents in `sites/<site>/documents/clinic-forms/` (for most installs, `sites/default/documents/clinic-forms/`), in the same format as `data/documents/`. That folder belongs to the site, so module updates leave it alone.
 
 - A file with a new id adds a document. A file with the id of a shipped document replaces it, so the clinic's edited consent prints instead of the module's.
 - Files are checked strictly. A document with an unknown field, an unknown block type or a placeholder that doesn't exist is left out, and the Clinic Forms page names the file and the mistake.
+- `settings.json` in the same folder chooses the country pack: `{"country": "us"}` or `{"country": "none"}`.
 - Your own packets go in `packets.json` in the same folder, in the format of `data/packets.json`. A packet with the id of a shipped one replaces it. A file with a mistake is left out and reported; the shipped packets stay.
 
 The format is in `src/Paper/Document.php`. Blocks are headings, paragraphs, fields, checklists, ruled lines, signature lines, scales (a question per row and a box per answer, optionally scored, as the PHQ-9 is) and tables (column headings over blank rows, as the household list is). Text can use these placeholders, which print as a blank line when the value isn't known:
@@ -95,7 +106,7 @@ The format is in `src/Paper/Document.php`. Blocks are headings, paragraphs, fiel
 
 Choose **Español** as the language at the top of the Clinic Forms page. Documents marked **ES** print in Spanish; staff documents and the rest stay in English. The words Clinic Forms prints itself (Phone, Date, the patient line) follow the paper's language, not the language you use OpenEMR in. Word and LibreOffice downloads follow it too.
 
-- **All 22 patient documents** have Spanish versions in `data/documents/es/`.
+- **All 22 patient documents** have Spanish versions, in the `es/` folder beside each (`data/documents/es/`, `data/packs/us/documents/es/`).
 - **The validated questionnaires use their official Spanish wording.** PHQ-9, PHQ-2 and GAD-7 are the "Spanish for the USA" versions from phqscreeners.com. AUDIT-C is from the WHO's Spanish AUDIT manual.
 - **The other translations are ours.** Have a qualified translator review them before use, as you would the English.
 - **Nothing gets dropped in translation.** Each translation is checked against its English document: the same blocks, fields, items, signature lines and placeholders. The key legal wording is checked in Spanish too.
@@ -106,7 +117,7 @@ Choose **Español** as the language at the top of the Clinic Forms page. Documen
 **Section 1557 language assistance (45 CFR 92.10 and 92.11).**
 
 - **Taglines on every patient page.** With *Add the language assistance taglines* ticked (the default), every patient document and intake form ends with short notices, in English and Spanish, saying that free language help and disability aids are available. They come first in the paper's own language. The rule asks for them on the notice of privacy practices, intake and consent forms, billing communications and complaint forms.
-- **Your state's languages.** The rule asks for English and at least the 15 languages most spoken by people with limited English in your state. Clinic Forms ships English and Spanish. Add the others, with HHS's translations, in `sites/<site>/documents/clinic-forms/taglines.json`:
+- **Your state's languages.** The rule asks for English and at least the 15 languages most spoken by people with limited English in your state. Clinic Forms ships English and Spanish, and the page lists the languages your facilities' states still need (from the Census Bureau's 2019–2023 American Community Survey; HHS's own list is the one the rule uses). Add the others, with HHS's translations, in `sites/<site>/documents/clinic-forms/taglines.json`:
 
   ```json
   {"taglines": {"vi": "CHÚ Ý: … Gọi số {facility.phone} (TTY: 711).", "zh-Hant": "注意：… {facility.phone} (TTY: 711)。"}}
@@ -210,6 +221,7 @@ The tests need no database: they cover the document library (every shipped docum
 ## Known limitations
 
 - Only Demographics and History can be filled from the chart; encounter and transaction forms print blank. Previous names, additional addresses and related persons (kept in their own tables) print blank.
+- The United States is the only country pack; elsewhere Clinic Forms offers the core documents, and a clinic adds its country's own. The pack is per site, so facilities in two countries share one (their states still each get their own region).
 - Spanish is the only translation. The reading-level check measures the English only (its formula is for English). Layout forms print with the site's labels in either language.
 - Word and LibreOffice downloads of posters use the normal type size; print posters from the browser.
 - Adding your own documents and packets means writing JSON files on the server.

@@ -1,5 +1,5 @@
 {
-  "about": "Ready-made selections on the Clinic Forms page. Each item is doc:<document id> or layout:<form id> (DEM is the Demographics registration form). Printed in this order.",
+  "about": "Ready-made selections on the Clinic Forms page. Each item is doc:<document id> or layout:<form id> (DEM is the Demographics registration form). Printed in this order. A country pack's packets.json adds packets and replaces these by id (the US pack's new-patient packet adds the privacy notice, sliding fee application and nondiscrimination notice).",
   "packets": [
     {
       "id": "new-patient",
@@ -8,12 +8,8 @@
         "layout:DEM",
         "layout:HIS",
         "doc:consent-to-treat",
-        "doc:notice-of-privacy-practices",
-        "doc:privacy-acknowledgment",
         "doc:financial-policy",
-        "doc:communication-consent",
-        "doc:sliding-fee-application",
-        "doc:notice-of-nondiscrimination"
+        "doc:communication-consent"
       ]
     },
     {
@@ -21,19 +17,7 @@
       "title": "Annual update",
       "items": [
         "layout:DEM",
-        "doc:privacy-acknowledgment",
         "doc:financial-policy",
-        "doc:communication-consent",
-        "doc:sliding-fee-application",
-        "doc:notice-of-nondiscrimination"
-      ]
-    },
-    {
-      "id": "annual-update-short",
-      "title": "Annual update (short, with UDS questions)",
-      "items": [
-        "layout:UDS",
-        "doc:sliding-fee-application",
         "doc:communication-consent"
       ]
     },
@@ -49,8 +33,7 @@
       "id": "referral",
       "title": "Referral",
       "items": [
-        "doc:referral-letter",
-        "doc:release-of-information"
+        "doc:referral-letter"
       ]
     },
     {

@@ -20,6 +20,7 @@ use OpenHealthcare\ClinicForms\Office\TemplateLibrary;
 use OpenHealthcare\ClinicForms\Office\WordWriter;
 use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
+use OpenHealthcare\ClinicForms\Paper\Pack;
 use OpenHealthcare\ClinicForms\Paper\Packets;
 use OpenHealthcare\ClinicForms\Paper\Taglines;
 use OpenHealthcare\ClinicForms\Paper\Words;
@@ -32,6 +33,8 @@ OpenEmr::requireCsrf($_POST['csrf_token_form'] ?? '');
 
 $siteDir = OpenEmr::siteDir();
 $site = new SiteData();
+[$pack] = Pack::forSite($siteDir, $site->facilities()[0]['country'] ?? '');
+$region = $pack?->region($site->facilityState((int)($_POST['facility'] ?? 0)));
 $pid = (int)(OpenEmr::session('pid') ?? 0);
 $patient = !empty($_POST['fill_patient']) && $pid > 0 ? $site->patient($pid) : [];
 $recipientId = (int)($_POST['recipient'] ?? 0);
@@ -47,7 +50,7 @@ $context = new Context(
 );
 $paper = ($_POST['paper'] ?? '') === 'a4' ? 'A4' : 'letter';
 $language = Words::language($_POST['language'] ?? 'en');
-$taglines = !empty($_POST['taglines']) ? Taglines::forSite($siteDir)->forPage($language) : [];
+$taglines = !empty($_POST['taglines']) ? Taglines::forSite($siteDir, $pack?->id)->forPage($language) : [];
 
 /** Ends with a short plain message, for a request that can't produce a file. */
 function clinicFormsRefuse(int $status, string $message): never
@@ -76,7 +79,7 @@ if ($template !== '') {
     $stem = pathinfo($template, PATHINFO_FILENAME);
 } else {
     $writer = ($_POST['format'] ?? '') === 'odt' ? new OdtWriter(Words::t('Date', $language)) : new WordWriter(Words::t('Date', $language));
-    $library = DocumentLibrary::forSite($siteDir, $language);
+    $library = DocumentLibrary::forSite($siteDir, $language, $pack?->id, $region);
     $documents = [];
     foreach (explode(',', (string)($_POST['order'] ?? '')) as $item) {
         if (Packets::isItem($item) && str_starts_with($item, 'doc:')) {

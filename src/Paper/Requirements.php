@@ -1,7 +1,7 @@
 <?php
 
 /**
- * What some documents must contain (data/requirements.json): the elements of a HIPAA
+ * What some documents must contain (data/requirements.json, and a country pack's own): the elements of a HIPAA
  * authorization, a privacy-notice acknowledgment, a sliding fee application and so on, each
  * found by its wording. The tests hold the shipped documents to them; a clinic's own version
  * of one of these documents is checked too, and anything not found is shown as a warning.
@@ -26,30 +26,43 @@ final readonly class Requirements
     {
     }
 
-    public static function shipped(): self
+    /** The core rules and a pack's (the US pack unless another id, or null for the core alone), the pack's replacing the core's by document id. */
+    public static function shipped(?string $pack = Pack::DEFAULT): self
     {
-        $file = dirname(__DIR__, 2) . '/data/requirements.json';
+        $documents = self::read(dirname(__DIR__, 2) . '/data/requirements.json', 'data/requirements.json');
+        if ($pack !== null) {
+            $packDir = Pack::get($pack)->dir;
+            if (is_file($packDir . '/requirements.json')) {
+                $documents = array_merge($documents, self::read($packDir . '/requirements.json', "data/packs/$pack/requirements.json"));
+            }
+        }
+        return new self($documents);
+    }
+
+    /** @return array<string, array{source: string, elements: list<array{name: string, cite: string, any?: list<string>, all?: list<string>, signature?: bool, forbid?: list<string>}>}> */
+    private static function read(string $file, string $where): array
+    {
         $data = json_decode((string)file_get_contents($file), true, 32, JSON_THROW_ON_ERROR);
         if (!is_array($data) || !is_array($data['documents'] ?? null)) {
-            throw new \InvalidArgumentException('data/requirements.json: needs "documents"');
+            throw new \InvalidArgumentException("$where: needs \"documents\"");
         }
         foreach ($data['documents'] as $id => $rule) {
             if (!is_array($rule) || !is_string($rule['source'] ?? null) || !is_array($rule['elements'] ?? null) || $rule['elements'] === []) {
-                throw new \InvalidArgumentException("data/requirements.json $id: needs a source and elements");
+                throw new \InvalidArgumentException("$where $id: needs a source and elements");
             }
             foreach ($rule['elements'] as $i => $e) {
                 $checks = array_intersect(array_keys($e), ['any', 'all', 'signature', 'forbid']);
                 if (isset($e['es']) && (!is_array($e['es']) || count(array_intersect(array_keys($e['es']), ['any', 'all'])) !== 1)) {
-                    throw new \InvalidArgumentException("data/requirements.json $id elements[$i] es: needs any or all");
+                    throw new \InvalidArgumentException("$where $id elements[$i] es: needs any or all");
                 }
                 if (!is_string($e['name'] ?? null) || !is_string($e['cite'] ?? null) || count($checks) !== 1) {
-                    throw new \InvalidArgumentException("data/requirements.json $id elements[$i]: needs a name, a cite and one of any, all, signature or forbid");
+                    throw new \InvalidArgumentException("$where $id elements[$i]: needs a name, a cite and one of any, all, signature or forbid");
                 }
             }
         }
         /** @var array<string, array{source: string, elements: list<array{name: string, cite: string, any?: list<string>, all?: list<string>, signature?: bool, forbid?: list<string>}>}> $documents */
         $documents = $data['documents'];
-        return new self($documents);
+        return $documents;
     }
 
     /** @return ?string what the document is held to, or null when nothing */

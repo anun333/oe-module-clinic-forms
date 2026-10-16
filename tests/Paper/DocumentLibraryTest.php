@@ -32,7 +32,7 @@ final class DocumentLibraryTest extends TestCase
 
     public function testEveryShippedDocumentLoads(): void
     {
-        $files = glob(dirname(__DIR__, 2) . '/data/documents/*.json') ?: [];
+        $files = array_merge(glob(dirname(__DIR__, 2) . '/data/documents/*.json') ?: [], glob(dirname(__DIR__, 2) . '/data/packs/us/documents/*.json') ?: []);
         $all = DocumentLibrary::shipped()->all();
         // A floor, so an empty glob can't pass as "every document loaded".
         self::assertGreaterThanOrEqual(12, count($files));

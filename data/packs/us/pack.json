@@ -1,0 +1,7 @@
+{
+  "about": "The United States: HIPAA's privacy set (45 CFR 164), 42 CFR Part 2, Section 1557 (45 CFR 92) notices and taglines, and HRSA's Health Center Program documents (sliding fee, the UDS patient form). Regions are states, DC and Puerto Rico (regions.json).",
+  "name": "United States",
+  "countries": ["US", "USA", "U.S.", "U.S.A.", "United States", "United States of America"],
+  "paper": "letter",
+  "layouts": ["UDS"]
+}

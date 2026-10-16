@@ -7,9 +7,10 @@
  * privacy practices, intake and consent forms, billing communications and complaint forms, among
  * others.
  *
- * data/taglines.json ships English and Spanish. Which other languages a clinic needs depends on its
- * state, so the clinic adds them in sites/<site>/documents/clinic-forms/taglines.json, in the same
- * format; one with a shipped language's code replaces it.
+ * They come with a country pack (data/packs/us/taglines.json ships English and Spanish). Which
+ * other languages a clinic needs depends on its state (Pack::taglineGaps), so the clinic adds them
+ * in sites/<site>/documents/clinic-forms/taglines.json, in the same format; one with a shipped
+ * language's code replaces it. Without a pack only the clinic's own are used.
  *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
@@ -29,9 +30,11 @@ final readonly class Taglines
     {
     }
 
-    public static function forSite(?string $siteDir): self
+    /** A pack's taglines (the US pack's unless another id, or null for none) and the clinic's own. */
+    public static function forSite(?string $siteDir, ?string $pack = Pack::DEFAULT): self
     {
-        $taglines = self::read(dirname(__DIR__, 2) . '/data/taglines.json', 'data/taglines.json');
+        $file = $pack === null ? null : Pack::get($pack)->dir . '/taglines.json';
+        $taglines = $file !== null && is_file($file) ? self::read($file, "data/packs/$pack/taglines.json") : [];
         if ($siteDir === null) {
             return new self($taglines);
         }

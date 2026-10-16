@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.11.0 (2026-10-16)
+
+- **Country packs.** The documents that apply anywhere stay in `data/documents/` (the core); the United States' move to a **US pack** in `data/packs/us/`: the HIPAA privacy set, the Part 2 consent, the Section 1557 notices and taglines, the HRSA sliding fee documents and the UDS form, with their legal checks (`requirements.json`) and the packets that use them. Document ids are unchanged, so a clinic's own versions still replace them.
+- **Which pack:** `settings.json` in the Clinic Forms folder (`{"country": "us"}` or `{"country": "none"}`), else the first facility's country. A blank country, as a default install leaves it, is the US, so nothing changes for existing sites. Another country gets the core documents and a note on the page.
+- **Regions:** the facility's State picks its region. The page now lists, for each facility's state, which of the 15 languages most spoken there by people with limited English (Census, 2019–2023) have no tagline yet. A region can also carry its own documents (none ship yet).
+- Layers apply in order (core, pack, region, the clinic's own), each replacing the one before by id; a translation of a replaced document is out of date and prints in English.
+- The paper size starts on the pack's (Letter for the US, A4 without a pack).
+- The page's help text no longer passes quotes through OpenEMR's translation, which printed them as backticks.
+
 ## 0.10.0 (2026-10-16)
 
 - **Old Spanish is never printed for new English.** Each translation records the English it was made from (`translates`, a fingerprint). When the English changes, the document prints in English and the page lists it as out of date until its Spanish is updated. This also fixes a clinic's own English version of a document printing with the shipped Spanish of the original.

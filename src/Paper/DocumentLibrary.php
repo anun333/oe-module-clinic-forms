@@ -5,6 +5,10 @@
  * field, an unknown block type, or a placeholder that doesn't exist is refused with its file
  * and place named, so a mistake in the library can't print a broken page.
  *
+ * The core documents work anywhere. A country pack (data/packs/<id>/documents, see Pack) adds the
+ * documents of that country's law and programmes and may replace a core one by id; a region's
+ * folder may do the same again.
+ *
  * A clinic's own documents go in sites/<site>/documents/clinic-forms/, in the same format, so
  * they survive module updates. One with the id of a shipped document replaces it (a clinic's
  * edited consent, say). A clinic file with a mistake is left out and reported on the page;
@@ -38,40 +42,75 @@ final class DocumentLibrary
      * @param string  $localLabel how messages name the clinic's folder
      * @param string  $language   the language to print in: a document with a translation in
      *                            <dir>/<language>/ uses it, any other stays in English
+     * @param list<array{0: string, 1: string}> $packs folders between the core and the clinic's,
+     *                            each [folder, how messages name it]: a country pack's documents, then a region's
      */
     public function __construct(
         private readonly string $dir,
         private readonly ?string $localDir = null,
         private readonly string $localLabel = 'sites/default/' . self::LOCAL_FOLDER,
         private readonly string $language = 'en',
+        private readonly array $packs = [],
     ) {
     }
 
-    public static function shipped(string $language = 'en'): self
+    /**
+     * The shipped documents: the core, and a pack's (the US pack unless another id, or null for
+     * the core alone).
+     */
+    public static function shipped(string $language = 'en', ?string $pack = Pack::DEFAULT): self
     {
-        return new self(dirname(__DIR__, 2) . '/data/documents', null, 'sites/default/' . self::LOCAL_FOLDER, $language);
+        $packs = $pack === null ? [] : self::packLayers(Pack::get($pack), null);
+        return new self(dirname(__DIR__, 2) . '/data/documents', null, 'sites/default/' . self::LOCAL_FOLDER, $language, $packs);
     }
 
-    /** The shipped documents plus the clinic's own, from the site directory (OE_SITE_DIR). */
-    public static function forSite(string $siteDir, string $language = 'en'): self
+    /**
+     * The core documents, the pack's and its region's, then the clinic's own, from the site
+     * directory (OE_SITE_DIR). Each replaces the one before with the same id.
+     */
+    public static function forSite(string $siteDir, string $language = 'en', ?string $pack = Pack::DEFAULT, ?string $region = null): self
     {
-        return new self(dirname(__DIR__, 2) . '/data/documents', $siteDir . '/' . self::LOCAL_FOLDER, 'sites/' . basename($siteDir) . '/' . self::LOCAL_FOLDER, $language);
+        return new self(
+            dirname(__DIR__, 2) . '/data/documents',
+            $siteDir . '/' . self::LOCAL_FOLDER,
+            'sites/' . basename($siteDir) . '/' . self::LOCAL_FOLDER,
+            $language,
+            $pack === null ? [] : self::packLayers(Pack::get($pack), $region),
+        );
+    }
+
+    /** @return list<array{0: string, 1: string}> */
+    private static function packLayers(Pack $pack, ?string $region): array
+    {
+        $layers = [[$pack->dir . '/documents', "data/packs/$pack->id/documents"]];
+        $regionDir = $pack->regionDir($region);
+        if ($regionDir !== null) {
+            $layers[] = [$regionDir, "data/packs/$pack->id/regions/$region/documents"];
+        }
+        return $layers;
     }
 
     /** @return array<string, Document> */
     public function all(): array
     {
         if ($this->documents === []) {
-            $docs = [];
-            foreach (glob($this->dir . '/*.json') ?: [] as $file) {
-                $doc = self::read($file);
-                $docs[$doc->id] = $doc;
+            /** @var list<array{0: string, 1: string, 2: string}> $layers folder, label, source */
+            $layers = [[$this->dir, 'data/documents', 'shipped']];
+            foreach ($this->packs as [$dir, $label]) {
+                $layers[] = [$dir, $label, 'shipped'];
             }
             if ($this->localDir !== null) {
-                foreach (glob($this->localDir . '/*.json') ?: [] as $file) {
+                $layers[] = [$this->localDir, $this->localLabel, 'clinic'];
+            }
+            $docs = [];
+            foreach ($layers as [$dir, $label, $source]) {
+                foreach (glob($dir . '/*.json') ?: [] as $file) {
                     try {
-                        $doc = self::read($file, $this->localLabel, 'clinic');
+                        $doc = self::read($file, $label, $source);
                     } catch (\InvalidArgumentException $e) {
+                        if ($source === 'shipped') {
+                            throw $e;
+                        }
                         $this->problems[] = $e->getMessage();
                         continue;
                     }
@@ -79,11 +118,9 @@ final class DocumentLibrary
                 }
             }
             if ($this->language !== 'en') {
-                $sources = [[$this->dir . '/' . $this->language, 'data/documents/' . $this->language, 'shipped']];
-                if ($this->localDir !== null) {
-                    $sources[] = [$this->localDir . '/' . $this->language, $this->localLabel . '/' . $this->language, 'clinic'];
-                }
-                foreach ($sources as [$dir, $label, $source]) {
+                foreach ($layers as [$layerDir, $layerLabel, $source]) {
+                    $dir = $layerDir . '/' . $this->language;
+                    $label = $layerLabel . '/' . $this->language;
                     foreach (glob($dir . '/*.json') ?: [] as $file) {
                         $english = $docs[basename($file, '.json')] ?? null;
                         try {
@@ -106,7 +143,7 @@ final class DocumentLibrary
                             $this->problems[] = "$label/" . basename($file) . ': ' . $difference;
                         }
                         $docs[$doc->id] = $doc;
-                        unset($this->outOfDate[$doc->id]); // the clinic's own, current, replaces an out-of-date shipped one
+                        unset($this->outOfDate[$doc->id]); // a later, current translation replaces an out-of-date earlier one
                     }
                 }
             }

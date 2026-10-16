@@ -16,6 +16,7 @@ use OpenHealthcare\ClinicForms\Bootstrap;
 use OpenHealthcare\ClinicForms\Compat\OpenEmr;
 use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
+use OpenHealthcare\ClinicForms\Paper\Pack;
 use OpenHealthcare\ClinicForms\Paper\Packets;
 use OpenHealthcare\ClinicForms\Paper\Renderer;
 use OpenHealthcare\ClinicForms\Paper\Taglines;
@@ -29,9 +30,12 @@ OpenEmr::requireCsrf($_POST['csrf_token_form'] ?? '');
 
 $siteDir = OpenEmr::siteDir();
 $language = Words::language($_POST['language'] ?? 'en');
-$library = DocumentLibrary::forSite($siteDir, $language);
-$taglines = !empty($_POST['taglines']) ? Taglines::forSite($siteDir)->forPage($language) : [];
 $site = new SiteData();
+// The site's country pack, and the region (state) of the facility printing.
+[$pack] = Pack::forSite($siteDir, $site->facilities()[0]['country'] ?? '');
+$region = $pack?->region($site->facilityState((int)($_POST['facility'] ?? 0)));
+$library = DocumentLibrary::forSite($siteDir, $language, $pack?->id, $region);
+$taglines = !empty($_POST['taglines']) ? Taglines::forSite($siteDir, $pack?->id)->forPage($language) : [];
 $items = array_values(array_filter(
     explode(',', (string)($_POST['order'] ?? '')),
     static fn(string $item): bool => Packets::isItem($item),
@@ -61,7 +65,7 @@ foreach ($items as $item) {
             $titles[] = $doc->title;
         }
     } else {
-        $form = $site->layoutForm(substr($item, 7));
+        $form = $site->layoutForm(substr($item, 7), $pack?->layouts ?? []);
         if ($form !== null) {
             $values = $fillLayouts ? $site->onFile($form, $pid) : [];
             $pages[] = $renderer->layoutForm($form, $values);

@@ -45,14 +45,26 @@ final class SiteData
     /** @var array<string, list<string>> table => columns, read once */
     private array $columns = [];
 
-    /** @return list<array{id: int, name: string}> active facilities, the primary business entity first */
+    /**
+     * Active facilities, the primary business entity first, with the country and state typed for
+     * them under Administration > Facilities (both free text, often blank): they choose the
+     * country pack and its region (Pack).
+     *
+     * @return list<array{id: int, name: string, country: string, state: string}>
+     */
     public function facilities(): array
     {
         $out = [];
-        foreach (QueryUtils::fetchRecords("SELECT id, name FROM facility WHERE COALESCE(inactive, 0) = 0 ORDER BY primary_business_entity DESC, name") as $row) {
-            $out[] = ['id' => (int)$row['id'], 'name' => (string)$row['name']];
+        foreach (QueryUtils::fetchRecords("SELECT id, name, country_code, state FROM facility WHERE COALESCE(inactive, 0) = 0 ORDER BY primary_business_entity DESC, name") as $row) {
+            $out[] = ['id' => (int)$row['id'], 'name' => (string)$row['name'], 'country' => self::s($row['country_code'] ?? ''), 'state' => self::s($row['state'] ?? '')];
         }
         return $out;
+    }
+
+    /** A facility's state as typed, or '' (for its region). */
+    public function facilityState(int $id): string
+    {
+        return self::s(QueryUtils::fetchRecords("SELECT state FROM facility WHERE id = ?", [$id])[0]['state'] ?? '');
     }
 
     /** @return array<string, string> the Context facility values, or [] when there is no such facility */
@@ -209,17 +221,20 @@ final class SiteData
     /**
      * The layout forms that can be printed: Demographics and History, the active LBF encounter
      * forms by category (as Reports > Blank Forms lists them), then the active transaction forms
-     * (Referral and the like).
+     * (Referral and the like). The UDS short form only with a pack that offers it (the US pack).
      *
+     * @param list<string> $packLayouts the extra layout forms the site's country pack offers
      * @return list<array{id: string, title: string, category: string}>
      */
-    public function layoutForms(): array
+    public function layoutForms(array $packLayouts = []): array
     {
         $out = [
             ['id' => 'DEM', 'title' => xl('Registration (Demographics)'), 'category' => xl('Front desk')],
             ['id' => 'HIS', 'title' => xl('Medical history (History)'), 'category' => xl('Front desk')],
-            ['id' => 'UDS', 'title' => xl('Patient information for health center reporting (UDS)'), 'category' => xl('Front desk')],
         ];
+        if (in_array('UDS', $packLayouts, true)) {
+            $out[] = ['id' => 'UDS', 'title' => xl('Patient information for health center reporting (UDS)'), 'category' => xl('Front desk')];
+        }
         foreach (QueryUtils::fetchRecords(
             "SELECT grp_form_id, grp_title, grp_mapping FROM layout_group_properties
               WHERE (grp_form_id LIKE 'LBF%' OR grp_form_id LIKE 'LBT%') AND grp_group_id = '' AND grp_activity = 1
@@ -233,9 +248,10 @@ final class SiteData
         return $out;
     }
 
-    public function layoutForm(string $formId): ?LayoutForm
+    /** @param list<string> $packLayouts the extra layout forms the site's country pack offers (UDS) */
+    public function layoutForm(string $formId, array $packLayouts = ['UDS']): ?LayoutForm
     {
-        if (!LayoutForm::isPrintable($formId)) {
+        if (!LayoutForm::isPrintable($formId) || ($formId === 'UDS' && !in_array('UDS', $packLayouts, true))) {
             return null;
         }
         if ($formId === 'UDS') {
