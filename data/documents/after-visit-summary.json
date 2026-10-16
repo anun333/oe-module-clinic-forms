@@ -9,7 +9,7 @@
     "code": "103796-9",
     "display": "Outpatient Instructions"
   },
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -63,7 +63,7 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Your medicines on file",
+          "label": "Medicines on file when this was printed (see today's changes below)",
           "value": "{patient.medications}"
         },
         {

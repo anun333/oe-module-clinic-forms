@@ -10,7 +10,7 @@
     "display": "PHQ-9 quick depression assessment panel [Reported.PHQ]"
   },
   "validated": true,
-  "version": 2,
+  "version": 3,
   "status": "active",
   "source": {
     "kind": "instrument",
@@ -78,6 +78,10 @@
       ]
     },
     {
+      "type": "paragraph",
+      "text": "If you are thinking about hurting yourself, tell a staff member now. If you are in danger, call your local emergency number."
+    },
+    {
       "type": "heading",
       "text": "For office use"
     },
@@ -87,7 +91,7 @@
     },
     {
       "type": "paragraph",
-      "text": "If question 9 is answered above \"Not at all\", follow the clinic's safety protocol before the patient leaves."
+      "text": "If question 9 is answered above \"Not at all\", or is left blank, a clinician asks about it the same day, before the patient leaves. If the patient has already left, contact them today."
     },
     {
       "type": "fields",

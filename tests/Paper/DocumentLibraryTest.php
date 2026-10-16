@@ -152,6 +152,8 @@ final class DocumentLibraryTest extends TestCase
         self::assertSame('provider', $library->get('referral-letter')?->audience);
         self::assertSame('staff', $library->get('routing-slip')?->audience);
         self::assertTrue($library->get('phq-9')?->validated);
+        self::assertTrue($library->get('grievance-form')?->anonymous, 'a grievance may be filed without a name');
+        self::assertFalse($library->get('consent-to-treat')?->anonymous);
         self::assertFalse($library->get('consent-to-treat')?->validated);
         self::assertNull($library->get('sliding-fee-application')?->code);
     }

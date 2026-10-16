@@ -122,6 +122,8 @@
         "stated": "Abstract: \"The AUDIT-C screening thresholds that simultaneously maximized sensitivity and specificity were > or =4 in men (sensitivity 0.86, specificity 0.89) and > or =3 in women (sensitivity 0.73, specificity 0.91).\""
     },
     "accepted": {
-        "questions": []
+        "questions": {
+            "2": "The WHO AUDIT's printed wording (WHO/MSD/MSB/01.6a), \"How many drinks containing alcohol do you have on a typical day when you are drinking?\", which our Spanish version (WHO's Spanish manual) also follows; LOINC 68519-8 says \"standard drinks … on a typical day\"."
+        }
     }
 }

@@ -110,6 +110,9 @@ final readonly class Renderer
 
     public function document(Document $doc): string
     {
+        if ($doc->anonymous && $this->context->patient !== []) {
+            return (new self($this->context->withoutPatient(), $this->language, $this->taglines, $this->labelBox))->document($doc);
+        }
         $html = $this->open($doc->title, $doc->poster, $this->stamp($doc)) . $this->labelBox($doc->poster) . $this->letterhead() . "<h1>" . $this->text($doc->title) . "</h1>";
         foreach ($doc->blocks as $block) {
             $html .= match ($block['type']) {

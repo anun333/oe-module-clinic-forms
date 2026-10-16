@@ -53,10 +53,11 @@ final class PdfWriter implements OfficeWriter
         .foot { width: 100%; }
         CSS;
 
-    /** @var list<array{title: string, html: string, stamp: string}> */
+    /** @var list<array{title: string, html: string, stamp: string, running: ?string}> */
     private array $documents = [];
     private string $html = '';
     private string $title = '';
+    private ?string $running = null;
 
     /**
      * @param string $patientId the chart number to carry as a barcode on every page; '' on a blank print
@@ -177,11 +178,21 @@ final class PdfWriter implements OfficeWriter
         // Each document starts its own page with its own header and footer: see stamp() and file().
     }
 
+    /**
+     * The document being written is filed without a name (a grievance): its pages carry this blank
+     * patient line in place of the file's, and no barcode.
+     */
+    public function withoutPatient(string $blankRunning): void
+    {
+        $this->running = $blankRunning;
+    }
+
     public function stamp(string $text): void
     {
-        $this->documents[] = ['title' => $this->title, 'html' => $this->html, 'stamp' => $text];
+        $this->documents[] = ['title' => $this->title, 'html' => $this->html, 'stamp' => $text, 'running' => $this->running];
         $this->html = '';
         $this->title = '';
+        $this->running = null;
     }
 
     public function file(string $running, string $paper): string
@@ -204,8 +215,8 @@ final class PdfWriter implements OfficeWriter
         foreach ($this->documents as $i => $doc) {
             // Named, and attached as the page opens: mPDF draws a footer when its page closes, so a
             // footer set any later would land on the previous document's last page.
-            $mpdf->DefHTMLHeaderByName("h$i", "<table class='running'><tr><td>" . self::e($running) . "</td><td class='title'>" . self::e($doc['title']) . "</td></tr></table>");
-            $mpdf->DefHTMLFooterByName("f$i", $this->footer($doc['stamp']));
+            $mpdf->DefHTMLHeaderByName("h$i", "<table class='running'><tr><td>" . self::e($doc['running'] ?? $running) . "</td><td class='title'>" . self::e($doc['title']) . "</td></tr></table>");
+            $mpdf->DefHTMLFooterByName("f$i", $this->footer($doc['stamp'], $doc['running'] === null));
             $mpdf->AddPageByArray(['ohname' => "h$i", 'ohvalue' => 1, 'ehname' => "h$i", 'ehvalue' => 1, 'ofname' => "f$i", 'ofvalue' => 1, 'efname' => "f$i", 'efvalue' => 1]);
             $mpdf->WriteHTML($doc['html'], \Mpdf\HTMLParserMode::HTML_BODY);
         }
@@ -213,9 +224,9 @@ final class PdfWriter implements OfficeWriter
     }
 
     /** The chart number's barcode (Code 128, as on the printed page) and the document's stamp. */
-    private function footer(string $stamp): string
+    private function footer(string $stamp, bool $withPatient = true): string
     {
-        $code = Code128::encodable($this->patientId)
+        $code = $withPatient && Code128::encodable($this->patientId)
             ? "<barcode code='" . self::e($this->patientId) . "' type='C128B' size='0.9' height='0.75' />" : '';
         return "<table class='foot'><tr><td>" . $code . "</td><td class='stamp'>" . self::e($stamp) . "</td></tr></table>";
     }

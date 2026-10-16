@@ -9,7 +9,7 @@
     "code": "59284-0",
     "display": "Consent Document"
   },
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -45,10 +45,14 @@
       "type": "checklist",
       "items": [
         "A telehealth visit may not replace an in-person examination, and I may be asked to come in.",
-        "The visit is private, and I should take it somewhere I cannot be overheard.",
+        "At the start of each visit, I will say where I am.",
+        "If there is an emergency during a visit, the clinic may send help there.",
+        "The clinic uses a private connection.",
+        "I should take the visit where no one can overhear me.",
         "Technical problems may interrupt the visit; if so, the clinic will call me back or reschedule.",
         "My insurance may cover telehealth differently from an office visit.",
-        "I may refuse telehealth and ask for an in-person visit instead."
+        "I may refuse telehealth and ask for an in-person visit instead.",
+        "In an emergency, I will call my local emergency number, not wait for a visit."
       ]
     },
     {
@@ -59,7 +63,10 @@
           "value": "{patient.phone}"
         },
         {
-          "label": "Usual location during visits (city and state)"
+          "label": "Where I usually am during visits (city, and state or region)"
+        },
+        {
+          "label": "Someone to call in an emergency (name and phone)"
         }
       ]
     },

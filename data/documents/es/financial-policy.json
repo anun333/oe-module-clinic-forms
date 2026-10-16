@@ -1,6 +1,6 @@
 {
   "id": "financial-policy",
-  "translates": "90a2a9e64a00c5b7",
+  "translates": "d2176d4cc5483257",
   "title": "Política financiera y cesión de beneficios",
   "category": "Recepción",
   "about": "Responsabilidades de pago, facturación al seguro y cesión de beneficios.",
@@ -24,7 +24,7 @@
     },
     {
       "type": "paragraph",
-      "text": "{facility.name} le cobrará a mi seguro por mi atención. Yo pagaré cualquier copago, coseguro o deducible. También pagaré la atención que mi seguro no cubra."
+      "text": "{facility.name} le cobrará a mi seguro por mi atención. Pagaré cualquier copago, coseguro o deducible, y la atención que mi seguro no cubra, según lo permitan mi contrato de seguro y la ley. Si califico para un descuento, puede reducir estas cantidades."
     },
     {
       "type": "paragraph",

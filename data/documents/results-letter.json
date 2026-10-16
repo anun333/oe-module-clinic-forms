@@ -4,7 +4,7 @@
   "category": "After the visit",
   "about": "A letter to the patient with test results and what to do next, signed by the clinician.",
   "audience": "patient",
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -51,8 +51,8 @@
       "type": "checklist",
       "label": "What to do next",
       "items": [
-        "Your results are normal. You do not need to do anything.",
-        "Your results need follow-up. Please call us to make a visit.",
+        "Your results are normal. You do not need to do anything more about them.",
+        "Your results need follow-up. Please call us to make a visit. If we do not hear from you by the date below, we will call you.",
         "Please repeat the test on or after the date below.",
         "Keep taking your medicines as you do now.",
         "We changed a medicine. See the notes below."

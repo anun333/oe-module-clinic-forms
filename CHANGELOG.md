@@ -1,5 +1,40 @@
 # Changelog
 
+## 0.17.0 (2026-10-16)
+
+**A review of all 40 documents before 1.0.** Every document was read for errors of fact or law, patient safety, consistency and clarity. This release fixes what that review found to be wrong or unsafe, and most of what it found inconsistent or unclear. It is not a lawyer's or clinician's sign-off: have the documents reviewed for your state before relying on them, as before.
+
+- **Patient safety:**
+  - **PHQ-9.** The office note now covers question 9 left blank, and a patient who has already left: a clinician asks the same day, or contacts them today. Under the questions, the patient is told to tell staff now if they are thinking about hurting themselves, and to call their local emergency number if in danger.
+  - **Controlled Medicine Agreement.** Not mixing the medicine with alcohol, sleeping pills or anxiety medicines; what to do for someone who can't be woken or is breathing very slowly (naloxone, and the emergency number); how early to ask for refills; and the representative fields.
+  - **Telehealth.** The patient says where they are at each visit, and the clinic may send help there in an emergency. For an emergency, call the local emergency number rather than wait. Added a person to call in an emergency. The location field no longer assumes a US state. "The visit is private" is now "The clinic uses a private connection".
+  - **Downtime visit note.** The date is left to fill in (packets are printed before an outage), and allergies are asked.
+- **What a clinic could be held to:**
+  - **Financial Policy.** Payment for uncovered care is "as my insurance contract and the law allow" (Medicaid and network rules limit it), and a discount may lower it.
+  - **Request for Records.** It no longer calls a bare signature an authorization: the patient agrees, and a signed authorization is attached when the law requires one. Added who is asking, and the representative fields.
+  - **Sliding Fee Discount Application.** No longer says the facts are "used only" to decide the discount: they also feed the clinic's required reports, without the name.
+  - **Notice of Privacy Practices.** Says when more time may be needed for a copy or a correction. The free accounting is "the first list in any 12 months", as the request form says. The Office for Civil Rights contact is now its complaint portal and current number. The Part 2 paragraph covers records the clinic creates as well as receives.
+  - **Request for a List of Disclosures.** The 30-day extension.
+  - **Part 2 notice.** The self-pay restriction is limited to payment and operations, unless a law requires sharing. The court-case sentence no longer says "never" and then "only".
+  - **Personal Representative.** Speaks of "the patient", not "you", and treats the representative as the patient within their authority. "A minor child" replaces "under 18", since the age of majority differs by state. It points to the right forms for talking with family and for sending records.
+- **The grievance form can now be anonymous.**
+  - A new document flag, `"anonymous": true`, prints a document with no patient details, no patient line and no barcode, even when printed for a patient: in the browser and as a PDF.
+  - The grievance form uses it, so its "you may leave your name off" is true. It also names the Section 1557 Coordinator and gives the Office for Civil Rights TDD line and its usual 180 days.
+- **AUDIT-C follows the WHO AUDIT it cites.**
+  - Question 2 is WHO's "on a typical day when you are drinking", as the Spanish version (WHO's Spanish manual) already was.
+  - A line says what one drink is, and a patient who answers Never stops after question 1.
+  - The instrument reference records the difference from LOINC's wording, with its reason.
+- **Clearer:**
+  - **Results letter.** "Nothing more to do about these results". For follow-up, the clinic calls if it hasn't heard back.
+  - **Work or School Note.** The parent or caregiver who came is named. Dates are "from" and "to".
+  - **Interpreter Request.** Help is "free of charge", and the staff choice is "qualified bilingual staff member".
+  - **Communication Preferences.** Mail to the home address, or another address.
+  - **Procedure consent.** Filed with the front-desk consents. The clinician is no longer prefilled. Representative fields added.
+  - **Visit summary.** The medicine list says it was "on file when this was printed".
+  - **Sliding fee notice.** Defines the household as the application does, and allows a small set fee at full discount.
+- **Spanish brought current** for every changed document that has a Spanish version: PHQ-9, AUDIT-C, telehealth, financial policy, communication preferences, work or school note, sliding fee application and notice, Notice of Privacy Practices, request for a list of disclosures. The work or school note's Spanish, out of date since 0.13.0, is current again.
+- **Documents changed in this release:** 20, each one version up. PHQ-9 is now version 3, the rest version 2.
+
 ## 0.16.1 (2026-10-16)
 
 - `FOOTPRINT.md` regenerated: 0.16.0's was made before its last test was added, so its line count was 5 short and the CI check failed. No change to what prints or saves.

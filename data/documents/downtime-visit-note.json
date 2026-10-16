@@ -9,7 +9,7 @@
     "code": "11506-3",
     "display": "Progress Note"
   },
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -41,14 +41,16 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Date and time",
-          "value": "{clinic.today}"
+          "label": "Date and time"
         },
         {
           "label": "Provider"
         },
         {
           "label": "Visit type"
+        },
+        {
+          "label": "Allergies (asked today)"
         }
       ]
     },

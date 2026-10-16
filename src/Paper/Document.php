@@ -33,6 +33,8 @@
  *   "status": "active"    draft (offered, marked draft), active, or retired (no longer offered)
  *   "source": {"kind": "written" | "rule" | "instrument", "name": "...", "url": "..."}   where the wording comes from
  *   "licence": {"holder": "...", "terms": "...", "permission": "..."}                       who owns it and on what terms
+ * "anonymous": true marks a document that may be filed without a name (a grievance): it never prints
+ * the patient's details, the patient line or the chart number's barcode, even when printed for a patient.
  * A clinic's own version of a shipped document may say "based_on": the fingerprint (Translation::fingerprint)
  * of the module's version it was copied from, so the page can say when the module's has changed since.
  *
@@ -86,6 +88,7 @@ final readonly class Document
         public ?array $origin = null,
         public ?array $licence = null,
         public ?string $basedOn = null,
+        public bool $anonymous = false,
     ) {
     }
 

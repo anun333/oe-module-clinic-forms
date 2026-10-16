@@ -1,6 +1,6 @@
 {
   "id": "audit-c",
-  "translates": "b5b4123250ac27ed",
+  "translates": "d5ec51a87ea512fd",
   "title": "Prueba de detección del consumo de alcohol (AUDIT-C)",
   "category": "Detección",
   "about": "Las tres primeras preguntas del AUDIT de la Organización Mundial de la Salud, con puntuación de 0 a 12.",
@@ -22,6 +22,10 @@
       ]
     },
     {
+      "type": "paragraph",
+      "text": "Una bebida es una lata o botella de cerveza, una copa de vino o un trago de licor."
+    },
+    {
       "type": "checklist",
       "label": "1. ¿Con qué frecuencia consume alguna bebida alcohólica?",
       "items": [
@@ -31,6 +35,10 @@
         "De 2 a 3 veces a la semana (3)",
         "4 o más veces a la semana (4)"
       ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Si respondió Nunca, deténgase aquí."
     },
     {
       "type": "checklist",

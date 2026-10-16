@@ -9,7 +9,7 @@
     "code": "57017-6",
     "display": "Privacy policy Organization Document"
   },
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "rule",
@@ -166,7 +166,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Your records, or testimony about what is in them, will not be used in any civil, administrative, criminal, or legislative case against you. This can happen only with your specific written consent or a court order."
+      "text": "Your records, or testimony about what is in them, will not be used in any civil, administrative, criminal, or legislative case against you, unless you give specific written consent or a court orders it."
     },
     {
       "type": "paragraph",
@@ -186,7 +186,7 @@
     },
     {
       "type": "paragraph",
-      "text": "• You may ask us not to share with your health plan care you paid for in full yourself. We must agree."
+      "text": "• You may ask us not to share with your health plan, for payment or our operations, care you paid for in full yourself. We must agree, unless a law requires us to share it."
     },
     {
       "type": "paragraph",

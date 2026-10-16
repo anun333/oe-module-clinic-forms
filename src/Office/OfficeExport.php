@@ -34,41 +34,55 @@ final readonly class OfficeExport
     public function write(array $documents, OfficeWriter $writer, string $paper): string
     {
         foreach ($documents as $i => $doc) {
-            if ($i > 0) {
-                $writer->pageBreak();
+            if ($doc->anonymous && $this->context->patient !== []) {
+                // Filed without a name: written as if printed blank, and with no barcode in a PDF.
+                (new self($this->context->withoutPatient(), $this->language, $this->taglines))->writeOne($doc, $writer, $i);
+                continue;
             }
-            $writer->letterhead($this->context->value('facility.name'), $this->letterheadLines());
-            $writer->title($this->text($doc->title));
-            foreach ($doc->blocks as $block) {
-                match ($block['type']) {
-                    'heading' => $writer->heading($this->text($block['text'])),
-                    'paragraph' => $writer->paragraph($this->text($block['text'])),
-                    'fields' => $writer->fields(array_map(
-                        fn(array $f): array => [$this->text($f['label']), isset($f['value']) ? $this->value($f['value']) : ''],
-                        $block['fields'],
-                    )),
-                    'checklist' => $writer->checklist(isset($block['label']) ? $this->text($block['label']) : null, array_map($this->text(...), $block['items'])),
-                    'lines' => $writer->lines($this->text($block['label']), $block['count']),
-                    'signature' => $writer->signatures(array_map($this->text(...), $block['signers'])),
-                    'scale' => $writer->scale(
-                        $this->text($block['label']),
-                        array_map($this->text(...), $block['columns']),
-                        array_map($this->text(...), $block['items']),
-                        $block['scores'] ?? null,
-                        isset($block['total']) ? $this->text($block['total']) : null,
-                    ),
-                    'table' => $writer->table($this->text($block['label']), array_map($this->text(...), $block['columns']), $block['rows']),
-                    'taglines' => $this->taglines($writer),
-                    default => null,
-                };
-            }
-            $hasBlock = array_filter($doc->blocks, static fn(array $b): bool => $b['type'] === 'taglines') !== [];
-            if ($doc->audience === 'patient' && !$hasBlock) {
-                $this->taglines($writer);
-            }
-            $writer->stamp($doc->stamp() . ($doc->status === 'draft' ? ' · ' . $this->t('draft') : '') . ($doc->source === 'clinic' ? ' · ' . $this->t('local version') : ''));
+            $this->writeOne($doc, $writer, $i);
         }
         return $writer->file($this->running(), $paper);
+    }
+
+    private function writeOne(Document $doc, OfficeWriter $writer, int $i): void
+    {
+        if ($i > 0) {
+            $writer->pageBreak();
+        }
+        if ($writer instanceof PdfWriter && $doc->anonymous) {
+            // Its pages carry the blank patient line and no barcode.
+            $writer->withoutPatient($this->running());
+        }
+        $writer->letterhead($this->context->value('facility.name'), $this->letterheadLines());
+        $writer->title($this->text($doc->title));
+        foreach ($doc->blocks as $block) {
+            match ($block['type']) {
+                'heading' => $writer->heading($this->text($block['text'])),
+                'paragraph' => $writer->paragraph($this->text($block['text'])),
+                'fields' => $writer->fields(array_map(
+                    fn(array $f): array => [$this->text($f['label']), isset($f['value']) ? $this->value($f['value']) : ''],
+                    $block['fields'],
+                )),
+                'checklist' => $writer->checklist(isset($block['label']) ? $this->text($block['label']) : null, array_map($this->text(...), $block['items'])),
+                'lines' => $writer->lines($this->text($block['label']), $block['count']),
+                'signature' => $writer->signatures(array_map($this->text(...), $block['signers'])),
+                'scale' => $writer->scale(
+                    $this->text($block['label']),
+                    array_map($this->text(...), $block['columns']),
+                    array_map($this->text(...), $block['items']),
+                    $block['scores'] ?? null,
+                    isset($block['total']) ? $this->text($block['total']) : null,
+                ),
+                'table' => $writer->table($this->text($block['label']), array_map($this->text(...), $block['columns']), $block['rows']),
+                'taglines' => $this->taglines($writer),
+                default => null,
+            };
+        }
+        $hasBlock = array_filter($doc->blocks, static fn(array $b): bool => $b['type'] === 'taglines') !== [];
+        if ($doc->audience === 'patient' && !$hasBlock) {
+            $this->taglines($writer);
+        }
+        $writer->stamp($doc->stamp() . ($doc->status === 'draft' ? ' · ' . $this->t('draft') : '') . ($doc->source === 'clinic' ? ' · ' . $this->t('local version') : ''));
     }
 
     private function taglines(OfficeWriter $writer): void

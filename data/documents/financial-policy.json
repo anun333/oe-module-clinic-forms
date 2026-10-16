@@ -9,7 +9,7 @@
     "code": "59284-0",
     "display": "Consent Document"
   },
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -39,7 +39,7 @@
     },
     {
       "type": "paragraph",
-      "text": "{facility.name} will bill my insurance for my care. I will pay any copay, coinsurance or deductible. I will also pay for care my insurance does not cover."
+      "text": "{facility.name} will bill my insurance for my care. I will pay any copay, coinsurance or deductible, and for care my insurance does not cover, as my insurance contract and the law allow. If I qualify for a discount, it may lower these amounts."
     },
     {
       "type": "paragraph",

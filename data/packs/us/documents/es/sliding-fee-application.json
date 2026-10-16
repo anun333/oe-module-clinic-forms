@@ -1,13 +1,13 @@
 {
   "id": "sliding-fee-application",
-  "translates": "158026b6b47eb470",
+  "translates": "714e66bedc81fb6b",
   "title": "Solicitud de descuento de tarifa variable",
   "category": "Recepción",
   "about": "Tamaño del hogar e ingresos para el descuento de tarifa variable de la clínica, los mismos datos que la Tabla 4 del UDS reporta por nivel de pobreza.",
   "blocks": [
     {
       "type": "paragraph",
-      "text": "{facility.name} ofrece descuentos según el tamaño del hogar y los ingresos. Lo que escriba aquí se mantiene confidencial y solo se usa para decidir su descuento."
+      "text": "{facility.name} ofrece descuentos según el tamaño del hogar y los ingresos. Lo que escriba aquí se mantiene privado. Lo usamos para decidir su descuento y, sin su nombre, en los informes que la clínica debe presentar."
     },
     {
       "type": "fields",

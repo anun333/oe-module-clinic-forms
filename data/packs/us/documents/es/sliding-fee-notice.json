@@ -1,13 +1,13 @@
 {
   "id": "sliding-fee-notice",
-  "translates": "7e64d7e671225bec",
+  "translates": "9535c9e7c126ee8f",
   "title": "Ofrecemos descuentos según sus ingresos",
   "category": "Recepción",
   "about": "Un aviso para colocar o entregar: el descuento de tarifa variable de la clínica, quién califica y que a nadie se le niega la atención por no poder pagar. Manual de cumplimiento del Programa de Centros de Salud de HRSA, capítulo 9.",
   "blocks": [
     {
       "type": "paragraph",
-      "text": "{facility.name} ofrece un descuento de tarifa variable. Lo que usted paga depende de cuántas personas viven en su hogar y de los ingresos de su hogar."
+      "text": "{facility.name} ofrece un descuento de tarifa variable. Lo que usted paga depende del tamaño y de los ingresos de su hogar. Su hogar incluye a usted, a su cónyuge o pareja, y a cualquier persona que usted mantenga o que lo mantenga a usted."
     },
     {
       "type": "paragraph",
@@ -26,7 +26,7 @@
       "label": "Nuestros descuentos (la clínica anota su propia tabla)",
       "columns": [
         "Tamaño del hogar",
-        "Descuento completo si el ingreso anual es de hasta",
+        "Descuento completo (o una tarifa fija pequeña) si el ingreso anual es de hasta",
         "Descuento parcial si el ingreso anual es de hasta"
       ],
       "rows": 8

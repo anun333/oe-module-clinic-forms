@@ -4,7 +4,7 @@
   "category": "Privacy and patient rights",
   "about": "For a patient to raise a concern or a grievance, including unfair treatment. Keeps what 45 CFR 92.8(c) asks a Section 1557 grievance record to hold; keep it three years after it is resolved.",
   "audience": "patient",
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "rule",
@@ -24,12 +24,10 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Your name",
-          "value": "{patient.name}"
+          "label": "Your name"
         },
         {
-          "label": "Phone or email to reach you",
-          "value": "{patient.phone}"
+          "label": "Phone or email to reach you"
         },
         {
           "label": "Today's date",
@@ -81,7 +79,21 @@
     },
     {
       "type": "paragraph",
-      "text": "Our Section 1557 Coordinator handles concerns about unfair treatment. You can also file a civil rights complaint with the U.S. Department of Health and Human Services, Office for Civil Rights, at ocrportal.hhs.gov or 1-800-368-1019."
+      "text": "Our Section 1557 Coordinator, named below, handles concerns about unfair treatment. You can also file a civil rights complaint with the U.S. Department of Health and Human Services, Office for Civil Rights, at ocrportal.hhs.gov or 1-800-368-1019 (TDD 1-800-537-7697), usually within 180 days."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Section 1557 Coordinator"
+        },
+        {
+          "label": "Coordinator phone"
+        },
+        {
+          "label": "Coordinator email"
+        }
+      ]
     },
     {
       "type": "signature",
@@ -125,5 +137,6 @@
       "type": "paragraph",
       "text": "Keep this record for at least three years after the grievance is resolved."
     }
-  ]
+  ],
+  "anonymous": true
 }

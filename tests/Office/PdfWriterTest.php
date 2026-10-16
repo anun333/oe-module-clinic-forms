@@ -53,6 +53,7 @@ final class PdfWriterTest extends TestCase
     {
         $library = DocumentLibrary::shipped();
         $docs = [$library->get('consent-to-treat'), $library->get('phq-9')];
+        $phq9 = $library->get('phq-9')?->stamp() ?? 'phq-9';
         $context = new Context(['name' => 'Seed Clinic', 'phone' => '555-0100'], self::PATIENT);
         $pdf = (new OfficeExport($context))->write(array_values(array_filter($docs)), new PdfWriter('Date', 'WL9001', $this->config()), 'letter');
         self::assertStringStartsWith('%PDF-', $pdf);
@@ -61,14 +62,30 @@ final class PdfWriterTest extends TestCase
         self::assertGreaterThanOrEqual(2, count($pages));
         self::assertStringContainsString('Consent to Treatment', $pages[0]);
         self::assertStringContainsString('consent-to-treat v1', $pages[0]);
-        self::assertStringNotContainsString('phq-9 v', $pages[0], "a document's stamp stays on its own pages");
+        self::assertStringNotContainsString($phq9, $pages[0], "a document's stamp stays on its own pages");
         $last = $pages[count($pages) - 1];
-        self::assertStringContainsString('phq-9 v2', $last);
+        self::assertStringContainsString($phq9, $last);
         self::assertStringNotContainsString('consent-to-treat v1', $last);
         foreach ($pages as $n => $text) {
             self::assertStringContainsString('Jane Q Sample', $text, 'page ' . ($n + 1) . ' carries the patient line');
         }
         self::assertSame(array_fill(0, count($pages), 'WL9001'), $this->codes($pdf), 'every page carries the chart number, as a scanner reads it');
+    }
+
+    public function testADocumentFiledWithoutANameCarriesNoPatientInThePdf(): void
+    {
+        $library = DocumentLibrary::shipped();
+        $docs = array_values(array_filter([$library->get('consent-to-treat'), $library->get('grievance-form')]));
+        $context = new Context(['name' => 'Seed Clinic'], self::PATIENT);
+        $pdf = (new OfficeExport($context))->write($docs, new PdfWriter('Date', 'WL9001', $this->config()), 'letter');
+        $pages = $this->pages($pdf);
+        $codes = $this->codes($pdf);
+        self::assertStringContainsString('Jane Q Sample', $pages[0]);
+        self::assertSame('WL9001', $codes[0]);
+        $last = count($pages) - 1;
+        self::assertStringContainsString('Patient Concern or Grievance', $pages[$last]);
+        self::assertStringNotContainsString('Jane Q Sample', $pages[$last], 'the grievance form carries no patient');
+        self::assertSame('', $codes[$last], 'and no barcode');
     }
 
     public function testABlankPdfHasNoBarcode(): void

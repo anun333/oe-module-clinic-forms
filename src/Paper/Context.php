@@ -45,6 +45,12 @@ final readonly class Context
     ) {
     }
 
+    /** The same clinic, recipient, date and provider, with no patient: for a document filed without a name. */
+    public function withoutPatient(): self
+    {
+        return new self($this->facility, [], $this->recipient, $this->today, $this->logoUrl, $this->user, $this->provider);
+    }
+
     /** The value of "group.key", or '' when it isn't known. */
     public function value(string $placeholder): string
     {

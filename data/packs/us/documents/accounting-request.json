@@ -4,7 +4,7 @@
   "category": "Privacy and patient rights",
   "about": "A patient's request for a list of who the clinic shared their information with. HIPAA accounting of disclosures, 45 CFR 164.528.",
   "audience": "patient",
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "rule",
@@ -70,7 +70,7 @@
     },
     {
       "type": "paragraph",
-      "text": "The list shows who we shared your information with and why. It leaves out sharing for treatment, payment and our operations, and some other cases the law allows. The first list in any 12 months is free. For another list within 12 months, we may charge a fair, cost-based fee. We will tell you the fee first, and you can change or cancel your request. We will answer within 60 days."
+      "text": "The list shows who we shared your information with and why. It leaves out sharing for treatment, payment and our operations, and some other cases the law allows. The first list in any 12 months is free. For another list within 12 months, we may charge a fair, cost-based fee. We will tell you the fee first, and you can change or cancel your request. We will answer within 60 days. If we need more time, we will tell you why in writing and answer within 30 more days."
     },
     {
       "type": "signature",

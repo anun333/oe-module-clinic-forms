@@ -4,7 +4,7 @@
   "category": "Care coordination",
   "about": "A request to another provider for a patient's records, with the patient's signature.",
   "audience": "provider",
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -79,13 +79,33 @@
       "count": 1
     },
     {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Requested by (name and phone)",
+          "value": "{user.name}"
+        }
+      ]
+    },
+    {
       "type": "paragraph",
-      "text": "The patient's authorization is below, or attached."
+      "text": "The patient agrees to this request (signature below). If the law requires a signed authorization for these records, it is attached."
     },
     {
       "type": "signature",
       "signers": [
         "Patient or legal representative"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
       ]
     }
   ]

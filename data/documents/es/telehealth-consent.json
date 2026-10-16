@@ -1,6 +1,6 @@
 {
   "id": "telehealth-consent",
-  "translates": "b984d5c32adf44f4",
+  "translates": "c5adabb87b96d2a0",
   "title": "Consentimiento para consultas de telesalud",
   "category": "Recepción",
   "about": "Consentimiento para consultas por video o por teléfono.",
@@ -30,10 +30,14 @@
       "type": "checklist",
       "items": [
         "Una consulta de telesalud puede no reemplazar un examen en persona, y es posible que me pidan que vaya a la clínica.",
-        "La consulta es privada, y debo tenerla en un lugar donde nadie me pueda escuchar.",
+        "Al comenzar cada consulta, diré dónde estoy.",
+        "Si hay una emergencia durante la consulta, la clínica puede enviar ayuda a ese lugar.",
+        "La clínica usa una conexión privada.",
+        "Debo tener la consulta en un lugar donde nadie me pueda escuchar.",
         "Los problemas técnicos pueden interrumpir la consulta; si pasa, la clínica me volverá a llamar o cambiará la cita.",
         "Mi seguro puede cubrir la telesalud de forma distinta a una consulta en la oficina.",
-        "Puedo rechazar la telesalud y pedir una consulta en persona."
+        "Puedo rechazar la telesalud y pedir una consulta en persona.",
+        "En una emergencia, llamaré al número local de emergencias, sin esperar a una consulta."
       ]
     },
     {
@@ -44,7 +48,10 @@
           "value": "{patient.phone}"
         },
         {
-          "label": "Lugar habitual durante las consultas (ciudad y estado)"
+          "label": "Dónde suelo estar durante las consultas (ciudad, y estado o región)"
+        },
+        {
+          "label": "Alguien a quien llamar en una emergencia (nombre y teléfono)"
         }
       ]
     },

@@ -1,6 +1,6 @@
 {
   "id": "notice-of-privacy-practices",
-  "translates": "5d23163bd13169f9",
+  "translates": "f215e68decc1ca80",
   "title": "Aviso de prácticas de privacidad",
   "category": "Privacidad y derechos del paciente",
   "about": "El aviso que recibe cada paciente: cómo usa y comparte la clínica la información de salud, y los derechos del paciente. HIPAA, 45 CFR 164.520, con las declaraciones de 42 CFR Parte 2 que los avisos deben incluir desde el 16 de febrero de 2026.",
@@ -30,11 +30,11 @@
     },
     {
       "type": "paragraph",
-      "text": "Usted tiene derecho a obtener una copia de su expediente médico. Pídanosla, por escrito si se lo pedimos. Le daremos una copia en papel o electrónica en un plazo de 30 días, por lo general antes. Podemos cobrar una tarifa justa basada en el costo."
+      "text": "Usted tiene derecho a obtener una copia de su expediente médico. Pídanosla, por escrito si se lo pedimos. Le daremos una copia en papel o electrónica en un plazo de 30 días, por lo general antes. Si necesitamos más tiempo, le diremos el motivo por escrito. Podemos cobrar una tarifa justa basada en el costo."
     },
     {
       "type": "paragraph",
-      "text": "Usted tiene derecho a pedirnos que corrijamos su expediente si cree que está mal o que le falta algo. Podemos decir que no. Si lo hacemos, le diremos por escrito el motivo en un plazo de 60 días."
+      "text": "Usted tiene derecho a pedirnos que corrijamos su expediente si cree que está mal o que le falta algo. Podemos decir que no. Si lo hacemos, le diremos por escrito el motivo en un plazo de 60 días. Si necesitamos más tiempo, se lo diremos por escrito."
     },
     {
       "type": "paragraph",
@@ -46,7 +46,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Usted tiene derecho a obtener una lista de las personas con quienes compartimos su información en los últimos seis años. La lista no incluye lo que compartimos para tratamiento, pago y nuestras operaciones, ni algunos otros casos. Una lista al año es gratis. Podemos cobrar una tarifa justa basada en el costo por más listas."
+      "text": "Usted tiene derecho a obtener una lista de las personas con quienes compartimos su información en los últimos seis años. La lista no incluye lo que compartimos para tratamiento, pago y nuestras operaciones, ni algunos otros casos. La primera lista en cualquier período de 12 meses es gratis. Podemos cobrar una tarifa justa basada en el costo por más listas."
     },
     {
       "type": "paragraph",
@@ -122,7 +122,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Los registros de tratamiento de trastornos por consumo de sustancias que recibimos de programas cubiertos por 42 CFR Parte 2, o los testimonios sobre lo que dicen, no se usarán ni se compartirán en procedimientos civiles, penales, administrativos o legislativos contra usted. Las únicas excepciones son su consentimiento por escrito, o una orden judicial dictada después de que usted o quien tiene los registros haya recibido aviso y la oportunidad de ser escuchado. La orden judicial debe venir con una citación u otro requisito legal antes de que se usen o compartan los registros."
+      "text": "Los registros de tratamiento de trastornos por consumo de sustancias que creamos o recibimos y que están cubiertos por 42 CFR Parte 2, o los testimonios sobre lo que dicen, no se usarán ni se compartirán en procedimientos civiles, penales, administrativos o legislativos contra usted. Las únicas excepciones son su consentimiento por escrito, o una orden judicial dictada después de que usted o quien tiene los registros haya recibido aviso y la oportunidad de ser escuchado. La orden judicial debe venir con una citación u otro requisito legal antes de que se usen o compartan los registros."
     },
     {
       "type": "paragraph",
@@ -150,7 +150,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Si cree que hemos violado sus derechos, puede presentar una queja ante nuestro contacto de privacidad indicado arriba. También puede presentar una queja ante el Departamento de Salud y Servicios Humanos de los EE. UU., Oficina de Derechos Civiles: 200 Independence Avenue, S.W., Washington, D.C. 20201; teléfono 1-877-696-6775; o www.hhs.gov/ocr/privacy/hipaa/complaints/. No tomaremos represalias contra usted por presentar una queja."
+      "text": "Si cree que hemos violado sus derechos, puede presentar una queja ante nuestro contacto de privacidad indicado arriba. También puede presentar una queja ante el Departamento de Salud y Servicios Humanos de los EE. UU., Oficina de Derechos Civiles: 200 Independence Avenue, S.W., Washington, D.C. 20201; teléfono 1-800-368-1019 (TDD 1-800-537-7697); o ocrportal.hhs.gov. No tomaremos represalias contra usted por presentar una queja."
     }
   ]
 }

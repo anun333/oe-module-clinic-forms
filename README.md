@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.16.1, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.17.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -262,7 +262,8 @@ The tests need no database: they cover the document library (every shipped docum
 - Word and LibreOffice downloads of posters use the normal type size; print posters from the browser.
 - Adding your own documents and packets means writing JSON files on the server.
 - Nothing is faxed or emailed. Scanned pages aren't filed automatically: the barcode is there for a scanning workflow, not read by the module.
-- Word, LibreOffice and PDF files use plain tick boxes (☐) and no logo, and layout forms aren't included. Placeholders in footnotes and comments of your own documents aren't filled.
+- Word, LibreOffice and PDF files use plain tick boxes (☐) and no logo, and layout forms aren't included.
+- A document filed without a name (the grievance form, `"anonymous": true`) never prints the patient's details, patient line or barcode. In a Word or LibreOffice file, though, the patient line is one header for the whole file: download a grievance form on its own, or print it from the browser or as a PDF. Placeholders in footnotes and comments of your own documents aren't filled.
 - Questionnaires and Patient Portal document templates don't print from here.
 
 ## License

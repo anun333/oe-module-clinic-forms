@@ -1,6 +1,6 @@
 {
   "id": "accounting-request",
-  "translates": "bbbbb401c16f9873",
+  "translates": "50ffcb67410ad9c7",
   "title": "Solicitud de una lista de divulgaciones",
   "category": "Privacidad y derechos del paciente",
   "about": "Solicitud del paciente de una lista de las personas con quienes la clínica compartió su información. HIPAA, registro de divulgaciones, 45 CFR 164.528.",
@@ -59,7 +59,7 @@
     },
     {
       "type": "paragraph",
-      "text": "La lista muestra con quién compartimos su información y por qué. No incluye lo que compartimos para tratamiento, pago y nuestras operaciones, ni algunos otros casos que la ley permite. La primera lista en cualquier período de 12 meses es gratis. Por otra lista dentro de esos 12 meses, podemos cobrarle una tarifa justa basada en el costo. Le diremos la tarifa primero, y usted podrá cambiar o cancelar su solicitud. Le responderemos en un plazo de 60 días."
+      "text": "La lista muestra con quién compartimos su información y por qué. No incluye lo que compartimos para tratamiento, pago y nuestras operaciones, ni algunos otros casos que la ley permite. La primera lista en cualquier período de 12 meses es gratis. Por otra lista dentro de esos 12 meses, podemos cobrarle una tarifa justa basada en el costo. Le diremos la tarifa primero, y usted podrá cambiar o cancelar su solicitud. Le responderemos en un plazo de 60 días. Si necesitamos más tiempo, le diremos el motivo por escrito y le responderemos en un plazo de 30 días más."
     },
     {
       "type": "signature",

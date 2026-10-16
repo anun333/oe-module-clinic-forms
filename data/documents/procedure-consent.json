@@ -1,7 +1,7 @@
 {
   "id": "procedure-consent",
   "title": "Consent for a Procedure",
-  "category": "After the visit",
+  "category": "Front desk",
   "about": "Informed consent for one procedure: what it is, why, its benefits and risks, and the other choices, explained and signed before it starts.",
   "audience": "patient",
   "code": {
@@ -9,7 +9,7 @@
     "code": "64293-4",
     "display": "Procedure Consent Document"
   },
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -47,8 +47,7 @@
           "label": "Body part and side"
         },
         {
-          "label": "Clinician doing it",
-          "value": "{provider.name}"
+          "label": "Clinician doing it"
         }
       ]
     },
@@ -97,6 +96,17 @@
         "Patient or legal representative",
         "Clinician",
         "Witness"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
       ]
     }
   ]

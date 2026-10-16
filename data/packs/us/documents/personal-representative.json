@@ -4,7 +4,7 @@
   "category": "Privacy and patient rights",
   "about": "Records who the law lets act for a patient on health care and health information, and the papers that show it. HIPAA, 45 CFR 164.502(g); identity and authority checked under 164.514(h).",
   "audience": "patient",
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "rule",
@@ -35,7 +35,7 @@
     },
     {
       "type": "paragraph",
-      "text": "A personal representative is someone the law lets make health care decisions for you. We treat them as you for your health information."
+      "text": "A personal representative is someone the law lets make health care decisions for the patient. Within that authority, we treat them as the patient for the patient's health information."
     },
     {
       "type": "paragraph",
@@ -71,7 +71,7 @@
       "items": [
         "Health care power of attorney or health care agent",
         "Guardian or conservator named by a court",
-        "Parent or legal guardian of a child under 18",
+        "Parent or legal guardian of a minor child",
         "Executor or administrator of the estate of a patient who has died",
         "Other legal authority (write below)"
       ]
@@ -94,7 +94,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Please bring a copy of the paper that gives this authority, such as the power of attorney or the court order. We keep a copy in your record."
+      "text": "Please bring a copy of the paper that gives this authority, such as the power of attorney or the court order. We keep a copy in the patient's record."
     },
     {
       "type": "paragraph",
@@ -102,7 +102,7 @@
     },
     {
       "type": "paragraph",
-      "text": "If you only want us to talk with a family member or friend, you do not need this form. Ask us for a release form instead."
+      "text": "If you only want us to talk with a family member or friend, you do not need this form: use our Communication Preferences form. To send records to someone, use our Release of Information form."
     },
     {
       "type": "signature",

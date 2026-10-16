@@ -9,7 +9,7 @@
     "code": "59284-0",
     "display": "Consent Document"
   },
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -53,6 +53,9 @@
         },
         {
           "label": "Email"
+        },
+        {
+          "label": "Other address for mail, if any"
         }
       ]
     },
@@ -65,7 +68,8 @@
         "Send text messages",
         "Send email",
         "Use the patient portal",
-        "Speak with this person about my care (write below)"
+        "Speak with this person about my care (write below)",
+        "Send mail to my home address"
       ]
     },
     {
@@ -81,6 +85,17 @@
       "type": "signature",
       "signers": [
         "Patient or legal representative"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
       ]
     }
   ]

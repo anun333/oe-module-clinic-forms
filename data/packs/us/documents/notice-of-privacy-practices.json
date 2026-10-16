@@ -9,7 +9,7 @@
     "code": "57017-6",
     "display": "Privacy policy Organization Document"
   },
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "rule",
@@ -46,11 +46,11 @@
     },
     {
       "type": "paragraph",
-      "text": "You have the right to get a copy of your health record. Ask us, in writing if we ask you to. We will give you a paper or electronic copy within 30 days, usually sooner. We may charge a fair, cost-based fee."
+      "text": "You have the right to get a copy of your health record. Ask us, in writing if we ask you to. We will give you a paper or electronic copy within 30 days, usually sooner. If we need more time, we will tell you why in writing. We may charge a fair, cost-based fee."
     },
     {
       "type": "paragraph",
-      "text": "You have the right to ask us to correct your record if you think it is wrong or missing something. We may say no. If we do, we will tell you why in writing within 60 days."
+      "text": "You have the right to ask us to correct your record if you think it is wrong or missing something. We may say no. If we do, we will tell you why in writing within 60 days. If we need more time, we will tell you in writing."
     },
     {
       "type": "paragraph",
@@ -62,7 +62,7 @@
     },
     {
       "type": "paragraph",
-      "text": "You have the right to get a list of who we shared your information with in the past six years. The list leaves out sharing for treatment, payment and our operations, and a few other cases. One list a year is free. We may charge a fair, cost-based fee for more."
+      "text": "You have the right to get a list of who we shared your information with in the past six years. The list leaves out sharing for treatment, payment and our operations, and a few other cases. The first list in any 12 months is free. We may charge a fair, cost-based fee for more."
     },
     {
       "type": "paragraph",
@@ -138,7 +138,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Substance use disorder treatment records we receive from programs covered by 42 CFR Part 2, or testimony about what they say, will not be used or shared in civil, criminal, administrative or legislative proceedings against you. The only exceptions are your written consent, or a court order made after you or the record holder had notice and a chance to be heard. A court order must come with a subpoena or other legal requirement before the records are used or shared."
+      "text": "Substance use disorder treatment records we create or receive that are covered by 42 CFR Part 2, or testimony about what they say, will not be used or shared in civil, criminal, administrative or legislative proceedings against you. The only exceptions are your written consent, or a court order made after you or the record holder had notice and a chance to be heard. A court order must come with a subpoena or other legal requirement before the records are used or shared."
     },
     {
       "type": "paragraph",
@@ -166,7 +166,7 @@
     },
     {
       "type": "paragraph",
-      "text": "If you think we have violated your rights, you can complain to our privacy contact named above. You can also complain to the U.S. Department of Health and Human Services, Office for Civil Rights: 200 Independence Avenue, S.W., Washington, D.C. 20201; phone 1-877-696-6775; or www.hhs.gov/ocr/privacy/hipaa/complaints/. We will not retaliate against you for filing a complaint."
+      "text": "If you think we have violated your rights, you can complain to our privacy contact named above. You can also complain to the U.S. Department of Health and Human Services, Office for Civil Rights: 200 Independence Avenue, S.W., Washington, D.C. 20201; phone 1-800-368-1019 (TDD 1-800-537-7697); or ocrportal.hhs.gov. We will not retaliate against you for filing a complaint."
     }
   ]
 }

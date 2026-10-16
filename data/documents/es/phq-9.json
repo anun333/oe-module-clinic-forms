@@ -1,6 +1,6 @@
 {
   "id": "phq-9",
-  "translates": "5d0fc3a48952e121",
+  "translates": "d3e8431f6ba0315d",
   "title": "Cuestionario sobre la salud del paciente (PHQ-9)",
   "category": "Detección",
   "about": "Detección de depresión: nueve preguntas con puntuación de 0 a 27. Las respuestas se pueden registrar en el formulario PHQ-9 de OpenEMR (actívelo en Administración > Formularios > Administración de formularios).",
@@ -60,6 +60,10 @@
       ]
     },
     {
+      "type": "paragraph",
+      "text": "Si está pensando en hacerse daño, dígaselo ahora a un miembro del personal. Si está en peligro, llame al número local de emergencias."
+    },
+    {
       "type": "heading",
       "text": "Para uso de la oficina"
     },
@@ -69,7 +73,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Si la pregunta 9 tiene una respuesta distinta de \"Ningún día\", siga el protocolo de seguridad de la clínica antes de que el paciente se vaya."
+      "text": "Si la pregunta 9 tiene una respuesta distinta de \"Ningún día\", o está en blanco, un clínico pregunta sobre ella el mismo día, antes de que el paciente se vaya. Si el paciente ya se fue, comuníquese con él hoy."
     },
     {
       "type": "fields",

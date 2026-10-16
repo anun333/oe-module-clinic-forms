@@ -9,7 +9,7 @@
     "code": "94136-9",
     "display": "Controlled Substance Agreement"
   },
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -66,8 +66,10 @@
         "Keep my medicine locked up and away from children and others.",
         "Never share, sell or trade my medicine.",
         "Tell my clinician about all the other medicines I take, and about alcohol or drug use.",
+        "Not mix this medicine with alcohol, sleeping pills or anxiety medicines unless my clinician says it is safe.",
         "Not drive or use machines if the medicine makes me sleepy.",
-        "Come to my visits, and give a urine or other test when asked."
+        "Come to my visits, and give a urine or other test when asked.",
+        "Ask for a refill ____ days before I run out, during clinic hours."
       ]
     },
     {
@@ -90,10 +92,25 @@
       "text": "We will look at this agreement together at least once a year."
     },
     {
+      "type": "paragraph",
+      "text": "If someone who takes this medicine cannot be woken up or is breathing very slowly, give naloxone if you have it, and call your local emergency number."
+    },
+    {
       "type": "signature",
       "signers": [
         "Patient or legal representative",
         "Clinician"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
       ]
     }
   ]

@@ -4,7 +4,7 @@
   "category": "After the visit",
   "about": "Confirms a visit and when the patient may return, without saying why they were seen.",
   "audience": "patient",
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -45,7 +45,7 @@
         "May return to work or school on the date below",
         "May return with the restrictions below",
         "Should stay home until seen again",
-        "Was here with a family member"
+        "Came with the patient, as a parent or caregiver (name below)"
       ]
     },
     {
@@ -55,10 +55,13 @@
           "label": "May return on"
         },
         {
-          "label": "Excused from"
+          "label": "Excused from (date)"
         },
         {
-          "label": "Excused until"
+          "label": "Excused to (date)"
+        },
+        {
+          "label": "Parent or caregiver who came"
         }
       ]
     },

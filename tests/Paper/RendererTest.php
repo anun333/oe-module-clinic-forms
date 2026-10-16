@@ -172,6 +172,19 @@ final class RendererTest extends TestCase
         self::assertStringContainsString('cf-label-box', (new Renderer(new Context(self::FACILITY), 'en', [], true))->layoutForm(new LayoutForm('DEM', 'Registration', ['1' => 'Who'], [], [])));
     }
 
+    public function testADocumentFiledWithoutANameNeverCarriesThePatient(): void
+    {
+        $grievance = DocumentLibrary::shipped()->get('grievance-form');
+        self::assertNotNull($grievance);
+        self::assertTrue($grievance->anonymous);
+        $renderer = new Renderer(new Context(self::FACILITY, ['name' => 'Jane Q Sample', 'phone' => '555-0199', 'id' => '00042']));
+        $html = $renderer->document($grievance);
+        self::assertStringNotContainsString('Jane Q Sample', $html);
+        self::assertStringNotContainsString('555-0199', $html);
+        self::assertStringNotContainsString('cf-barcode', $html, 'nor the chart number');
+        self::assertStringContainsString('Jane Q Sample', $renderer->document($this->doc([['type' => 'paragraph', 'text' => 'Hello.']])), 'other documents in the same print are filled');
+    }
+
     private function doc(array $blocks): Document
     {
         return new Document('sample', 'Sample', 'Front desk', 'A sample.', $blocks, []);

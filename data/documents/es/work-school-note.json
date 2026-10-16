@@ -1,6 +1,6 @@
 {
   "id": "work-school-note",
-  "translates": "04bb983b79cf53b5",
+  "translates": "9b68de26a4b4ed3c",
   "title": "Nota para el trabajo o la escuela",
   "category": "Después de la consulta",
   "about": "Confirma una consulta y cuándo puede regresar el paciente, sin decir por qué lo atendieron.",
@@ -35,7 +35,7 @@
         "Puede regresar al trabajo o a la escuela en la fecha indicada abajo",
         "Puede regresar con las restricciones indicadas abajo",
         "Debe quedarse en casa hasta una nueva consulta",
-        "Vino acompañando a un familiar"
+        "Vino con el paciente, como padre, madre o cuidador (nombre abajo)"
       ]
     },
     {
@@ -45,10 +45,13 @@
           "label": "Puede regresar el"
         },
         {
-          "label": "Justificado desde"
+          "label": "Justificado desde (fecha)"
         },
         {
-          "label": "Justificado hasta"
+          "label": "Justificado hasta (fecha)"
+        },
+        {
+          "label": "Padre, madre o cuidador que vino"
         }
       ]
     },
@@ -67,7 +70,12 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Nombre del profesional clínico (en letra de molde)"
+          "label": "Nombre del profesional clínico (en letra de molde)",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Credenciales",
+          "value": "{provider.credentials}"
         },
         {
           "label": "Teléfono de la clínica",

@@ -289,8 +289,12 @@ final class DocumentLibrary
             }
             $data['validated'] = $english->validated;
             $data['poster'] = $english->poster;
+            $data['anonymous'] = $english->anonymous;
         }
-        self::onlyKeys($data, ['id', 'title', 'category', 'about', 'audience', 'blocks'], ['code', 'validated', 'poster', 'version', 'status', 'source', 'licence', 'based_on'], $where);
+        self::onlyKeys($data, ['id', 'title', 'category', 'about', 'audience', 'blocks'], ['code', 'validated', 'poster', 'anonymous', 'version', 'status', 'source', 'licence', 'based_on'], $where);
+        if (isset($data['anonymous']) && !is_bool($data['anonymous'])) {
+            throw new \InvalidArgumentException("$where anonymous: must be true or false");
+        }
         [$version, $status, $origin, $licence, $basedOn] = self::metadata($data, $where);
         if (isset($data['poster']) && !is_bool($data['poster'])) {
             throw new \InvalidArgumentException("$where poster: must be true or false");
@@ -432,6 +436,7 @@ final class DocumentLibrary
             $origin,
             $licence,
             $basedOn,
+            ($data['anonymous'] ?? false) === true,
         );
     }
 
