@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.9.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.10.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -88,6 +88,7 @@ The format is in `src/Paper/Document.php`. Blocks are headings, paragraphs, fiel
 | `patient` | `{patient.name}` `{patient.dob}` `{patient.id}` `{patient.address}` `{patient.street}` `{patient.city}` `{patient.state}` `{patient.zip}` `{patient.phone}` `{patient.sex}` `{patient.allergies}` `{patient.medications}` `{patient.problems}` (current allergies, medications and problems, as OpenEMR's issue lists hold them) |
 | `recipient` | `{recipient.name}` `{recipient.organization}` `{recipient.specialty}` `{recipient.address}` `{recipient.phone}` `{recipient.fax}` `{recipient.email}` |
 | `user` | `{user.name}` (the person printing) |
+| `provider` | `{provider.name}` `{provider.credentials}` `{provider.npi}` `{provider.specialty}`: the **Signing provider** chosen at the top of the page. It defaults to the clinician printing, or else the patient's own provider. Credentials are the user's *Valedictory* (MD, NP) under Administration › Users |
 | `clinic` | `{clinic.today}` |
 
 ## Spanish and language assistance
@@ -98,7 +99,8 @@ Choose **Español** as the language at the top of the Clinic Forms page. Documen
 - **The validated questionnaires use their official Spanish wording.** PHQ-9, PHQ-2 and GAD-7 are the "Spanish for the USA" versions from phqscreeners.com. AUDIT-C is from the WHO's Spanish AUDIT manual.
 - **The other translations are ours.** Have a qualified translator review them before use, as you would the English.
 - **Nothing gets dropped in translation.** Each translation is checked against its English document: the same blocks, fields, items, signature lines and placeholders. The key legal wording is checked in Spanish too.
-- **Your own translations:** put them in `sites/<site>/documents/clinic-forms/es/`, with the English document's id. The page warns if one doesn't match its English document.
+- **Old Spanish is never printed for new English.** Each translation records which English wording it was made from (its `translates` fingerprint). When the English changes, through a module update or your own version of the document, the document prints in English and the page lists it as out of date until its Spanish is updated. The picker marks it **ES out of date**.
+- **Your own translations:** put them in `sites/<site>/documents/clinic-forms/es/`, with the English document's id. The page warns if one doesn't match its English document. If you start from a shipped Spanish file, keep its `translates` line: then your copy, too, is marked out of date when its English changes. A translation without that line is printed without this check.
 - **Layout forms (Demographics, History) still print with your site's labels.** OpenEMR's own Spanish translation renders "Ethnicity" as "Raza", which means race, so it isn't used for intake forms.
 
 **Section 1557 language assistance (45 CFR 92.10 and 92.11).**
@@ -142,7 +144,9 @@ Each group of the layout becomes a heading, and each field in use a labelled bla
 
 Short answers sit two to a row. Labels and list options follow the site's translation settings, as the screens do. A field with no label on screen (middle and last name share the "Name" row) is labelled with its description.
 
-On Demographics, the fields the clinic fills rather than the patient (chart number, providers, portal login, registry and publicity codes, deceased date and others: the list is `LayoutPaper::OFFICE_FIELDS`) print last, in a **For office use** box.
+On Demographics, the fields the clinic fills rather than the patient (chart number, providers, portal login, registry and publicity codes, deceased date and others: the list is `LayoutPaper::OFFICE_FIELDS`) print last, in a **For office use** box. Each one names the screen tab it's typed into (Who, Choices, Stats…), since the box gathers fields from several.
+
+**The paper follows the entry screens.** Fields print in the order the Edit Demographics, New Patient and Edit History screens show them (and the Tab key moves through them). Measured on 8.4.1 with `dev/clinic_forms_entry_order.py` in the openhealthcare workspace: 107 Demographics fields, 15 on the UDS form and 35 on History. The only step back is the start of the office box, which then goes forward tab by tab. Fields with the same position number are ordered as the screens order them.
 
 ### Check and correct
 

@@ -126,6 +126,27 @@
       "signers": [
         "Referring provider"
       ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Credentials",
+          "value": "{provider.credentials}"
+        },
+        {
+          "label": "NPI",
+          "value": "{provider.npi}"
+        },
+        {
+          "label": "Specialty",
+          "value": "{provider.specialty}"
+        }
+      ]
     }
   ]
 }

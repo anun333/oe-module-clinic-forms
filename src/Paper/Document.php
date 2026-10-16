@@ -17,7 +17,9 @@
  *   taglines   {"type": "taglines"}   the language assistance taglines (data/taglines.json and the clinic's own)
  *
  * A translation (data/documents/es/<id>.json) has the same id, title, category, about and blocks,
- * and takes its audience, code and validated flag from the English document.
+ * and takes its audience, code and validated flag from the English document. Its "translates" names
+ * the English it was made from (Translation::fingerprint); when the English changes, the translation
+ * is out of date and the document prints in English until it is updated.
  * Text may use the placeholders in Context::KEYS, written {group.key}.
  *
  * Every document also says who reads it ("audience": patient, staff or provider) and may carry a
@@ -46,6 +48,7 @@ final readonly class Document
      * @param bool                       $validated a validated instrument: its wording must not be changed
      * @param string                     $language  the language of its wording (en, es)
      * @param bool                       $poster    a notice for posting: printed in 20-point sans serif, as 45 CFR 92.10-92.11 require
+     * @param ?string                    $translates for a translation, the fingerprint of the English it was made from
      */
     public function __construct(
         public string $id,
@@ -60,6 +63,7 @@ final readonly class Document
         public bool $validated = false,
         public string $language = 'en',
         public bool $poster = false,
+        public ?string $translates = null,
     ) {
     }
 

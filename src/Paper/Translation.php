@@ -7,6 +7,9 @@
  * can be dropped or added without this noticing. Shipped translations must have no differences;
  * a clinic's own get them as warnings.
  *
+ * Wording changes are caught another way: a translation records the fingerprint of the English
+ * it was made from, and one whose English has changed since is out of date.
+ *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
  */
@@ -17,6 +20,18 @@ namespace OpenHealthcare\ClinicForms\Paper;
 
 final class Translation
 {
+    /**
+     * The English a translation was made from, in 16 hex digits: a hash of everything a translation
+     * translates (id, title, category, about, blocks), so reformatting the file changes nothing but
+     * any change of wording does. dev/clinic_forms_translate_es.py computes the same value.
+     */
+    public static function fingerprint(Document $english): string
+    {
+        $content = ['id' => $english->id, 'title' => $english->title, 'category' => $english->category, 'about' => $english->about, 'blocks' => $english->blocks];
+        $json = json_encode($content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_LINE_TERMINATORS | JSON_THROW_ON_ERROR);
+        return substr(hash('sha256', $json), 0, 16);
+    }
+
     /** @return list<string> what differs, each naming the block */
     public static function differences(Document $english, Document $translation): array
     {

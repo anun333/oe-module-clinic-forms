@@ -43,6 +43,7 @@ $context = new Context(
     $today,
     null,
     $site->user((int)(OpenEmr::session('authUserID') ?? 0)),
+    $site->provider((int)($_POST['provider'] ?? 0)),
 );
 $paper = ($_POST['paper'] ?? '') === 'a4' ? 'A4' : 'letter';
 $language = Words::language($_POST['language'] ?? 'en');

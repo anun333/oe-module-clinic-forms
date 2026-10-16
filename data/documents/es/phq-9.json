@@ -1,5 +1,6 @@
 {
   "id": "phq-9",
+  "translates": "b113d5e895f5f6df",
   "title": "Cuestionario sobre la salud del paciente (PHQ-9)",
   "category": "Detección",
   "about": "Detección de depresión: nueve preguntas con puntuación de 0 a 27. Las respuestas se pueden registrar en el formulario PHQ-9 de OpenEMR (actívelo en Administración > Formularios > Administración de formularios).",

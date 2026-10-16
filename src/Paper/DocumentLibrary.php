@@ -10,6 +10,10 @@
  * edited consent, say). A clinic file with a mistake is left out and reported on the page;
  * the shipped files are checked by the tests, so a mistake there stops the page instead.
  *
+ * A translation whose English has changed since it was made (its "translates" fingerprint no
+ * longer matches) is out of date: the document prints in English and outOfDate() names it.
+ * Shipped translations must carry the fingerprint; a clinic's own are checked when they do.
+ *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
  */
@@ -26,6 +30,8 @@ final class DocumentLibrary
     private array $documents = [];
     /** @var list<string> clinic files that were left out, and why */
     private array $problems = [];
+    /** @var array<string, string> translations whose English has changed, by document id: the file */
+    private array $outOfDate = [];
 
     /**
      * @param ?string $localDir   the clinic's own documents, or null for none
@@ -85,6 +91,10 @@ final class DocumentLibrary
                                 throw new \InvalidArgumentException("$label/" . basename($file) . ': a translation of a document that does not exist');
                             }
                             $doc = self::read($file, $label, $source, $english, $this->language);
+                            if ($doc->translates !== Translation::fingerprint($english) && ($doc->translates !== null || $source === 'shipped')) {
+                                $this->outOfDate[$doc->id] = "$label/" . basename($file);
+                                continue;
+                            }
                         } catch (\InvalidArgumentException $e) {
                             if ($source === 'shipped') {
                                 throw $e;
@@ -96,6 +106,7 @@ final class DocumentLibrary
                             $this->problems[] = "$label/" . basename($file) . ': ' . $difference;
                         }
                         $docs[$doc->id] = $doc;
+                        unset($this->outOfDate[$doc->id]); // the clinic's own, current, replaces an out-of-date shipped one
                     }
                 }
             }
@@ -110,6 +121,18 @@ final class DocumentLibrary
     {
         $this->all();
         return $this->problems;
+    }
+
+    /**
+     * Translations left out because their English changed after they were made (or, shipped,
+     * because they don't say which English they were made from). Those documents print in English.
+     *
+     * @return array<string, string> the file, by document id
+     */
+    public function outOfDate(): array
+    {
+        $this->all();
+        return $this->outOfDate;
     }
 
     public function get(string $id): ?Document
@@ -138,9 +161,15 @@ final class DocumentLibrary
         if (!is_array($data)) {
             throw new \InvalidArgumentException("$where: must be an object");
         }
+        $translates = null;
         if ($english !== null) {
             // A translation takes its audience, code and validated flag from the English document.
-            self::onlyKeys($data, ['id', 'title', 'category', 'about', 'blocks'], [], $where);
+            self::onlyKeys($data, ['id', 'title', 'category', 'about', 'blocks'], ['translates'], $where);
+            if (isset($data['translates']) && (!is_string($data['translates']) || preg_match('/^[0-9a-f]{16}$/', $data['translates']) !== 1)) {
+                throw new \InvalidArgumentException("$where translates: must be the 16-digit fingerprint of the English it translates");
+            }
+            $translates = $data['translates'] ?? null;
+            unset($data['translates']);
             $data['audience'] = $english->audience;
             if ($english->code !== null) {
                 $data['code'] = $english->code;
@@ -283,6 +312,7 @@ final class DocumentLibrary
             ($data['validated'] ?? false) === true,
             $language,
             ($data['poster'] ?? false) === true,
+            $translates,
         );
     }
 

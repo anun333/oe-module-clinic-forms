@@ -27,7 +27,11 @@ final class TranslationTest extends TestCase
         $spanish = DocumentLibrary::shipped('es');
         $patient = array_filter($english->all(), static fn(Document $d): bool => $d->audience === 'patient');
         self::assertGreaterThanOrEqual(22, count($patient));
+        $outOfDate = $spanish->outOfDate();
         foreach ($patient as $id => $doc) {
+            if (isset($outOfDate[$id])) {
+                continue;
+            }
             $es = $spanish->get($id);
             self::assertNotNull($es);
             self::assertSame('es', $es->language, "$id has a Spanish version");
@@ -39,6 +43,140 @@ final class TranslationTest extends TestCase
             self::assertNotSame($doc->title, $es->title, "$id title is translated");
         }
         self::assertSame([], $spanish->problems());
+        if ($outOfDate !== []) {
+            // Not a failure: while the English is being worked on, its Spanish waits for the language
+            // pass (dev/clinic_forms_translate_es.py), and those documents print in English meanwhile.
+            self::markTestIncomplete('Spanish out of date, printing in English: ' . implode(', ', array_keys($outOfDate)));
+        }
+    }
+
+    public function testTheFingerprintIsTheGeneratorsToo(): void
+    {
+        // The same document and value as FINGERPRINT_CHECK in dev/clinic_forms_translate_es.py.
+        $doc = new Document('x', 'Título', 'Cat', 'About / "q"', [['type' => 'paragraph', 'text' => "Line\nnext <b> & 'q' \u{2610} \u{1D11E} \u{2028}"], ['type' => 'lines', 'label' => 'L', 'count' => 2]], []);
+        self::assertSame('19e49de3cf3a43f4', Translation::fingerprint($doc));
+        $reworded = new Document('x', 'Título', 'Cat', 'About / "q"', [['type' => 'paragraph', 'text' => "Line\nnext <b> & 'q' \u{2610} \u{1D11E} \u{2028}."], ['type' => 'lines', 'label' => 'L', 'count' => 2]], []);
+        self::assertNotSame(Translation::fingerprint($doc), Translation::fingerprint($reworded));
+        $more = new Document('x', 'Título', 'Cat', 'About / "q"', [['type' => 'paragraph', 'text' => "Line\nnext <b> & 'q' \u{2610} \u{1D11E} \u{2028}"], ['type' => 'lines', 'label' => 'L', 'count' => 3]], []);
+        self::assertNotSame(Translation::fingerprint($doc), Translation::fingerprint($more));
+    }
+
+    public function testEveryShippedTranslationSaysWhichEnglishItTranslates(): void
+    {
+        $files = glob(dirname(__DIR__, 2) . '/data/documents/es/*.json') ?: [];
+        self::assertGreaterThanOrEqual(22, count($files));
+        foreach ($files as $file) {
+            $data = json_decode((string)file_get_contents($file), true, 64, JSON_THROW_ON_ERROR);
+            self::assertMatchesRegularExpression('/^[0-9a-f]{16}$/', $data['translates'] ?? '', basename($file));
+        }
+    }
+
+    public function testAChangedEnglishDocumentPrintsInEnglishUntilItsTranslationIsUpdated(): void
+    {
+        $dir = self::copyOf('consent-to-treat');
+        try {
+            $library = new DocumentLibrary($dir, null, 'sites/default/documents/clinic-forms', 'es');
+            self::assertSame('es', $library->get('consent-to-treat')?->language, 'unchanged, the translation is used');
+            self::assertSame([], $library->outOfDate());
+
+            $data = json_decode((string)file_get_contents($dir . '/consent-to-treat.json'), true, 64, JSON_THROW_ON_ERROR);
+            file_put_contents($dir . '/consent-to-treat.json', json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR));
+            $library = new DocumentLibrary($dir, null, 'sites/default/documents/clinic-forms', 'es');
+            self::assertSame('es', $library->get('consent-to-treat')?->language, 'reformatting the English changes nothing');
+
+            $data['blocks'][1]['text'] .= ' One more sentence.';
+            file_put_contents($dir . '/consent-to-treat.json', json_encode($data, JSON_THROW_ON_ERROR));
+            $library = new DocumentLibrary($dir, null, 'sites/default/documents/clinic-forms', 'es');
+            self::assertSame('en', $library->get('consent-to-treat')?->language, 'reworded, the document prints in English');
+            self::assertStringEndsWith('One more sentence.', $library->get('consent-to-treat')->blocks[1]['text'] ?? '');
+            self::assertSame(['consent-to-treat' => 'data/documents/es/consent-to-treat.json'], $library->outOfDate());
+            self::assertFalse($library->isTranslated('consent-to-treat'));
+            self::assertSame([], $library->problems(), 'out of date is not a mistake in the file');
+        } finally {
+            self::remove($dir);
+        }
+    }
+
+    public function testAShippedTranslationThatDoesNotSayWhatItTranslatesIsOutOfDate(): void
+    {
+        $dir = self::copyOf('consent-to-treat');
+        try {
+            $data = json_decode((string)file_get_contents($dir . '/es/consent-to-treat.json'), true, 64, JSON_THROW_ON_ERROR);
+            unset($data['translates']);
+            file_put_contents($dir . '/es/consent-to-treat.json', json_encode($data, JSON_THROW_ON_ERROR));
+            $library = new DocumentLibrary($dir, null, 'sites/default/documents/clinic-forms', 'es');
+            self::assertSame('en', $library->get('consent-to-treat')?->language);
+            self::assertArrayHasKey('consent-to-treat', $library->outOfDate());
+
+            $data['translates'] = 'not-a-fingerprint';
+            file_put_contents($dir . '/es/consent-to-treat.json', json_encode($data, JSON_THROW_ON_ERROR));
+            $this->expectExceptionMessage('es/consent-to-treat.json translates: must be the 16-digit fingerprint');
+            (new DocumentLibrary($dir, null, 'sites/default/documents/clinic-forms', 'es'))->all();
+        } finally {
+            self::remove($dir);
+        }
+    }
+
+    public function testAClinicsOwnEnglishVersionIsNotPrintedWithTheShippedSpanish(): void
+    {
+        // Before fingerprints, a clinic's edited consent printed in Spanish as the shipped original.
+        $dir = sys_get_temp_dir() . '/cf-local-' . bin2hex(random_bytes(4));
+        mkdir($dir . '/es', 0777, true);
+        try {
+            $data = json_decode((string)file_get_contents(dirname(__DIR__, 2) . '/data/documents/consent-to-treat.json'), true, 64, JSON_THROW_ON_ERROR);
+            $data['blocks'][1]['text'] = 'Our own wording.';
+            file_put_contents($dir . '/consent-to-treat.json', json_encode($data, JSON_THROW_ON_ERROR));
+            $library = new DocumentLibrary(dirname(__DIR__, 2) . '/data/documents', $dir, 'sites/default/documents/clinic-forms', 'es');
+            $doc = $library->get('consent-to-treat');
+            self::assertSame(['clinic', 'en', 'Our own wording.'], [$doc?->source, $doc?->language, $doc?->blocks[1]['text'] ?? null]);
+            self::assertSame('data/documents/es/consent-to-treat.json', $library->outOfDate()['consent-to-treat'] ?? null);
+
+            // The clinic's own Spanish of its own wording, with that fingerprint, is used.
+            $english = DocumentLibrary::read($dir . '/consent-to-treat.json', 'sites/default/documents/clinic-forms', 'clinic');
+            $es = json_decode((string)file_get_contents(dirname(__DIR__, 2) . '/data/documents/es/consent-to-treat.json'), true, 64, JSON_THROW_ON_ERROR);
+            $es['blocks'][1]['text'] = 'Nuestro propio texto.';
+            $es['translates'] = Translation::fingerprint($english);
+            file_put_contents($dir . '/es/consent-to-treat.json', json_encode($es, JSON_THROW_ON_ERROR));
+            $library = new DocumentLibrary(dirname(__DIR__, 2) . '/data/documents', $dir, 'sites/default/documents/clinic-forms', 'es');
+            self::assertSame(['es', 'Nuestro propio texto.'], [$library->get('consent-to-treat')?->language, $library->get('consent-to-treat')?->blocks[1]['text'] ?? null]);
+            self::assertArrayNotHasKey('consent-to-treat', $library->outOfDate());
+            self::assertSame([], $library->problems());
+
+            // Then the clinic edits its English again: its Spanish is out of date too.
+            $data['blocks'][1]['text'] = 'Our own wording, edited.';
+            file_put_contents($dir . '/consent-to-treat.json', json_encode($data, JSON_THROW_ON_ERROR));
+            $library = new DocumentLibrary(dirname(__DIR__, 2) . '/data/documents', $dir, 'sites/default/documents/clinic-forms', 'es');
+            self::assertSame('en', $library->get('consent-to-treat')?->language);
+            self::assertSame('sites/default/documents/clinic-forms/es/consent-to-treat.json', $library->outOfDate()['consent-to-treat'] ?? null);
+        } finally {
+            self::remove($dir);
+        }
+    }
+
+    /** A shipped-style folder holding one document and its Spanish, current whatever the shipped one is. */
+    private static function copyOf(string $id): string
+    {
+        $dir = sys_get_temp_dir() . '/cf-copy-' . bin2hex(random_bytes(4));
+        mkdir($dir . '/es', 0777, true);
+        copy(dirname(__DIR__, 2) . "/data/documents/$id.json", "$dir/$id.json");
+        $es = json_decode((string)file_get_contents(dirname(__DIR__, 2) . "/data/documents/es/$id.json"), true, 64, JSON_THROW_ON_ERROR);
+        $es['translates'] = Translation::fingerprint(DocumentLibrary::read("$dir/$id.json"));
+        file_put_contents("$dir/es/$id.json", json_encode($es, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR));
+        return $dir;
+    }
+
+    private static function remove(string $dir): void
+    {
+        array_map('unlink', array_merge(glob($dir . '/es/*') ?: [], glob($dir . '/*.json') ?: []));
+        rmdir($dir . '/es');
+        rmdir($dir);
+    }
+
+    /** The shipped Spanish of a document, read whether or not it is up to date. */
+    private static function shippedSpanish(string $id): Document
+    {
+        $english = DocumentLibrary::shipped()->get($id) ?? throw new \LogicException($id);
+        return DocumentLibrary::read(dirname(__DIR__, 2) . "/data/documents/es/$id.json", 'data/documents/es', 'shipped', $english, 'es');
     }
 
     public function testSpanishVersionsKeepTheirRequiredWording(): void
@@ -55,13 +193,13 @@ final class TranslationTest extends TestCase
         $spanish = DocumentLibrary::shipped('es');
         self::assertSame('en', $spanish->get('routing-slip')?->language);
         self::assertFalse($spanish->isTranslated('routing-slip'));
-        self::assertTrue($spanish->isTranslated('consent-to-treat'));
+        self::assertTrue($spanish->isTranslated('consent-to-treat') || isset($spanish->outOfDate()['consent-to-treat']));
     }
 
     public function testADroppedElementIsADifference(): void
     {
         $english = DocumentLibrary::shipped()->get('release-of-information') ?? throw new \LogicException();
-        $es = DocumentLibrary::shipped('es')->get('release-of-information') ?? throw new \LogicException();
+        $es = self::shippedSpanish('release-of-information');
         $blocks = $es->blocks;
         array_pop($blocks[0]['fields']);
         $fewer = new Document($es->id, $es->title, $es->category, $es->about, $blocks, $es->uses, language: 'es');
@@ -114,7 +252,7 @@ final class TranslationTest extends TestCase
 
     public function testASpanishPageIsInSpanishAndCarriesTheTaglines(): void
     {
-        $doc = DocumentLibrary::shipped('es')->get('consent-to-treat') ?? throw new \LogicException();
+        $doc = self::shippedSpanish('consent-to-treat');
         $taglines = Taglines::forSite(null)->forPage('es');
         $html = (new Renderer(new Context(['name' => 'Clínica', 'phone' => '555-0100']), 'es', $taglines))->document($doc);
         self::assertStringContainsString("lang='es'", $html);

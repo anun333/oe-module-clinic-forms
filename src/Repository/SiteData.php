@@ -162,6 +162,51 @@ final class SiteData
     }
 
     /**
+     * The clinicians who can sign letters: active users marked as authorized (providers), not
+     * Address Book entries.
+     *
+     * @return list<array{id: int, name: string}> by last name
+     */
+    public function providers(): array
+    {
+        $out = [];
+        foreach (QueryUtils::fetchRecords("SELECT id, fname, lname, valedictory FROM users WHERE active = 1 AND authorized = 1 AND COALESCE(username, '') <> '' ORDER BY lname, fname") as $row) {
+            $name = trim(self::s($row['lname'] ?? '') . ', ' . self::s($row['fname'] ?? ''), ', ');
+            $credentials = self::s($row['valedictory'] ?? '');
+            $out[] = ['id' => (int)$row['id'], 'name' => $name . ($credentials !== '' ? ", $credentials" : '')];
+        }
+        return $out;
+    }
+
+    /**
+     * A signing clinician for {provider.*}: name, credentials (the user's "Valedictory", MD or NP),
+     * NPI and specialty. Empty unless the id is one of providers().
+     *
+     * @return array<string, string>
+     */
+    public function provider(int $id): array
+    {
+        $rows = QueryUtils::fetchRecords("SELECT fname, mname, lname, valedictory, npi, specialty FROM users WHERE id = ? AND active = 1 AND authorized = 1 AND COALESCE(username, '') <> ''", [$id]);
+        if ($rows === []) {
+            return [];
+        }
+        $r = $rows[0];
+        return [
+            'name' => trim(implode(' ', array_filter([self::s($r['fname'] ?? ''), self::s($r['mname'] ?? ''), self::s($r['lname'] ?? '')]))),
+            'credentials' => self::s($r['valedictory'] ?? ''),
+            'npi' => self::s($r['npi'] ?? ''),
+            'specialty' => self::s($r['specialty'] ?? ''),
+        ];
+    }
+
+    /** The patient's provider (Demographics "Provider"), or 0. */
+    public function patientProvider(int $pid): int
+    {
+        $rows = QueryUtils::fetchRecords("SELECT providerID FROM patient_data WHERE pid = ?", [$pid]);
+        return (int)($rows[0]['providerID'] ?? 0);
+    }
+
+    /**
      * The layout forms that can be printed: Demographics and History, the active LBF encounter
      * forms by category (as Reports > Blank Forms lists them), then the active transaction forms
      * (Referral and the like).
@@ -220,7 +265,7 @@ final class SiteData
         $listIds = [];
         foreach (QueryUtils::fetchRecords(
             "SELECT field_id, group_id, title, data_type, list_id, fld_rows, description FROM layout_options
-              WHERE form_id = ? AND uor > 0 ORDER BY group_id, seq, title",
+              WHERE form_id = ? AND uor > 0 ORDER BY group_id, seq, field_id",
             [$formId],
         ) as $row) {
             $field = [
@@ -402,9 +447,10 @@ final class SiteData
         return $this->columns[$table];
     }
 
+    /** A layout title as the site shows it, with the apostrophe xl() turns into a backtick put back for paper. */
     private static function label(string $text): string
     {
-        return function_exists('xl_layout_label') ? (string)xl_layout_label($text) : $text;
+        return str_replace('`', "'", function_exists('xl_layout_label') ? (string)xl_layout_label($text) : $text);
     }
 
     private static function address(string $street, string $street2, string $city, string $state, string $zip): string

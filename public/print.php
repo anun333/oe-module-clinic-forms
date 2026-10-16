@@ -48,7 +48,8 @@ $paper = ($_POST['paper'] ?? '') === 'a4' ? 'A4' : 'letter';
 
 $logo = (new LogoService())->getLogo('core/menu/primary');
 $today = function_exists('oeFormatShortDate') ? (string)oeFormatShortDate(date('Y-m-d')) : date('Y-m-d');
-$renderer = new Renderer(new Context($facility, $patient, $recipient, $today, $logo !== '' ? $logo : null), $language, $taglines);
+$provider = $site->provider((int)($_POST['provider'] ?? 0));
+$renderer = new Renderer(new Context($facility, $patient, $recipient, $today, $logo !== '' ? $logo : null, [], $provider), $language, $taglines);
 
 $pages = [];
 $titles = [];

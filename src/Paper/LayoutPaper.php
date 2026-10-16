@@ -100,7 +100,8 @@ final class LayoutPaper
         if ($officeFields !== []) {
             $html .= "<div class='cf-group cf-office'><h2>" . self::e($this->t('For office use')) . "</h2>";
             foreach ($officeFields as $i => $field) {
-                $html .= $this->field($field, $form->lists[$field['list_id']] ?? [], self::label($field, $officeFields[$i + 1] ?? null), $form->common[$field['field_id']] ?? [], $values[$field['field_id']] ?? null);
+                // Named with the screen group (tab) it's typed into, since the box gathers fields from several.
+                $html .= $this->field($field, $form->lists[$field['list_id']] ?? [], self::label($field, $officeFields[$i + 1] ?? null), $form->common[$field['field_id']] ?? [], $values[$field['field_id']] ?? null, $form->groups[$field['group_id']] ?? null);
             }
             $html .= "</div>";
         }
@@ -133,8 +134,9 @@ final class LayoutPaper
      * @param array{field_id: string, group_id: string, title: string, data_type: int, list_id: string, fld_rows: int, description: string} $field
      * @param list<string> $options
      * @param list<string> $common  for a long list, the options most used at this site
+     * @param ?string      $tab     for a field in the "For office use" box, the screen group it's entered on
      */
-    private function field(array $field, array $options, string $label, array $common = [], ?array $value = null): string
+    private function field(array $field, array $options, string $label, array $common = [], ?array $value = null, ?string $tab = null): string
     {
         $type = $field['data_type'];
         if ($type === self::STATIC_TYPE) {
@@ -142,7 +144,7 @@ final class LayoutPaper
             $text = preg_replace('/\{\w+\}/', '________', $text) ?? $text;
             return $text === '' ? '' : "<p class='cf-static'>" . nl2br(self::e($text)) . "</p>";
         }
-        $head = "<div class='cf-label'>" . self::e($label) . "</div>";
+        $head = "<div class='cf-label'>" . self::e($label) . ($tab !== null && $tab !== '' ? " <span class='cf-hint cf-tab'>(" . self::e($tab) . ")</span>" : '') . "</div>";
         $ticked = array_map('strval', (array)($value['ticked'] ?? []));
         $text = is_string($value['text'] ?? null) ? $value['text'] : '';
         $note = is_string($value['note'] ?? null) ? $value['note'] : '';

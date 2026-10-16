@@ -152,4 +152,20 @@ final class RendererTest extends TestCase
     {
         return new Document('sample', 'Sample', 'Front desk', 'A sample.', $blocks, []);
     }
+
+    public function testLettersCarryTheSigningProvider(): void
+    {
+        $library = DocumentLibrary::shipped();
+        $context = new Context(['name' => 'Clinic', 'phone' => '555-0100'], provider: ['name' => 'Ana Q Sample', 'credentials' => 'MD', 'npi' => '1234567893', 'specialty' => 'Family Medicine']);
+        $letter = (new Renderer($context))->document($library->get('referral-letter') ?? throw new \LogicException());
+        foreach (['Ana Q Sample', 'MD', '1234567893', 'Family Medicine'] as $value) {
+            self::assertStringContainsString("<span class='cf-filled'>$value</span>", $letter);
+        }
+        self::assertLessThan(strpos($letter, 'Ana Q Sample'), strpos($letter, 'Referring provider'), 'the printed name is under the signature');
+        $note = (new Renderer($context))->document($library->get('work-school-note') ?? throw new \LogicException());
+        self::assertStringContainsString("<span class='cf-filled'>Ana Q Sample</span>", $note);
+        self::assertStringNotContainsString('1234567893', $note, 'a school or employer gets no NPI');
+        $blank = (new Renderer(new Context(['name' => 'Clinic'])))->document($library->get('referral-letter') ?? throw new \LogicException());
+        self::assertStringContainsString("<span class='cf-label'>NPI</span><span class='cf-blank'></span>", $blank, 'with no provider chosen the lines stay blank');
+    }
 }

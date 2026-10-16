@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.10.0 (2026-10-16)
+
+- **Old Spanish is never printed for new English.** Each translation records the English it was made from (`translates`, a fingerprint). When the English changes, the document prints in English and the page lists it as out of date until its Spanish is updated. This also fixes a clinic's own English version of a document printing with the shipped Spanish of the original.
+- **Letters carry the signing provider.** New placeholders `{provider.name}`, `{provider.credentials}`, `{provider.npi}` and `{provider.specialty}`, and a **Signing provider** choice that defaults to the clinician printing. The referral letter prints them under the signature, and the work or school note prints the clinician's name and credentials. Its Spanish is out of date until the next language update, so it prints in English meanwhile.
+- **Paper in entry-screen order.** Fields sharing a position number now print in the order the screens show them (two UDS fields had printed one place early). Fields in the For office use box name the screen tab they're typed into. An apostrophe that OpenEMR's translation shows as a backtick ("Mother`s Name") prints as an apostrophe.
+- Checked end to end on 8.4.1, including that a user who isn't a provider can't be chosen as the signer.
+
 ## 0.9.0 (2026-10-16)
 
 - **Runs on OpenEMR 7.0.** The calls that changed between 7.0 and 8.x (settings and web root, the session, CSRF tokens, the access-denied page, the audit logger) go through one adapter, `src/Compat/OpenEmr.php`, which uses the newer call when it exists. A print without the CSRF token is refused with 403 on every release (7.0 answered 200).

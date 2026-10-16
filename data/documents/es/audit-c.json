@@ -1,5 +1,6 @@
 {
   "id": "audit-c",
+  "translates": "b5b4123250ac27ed",
   "title": "Prueba de detección del consumo de alcohol (AUDIT-C)",
   "category": "Detección",
   "about": "Las tres primeras preguntas del AUDIT de la Organización Mundial de la Salud, con puntuación de 0 a 12.",

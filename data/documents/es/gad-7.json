@@ -1,5 +1,6 @@
 {
   "id": "gad-7",
+  "translates": "c36a3bec30045bdd",
   "title": "Escala del trastorno de ansiedad generalizada (GAD-7)",
   "category": "Detección",
   "about": "Detección de ansiedad: siete preguntas con puntuación de 0 a 21. Las respuestas se pueden registrar en el formulario GAD-7 de OpenEMR (actívelo en Administración > Formularios > Administración de formularios).",

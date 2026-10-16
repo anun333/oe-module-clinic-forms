@@ -24,6 +24,9 @@ final class ContextTest extends TestCase
         self::assertSame('', $c->value('patient.name'));
         self::assertSame('', $c->value('clinic.tomorrow'));
         self::assertSame('', $c->value('nonsense'));
+        self::assertSame('', $c->value('provider.name'), 'no signing provider chosen');
+        $signed = new Context(['name' => 'Clinic'], provider: ['name' => 'Ana Q Sample', 'credentials' => 'MD', 'npi' => '1234567893']);
+        self::assertSame(['Ana Q Sample', 'MD', '1234567893'], [$signed->value('provider.name'), $signed->value('provider.credentials'), $signed->value('provider.npi')]);
     }
 
     public function testKnownPlaceholders(): void
@@ -34,6 +37,8 @@ final class ContextTest extends TestCase
         self::assertTrue(Context::isKnown('user.name'));
         self::assertTrue(Context::isKnown('patient.medications'));
         self::assertFalse(Context::isKnown('user.password'));
+        self::assertTrue(Context::isKnown('provider.npi'));
+        self::assertFalse(Context::isKnown('provider.dea'));
         self::assertFalse(Context::isKnown('facility'));
     }
 }

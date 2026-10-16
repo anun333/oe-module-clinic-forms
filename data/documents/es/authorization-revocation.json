@@ -1,5 +1,6 @@
 {
   "id": "authorization-revocation",
+  "translates": "119f62b4df86b9df",
   "title": "Cancelación de mi autorización para divulgar información",
   "category": "Privacidad y derechos del paciente",
   "about": "Retira una autorización que el paciente firmó antes. HIPAA, 45 CFR 164.508(b)(5).",

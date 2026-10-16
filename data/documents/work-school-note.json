@@ -67,7 +67,12 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Clinician name (printed)"
+          "label": "Clinician name (printed)",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Credentials",
+          "value": "{provider.credentials}"
         },
         {
           "label": "Clinic phone",

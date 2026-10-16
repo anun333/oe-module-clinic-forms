@@ -51,9 +51,14 @@ $flashOk = ($_GET['cf_ok'] ?? '') === '1';
 $site = new SiteData();
 $facilities = $site->facilities();
 $recipients = $site->recipients();
+// Letters are signed by the clinician printing them, or else the patient's own provider.
+$providers = $site->providers();
+$providerIds = array_column($providers, 'id');
+$userId = (int)(OpenEmr::session('authUserID') ?? 0);
 $layouts = $site->layoutForms();
 $pid = (int)(OpenEmr::session('pid') ?? 0);
 $patient = $pid > 0 ? $site->patient($pid) : [];
+$signer = in_array($userId, $providerIds, true) ? $userId : ($pid > 0 && in_array($site->patientProvider($pid), $providerIds, true) ? $site->patientProvider($pid) : 0);
 $moduleUrl = OpenEmr::webRoot() . Bootstrap::MODULE_INSTALLATION_PATH;
 
 $byCategory = [];
@@ -63,6 +68,7 @@ foreach ($library->all() as $doc) {
         'title' => $doc->title . ($doc->source === 'clinic' ? ' (' . xl('local version') . ')' : ''),
         'about' => $doc->about,
         'es' => $spanish->isTranslated($doc->id),
+        'esOutOfDate' => isset($spanish->outOfDate()[$doc->id]),
     ];
 }
 foreach ($layouts as $form) {
@@ -91,6 +97,12 @@ foreach ($layouts as $form) {
         <div class="alert alert-warning">
             <?php echo xlt('Some local documents or packets need attention'); ?>:
             <ul class="mb-0"><?php foreach ($problems as $problem) { ?><li><?php echo text($problem); ?></li><?php } ?></ul>
+        </div>
+    <?php } ?>
+    <?php if ($spanish->outOfDate() !== []) { ?>
+        <div class="alert alert-info">
+            <?php echo xlt('These Spanish versions were made from older English wording, so the documents print in English until they are updated'); ?>:
+            <?php echo text(implode(', ', array_map(static fn(string $id): string => $library->get($id)?->title ?? $id, array_keys($spanish->outOfDate())))); ?>
         </div>
     <?php } ?>
 
@@ -131,6 +143,16 @@ foreach ($layouts as $form) {
                 </select>
                 <small class="form-text text-muted"><?php echo xlt('From the Address Book (Administration > Address Book).'); ?></small>
             </div>
+            <div class="form-group col-md-6">
+                <label for="provider"><?php echo xlt('Signing provider (for letters and notes)'); ?></label>
+                <select class="form-control" name="provider" id="provider">
+                    <option value="0"><?php echo xlt('None: leave blank'); ?></option>
+                    <?php foreach ($providers as $p) { ?>
+                        <option value="<?php echo attr((string)$p['id']); ?>"<?php echo $p['id'] === $signer ? ' selected' : ''; ?>><?php echo text($p['name']); ?></option>
+                    <?php } ?>
+                </select>
+                <small class="form-text text-muted"><?php echo xlt('Name, credentials (Valedictory) and NPI come from Administration > Users.'); ?></small>
+            </div>
         </div>
         <?php if ($patient !== []) { ?>
             <div class="form-check mb-2">
@@ -166,7 +188,7 @@ foreach ($layouts as $form) {
                 <?php foreach ($items as $item) { ?>
                     <div class="form-check">
                         <input class="form-check-input cf-item" type="checkbox" name="items[]" value="<?php echo attr($item['value']); ?>" id="<?php echo attr('i-' . $item['value']); ?>">
-                        <label class="form-check-label" for="<?php echo attr('i-' . $item['value']); ?>"><?php echo text($item['title']); ?><?php echo !empty($item['es']) ? ' <span class="badge badge-info">ES</span>' : ''; ?>
+                        <label class="form-check-label" for="<?php echo attr('i-' . $item['value']); ?>"><?php echo text($item['title']); ?><?php echo !empty($item['es']) ? ' <span class="badge badge-info">ES</span>' : (!empty($item['esOutOfDate']) ? ' <span class="badge badge-light">' . xlt('ES out of date') . '</span>' : ''); ?>
                             <span class="cf-about">— <?php echo text($item['about']); ?></span></label>
                     </div>
                 <?php } ?>

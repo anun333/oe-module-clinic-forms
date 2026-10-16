@@ -1,5 +1,6 @@
 {
   "id": "accounting-request",
+  "translates": "bbbbb401c16f9873",
   "title": "Solicitud de una lista de divulgaciones",
   "category": "Privacidad y derechos del paciente",
   "about": "Solicitud del paciente de una lista de las personas con quienes la clínica compartió su información. HIPAA, registro de divulgaciones, 45 CFR 164.528.",

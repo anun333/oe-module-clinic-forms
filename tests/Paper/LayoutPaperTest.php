@@ -75,6 +75,9 @@ final class LayoutPaperTest extends TestCase
         self::assertLessThan(strpos($dem, 'External ID'), strpos($dem, 'First name'));
         self::assertGreaterThan($office, strpos($dem, 'External ID'));
         self::assertGreaterThan($office, strpos($dem, 'Provider'));
+        // Each office field names the screen group it's typed into; the patient's fields don't.
+        self::assertStringContainsString("External ID <span class='cf-hint cf-tab'>(Who)</span>", $dem);
+        self::assertStringContainsString("<div class='cf-label'>First name</div>", $dem);
         // The same field ids on another form are the patient's to fill.
         $lbf = (new LayoutPaper())->render(new LayoutForm('LBFx', 'X', ['1' => 'Who'], $fields, []));
         self::assertStringNotContainsString('For office use', $lbf);

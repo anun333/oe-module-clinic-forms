@@ -21,6 +21,7 @@ final readonly class Context
         'patient' => ['name', 'dob', 'id', 'address', 'street', 'city', 'state', 'zip', 'phone', 'sex', 'allergies', 'medications', 'problems'],
         'recipient' => ['name', 'organization', 'specialty', 'address', 'phone', 'fax', 'email'],
         'user' => ['name'],
+        'provider' => ['name', 'credentials', 'npi', 'specialty'],
         'clinic' => ['today'],
     ];
 
@@ -31,6 +32,7 @@ final readonly class Context
      * @param string                $today     the date printed for {clinic.today}, as the site formats dates
      * @param ?string               $logoUrl   the clinic's logo, or null for none
      * @param array<string, string> $user      keys from KEYS['user']: the person printing
+     * @param array<string, string> $provider  keys from KEYS['provider']: the clinician who signs letters; empty when none is chosen
      */
     public function __construct(
         public array $facility,
@@ -39,6 +41,7 @@ final readonly class Context
         public string $today = '',
         public ?string $logoUrl = null,
         public array $user = [],
+        public array $provider = [],
     ) {
     }
 
@@ -51,6 +54,7 @@ final readonly class Context
             'patient' => $this->patient[$key] ?? '',
             'recipient' => $this->recipient[$key] ?? '',
             'user' => $this->user[$key] ?? '',
+            'provider' => $this->provider[$key] ?? '',
             'clinic' => $key === 'today' ? $this->today : '',
             default => '',
         };
