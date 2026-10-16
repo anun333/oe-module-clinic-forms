@@ -1,0 +1,75 @@
+{
+  "id": "phq-2",
+  "title": "Patient Health Questionnaire (PHQ-2)",
+  "category": "Screening",
+  "about": "Two-question depression screen, scored 0 to 6. A score of 3 or more is the usual point to give the PHQ-9.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "55757-9",
+    "display": "Patient Health Questionnaire 2 item (PHQ-2) [Reported]"
+  },
+  "validated": true,
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "Over the last 2 weeks, how often have you been bothered by any of the following problems?",
+      "columns": [
+        "Not at all",
+        "Several days",
+        "More than half the days",
+        "Nearly every day"
+      ],
+      "scores": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "items": [
+        "Little interest or pleasure in doing things",
+        "Feeling down, depressed, or hopeless"
+      ],
+      "total": "Total score (for office use)"
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "paragraph",
+      "text": "A total of 3 or more is the usual cut-off for giving the full PHQ-9."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Entered into OpenEMR by"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Developed by Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc. No permission required to reproduce, translate, display or distribute."
+    }
+  ]
+}

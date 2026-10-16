@@ -30,6 +30,7 @@ final class PacketsTest extends TestCase
         self::assertTrue(Packets::isItem('layout:LBFintake_2'));
         self::assertTrue(Packets::isItem('layout:HIS'));
         self::assertTrue(Packets::isItem('layout:LBTref'));
+        self::assertTrue(Packets::isItem('layout:UDS'));
         self::assertFalse(Packets::isItem('layout:FACUSR'));
         self::assertFalse(Packets::isItem('layout:'));
         self::assertFalse(Packets::isItem('layout:LBF x'));

@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.0 (2026-10-16)
+
+- **A short UDS form**: the Demographics fields UDS Tables 3A, 3B and 4 read, and nothing else, with the site's own lists, so the paper matches what staff type in. It uses the UDS Report module's fields when the site has them (and drops OpenEMR's older free-text housing and farmworker fields then), and "check and correct" fills it too. New packet: Annual update (short, with UDS questions).
+- **We Offer Discounts Based on Income**: the sliding fee notice health centers must give, with a table for the clinic's own schedule and the statement that no one is denied care for inability to pay.
+- **PHQ-2 and AUDIT-C**, validated wording and scoring; new packet: Quick screening.
+- Checked end to end on 8.4.1, and on 8.1.0 and 8.5.0 (official images).
+
 ## 0.6.0 (2026-10-16)
 
 - **Notice of Privacy Practices**, element by element from 45 CFR 164.520(b)(1), with the 42 CFR Part 2 statements notices need from February 16, 2026. The 2024 reproductive health statements, vacated in *Purl v. HHS* (2025), are left out, and a test keeps them out. It is part of New patient intake, ahead of the acknowledgment.

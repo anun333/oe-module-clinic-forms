@@ -132,7 +132,7 @@ foreach ($layouts as $form) {
             </div>
             <div class="form-check mb-2 ml-4">
                 <input class="form-check-input" type="checkbox" name="fill_layouts" value="1" id="fill_layouts">
-                <label class="form-check-label" for="fill_layouts"><?php echo xlt('Also fill Demographics and History with what is on file, for the patient to check and correct'); ?></label>
+                <label class="form-check-label" for="fill_layouts"><?php echo xlt('Also fill Demographics, History and the UDS form with what is on file, for the patient to check and correct'); ?></label>
                 <small class="form-text text-muted"><?php echo xlt('Social Security and driver license numbers print as their last four characters.'); ?></small>
             </div>
         <?php } ?>

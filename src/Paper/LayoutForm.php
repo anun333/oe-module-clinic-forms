@@ -37,9 +37,12 @@ final readonly class LayoutForm
     ) {
     }
 
-    /** Demographics, History, an LBF encounter form or an LBT transaction form (Referral...). */
+    /**
+     * Demographics, History, an LBF encounter form or an LBT transaction form (Referral...), or
+     * UDS: the Demographics fields health center reporting uses, as a short form of their own.
+     */
     public static function isPrintable(string $formId): bool
     {
-        return preg_match('/^(DEM|HIS|LBF\w+|LBT\w+)$/', $formId) === 1;
+        return preg_match('/^(DEM|HIS|UDS|LBF\w+|LBT\w+)$/', $formId) === 1;
     }
 }

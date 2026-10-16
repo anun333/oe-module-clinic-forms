@@ -714,6 +714,78 @@
           ]
         }
       ]
+    },
+    "sliding-fee-notice": {
+      "source": "HRSA Health Center Program Compliance Manual, chapter 9 (patients are told about the sliding fee discount; no one is denied for inability to pay)",
+      "elements": [
+        {
+          "name": "Discount based on household size and income",
+          "cite": "chapter 9",
+          "all": [
+            "sliding fee discount",
+            "household",
+            "income"
+          ]
+        },
+        {
+          "name": "No one denied care for inability to pay",
+          "cite": "chapter 9",
+          "any": [
+            "no one will be denied care because they cannot pay"
+          ]
+        },
+        {
+          "name": "How to apply",
+          "cite": "chapter 9",
+          "any": [
+            "application"
+          ]
+        }
+      ]
+    },
+    "phq-2": {
+      "source": "PHQ-2 (Kroenke, Spitzer and Williams); validated wording",
+      "elements": [
+        {
+          "name": "The two questions",
+          "cite": "instrument",
+          "all": [
+            "little interest or pleasure in doing things",
+            "feeling down, depressed, or hopeless"
+          ]
+        },
+        {
+          "name": "The authors' reproduction statement",
+          "cite": "instrument",
+          "any": [
+            "no permission required to reproduce"
+          ]
+        }
+      ]
+    },
+    "audit-c": {
+      "source": "AUDIT-C (WHO AUDIT questions 1-3); validated wording and scoring",
+      "elements": [
+        {
+          "name": "The three questions",
+          "cite": "instrument",
+          "all": [
+            "how often do you have a drink containing alcohol",
+            "how many standard drinks containing alcohol do you have on a typical day",
+            "how often do you have six or more drinks on one occasion"
+          ]
+        },
+        {
+          "name": "Answers scored 0 to 4",
+          "cite": "instrument",
+          "all": [
+            "never (0)",
+            "4 or more times a week (4)",
+            "10 or more (4)",
+            "daily or almost daily (4)"
+          ]
+        }
+      ]
     }
   }
 }

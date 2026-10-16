@@ -1,0 +1,47 @@
+{
+  "id": "sliding-fee-notice",
+  "title": "We Offer Discounts Based on Income",
+  "category": "Front desk",
+  "about": "A notice to post or hand out: the clinic's sliding fee discount, who qualifies, and that no one is turned away for being unable to pay. HRSA Health Center Program Compliance Manual, chapter 9.",
+  "audience": "patient",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "{facility.name} offers a sliding fee discount. What you pay depends on how many people live in your household and on your household income."
+    },
+    {
+      "type": "paragraph",
+      "text": "No one will be denied care because they cannot pay."
+    },
+    {
+      "type": "heading",
+      "text": "Who can get a discount"
+    },
+    {
+      "type": "paragraph",
+      "text": "Anyone whose household income is at or below the levels below can ask for a discount, with or without health insurance. Ask at the front desk for an application."
+    },
+    {
+      "type": "table",
+      "label": "Our discounts (the clinic fills in its own schedule)",
+      "columns": [
+        "Household size",
+        "Full discount if yearly income is up to",
+        "Partial discount if yearly income is up to"
+      ],
+      "rows": 8
+    },
+    {
+      "type": "heading",
+      "text": "What to bring"
+    },
+    {
+      "type": "paragraph",
+      "text": "Bring proof of income for each person in your household who has income, such as recent pay stubs or last year's tax return. If you have no proof, ask us about signing a statement of your income."
+    },
+    {
+      "type": "paragraph",
+      "text": "Questions? Call {facility.phone}."
+    }
+  ]
+}

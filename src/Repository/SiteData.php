@@ -28,6 +28,20 @@ final class SiteData
     /** How many of a long list's most used options print. */
     public const MOST_USED = 12;
 
+    /**
+     * The Demographics fields UDS reporting reads (Tables 3A, 3B and 4), printed as the short UDS
+     * form: sex, gender identity and sexual orientation, race, ethnicity and tribal affiliation,
+     * language, household size and income, housing, agricultural work and military service. Both
+     * the UDS Report module's fields (uds_*) and OpenEMR's older ones are listed; a site prints the
+     * ones its layout has.
+     */
+    public const UDS_FIELDS = [
+        'sex', 'sex_identified', 'gender_identity', 'sexual_orientation', 'pronoun',
+        'race', 'ethnicity', 'tribal_affiliations', 'language', 'interpreter_needed',
+        'family_size', 'monthly_income', 'uds_housing_status', 'homeless',
+        'uds_agricultural_worker', 'migrantseasonal', 'uds_veteran_status',
+    ];
+
     /** @var array<string, list<string>> table => columns, read once */
     private array $columns = [];
 
@@ -159,6 +173,7 @@ final class SiteData
         $out = [
             ['id' => 'DEM', 'title' => xl('Registration (Demographics)'), 'category' => xl('Front desk')],
             ['id' => 'HIS', 'title' => xl('Medical history (History)'), 'category' => xl('Front desk')],
+            ['id' => 'UDS', 'title' => xl('Patient information for health center reporting (UDS)'), 'category' => xl('Front desk')],
         ];
         foreach (QueryUtils::fetchRecords(
             "SELECT grp_form_id, grp_title, grp_mapping FROM layout_group_properties
@@ -177,6 +192,9 @@ final class SiteData
     {
         if (!LayoutForm::isPrintable($formId)) {
             return null;
+        }
+        if ($formId === 'UDS') {
+            return $this->udsForm();
         }
         $title = match ($formId) {
             'DEM' => xl('Registration (Demographics)'),
@@ -246,6 +264,23 @@ final class SiteData
         return new LayoutForm($formId, $title, $groups, $fields, $lists, $common, $titles);
     }
 
+    /** The UDS short form: the Demographics layout with only the UDS_FIELDS it has, in its own order. */
+    private function udsForm(): ?LayoutForm
+    {
+        $dem = $this->layoutForm('DEM');
+        if ($dem === null) {
+            return null;
+        }
+        $fields = array_values(array_filter($dem->fields, static fn(array $f): bool => in_array($f['field_id'], self::UDS_FIELDS, true)));
+        // OpenEMR's older free-text fields ask the same as the UDS module's coded ones: keep one.
+        $ids = array_column($fields, 'field_id');
+        $older = array_keys(array_filter(['homeless' => 'uds_housing_status', 'migrantseasonal' => 'uds_agricultural_worker'], static fn(string $coded): bool => in_array($coded, $ids, true)));
+        $fields = array_values(array_filter($fields, static fn(array $f): bool => !in_array($f['field_id'], $older, true)));
+        $used = array_unique(array_column($fields, 'group_id'));
+        $groups = array_filter($dem->groups, static fn(string $id): bool => in_array((string)$id, array_map('strval', $used), true), ARRAY_FILTER_USE_KEY);
+        return new LayoutForm('UDS', xl('Patient information for health center reporting (UDS)'), $groups, $fields, $dem->lists, $dem->common, $dem->optionTitles);
+    }
+
     /**
      * What a patient has on file for each field of Demographics or History (the latest History
      * row), for the patient to check and correct. Other forms have no single record to read.
@@ -255,7 +290,7 @@ final class SiteData
     public function onFile(LayoutForm $form, int $pid): array
     {
         $rows = match ($form->id) {
-            'DEM' => QueryUtils::fetchRecords("SELECT * FROM patient_data WHERE pid = ?", [$pid]),
+            'DEM', 'UDS' => QueryUtils::fetchRecords("SELECT * FROM patient_data WHERE pid = ?", [$pid]),
             'HIS' => QueryUtils::fetchRecords("SELECT * FROM history_data WHERE pid = ? ORDER BY date DESC, id DESC LIMIT 1", [$pid]),
             default => [],
         };

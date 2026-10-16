@@ -1,0 +1,95 @@
+{
+  "id": "audit-c",
+  "title": "Alcohol Use Screen (AUDIT-C)",
+  "category": "Screening",
+  "about": "The first three questions of the World Health Organization's AUDIT, scored 0 to 12.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "72109-2",
+    "display": "Alcohol Use Disorder Identification Test - Consumption [AUDIT-C]"
+  },
+  "validated": true,
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "1. How often do you have a drink containing alcohol?",
+      "items": [
+        "Never (0)",
+        "Monthly or less (1)",
+        "2 to 4 times a month (2)",
+        "2 to 3 times a week (3)",
+        "4 or more times a week (4)"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "2. How many standard drinks containing alcohol do you have on a typical day?",
+      "items": [
+        "1 or 2 (0)",
+        "3 or 4 (1)",
+        "5 or 6 (2)",
+        "7 to 9 (3)",
+        "10 or more (4)"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "3. How often do you have six or more drinks on one occasion?",
+      "items": [
+        "Never (0)",
+        "Less than monthly (1)",
+        "Monthly (2)",
+        "Weekly (3)",
+        "Daily or almost daily (4)"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Total score (for office use)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "paragraph",
+      "text": "Common cut-offs for a positive screen: 4 or more for men, 3 or more for women."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Entered into OpenEMR by"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "From the Alcohol Use Disorders Identification Test (AUDIT), World Health Organization."
+    }
+  ]
+}
