@@ -1,0 +1,80 @@
+{
+    "instrument": "PHQ-2",
+    "loinc": "55757-9",
+    "loinc_version": "2.83",
+    "from": "fhir.loinc.org Questionnaire/55757-9 (questions, answers); scores and answer order from LOINC's answer lists via clinicaltables.nlm.nih.gov loinc_items",
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "questions": [
+        {
+            "code": "44250-9",
+            "text": "Little interest or pleasure in doing things",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA6569-3",
+                    "text": "Several days",
+                    "score": 1
+                },
+                {
+                    "code": "LA6570-1",
+                    "text": "More than half the days",
+                    "score": 2
+                },
+                {
+                    "code": "LA6571-9",
+                    "text": "Nearly every day",
+                    "score": 3
+                }
+            ]
+        },
+        {
+            "code": "44255-8",
+            "text": "Feeling down, depressed, or hopeless",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA6569-3",
+                    "text": "Several days",
+                    "score": 1
+                },
+                {
+                    "code": "LA6570-1",
+                    "text": "More than half the days",
+                    "score": 2
+                },
+                {
+                    "code": "LA6571-9",
+                    "text": "Nearly every day",
+                    "score": 3
+                }
+            ]
+        }
+    ],
+    "total": {
+        "min": 0,
+        "max": 6
+    },
+    "cutoffs": [
+        {
+            "score": 3,
+            "meaning": "screen positive: give the full PHQ-9"
+        }
+    ],
+    "cutoffs_source": {
+        "citation": "Kroenke K, Spitzer RL, Williams JBW. The Patient Health Questionnaire-2: validity of a two-item depression screener. Med Care. 2003;41(11):1284-1292.",
+        "pmid": "14583691",
+        "doi": "10.1097/01.MLR.0000093487.78664.3C",
+        "stated": "Abstract: \"Likelihood ratio and receiver operator characteristic analysis identified a PHQ-2 score of 3 as the optimal cutpoint for screening purposes.\""
+    },
+    "accepted": {
+        "questions": []
+    }
+}

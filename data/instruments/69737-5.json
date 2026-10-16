@@ -1,0 +1,223 @@
+{
+    "instrument": "GAD-7",
+    "loinc": "69737-5",
+    "loinc_version": "2.83",
+    "from": "fhir.loinc.org Questionnaire/69737-5 (questions, answers); scores and answer order from LOINC's answer lists via clinicaltables.nlm.nih.gov loinc_items; scored from the same answer elsewhere in the panel: 68509-9 LA6570-1",
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "questions": [
+        {
+            "code": "69725-0",
+            "text": "Feeling nervous, anxious or on edge",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA6569-3",
+                    "text": "Several days",
+                    "score": 1
+                },
+                {
+                    "code": "LA6570-1",
+                    "text": "More than half the days",
+                    "score": 2
+                },
+                {
+                    "code": "LA6571-9",
+                    "text": "Nearly every day",
+                    "score": 3
+                }
+            ]
+        },
+        {
+            "code": "68509-9",
+            "text": "Over the past 2 weeks have you not been able to stop or control worrying",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA6569-3",
+                    "text": "Several days",
+                    "score": 1
+                },
+                {
+                    "code": "LA6570-1",
+                    "text": "More than half the days",
+                    "score": 2
+                },
+                {
+                    "code": "LA6571-9",
+                    "text": "Nearly every day",
+                    "score": 3
+                }
+            ]
+        },
+        {
+            "code": "69733-4",
+            "text": "Worrying too much about different things",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA6569-3",
+                    "text": "Several days",
+                    "score": 1
+                },
+                {
+                    "code": "LA6570-1",
+                    "text": "More than half the days",
+                    "score": 2
+                },
+                {
+                    "code": "LA6571-9",
+                    "text": "Nearly every day",
+                    "score": 3
+                }
+            ]
+        },
+        {
+            "code": "69734-2",
+            "text": "Trouble relaxing",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA6569-3",
+                    "text": "Several days",
+                    "score": 1
+                },
+                {
+                    "code": "LA6570-1",
+                    "text": "More than half the days",
+                    "score": 2
+                },
+                {
+                    "code": "LA6571-9",
+                    "text": "Nearly every day",
+                    "score": 3
+                }
+            ]
+        },
+        {
+            "code": "69735-9",
+            "text": "Being so restless that it is hard to sit still",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA6569-3",
+                    "text": "Several days",
+                    "score": 1
+                },
+                {
+                    "code": "LA6570-1",
+                    "text": "More than half the days",
+                    "score": 2
+                },
+                {
+                    "code": "LA6571-9",
+                    "text": "Nearly every day",
+                    "score": 3
+                }
+            ]
+        },
+        {
+            "code": "69689-8",
+            "text": "Becoming easily annoyed or irritable.",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA6569-3",
+                    "text": "Several days",
+                    "score": 1
+                },
+                {
+                    "code": "LA6570-1",
+                    "text": "More than half the days",
+                    "score": 2
+                },
+                {
+                    "code": "LA6571-9",
+                    "text": "Nearly every day",
+                    "score": 3
+                }
+            ]
+        },
+        {
+            "code": "69736-7",
+            "text": "Feeling afraid as if something awful might happen",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA6569-3",
+                    "text": "Several days",
+                    "score": 1
+                },
+                {
+                    "code": "LA6570-1",
+                    "text": "More than half the days",
+                    "score": 2
+                },
+                {
+                    "code": "LA6571-9",
+                    "text": "Nearly every day",
+                    "score": 3
+                }
+            ]
+        }
+    ],
+    "total": {
+        "min": 0,
+        "max": 21
+    },
+    "cutoffs": [
+        {
+            "score": 5,
+            "meaning": "mild anxiety"
+        },
+        {
+            "score": 10,
+            "meaning": "moderate anxiety; the cut point for generalized anxiety disorder"
+        },
+        {
+            "score": 15,
+            "meaning": "severe anxiety"
+        }
+    ],
+    "cutoffs_source": {
+        "citation": "Spitzer RL, Kroenke K, Williams JBW, Löwe B. A brief measure for assessing generalized anxiety disorder: the GAD-7. Arch Intern Med. 2006;166(10):1092-1097.",
+        "pmid": "16717171",
+        "doi": "10.1001/archinte.166.10.1092",
+        "stated": "In the paper's results (5, 10 and 15 as mild, moderate and severe; 10 as the cut point, sensitivity 89%, specificity 82%). The abstract reports the cut point's sensitivity and specificity without its value."
+    },
+    "accepted": {
+        "questions": {
+            "2": "Pfizer's published wording (phqscreeners.com), \"Not being able to stop or control worrying\"; LOINC 69737-5 writes the time frame into this one item."
+        },
+        "extra": {
+            "8": "Pfizer's printed GAD-7 (phqscreeners.com) ends with the unscored \"If you checked off any problems, how difficult have these problems made it…\"; LOINC's GAD-7 panel doesn't include it."
+        }
+    }
+}

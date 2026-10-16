@@ -1,0 +1,127 @@
+{
+    "instrument": "AUDIT-C",
+    "loinc": "72109-2",
+    "loinc_version": "2.83",
+    "from": "fhir.loinc.org Questionnaire/72109-2 (questions, answers); scores and answer order from LOINC's answer lists via clinicaltables.nlm.nih.gov loinc_items",
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "questions": [
+        {
+            "code": "68518-0",
+            "text": "How often do you have a drink containing alcohol?",
+            "answers": [
+                {
+                    "code": "LA6270-8",
+                    "text": "Never",
+                    "score": 0
+                },
+                {
+                    "code": "LA18926-8",
+                    "text": "Monthly or less",
+                    "score": 1
+                },
+                {
+                    "code": "LA18927-6",
+                    "text": "2-4 times a month",
+                    "score": 2
+                },
+                {
+                    "code": "LA18928-4",
+                    "text": "2-3 times a week",
+                    "score": 3
+                },
+                {
+                    "code": "LA18929-2",
+                    "text": "4 or more times a week",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "68519-8",
+            "text": "How many standard drinks containing alcohol do you have on a typical day?",
+            "answers": [
+                {
+                    "code": "LA15694-5",
+                    "text": "1 or 2",
+                    "score": 0
+                },
+                {
+                    "code": "LA15695-2",
+                    "text": "3 or 4",
+                    "score": 1
+                },
+                {
+                    "code": "LA18930-0",
+                    "text": "5 or 6",
+                    "score": 2
+                },
+                {
+                    "code": "LA18931-8",
+                    "text": "7 to 9",
+                    "score": 3
+                },
+                {
+                    "code": "LA18932-6",
+                    "text": "10 or more",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "68520-6",
+            "text": "How often do you have 6 or more drinks on 1 occasion?",
+            "answers": [
+                {
+                    "code": "LA6270-8",
+                    "text": "Never",
+                    "score": 0
+                },
+                {
+                    "code": "LA18933-4",
+                    "text": "Less than monthly",
+                    "score": 1
+                },
+                {
+                    "code": "LA18876-5",
+                    "text": "Monthly",
+                    "score": 2
+                },
+                {
+                    "code": "LA18891-4",
+                    "text": "Weekly",
+                    "score": 3
+                },
+                {
+                    "code": "LA18934-2",
+                    "text": "Daily or almost daily",
+                    "score": 4
+                }
+            ]
+        }
+    ],
+    "total": {
+        "min": 0,
+        "max": 12
+    },
+    "cutoffs": [
+        {
+            "score": 4,
+            "meaning": "screen positive for alcohol misuse",
+            "for": "men"
+        },
+        {
+            "score": 3,
+            "meaning": "screen positive for alcohol misuse",
+            "for": "women"
+        }
+    ],
+    "cutoffs_source": {
+        "citation": "Bradley KA, DeBenedetti AF, Volk RJ, Williams EC, Frank D, Kivlahan DR. AUDIT-C as a brief screen for alcohol misuse in primary care. Alcohol Clin Exp Res. 2007;31(7):1208-1217.",
+        "pmid": "17451397",
+        "doi": "10.1111/j.1530-0277.2007.00403.x",
+        "stated": "Abstract: \"The AUDIT-C screening thresholds that simultaneously maximized sensitivity and specificity were > or =4 in men (sensitivity 0.86, specificity 0.89) and > or =3 in women (sensitivity 0.73, specificity 0.91).\""
+    },
+    "accepted": {
+        "questions": []
+    }
+}

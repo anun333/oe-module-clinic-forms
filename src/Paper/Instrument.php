@@ -1,0 +1,279 @@
+<?php
+
+/**
+ * A validated instrument's reference (data/instruments/<loinc>.json) and the check of a document
+ * against it. A score means what its validation study says only when the questions, their order,
+ * the answers and the points for each are the instrument's, and the cut-offs printed beside it are
+ * the published ones; so those are what is checked, not the wording alone.
+ *
+ * A reference holds, from LOINC (tools/instrument-references.php fetches them):
+ *   "questions": [{"code": "44250-9", "text": "...", "answers": [{"code": "LA6568-5", "text": "Not at all", "score": 0}]}]
+ *   "total": {"min": 0, "max": 27}
+ * and, written by hand with their source:
+ *   "cutoffs": [{"score": 10, "meaning": "moderate depression", "for": "men"}], "cutoffs_source": {"citation": ..., "pmid": ..., "stated": ...}
+ *   "accepted": {"questions": {"2": "why our wording knowingly differs from LOINC's"},
+ *                "extra": {"8": "why the document asks an unscored question LOINC's panel doesn't have"}}
+ * Question numbers in "questions" count the instrument's questions; in "extra", the document's.
+ *
+ * @package   OpenHealthcare\ClinicForms
+ * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
+ */
+
+declare(strict_types=1);
+
+namespace OpenHealthcare\ClinicForms\Paper;
+
+final class Instrument
+{
+    private const STOP = ['a', 'an', 'and', 'or', 'the', 'of', 'to', 'in', 'on', 'for', 'you', 'your', 'have', 'been', 'by', 'with', 'do', 'did', 'is', 'are'];
+    private const NUMBERS = ['one' => '1', 'two' => '2', 'three' => '3', 'four' => '4', 'five' => '5', 'six' => '6', 'seven' => '7', 'eight' => '8', 'nine' => '9', 'ten' => '10'];
+
+    public static function dir(): string
+    {
+        return dirname(__DIR__, 2) . '/data/instruments';
+    }
+
+    /** The reference for a LOINC code, or null when there is none. */
+    public static function reference(string $loinc): ?array
+    {
+        $file = self::dir() . '/' . $loinc . '.json';
+        if (!Loinc::isValid($loinc) || !is_file($file)) {
+            return null;
+        }
+        $data = json_decode((string)file_get_contents($file), true);
+        return is_array($data) ? $data : null;
+    }
+
+    /**
+     * The document's questions in order: each scale row, and each checklist with a label. A
+     * checklist answer's points are written after it, "Never (0)".
+     *
+     * @return list<array{text: string, answers: list<array{text: string, score: ?float}>}>
+     */
+    public static function questions(Document $doc): array
+    {
+        $out = [];
+        foreach ($doc->blocks as $block) {
+            $type = $block['type'] ?? '';
+            if ($type === 'scale') {
+                $answers = [];
+                foreach ($block['columns'] ?? [] as $i => $column) {
+                    $score = $block['scores'][$i] ?? null;
+                    $answers[] = ['text' => (string)$column, 'score' => is_numeric($score) ? (float)$score : null];
+                }
+                foreach ($block['items'] ?? [] as $item) {
+                    $out[] = ['text' => self::unnumbered((string)$item), 'answers' => $answers];
+                }
+            } elseif ($type === 'checklist' && ($block['label'] ?? '') !== '') {
+                $answers = [];
+                foreach ($block['items'] ?? [] as $item) {
+                    $answers[] = preg_match('/^(.*?)\s*\((\d+(?:\.\d+)?)\)\s*$/u', (string)$item, $m) === 1
+                        ? ['text' => $m[1], 'score' => (float)$m[2]]
+                        : ['text' => (string)$item, 'score' => null];
+                }
+                $out[] = ['text' => self::unnumbered((string)$block['label']), 'answers' => $answers];
+            }
+        }
+        return $out;
+    }
+
+    /** @return array{min: float, max: float} the lowest and highest total of the scored questions */
+    public static function totalRange(array $questions): array
+    {
+        $min = $max = 0.0;
+        foreach ($questions as $q) {
+            $scores = array_values(array_filter(array_column($q['answers'], 'score'), static fn($s): bool => $s !== null));
+            if ($scores !== [] && count($scores) === count($q['answers'])) {
+                $min += min($scores);
+                $max += max($scores);
+            }
+        }
+        return ['min' => $min, 'max' => $max];
+    }
+
+    /**
+     * Where the document departs from its instrument, each in words a reviewer can act on. Empty
+     * when it matches.
+     *
+     * @return list<string>
+     */
+    public static function differences(Document $doc, array $reference): array
+    {
+        $problems = [];
+        $ours = self::questions($doc);
+        $theirs = $reference['questions'] ?? [];
+        $accepted = $reference['accepted']['questions'] ?? [];
+        // A question the printed form asks that LOINC's panel doesn't code (GAD-7's closing "how
+        // difficult…") is allowed when it is listed with its reason and carries no score.
+        foreach ($reference['accepted']['extra'] ?? [] as $n => $why) {
+            $q = $ours[(int)$n - 1] ?? null;
+            if ($q === null || trim((string)$why) === '') {
+                $problems[] = "the reference accepts an extra question $n that the document doesn't have";
+            } elseif (array_filter(array_column($q['answers'], 'score'), static fn($s): bool => $s !== null) !== []) {
+                $problems[] = "question $n, \"{$q['text']}\", is extra to the instrument and scored, which changes the total";
+            }
+        }
+        $extra = array_map('intval', array_keys($reference['accepted']['extra'] ?? []));
+        $ours = array_values(array_filter($ours, static fn(int $i): bool => !in_array($i + 1, $extra, true), ARRAY_FILTER_USE_KEY));
+        if (count($ours) !== count($theirs)) {
+            $problems[] = sprintf('%d questions where the instrument has %d', count($ours), count($theirs));
+        }
+        foreach ($theirs as $i => $ref) {
+            $n = $i + 1;
+            $q = $ours[$i] ?? null;
+            if ($q === null) {
+                $problems[] = "question $n is missing: \"{$ref['text']}\"";
+                continue;
+            }
+            if (!self::same($q['text'], (string)$ref['text']) && trim((string)($accepted[(string)$n] ?? '')) === '') {
+                $problems[] = "question $n is \"{$q['text']}\" where the instrument has \"{$ref['text']}\" ({$ref['code']})";
+            }
+            $refAnswers = $ref['answers'] ?? [];
+            if (count($q['answers']) !== count($refAnswers)) {
+                $problems[] = sprintf('question %d has %d answers where the instrument has %d (%s)', $n, count($q['answers']), count($refAnswers),
+                    implode(', ', array_map(static fn(array $a): string => self::answerLabel($a), $refAnswers)));
+                continue;
+            }
+            foreach ($refAnswers as $j => $refAnswer) {
+                $a = $q['answers'][$j];
+                if (!self::same($a['text'], (string)$refAnswer['text'])) {
+                    $problems[] = sprintf('question %d, answer %d is "%s" where the instrument has "%s"', $n, $j + 1, $a['text'], $refAnswer['text']);
+                }
+                $refScore = isset($refAnswer['score']) && is_numeric($refAnswer['score']) ? (float)$refAnswer['score'] : null;
+                if ($refScore !== $a['score']) {
+                    $problems[] = sprintf('question %d, "%s" scores %s where the instrument scores %s', $n, $a['text'], self::points($a['score']), self::points($refScore));
+                }
+            }
+        }
+        $total = self::totalRange($ours);
+        $refTotal = $reference['total'] ?? null;
+        if (is_array($refTotal) && ($total['min'] !== (float)$refTotal['min'] || $total['max'] !== (float)$refTotal['max'])) {
+            $problems[] = sprintf('the total runs %s to %s where the instrument runs %s to %s', self::points($total['min']), self::points($total['max']),
+                self::points((float)$refTotal['min']), self::points((float)$refTotal['max']));
+        }
+        if (preg_match('/scored (\d+) to (\d+)/', $doc->about, $m) === 1 && ((float)$m[1] !== $total['min'] || (float)$m[2] !== $total['max'])) {
+            $problems[] = "the description says \"scored $m[1] to $m[2]\" but the questions total " . self::points($total['min']) . ' to ' . self::points($total['max']);
+        }
+        $published = array_map(static fn(array $c): float => (float)$c['score'], $reference['cutoffs'] ?? []);
+        foreach (self::printedCutoffs($doc) as $cut) {
+            if (!in_array($cut, $published, true)) {
+                $problems[] = 'it prints a cut-off of ' . self::points($cut) . ' where the published ones are '
+                    . ($published === [] ? 'not recorded in the reference' : implode(', ', array_map([self::class, 'points'], array_unique($published))));
+            }
+        }
+        return $problems;
+    }
+
+    /**
+     * A translation must keep its English document's instrument: the same number of questions and
+     * answers, the same points, and the same numbers in its text (ranges, cut-offs, question numbers).
+     *
+     * @return list<string>
+     */
+    public static function translationDifferences(Document $english, Document $translation): array
+    {
+        $problems = [];
+        $en = self::questions($english);
+        $tr = self::questions($translation);
+        if (count($en) !== count($tr)) {
+            $problems[] = sprintf('%d questions where the English has %d', count($tr), count($en));
+        }
+        foreach ($en as $i => $q) {
+            $t = $tr[$i] ?? null;
+            if ($t === null) {
+                continue;
+            }
+            if (count($t['answers']) !== count($q['answers'])) {
+                $problems[] = sprintf('question %d has %d answers where the English has %d', $i + 1, count($t['answers']), count($q['answers']));
+                continue;
+            }
+            if (array_column($t['answers'], 'score') !== array_column($q['answers'], 'score')) {
+                $problems[] = sprintf('question %d scores %s where the English scores %s', $i + 1,
+                    implode('/', array_map([self::class, 'points'], array_column($t['answers'], 'score'))), implode('/', array_map([self::class, 'points'], array_column($q['answers'], 'score'))));
+            }
+        }
+        if (self::numbers($translation) !== self::numbers($english)) {
+            $problems[] = 'its text has the numbers ' . implode(', ', self::numbers($translation)) . ' where the English has ' . implode(', ', self::numbers($english));
+        }
+        return $problems;
+    }
+
+    /** @return list<float> the cut-offs a document prints: "3 or more", "3 o más", "≥ 3" */
+    public static function printedCutoffs(Document $doc): array
+    {
+        $text = $doc->about;
+        foreach ($doc->blocks as $block) {
+            if (($block['type'] ?? '') === 'paragraph') {
+                $text .= "\n" . ($block['text'] ?? '');
+            }
+        }
+        preg_match_all('/(\d+)\s+(?:or more|or higher|or above|o más|ou plus)|≥\s*(\d+)/u', $text, $m, PREG_SET_ORDER);
+        return array_values(array_unique(array_map(static fn(array $x): float => (float)($x[1] !== '' ? $x[1] : $x[2]), $m), SORT_REGULAR));
+    }
+
+    /** Same wording: word for word both ways (85%), or nearly letter for letter. */
+    public static function same(string $a, string $b): bool
+    {
+        $x = self::words($a);
+        $y = self::words($b);
+        if ($x === [] || $y === []) {
+            return $x === $y;
+        }
+        $shared = count(array_intersect($x, $y));
+        if (min($shared / count($x), $shared / count($y)) >= 0.85) {
+            return true;
+        }
+        similar_text(self::plain($a), self::plain($b), $percent);
+        return $percent >= 92.0;
+    }
+
+    /** @return list<string> content words, cut to four letters so "drinks" meets "drink" */
+    private static function words(string $s): array
+    {
+        $words = [];
+        foreach (preg_split('/\s+/', self::plain($s), -1, PREG_SPLIT_NO_EMPTY) ?: [] as $w) {
+            if (!in_array($w, self::STOP, true)) {
+                $words[] = mb_substr($w, 0, 4);
+            }
+        }
+        return array_values(array_unique($words));
+    }
+
+    private static function plain(string $s): string
+    {
+        $s = mb_strtolower(strip_tags($s));
+        $s = (string)preg_replace('/[^\p{L}\p{N}]+/u', ' ', $s);
+        $s = implode(' ', array_map(static fn(string $w): string => self::NUMBERS[$w] ?? $w, explode(' ', trim($s))));
+        return $s;
+    }
+
+    private static function unnumbered(string $s): string
+    {
+        return trim((string)preg_replace('/^\s*\d+[.)]\s+/', '', $s));
+    }
+
+    /** @return list<string> */
+    private static function numbers(Document $doc): array
+    {
+        $text = $doc->about;
+        foreach ($doc->blocks as $block) {
+            if (($block['type'] ?? '') === 'paragraph') {
+                $text .= ' ' . ($block['text'] ?? '');
+            }
+        }
+        preg_match_all('/\d+/', $text, $m);
+        $n = $m[0];
+        sort($n);
+        return $n;
+    }
+
+    private static function answerLabel(array $a): string
+    {
+        return $a['text'] . (isset($a['score']) && is_numeric($a['score']) ? ' ' . self::points((float)$a['score']) : '');
+    }
+
+    public static function points(?float $p): string
+    {
+        return $p === null ? 'nothing' : rtrim(rtrim(number_format($p, 2, '.', ''), '0'), '.');
+    }
+}

@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.14.0 (2026-10-16)
+
+**Validated instruments are now checked for what makes their scores valid, not only their wording.**
+
+- **`data/instruments/<loinc>.json`** holds a reference for PHQ-9 (44249-1), PHQ-2 (55757-9), GAD-7 (69737-5) and AUDIT-C (72109-2):
+  - their questions and answers from LOINC's own questionnaire (LOINC 2.83), with each answer's points from LOINC's answer lists;
+  - the total range;
+  - the published cut-offs, with their paper and the sentence that states them. These are Kroenke 2001 (PHQ-9), Spitzer 2006 (GAD-7), Kroenke 2003 (PHQ-2) and Bradley 2007 (AUDIT-C).
+- **The tests fail** when a validated document's questions, their order, its answers, their points, its total range, its stated range ("scored 0 to 27") or a cut-off it prints differ from the reference, or when a translation changes the number of questions, the answers, the points or the numbers in its text.
+  - They also show the check catches the faults found in other projects' copies: another instrument's question (KenyaEMR's GAD-7 asks PHQ-9's item 6), an added answer (AMRS's "0 drinks" on AUDIT-C), a changed point, a wrong cut-off, and a translation that rescores.
+- **Two deliberate differences** are recorded with their reasons. GAD-7's question 2 follows Pfizer's printed form, where LOINC writes the time frame into that item. PHQ-9 and GAD-7 end with Pfizer's unscored "If you checked off any problems, how difficult…", which LOINC words differently for PHQ-9 and leaves out of its GAD-7 panel.
+- **`tools/instrument-references.php`** refreshes the references from fhir.loinc.org and NLM's Clinical Tables, keeping what was written by hand; `--check` reports whether LOINC has changed.
+  - Where a question's own answer list differs from the panel's (GAD-7's 68509-9 defaults to "More days than not"), the panel's answer is the instrument's, scored as it is everywhere else in the panel.
+- **Documents changed in this release:** none. All four instruments and their Spanish versions already matched.
+
 ## 0.13.1 (2026-10-16)
 
 - `FOOTPRINT.md` regenerated: the 0.13.0 tag carried one made before its last edits, so its CI check failed. No change to what prints.
