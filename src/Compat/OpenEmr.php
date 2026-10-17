@@ -24,6 +24,7 @@ namespace OpenHealthcare\ClinicForms\Compat;
 use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Common\Csrf\CsrfUtils;
 use OpenEMR\Common\Logging\EventAuditLogger;
+use OpenEMR\Services\QuestionnaireService;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 final class OpenEmr
@@ -140,6 +141,52 @@ final class OpenEmr
             return [null, (string)$error];
         }
         return [(int)$document->get_id(), ''];
+    }
+
+    /**
+     * Whether the logged-in user may add to OpenEMR's questionnaires: the check OpenEMR makes before
+     * importing forms (Admin > Forms), as the patient portal's template import does.
+     */
+    public static function canAddQuestionnaires(): bool
+    {
+        return class_exists(QuestionnaireService::class) && (bool)AclMain::aclCheckCore('admin', 'forms');
+    }
+
+    /**
+     * The questionnaire OpenEMR keeps under this title, or null.
+     *
+     * @return ?array{id: int, questionnaire_id: string, source_url: string, active: bool, questionnaire: string}
+     */
+    public static function questionnaire(string $title): ?array
+    {
+        $row = (new QuestionnaireService())->fetchQuestionnaireResource($title);
+        if (!is_array($row) || !isset($row['id'])) {
+            return null;
+        }
+        $text = static fn(string $key): string => is_scalar($row[$key] ?? null) ? (string)$row[$key] : '';
+        return [
+            'id' => (int)$row['id'],
+            'questionnaire_id' => $text('questionnaire_id'),
+            'source_url' => $text('source_url'),
+            'active' => $text('active') === '1',
+            'questionnaire' => $text('questionnaire'),
+        ];
+    }
+
+    /**
+     * Saves a Questionnaire in OpenEMR's questionnaires under this title, through OpenEMR's own
+     * QuestionnaireService: into the row with that title or the Questionnaire's id, or a new row.
+     * Filed under Survey (Observation_Types), as OpenEMR's encounter form files its own; 8.0 added
+     * the category, and 7.0's method ignores the extra argument.
+     *
+     * @param array<string, mixed> $q
+     * @return int the row's id
+     */
+    public static function saveQuestionnaire(array $q, string $title): int
+    {
+        $json = json_encode($q, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
+        $id = (new QuestionnaireService())->saveQuestionnaireResource($json, $title, null, null, null, 'Questionnaire', 'survey');
+        return is_numeric($id) ? (int)$id : 0;
     }
 
     /** Writes an event to OpenEMR's audit log as the logged-in user. */

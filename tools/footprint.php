@@ -36,6 +36,7 @@ $out = $root . '/FOOTPRINT.md';
 /** Calls to OpenEMR classes that write, and what they write. */
 const CORE_CLASS_WRITES = [
     '->createDocument(' => "`documents` and `categories_to_documents`, and the file in the site's documents folder, through `Document::createDocument()`",
+    '->saveQuestionnaireResource(' => "`questionnaire_repository`, and a `uuid_registry` row for a new questionnaire, through `QuestionnaireService::saveQuestionnaireResource()`",
 ];
 
 function stringLiterals(string $php): array

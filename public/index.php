@@ -83,6 +83,7 @@ foreach ($spanish->all() as $id => $es) {
 $templates = TemplateLibrary::forSite($siteDir)->all();
 $pdfAvailable = PdfWriter::available();
 $canSaveDocuments = OpenEmr::canWriteDocuments();
+$canAddQuestionnaires = OpenEmr::canAddQuestionnaires();
 $documentsCategory = Settings::forSite($siteDir)->documentsCategory;
 $isAdmin = AclMain::aclCheckCore('admin', 'super');
 $csrf = OpenEmr::csrfToken();
@@ -300,6 +301,12 @@ foreach ($layouts as $form) {
                 <button type="submit" class="btn btn-outline-secondary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="fhir"><?php echo xlt('FHIR Questionnaire'); ?> (.json)</button>
                 <small class="form-text text-muted"><?php echo xlt('The ticked documents as blank forms to fill on screen, in OpenEMR questionnaires or another system. Never with patient details. Validated screening instruments carry their LOINC codes and points.'); ?></small>
             </div>
+            <?php if ($canAddQuestionnaires) { ?>
+                <div class="mt-2">
+                    <button type="submit" class="btn btn-outline-primary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="oe-questionnaires"><?php echo xlt('Add to OpenEMR questionnaires'); ?></button>
+                    <small class="form-text text-muted"><?php echo xlt('Staff can then enter the answers from a paper form in OpenEMR: in an encounter, Questionnaires, then New Questionnaire, or (8.3 and later) the patient menu, Assessments, then Questionnaires. OpenEMR adds up the score and keeps the answers in the chart. Adding a form again updates it; a questionnaire Clinic Forms did not add is left alone.'); ?></small>
+                </div>
+            <?php } ?>
         </div>
     </form>
 

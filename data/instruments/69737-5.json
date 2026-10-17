@@ -192,6 +192,8 @@
         "min": 0,
         "max": 21
     },
+    "total_code": "70274-6",
+    "total_code_source": "LOINC 70274-6, Generalized anxiety disorder 7 item (GAD-7) total score [Reported.PHQ]: written by hand, since LOINC's questionnaire leaves its total item uncoded; tools/instrument-references.php checks it is active and its component is that item's text",
     "cutoffs": [
         {
             "score": 5,

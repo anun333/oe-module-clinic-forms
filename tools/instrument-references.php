@@ -5,7 +5,9 @@
  * and answers from LOINC's own questionnaire (fhir.loinc.org, needs a free LOINC account), each
  * answer's score from LOINC's answer lists as NLM's Clinical Tables serve them (no account), and the
  * total range. What is written by hand in a reference (LOINC_HAND_FIELDS: the published cut-offs or
- * rules and their source, any scoring where LOINC differs, any accepted wording difference) is kept.
+ * rules and their source, any scoring where LOINC differs, any accepted wording difference, the LOINC
+ * term for the total) is kept. A total_code is checked against LOINC every run, hand-written
+ * references' too: an active term whose component is the text of LOINC's total item.
  *
  *   LOINC_USER=... LOINC_PASSWORD=... php tools/instrument-references.php          write the references
  *   LOINC_USER=... LOINC_PASSWORD=... php tools/instrument-references.php --check  compare only; exit 1 if LOINC's differ
@@ -39,6 +41,15 @@ foreach (DocumentLibrary::shipped()->all() as $doc) {
         continue;
     }
     $old = Instrument::reference($loinc) ?? [];
+    if (isset($old['total_code'])) {
+        try {
+            $problem = loincTotalCodeProblem($loinc, (string)$old['total_code'], $auth);
+        } catch (RuntimeException $e) {
+            $problem = $e->getMessage();
+        }
+        echo "$loinc ($doc->id): " . ($problem ?? "total_code {$old['total_code']} is LOINC's term for the total") . "\n";
+        $failed += $problem === null ? 0 : 1;
+    }
     if (isset($old['questions_from'])) {
         echo "$loinc ($doc->id): written by hand from {$old['questions_from']['name']}; not fetched\n";
         continue;

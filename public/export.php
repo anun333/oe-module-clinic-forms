@@ -5,7 +5,8 @@
  * or one of the clinic's own Word or LibreOffice documents, filled with the same details the
  * printed packet would have; or as FHIR Questionnaires ("fhir"), blank forms with the clinic's
  * details and never a patient's. The file is built in memory and sent; nothing is stored, except with
- * "pdf-documents", which files the PDF in the patient's Documents instead of sending it.
+ * "pdf-documents", which files the PDF in the patient's Documents instead of sending it, and with
+ * "oe-questionnaires", which adds the Questionnaires to OpenEMR's own questionnaires instead.
  *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
@@ -20,6 +21,7 @@ use OpenHealthcare\ClinicForms\Office\PdfWriter;
 use OpenHealthcare\ClinicForms\Office\TemplateFiller;
 use OpenHealthcare\ClinicForms\Compat\OpenEmr;
 use OpenHealthcare\ClinicForms\Fhir\QuestionnaireExport;
+use OpenHealthcare\ClinicForms\Fhir\QuestionnaireRegistration;
 use OpenHealthcare\ClinicForms\Office\TemplateLibrary;
 use OpenHealthcare\ClinicForms\Office\WordWriter;
 use OpenHealthcare\ClinicForms\Paper\Context;
@@ -44,7 +46,9 @@ $pid = (int)(OpenEmr::session('pid') ?? 0);
 $format = (string)($_POST['format'] ?? '');
 // A copy for the patient's Documents always names the patient whose chart it goes in.
 $toDocuments = $format === 'pdf-documents';
-$fhir = $format === 'fhir';
+// Added to OpenEMR's questionnaires, they are the same blank Questionnaires the FHIR file holds.
+$toQuestionnaires = $format === 'oe-questionnaires';
+$fhir = $format === 'fhir' || $toQuestionnaires;
 $patient = !$fhir && ($toDocuments || !empty($_POST['fill_patient'])) && $pid > 0 ? $site->patient($pid) : [];
 $recipientId = (int)($_POST['recipient'] ?? 0);
 $today = function_exists('oeFormatShortDate') ? (string)oeFormatShortDate(date('Y-m-d')) : date('Y-m-d');
@@ -70,10 +74,64 @@ function clinicFormsRefuse(int $status, string $message): never
     exit;
 }
 
+/**
+ * Adds each document's Questionnaire to OpenEMR's questionnaires, or updates the one it added
+ * before, and goes back to the page saying what was done with each.
+ *
+ * @param list<\OpenHealthcare\ClinicForms\Paper\Document> $documents
+ * @param array<string, \OpenHealthcare\ClinicForms\Paper\Document> $english
+ */
+function clinicFormsAddQuestionnaires(QuestionnaireExport $export, array $documents, array $english): never
+{
+    $registration = new QuestionnaireRegistration(OpenEmr::questionnaire(...), OpenEmr::saveQuestionnaire(...));
+    $titles = [];
+    $rows = [];
+    foreach ($documents as $doc) {
+        try {
+            [$what, $rowId] = $registration->register($export->questionnaire($doc, $english[$doc->id] ?? null));
+        } catch (\Throwable $e) {
+            error_log('Clinic Forms: ' . $doc->id . ' was not added to OpenEMR questionnaires: ' . $e->getMessage());
+            [$what, $rowId] = ['failed', null];
+        }
+        $titles[$what][] = $doc->title;
+        if ($what === QuestionnaireRegistration::ADDED || $what === QuestionnaireRegistration::UPDATED) {
+            $rows[] = $what . ' ' . $doc->stamp() . ' as questionnaire ' . $rowId;
+        }
+    }
+    if ($rows !== []) {
+        OpenEmr::audit('other', 'Clinic Forms in OpenEMR questionnaires: ' . implode(', ', $rows));
+    }
+    $said = [
+        QuestionnaireRegistration::ADDED => xl('Added to OpenEMR questionnaires'),
+        QuestionnaireRegistration::UPDATED => xl('Updated in OpenEMR questionnaires'),
+        QuestionnaireRegistration::NOTHING_TO_ANSWER => xl('Left out, since they have nothing to answer'),
+        QuestionnaireRegistration::NOT_OURS => xl('Left as they are: OpenEMR already has a questionnaire with the same title that Clinic Forms did not add'),
+        QuestionnaireRegistration::TURNED_OFF => xl('Left as they are: turned off in OpenEMR'),
+        'failed' => xl('Could not be added (the PHP error log says why)'),
+    ];
+    $lines = [];
+    foreach ($said as $what => $words) {
+        if (isset($titles[$what])) {
+            $lines[] = $words . ': ' . implode(', ', $titles[$what]) . '.';
+        }
+    }
+    if ($rows !== []) {
+        $lines[] = xl('To fill one in for a patient: in an encounter, Questionnaires, then New Questionnaire; or, on OpenEMR 8.3 and later, the patient menu, Assessments, then Questionnaires.');
+    }
+    header('Location: index.php?' . http_build_query(['cf_msg' => implode(' ', $lines), 'cf_ok' => $rows !== [] && !isset($titles['failed']) ? 1 : 0]));
+    exit;
+}
+
 $template = (string)($_POST['template'] ?? '');
 $versions = [];
 if ($template !== '' && $toDocuments) {
     clinicFormsRefuse(400, xl('Only Clinic Forms documents are saved to Documents as PDF; download a Word or LibreOffice document to edit it.'));
+}
+if ($template !== '' && $toQuestionnaires) {
+    clinicFormsRefuse(400, xl('Only Clinic Forms documents can be added to OpenEMR questionnaires.'));
+}
+if ($toQuestionnaires && !OpenEmr::canAddQuestionnaires()) {
+    clinicFormsRefuse(403, xl('You are not allowed to add OpenEMR questionnaires.'));
 }
 if ($template !== '') {
     $library = TemplateLibrary::forSite($siteDir);
@@ -120,7 +178,11 @@ if ($template !== '') {
                 $english[$doc->id] = $en;
             }
         }
-        $out = json_encode((new QuestionnaireExport($context->withoutPatient(), $language, $taglines))->export($documents, $english), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR) . "\n";
+        $export = new QuestionnaireExport($context->withoutPatient(), $language, $taglines);
+        if ($toQuestionnaires) {
+            clinicFormsAddQuestionnaires($export, $documents, $english);
+        }
+        $out = json_encode($export->export($documents, $english), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR) . "\n";
         $ext = 'json';
         $mime = 'application/fhir+json';
     } else {

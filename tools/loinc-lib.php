@@ -17,7 +17,7 @@ const LOINC_NOTICE = 'This material contains content from LOINC (http://loinc.or
  * What a reference holds that LOINC can't give, written by hand with its source and kept when the
  * reference is fetched again.
  */
-const LOINC_HAND_FIELDS = ['instrument', 'title', 'about', 'instructions', 'licence', 'source', 'cutoffs', 'cutoffs_source', 'rules', 'rules_source', 'subscales', 'subscales_source', 'scoring', 'accepted'];
+const LOINC_HAND_FIELDS = ['instrument', 'title', 'about', 'instructions', 'licence', 'source', 'total_code', 'total_code_source', 'cutoffs', 'cutoffs_source', 'rules', 'rules_source', 'subscales', 'subscales_source', 'scoring', 'accepted'];
 
 /** The Authorization header for fhir.loinc.org, from LOINC_USER and LOINC_PASSWORD; exits without them. */
 function loincAuth(): string
@@ -234,4 +234,65 @@ function loincScoringGaps(array $questions): array
         }
     }
     return $gaps;
+}
+
+/** A LOINC term's properties by name (STATUS, COMPONENT, METHOD_TYP...), as fhir.loinc.org gives them. @return array<string, string> */
+function loincTermProperties(string $code, string $auth): array
+{
+    $term = loincFetch('https://fhir.loinc.org/CodeSystem/$lookup?system=http://loinc.org&code=' . rawurlencode($code), [$auth, 'Accept: application/fhir+json']);
+    $props = [];
+    foreach ($term['parameter'] ?? [] as $p) {
+        if (($p['name'] ?? '') === 'property') {
+            $value = $p['part'][1] ?? [];
+            $props[(string)($p['part'][0]['valueCode'] ?? '')] = (string)($value['valueCoding']['display'] ?? $value['valueString'] ?? $value['valueCode'] ?? '');
+        }
+    }
+    return $props;
+}
+
+/**
+ * What's wrong with a reference's total_code, or null. LOINC's questionnaires leave their total
+ * item uncoded, so the code is written by hand; this holds it to LOINC. The term must be active, a
+ * quantitative score in the panel's own method (METHOD_TYP), and name the total: its component is
+ * the text of the questionnaire's one total item (the PHQ-9's 44261-6 is "Patient health
+ * questionnaire 9 item total score", word for word), or holds both that text and the method's name
+ * (Stay Independent's total item says only "Total"; 97885-8 is "Stay Independent total score").
+ * The method alone isn't enough: the PHQ-9 and PHQ-2 totals share "Reported.PHQ".
+ */
+function loincTotalCodeProblem(string $loinc, string $totalCode, string $auth): ?string
+{
+    $q = loincFetch("https://fhir.loinc.org/Questionnaire/$loinc", [$auth, 'Accept: application/fhir+json']);
+    $totals = [];
+    $walk = static function (array $items) use (&$walk, &$totals): void {
+        foreach ($items as $item) {
+            if (in_array($item['type'] ?? '', ['decimal', 'integer'], true) && empty($item['code'])) {
+                $totals[] = trim((string)($item['text'] ?? ''));
+            }
+            $walk($item['item'] ?? []);
+        }
+    };
+    $walk($q['item'] ?? []);
+    if (count($totals) !== 1) {
+        return "LOINC's questionnaire $loinc has " . count($totals) . ' uncoded total items, not one';
+    }
+    $text = $totals[0];
+    $panel = loincTermProperties($loinc, $auth);
+    $term = loincTermProperties($totalCode, $auth);
+    $method = $panel['METHOD_TYP'] ?? '';
+    $component = $term['COMPONENT'] ?? '';
+    if (($term['STATUS'] ?? '') !== 'ACTIVE') {
+        return "total_code $totalCode is " . ($term['STATUS'] ?? 'not found') . ', not ACTIVE';
+    }
+    if (($term['PROPERTY'] ?? '') !== 'Score' || ($term['SCALE_TYP'] ?? '') !== 'Qn') {
+        return "total_code $totalCode is not a quantitative score (" . ($term['PROPERTY'] ?? '') . ', ' . ($term['SCALE_TYP'] ?? '') . ')';
+    }
+    if ($method !== '' && ($term['METHOD_TYP'] ?? '') !== $method) {
+        return "total_code $totalCode has method \"" . ($term['METHOD_TYP'] ?? '') . "\", where $loinc's is \"$method\"";
+    }
+    $named = strcasecmp($component, $text) === 0
+        || ($method !== '' && stripos($component, $method) !== false && stripos($component, $text) !== false);
+    if (!$named) {
+        return "total_code $totalCode has component \"$component\", where $loinc's total item says \"$text\"";
+    }
+    return null;
 }

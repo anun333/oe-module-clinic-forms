@@ -250,6 +250,8 @@
         "min": 0,
         "max": 15
     },
+    "total_code": "48545-8",
+    "total_code_source": "LOINC 48545-8, Geriatric depression scale (GDS) short version total: written by hand, since LOINC's questionnaire leaves its total item uncoded; tools/instrument-references.php checks it is active and its component is that item's text",
     "cutoffs": [
         {
             "score": 6,

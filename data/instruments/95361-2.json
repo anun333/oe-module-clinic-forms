@@ -154,6 +154,8 @@
         "min": 0,
         "max": 6
     },
+    "total_code": "95379-4",
+    "total_code_source": "LOINC 95379-4, Total score [U.S. FSS-6]: written by hand, since LOINC's questionnaire leaves its total item uncoded; tools/instrument-references.php checks it is active and its component is that item's text",
     "licence": {
         "holder": "Economic Research Service, U.S. Department of Agriculture",
         "terms": "A work of the U.S. government, in the public domain.",

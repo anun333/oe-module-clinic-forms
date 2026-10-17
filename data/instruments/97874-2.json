@@ -202,6 +202,8 @@
         "min": 0,
         "max": 14
     },
+    "total_code": "97885-8",
+    "total_code_source": "LOINC 97885-8, Stay Independent total score [Stay Independent]: written by hand, since LOINC's questionnaire leaves its total item uncoded; tools/instrument-references.php checks it is active and its component is that item's text",
     "cutoffs": [
         {
             "score": 4,

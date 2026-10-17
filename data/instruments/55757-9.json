@@ -62,6 +62,8 @@
         "min": 0,
         "max": 6
     },
+    "total_code": "55758-7",
+    "total_code_source": "LOINC 55758-7, Patient Health Questionnaire 2 item (PHQ-2) total score [Reported]: written by hand, since LOINC's questionnaire leaves its total item uncoded; tools/instrument-references.php checks it is active and its component is that item's text",
     "cutoffs": [
         {
             "score": 3,

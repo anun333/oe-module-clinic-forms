@@ -42,6 +42,7 @@ final class QuestionnaireExportTest extends TestCase
         self::assertCount(1, $total);
         self::assertTrue($total[0]['readOnly']);
         self::assertSame(QuestionnaireExport::CALCULATED, $total[0]['extension'][0]['url']);
+        self::assertSame([['system' => 'http://loinc.org', 'code' => '44261-6']], $total[0]['code'], "LOINC's term for the total, from the reference");
         self::assertSame([], array_filter($items, static fn(array $i): bool => in_array($i['text'] ?? '', ['Name', 'Date of birth'], true)),
             "the patient's own fields are left out: the response names its patient");
         self::assertSame('date', array_values(array_filter($items, static fn(array $i): bool => ($i['text'] ?? '') === 'Date'))[0]['type']);
@@ -64,7 +65,26 @@ final class QuestionnaireExportTest extends TestCase
         self::assertSame('Seed Clinic', $q['publisher']);
         $items = self::flatten($q['item']);
         self::assertSame([], array_filter(array_keys($items), static fn(string $id): bool => str_starts_with($id, '/')), 'no LOINC question codes');
+        self::assertSame([], array_filter($items, static fn(array $i): bool => isset($i['code'])), 'and no code on its total');
         self::assertSame('Not at all', array_values(array_filter($items, static fn(array $i): bool => $i['type'] === 'choice'))[0]['answerOption'][0]['valueString']);
+    }
+
+    public function testEachInstrumentsTotalCarriesItsReferencesCodeAndAPartsScoreNone(): void
+    {
+        $coded = [];
+        foreach (DocumentLibrary::shipped()->all() as $doc) {
+            $q = (new QuestionnaireExport(new Context(['name' => 'Seed Clinic'], [])))->questionnaire($doc);
+            foreach (self::flatten($q['item']) as $item) {
+                if ($item['type'] === 'decimal' && isset($item['code'])) {
+                    $coded[$doc->id][] = $item['code'][0]['code'];
+                }
+            }
+        }
+        ksort($coded);
+        self::assertSame([
+            'audit-c' => ['75626-2'], 'food-security' => ['95379-4'], 'gad-7' => ['70274-6'], 'gds-15' => ['48545-8'],
+            'pc-ptsd-5' => ['102017-1'], 'phq-2' => ['55758-7'], 'phq-9' => ['44261-6'], 'stay-independent' => ['97885-8'],
+        ], $coded, "one coded total each; TAPS-2's per-substance scores and the screens read by rule have none");
     }
 
     public function testATranslationCarriesItsInstrumentsCodesInItsOwnWords(): void

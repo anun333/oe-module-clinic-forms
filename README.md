@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.24.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.25.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -170,7 +170,7 @@ Choose **Español** as the language at the top of the Clinic Forms page. Documen
 
 **Edit before printing.** Tick documents and click **Word (.docx)** or **LibreOffice (.odt)** instead of *Open for printing*. You get one file with the same letterhead, recipient and patient details the printed packet would have, to change before printing: a referral letter's wording, a note's restrictions. It opens in Word, LibreOffice and Google Docs, and every page carries the patient line in its header. Layout forms (Demographics and the like) print from the browser only.
 
-**Fill on screen (FHIR Questionnaire).** Tick documents and click **FHIR Questionnaire (.json)** to download them as FHIR R4 Questionnaires: one file, or a Bundle when several are ticked. They are blank forms with the clinic's details and never a patient's (a field the chart fills, such as the patient's name, is left out, since a response names its patient), so no audit event is written. Register one in OpenEMR's Questionnaire Assessments form, or in another system that fills FHIR Questionnaires.
+**Fill on screen (FHIR Questionnaire).** Tick documents and click **FHIR Questionnaire (.json)** to download them as FHIR R4 Questionnaires: one file, or a Bundle when several are ticked. They are blank forms with the clinic's details and never a patient's (a field the chart fills, such as the patient's name, is left out, since a response names its patient), so no audit event is written. Use them in another system that fills FHIR Questionnaires, or add them straight to OpenEMR's own questionnaires, as described next.
 
 - The validated instruments carry LOINC's question and answer codes, with the answers in the published order and each answer's points. Their total line adds the points up as the questions are answered, in OpenEMR's own questionnaire runtime (OpenEMR 8.3 and later).
 - A Spanish questionnaire shows its Spanish wording, with the same codes, when it keeps its English instrument. A clinic's own version that differs from its instrument carries no codes.
@@ -179,6 +179,16 @@ Choose **Español** as the language at the top of the Clinic Forms page. Documen
   - the HL7 FHIR validator (with the SDC guide). It notes three things that are expected: answer wording that differs from LOINC's display, the ASQ's codes being newer than the terminology server's LOINC, and LOINC's questionnaires not being fetchable;
   - OpenEMR 8.4.1's questionnaire import check;
   - OpenEMR's questionnaire runtime, which works out each instrument's total correctly.
+
+**Enter paper answers in OpenEMR (Add to OpenEMR questionnaires).** Tick documents and click **Add to OpenEMR questionnaires** to add them to OpenEMR's own questionnaires, as the same blank Questionnaires. Staff then enter a patient's answers from the paper form in OpenEMR: in an encounter, **Questionnaires**, then **New Questionnaire**, or, on OpenEMR 8.3 and later, the patient menu, **Assessments**, then **Questionnaires**. OpenEMR adds up the score as the answers go in, and keeps the answers in the chart as a FHIR QuestionnaireResponse, with LOINC's codes for the validated instruments.
+
+- The button is shown to users with OpenEMR's Admin > Forms permission (`admin / forms`), the permission OpenEMR asks for before importing forms. It adds a questionnaire for everyone at the site.
+- OpenEMR files questionnaires by title. Adding a document again updates the questionnaire it added before, in place, and OpenEMR raises its version.
+- A questionnaire with the same title that Clinic Forms didn't add (one the clinic imported itself, say) is left as it is, and so is one the clinic has turned off. The page says which.
+- A document with nothing to answer, such as the notice of free language help, is left out.
+- Each one is filed under Survey, the category OpenEMR's encounter form gives its own questionnaires (OpenEMR 8.0 and later; 7.0 has no categories).
+- An audit event names each document, its version and the questionnaire's number in OpenEMR.
+- Checked on OpenEMR 8.4.1 in a headless browser: the PHQ-9, added, is filled in OpenEMR's own Questionnaires page with the highest-scoring answers. The page shows 27, and the saved response holds the coded answers and the total. On 7.0.3 it is added and offered by the encounter form; OpenEMR works out totals in 8.3 and later.
 
 **For OpenMRS.** `tools/export-o3.php` writes each validated instrument that CIEL, the concept dictionary most OpenMRS sites load, can carry as an OpenMRS 3 form, for the O3 Form Builder. Its questions and answers are saved as CIEL concepts (`data/ciel.json`, from CIEL's latest release). Today that is the PHQ-9, PHQ-2 and GAD-7, in English and Spanish; PHQ-9's unscored closing question, which CIEL lacks, is left out and named in the form. CIEL has no concepts yet for the other instruments' questions (AUDIT-C, PC-PTSD-5, GDS-15, the ASQ, TAPS-1, Stay Independent and USDA's food security screen), so they have no OpenMRS form; their FHIR Questionnaires carry LOINC's codes. The forms pass OpenMRS's published form schema, and each concept and answer is checked against the CIEL release.
 

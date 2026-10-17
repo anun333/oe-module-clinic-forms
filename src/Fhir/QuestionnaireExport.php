@@ -78,6 +78,8 @@ final readonly class QuestionnaireExport
         if ($doc->source !== 'clinic') {
             $q['url'] = self::CANONICAL . $doc->id;
         }
+        // Names the document, wherever the Questionnaire goes: OpenEMR replaces the id and url of one it is given.
+        $q['identifier'] = [QuestionnaireRegistration::identifier($q['id'])];
         if ($doc->version > 0) {
             $q['version'] = (string)$doc->version;
         }
@@ -177,7 +179,7 @@ final readonly class QuestionnaireExport
                     }
                     $add(['linkId' => $id, 'text' => $this->text($block['label']), 'type' => 'group', 'item' => $children]);
                     if (isset($block['total'])) {
-                        $add(self::total("$id.total", $this->text($block['total']), $codes !== null));
+                        $add(self::total("$id.total", $this->text($block['total']), $codes !== null, null, self::totalCode($codes)));
                     }
                     break;
                 case 'lines':
@@ -235,7 +237,7 @@ final readonly class QuestionnaireExport
         }
         $label = $this->text($field['label']);
         if ($codes !== null && preg_match('/^(Total score|Puntuación total|Puntaje total)/iu', $label) === 1) {
-            return self::total($linkId, $label, true);
+            return self::total($linkId, $label, true, null, self::totalCode($codes));
         }
         // A part's score line (TAPS-2's "Alcohol score") adds up that part's answers only.
         foreach ($codes['reference']['subscales'] ?? [] as $subscale) {
@@ -291,9 +293,11 @@ final readonly class QuestionnaireExport
      *
      * @return array<string, mixed>
      */
-    private static function total(string $linkId, string $text, bool $calculated, ?array $questions = null): array
+    private static function total(string $linkId, string $text, bool $calculated, ?array $questions = null, ?string $loinc = null): array
     {
-        $item = ['linkId' => $linkId, 'text' => $text, 'type' => 'decimal', 'readOnly' => true];
+        // The instrument's own total carries LOINC's term for it; a part's score has none here.
+        $item = ['linkId' => $linkId] + ($loinc !== null ? ['code' => [['system' => Loinc::SYSTEM, 'code' => $loinc]]] : [])
+            + ['text' => $text, 'type' => 'decimal', 'readOnly' => true];
         if ($calculated) {
             $points = ".answer.valueCoding.extension.where(url = '" . self::ORDINAL . "').valueDecimal.sum()";
             $depths = ['%resource.item', '%resource.item.item', '%resource.item.item.item'];
@@ -305,6 +309,17 @@ final readonly class QuestionnaireExport
             $item['extension'] = [['url' => self::CALCULATED, 'valueExpression' => ['language' => 'text/fhirpath', 'expression' => implode(' + ', $terms)]]];
         }
         return $item;
+    }
+
+    /**
+     * LOINC's term for the instrument's total, from its reference, or null.
+     *
+     * @param ?array{reference: array<string, mixed>, map: array<int, string>} $codes
+     */
+    private static function totalCode(?array $codes): ?string
+    {
+        $code = $codes['reference']['total_code'] ?? null;
+        return is_string($code) && Loinc::isValid($code) ? $code : null;
     }
 
     /** @return array{0: string, 1: int|float|null} "Never (0)" as its text and points */

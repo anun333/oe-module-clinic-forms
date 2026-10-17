@@ -103,6 +103,8 @@
         "min": 0,
         "max": 12
     },
+    "total_code": "75626-2",
+    "total_code_source": "LOINC 75626-2, Total score [AUDIT-C]: written by hand, since LOINC's questionnaire leaves its total item uncoded; tools/instrument-references.php checks it is active and its component is that item's text",
     "cutoffs": [
         {
             "score": 4,

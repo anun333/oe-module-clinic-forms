@@ -106,6 +106,8 @@
         "min": 0,
         "max": 5
     },
+    "total_code": "102017-1",
+    "total_code_source": "LOINC 102017-1, PC-PTSD-5 score [PC-PTSD-5]: written by hand, since LOINC's questionnaire leaves its total item uncoded; tools/instrument-references.php checks it is active and its component is that item's text",
     "cutoffs": [
         {
             "score": 4,

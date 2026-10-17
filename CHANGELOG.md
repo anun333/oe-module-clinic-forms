@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.25.0 (2026-10-17)
+
+**Add documents to OpenEMR's own questionnaires, to enter paper answers in the chart; totals carry LOINC's codes.**
+
+- **Add to OpenEMR questionnaires.** A new button adds the ticked documents to OpenEMR's own questionnaires, as the same blank Questionnaires the FHIR file holds.
+  - Staff then enter a patient's answers from the paper form: in an encounter, Questionnaires, then New Questionnaire, or, on OpenEMR 8.3 and later, the patient menu, Assessments, then Questionnaires.
+  - OpenEMR adds up the score as the answers go in, and keeps the answers in the chart as a FHIR QuestionnaireResponse, with LOINC's codes for the validated instruments.
+  - The button is shown to users with OpenEMR's Admin > Forms permission, which OpenEMR asks for before importing forms. A questionnaire is added for the whole site.
+  - Adding a document again updates the questionnaire it added before, in place. A questionnaire with the same title that Clinic Forms didn't add is left alone, and so is one the clinic has turned off. A document with nothing to answer, such as the notice of free language help, is left out. The page says which.
+  - Each one is filed under Survey, the category OpenEMR's encounter form gives its own (OpenEMR 8.0 and later).
+  - An audit event names each document, its version and the questionnaire's number in OpenEMR.
+  - It goes through OpenEMR's own `QuestionnaireService`, which writes `questionnaire_repository` and, for a new questionnaire, a `uuid_registry` row (FOOTPRINT.md lists both).
+- **Every Questionnaire names its document** in an `identifier` (system `https://github.com/anun333/oe-module-clinic-forms/questionnaire`, value the document's id), since OpenEMR replaces a new questionnaire's id and url with its own. That is how Clinic Forms recognises the questionnaires it added.
+- **Each instrument's total carries LOINC's term for it** in the FHIR export: the PHQ-9's 44261-6, PHQ-2's 55758-7, GAD-7's 70274-6, AUDIT-C's 75626-2, PC-PTSD-5's 102017-1, GDS-15's 48545-8, Stay Independent's 97885-8 and the six-item food security survey's 95379-4. A per-substance TAPS-2 score has none.
+  - LOINC's questionnaires leave their total items uncoded, so the codes are written by hand in the references (`total_code`, with `total_code_source`).
+  - `tools/instrument-references.php` checks each against LOINC on every run. The term must be active and a quantitative score in the instrument's own LOINC method, and its name must match the total in LOINC's questionnaire. It refuses the PHQ-2's total on the PHQ-9, a question's code, and the full GDS's total.
+- **Checked** on OpenEMR 8.4.1, in a headless browser: the PHQ-9 was added, then filled in OpenEMR's own Questionnaires page with the highest-scoring answers. The page showed 27, and the saved response held the coded answers and the total. OpenEMR's runtime also totals the copy OpenEMR stores. All 70 Questionnaires pass OpenEMR 8.4.1's import path, its runtime (21 totals) and the HL7 validator.
+- **Documents changed in this release:** none. Their wording is unchanged; only the FHIR output gained the identifier and the total codes.
+
 ## 0.24.0 (2026-10-17)
 
 **TAPS-2, scored by substance; TAPS-1 corrected to NIDA's form.**

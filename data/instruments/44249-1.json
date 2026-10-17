@@ -270,6 +270,8 @@
         "min": 0,
         "max": 27
     },
+    "total_code": "44261-6",
+    "total_code_source": "LOINC 44261-6, Patient Health Questionnaire 9 item (PHQ-9) total score [Reported]: written by hand, since LOINC's questionnaire leaves its total item uncoded; tools/instrument-references.php checks it is active and its component is that item's text",
     "cutoffs": [
         {
             "score": 5,
