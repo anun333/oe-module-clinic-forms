@@ -77,8 +77,11 @@ final readonly class Packets
         $seen = [];
         foreach ($data['packets'] as $i => $p) {
             $at = "$where packets[$i]";
-            if (!is_array($p) || array_diff(array_keys($p), ['id', 'title', 'items']) !== [] || !isset($p['id'], $p['title'], $p['items'])) {
-                throw new \InvalidArgumentException("$at: needs exactly id, title and items");
+            if (!is_array($p) || array_diff(array_keys($p), ['id', 'title', 'about', 'items']) !== [] || !isset($p['id'], $p['title'], $p['items'])) {
+                throw new \InvalidArgumentException("$at: needs id, title and items (\"about\" is the only other field)");
+            }
+            if (isset($p['about']) && (!is_string($p['about']) || trim($p['about']) === '')) {
+                throw new \InvalidArgumentException("$at about: one line saying what the packet is for");
             }
             if (!is_string($p['id']) || preg_match('/^[a-z0-9]+(-[a-z0-9]+)*$/', $p['id']) !== 1 || isset($seen[$p['id']])) {
                 throw new \InvalidArgumentException("$at id: must be a new id of lower case words joined by hyphens");
@@ -100,7 +103,7 @@ final readonly class Packets
             if ($items === []) {
                 continue;
             }
-            $packets[] = ['id' => $p['id'], 'title' => $p['title'], 'items' => $items];
+            $packets[] = ['id' => $p['id'], 'title' => $p['title'], 'about' => $p['about'] ?? '', 'items' => $items];
         }
         return new self($packets);
     }

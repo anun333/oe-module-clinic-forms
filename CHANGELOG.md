@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.26.0 (2026-10-17)
+
+**Screening packets labelled by when they're used, and three new ones.**
+
+- **New packets:**
+  - **Yearly adult screen**, for every adult once a year: the short first stage of each screen, the PHQ-2 and TAPS-1, and in the US pack the Hunger Vital Sign.
+  - **After a positive depression screen:** the PHQ-9, then the ASQ when question 9 is answered positive or clinic protocol calls for it. A repeat PHQ-9 at follow-up shows remission (CMS159).
+  - **After a positive food screen** (US pack): the USDA six-item food security survey.
+- **Relabelled:** the older adult packet is now the **older adult add-on, 65 and over**, used alongside the yearly screen. The US pack's short annual update is now **who we serve: UDS questions and the sliding fee**. It feeds UDS Tables 3A, 3B and 4 and the Grant Reports.
+- **A packet can say what it is for.** A new optional `about` line is shown when you point at the packet's button. Every screening, follow-up and who-we-serve packet has one, and a clinic's own packets can have one too. A test keeps quotes out of titles and `about` lines, which OpenEMR's translation function prints as backticks.
+- **Documents changed in this release:** none.
+
 ## 0.25.0 (2026-10-17)
 
 **Add documents to OpenEMR's own questionnaires, to enter paper answers in the chart; totals carry LOINC's codes.**

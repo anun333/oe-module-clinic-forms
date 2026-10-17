@@ -2,13 +2,20 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.25.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.26.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
 - **Paperwork.** Consents, releases, referral letters and office slips, filled from the facility record and, optionally, the open patient and an Address Book entry.
 - **Paper versions of layout forms.** Demographics, History, any active encounter form (LBF) and any transaction form (Referral and the like), printed as a blank form with tick boxes, date boxes and ruled lines. With the US pack, a short **UDS form** prints only the Demographics fields health center reporting reads (sex, gender identity and sexual orientation, race, ethnicity, language, household size and income, housing, agricultural work, military service), with the site's own answer lists. Clinics without a computer in every room can do intake on paper and type it in later, in the same order.
-- **Ready-made packets.** New patient intake, annual update, telehealth, referral and a downtime kit, and five screening packets: depression and anxiety; depression and alcohol; behavioral health, which adds PTSD and substance use; substance use (TAPS-1, then TAPS-2); and older adults (falls and depression). Each opens as one document to print.
+- **Ready-made packets.** New patient intake, annual update, telehealth, referral and a downtime kit. The screening packets are labelled by when they are used:
+  - **every adult, yearly:** the yearly adult screen, the short first stage of each screen (PHQ-2 and TAPS-1, and in the US pack the Hunger Vital Sign);
+  - **after a positive screen:** depression (the PHQ-9, then the ASQ), substance use (TAPS-1, then TAPS-2) and, in the US pack, food (the six-item survey);
+  - **at 65 and over:** the older adult add-on (falls and depression);
+  - **for a visit about it:** depression and anxiety; depression and alcohol; and behavioral health, which adds PTSD and substance use;
+  - **who we serve** (US pack): the UDS questions and the sliding fee, which feed the UDS tables and Grant Reports.
+
+  Each packet opens as one document to print, and says what it is for when you point at its button.
 - **Spanish.** Every patient document prints in Spanish too, with the language assistance notices Section 1557 requires (see [Spanish and language assistance](#spanish-and-language-assistance)).
 - **Word and LibreOffice.** Any document downloads as a filled Word (.docx) or LibreOffice (.odt) file to edit before printing, and a clinic can write its own letters and forms in Word or LibreOffice and have them filled in (see [Word and LibreOffice](#word-and-libreoffice)).
 - **A PDF, and a copy in the chart.** The ticked documents download as one PDF, or are saved, filled for the patient, as a PDF in the patient's **Documents** (see [The chart number on every page, and a copy in the chart](#the-chart-number-on-every-page-and-a-copy-in-the-chart)).
@@ -127,7 +134,7 @@ Put your own documents in `sites/<site>/documents/clinic-forms/` (for most insta
 - A document marked `"status": "draft"` is offered with a Draft badge and prints "draft" at the foot of each page; `"retired"` stops offering it.
 - Files are checked strictly. A document with an unknown field, an unknown block type or a placeholder that doesn't exist is left out, and the Clinic Forms page names the file and the mistake.
 - `settings.json` in the same folder chooses the country pack and hides shipped documents: `{"country": "us", "hide": ["financial-policy"]}` (both optional).
-- Your own packets go in `packets.json` in the same folder, in the format of `data/packets.json`. A packet with the id of a shipped one replaces it. A file with a mistake is left out and reported; the shipped packets stay.
+- Your own packets go in `packets.json` in the same folder, in the format of `data/packets.json`: an id, a title, the items and, optionally, an `about` line saying what the packet is for. A packet with the id of a shipped one replaces it. A file with a mistake is left out and reported; the shipped packets stay.
 
 The format is in `src/Paper/Document.php`. Blocks are headings, paragraphs, fields, checklists, ruled lines, signature lines, scales (a question per row and a box per answer, optionally scored, as the PHQ-9 is) and tables (column headings over blank rows, as the household list is). Text can use these placeholders, which print as a blank line when the value isn't known:
 

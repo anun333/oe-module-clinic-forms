@@ -52,9 +52,50 @@ final class PacketsTest extends TestCase
         $this->read(['packets' => [$p, $p]]);
     }
 
+    public function testAPacketMaySayWhatItIsFor(): void
+    {
+        $packets = $this->read(['packets' => [
+            ['id' => 'p', 'title' => 'P', 'about' => 'Every adult, once a year.', 'items' => ['layout:DEM']],
+            ['id' => 'q', 'title' => 'Q', 'items' => ['layout:DEM']],
+        ]])->packets;
+        self::assertSame(['Every adult, once a year.', ''], array_column($packets, 'about'));
+    }
+
+    public function testShippedTitlesAndAboutsHaveNoQuotes(): void
+    {
+        // The page passes them through xl(), which prints ' and " as backticks.
+        $seen = 0;
+        foreach ([Packets::shipped(DocumentLibrary::shipped(), null), Packets::shipped(DocumentLibrary::shipped())] as $set) {
+            foreach ($set->packets as $packet) {
+                foreach ([$packet['title'], $packet['about']] as $text) {
+                    $seen++;
+                    self::assertDoesNotMatchRegularExpression('/[\'"]/', $text, $packet['id']);
+                }
+            }
+        }
+        self::assertGreaterThan(20, $seen);
+    }
+
+    public function testAnEmptyAboutIsRefused(): void
+    {
+        $this->expectExceptionMessage('packets[0] about: one line saying what the packet is for');
+        $this->read(['packets' => [['id' => 'p', 'title' => 'P', 'about' => ' ', 'items' => ['layout:DEM']]]]);
+    }
+
+    public function testEveryScreeningAndFollowUpPacketSaysWhatItIsFor(): void
+    {
+        foreach ([Packets::shipped(DocumentLibrary::shipped(), null), Packets::shipped(DocumentLibrary::shipped())] as $set) {
+            foreach ($set->packets as $packet) {
+                if (preg_match('/screen|follow-up|who-we-serve|add-on/', $packet['id']) === 1) {
+                    self::assertNotSame('', $packet['about'], $packet['id']);
+                }
+            }
+        }
+    }
+
     public function testAnUnknownFieldIsRefused(): void
     {
-        $this->expectExceptionMessage('packets[0]: needs exactly id, title and items');
+        $this->expectExceptionMessage('packets[0]: needs id, title and items ("about" is the only other field)');
         $this->read(['packets' => [['id' => 'p', 'title' => 'P', 'items' => ['layout:DEM'], 'colour' => 'red']]]);
     }
 
@@ -110,13 +151,13 @@ final class PacketsTest extends TestCase
     }
 
     /** @param array<string, mixed> $data */
-    private function read(array $data): void
+    private function read(array $data): Packets
     {
         $file = tempnam(sys_get_temp_dir(), 'cf-packets');
         self::assertIsString($file);
         try {
             file_put_contents($file, json_encode($data, JSON_THROW_ON_ERROR));
-            Packets::read($file, DocumentLibrary::shipped());
+            return Packets::read($file, DocumentLibrary::shipped());
         } finally {
             unlink($file);
         }

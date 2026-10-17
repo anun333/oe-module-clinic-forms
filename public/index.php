@@ -257,7 +257,7 @@ foreach ($layouts as $form) {
         <div class="mb-2">
             <span class="mr-2"><?php echo xlt('Ready-made'); ?>:</span>
             <?php foreach ($packets->packets as $p) { ?>
-                <button type="button" class="btn btn-sm btn-secondary mb-1 cf-packet-btn" data-items="<?php echo attr(implode(',', $p['items'])); ?>"><?php echo text(xl($p['title'])); ?></button>
+                <button type="button" class="btn btn-sm btn-secondary mb-1 cf-packet-btn" data-items="<?php echo attr(implode(',', $p['items'])); ?>"<?php echo ($p['about'] ?? '') !== '' ? ' title="' . attr(xl($p['about'])) . '"' : ''; ?>><?php echo text(xl($p['title'])); ?></button>
             <?php } ?>
             <button type="button" class="btn btn-sm btn-link mb-1" id="cf-clear"><?php echo xlt('Clear'); ?></button>
         </div>

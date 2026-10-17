@@ -31,20 +31,39 @@
       ]
     },
     {
-      "id": "annual-update-short",
-      "title": "Annual update (short, with UDS questions)",
-      "items": [
-        "layout:UDS",
-        "doc:sliding-fee-application",
-        "doc:communication-consent"
-      ]
-    },
-    {
       "id": "referral",
       "title": "Referral",
       "items": [
         "doc:referral-letter",
         "doc:release-of-information"
+      ]
+    },
+    {
+      "id": "yearly-adult-screen",
+      "title": "Yearly adult screen (depression, substance use and food)",
+      "about": "Every adult, once a year: the short first stage of each screen. A positive answer opens its follow-up: the PHQ-9 after the PHQ-2, TAPS-2 after TAPS-1, the six-item survey after the Hunger Vital Sign. A positive food screen counts in UDS Table 6A (line 40) once it is recorded as a coded problem.",
+      "items": [
+        "doc:phq-2",
+        "doc:taps-1",
+        "doc:hunger-vital-sign"
+      ]
+    },
+    {
+      "id": "food-follow-up",
+      "title": "After a positive food screen (six-item food security survey)",
+      "about": "For a positive Hunger Vital Sign: the USDA six-item survey says how severe the food insecurity is.",
+      "items": [
+        "doc:food-security"
+      ]
+    },
+    {
+      "id": "annual-update-short",
+      "title": "Who we serve: UDS questions and the sliding fee (short annual update)",
+      "about": "Housing status, agricultural work and veteran status, with household income for the sliding fee. Feeds UDS Tables 3A, 3B and 4 and the 330(g), (h) and (i) Grant Reports.",
+      "items": [
+        "layout:UDS",
+        "doc:sliding-fee-application",
+        "doc:communication-consent"
       ]
     },
     {

@@ -1,5 +1,5 @@
 {
-  "about": "Ready-made selections on the Clinic Forms page. Each item is doc:<document id> or layout:<form id> (DEM is the Demographics registration form). Printed in this order. A country pack's packets.json adds packets and replaces these by id (the US pack's new-patient packet adds the privacy notice, sliding fee application and nondiscrimination notice).",
+  "about": "Ready-made selections on the Clinic Forms page. Each item is doc:<document id> or layout:<form id> (DEM is the Demographics registration form). Printed in this order. \"about\" (optional) is one line saying what the packet is for, shown when staff point at its button. A country pack's packets.json adds packets and replaces these by id (the US pack's new-patient packet adds the privacy notice, sliding fee application and nondiscrimination notice).",
   "packets": [
     {
       "id": "new-patient",
@@ -48,8 +48,27 @@
       ]
     },
     {
+      "id": "yearly-adult-screen",
+      "title": "Yearly adult screen (depression and substance use)",
+      "about": "Every adult, once a year: the short first stage of each screen. A positive answer opens its follow-up: the PHQ-9 after the PHQ-2, TAPS-2 after TAPS-1.",
+      "items": [
+        "doc:phq-2",
+        "doc:taps-1"
+      ]
+    },
+    {
+      "id": "depression-follow-up",
+      "title": "After a positive depression screen (PHQ-9, then the ASQ)",
+      "about": "For a positive PHQ-2. The ASQ follows a positive answer to question 9, or whenever clinic protocol calls for it. A repeat PHQ-9 at follow-up shows remission (CMS159).",
+      "items": [
+        "doc:phq-9",
+        "doc:asq"
+      ]
+    },
+    {
       "id": "behavioral-health-screening",
       "title": "Depression and anxiety screening",
+      "about": "The PHQ-9 and GAD-7 together, for a visit about mood or anxiety.",
       "items": [
         "doc:phq-9",
         "doc:gad-7"
@@ -58,6 +77,7 @@
     {
       "id": "quick-screening",
       "title": "Quick screening (depression and alcohol)",
+      "about": "Two short screens, depression and alcohol, when there is time for no more.",
       "items": [
         "doc:phq-2",
         "doc:audit-c"
@@ -66,6 +86,7 @@
     {
       "id": "behavioral-health-full",
       "title": "Behavioral health screening (depression, anxiety, PTSD, substance use)",
+      "about": "A behavioral health intake: depression, anxiety, PTSD and the four substances TAPS-1 asks about.",
       "items": [
         "doc:phq-9",
         "doc:gad-7",
@@ -76,6 +97,7 @@
     {
       "id": "substance-use",
       "title": "Substance use (TAPS-1, then TAPS-2 for any substance it finds)",
+      "about": "For a positive TAPS-1, or a visit about substance use.",
       "items": [
         "doc:taps-1",
         "doc:taps-2"
@@ -83,7 +105,8 @@
     },
     {
       "id": "older-adult-screening",
-      "title": "Older adult screening (falls and depression)",
+      "title": "Older adult add-on, 65 and over (falls and depression)",
+      "about": "At 65 and over, with the yearly adult screen: falls risk (Stay Independent) and the Geriatric Depression Scale, which some clinics use for older adults in place of the PHQ.",
       "items": [
         "doc:stay-independent",
         "doc:gds-15"
