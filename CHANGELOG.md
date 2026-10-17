@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.18.0 (2026-10-16)
+
+**Three more screening instruments, all public domain, each scored as published and checked against its reference.**
+
+- **Primary Care PTSD Screen (PC-PTSD-5)**, from the National Center for PTSD's 2022 form: a question about a traumatic event, then five yes or no questions, scored 0 to 5. It prints the National Center's cut-point of 4, with its note about women.
+- **Geriatric Depression Scale, Short Form (GDS-15)**, in its developers' wording, scored as their key marks it (No scores on questions 1, 5, 7, 11 and 13, Yes on the rest). It prints their cut-offs: more than 5 suggests depression, more than 10 is almost always depression.
+- **Check Your Risk for Falling (Stay Independent)**, CDC's STEADI checklist, word for word from the brochure, with its 2-point first two statements. It prints its cut-off of 4 points or more.
+- **Points per question in a scale** (`"item_scores"`), for instruments whose questions score their answers differently. The page shows each box's points, and so do the Word, LibreOffice and PDF files. Validation, translations and the instrument check all follow it.
+- **The published scoring, where LOINC's differs.** A reference can now correct LOINC's answer scores under `"scoring"`, with the source and the sentence that states it.
+  - LOINC scores PC-PTSD-5's trauma question, leaves STEADI's first statement unscored, and scores no GDS-15 answer at all.
+  - The tools refuse an instrument with unscored answers until its scoring is written.
+  - A cut-off may now cite the instrument owner's own document (CDC's brochure, the developers' scoring sheet) as well as a paper.
+- **`tools/import-instrument.php`** brings an instrument in from LOINC: its reference, and a draft document built from LOINC's questions. Shared answer lists become a scale, others checklists, followed by the total line and the published cut-offs. The draft is compared with the instrument's printed form before it is made active. All three here were compared, and two of PC-PTSD-5's questions follow the VA's form rather than LOINC's (recorded, with the reason).
+- **Documents changed in this release:** three new, each at version 1. No existing document changed.
+
 ## 0.17.0 (2026-10-16)
 
 **A review of all 40 documents before 1.0.** Every document was read for errors of fact or law, patient safety, consistency and clarity. This release fixes what that review found to be wrong or unsafe, and most of what it found inconsistent or unclear. It is not a lawyer's or clinician's sign-off: have the documents reviewed for your state before relying on them, as before.

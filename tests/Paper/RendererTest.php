@@ -185,6 +185,15 @@ final class RendererTest extends TestCase
         self::assertStringContainsString('Jane Q Sample', $renderer->document($this->doc([['type' => 'paragraph', 'text' => 'Hello.']])), 'other documents in the same print are filled');
     }
 
+    public function testAScaleWithPointsPerQuestionShowsEachBoxsPoints(): void
+    {
+        $html = (new Renderer(new Context(self::FACILITY)))->document($this->doc([
+            ['type' => 'scale', 'label' => 'Choose', 'columns' => ['Yes', 'No'], 'items' => ['Happy?', 'Bored?'], 'item_scores' => [[0, 1], [1, 0]]],
+        ]));
+        self::assertSame(4, substr_count($html, "class='cf-score cf-item-score'"));
+        self::assertMatchesRegularExpression("/Happy\?<\/td><td class='cf-scale-box'><span class='cf-box'><\/span><span class='cf-score cf-item-score'>0<\/span>/", $html);
+    }
+
     private function doc(array $blocks): Document
     {
         return new Document('sample', 'Sample', 'Front desk', 'A sample.', $blocks, []);

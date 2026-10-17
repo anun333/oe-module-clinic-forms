@@ -56,12 +56,13 @@ final class Instrument
         foreach ($doc->blocks as $block) {
             $type = $block['type'] ?? '';
             if ($type === 'scale') {
-                $answers = [];
-                foreach ($block['columns'] ?? [] as $i => $column) {
-                    $score = $block['scores'][$i] ?? null;
-                    $answers[] = ['text' => (string)$column, 'score' => is_numeric($score) ? (float)$score : null];
-                }
-                foreach ($block['items'] ?? [] as $item) {
+                foreach ($block['items'] ?? [] as $n => $item) {
+                    $answers = [];
+                    foreach ($block['columns'] ?? [] as $i => $column) {
+                        // A scale scores its columns the same for every question, or each question its own (item_scores).
+                        $score = $block['item_scores'][$n][$i] ?? $block['scores'][$i] ?? null;
+                        $answers[] = ['text' => (string)$column, 'score' => is_numeric($score) ? (float)$score : null];
+                    }
                     $out[] = ['text' => self::unnumbered((string)$item), 'answers' => $answers];
                 }
             } elseif ($type === 'checklist' && ($block['label'] ?? '') !== '') {

@@ -152,7 +152,7 @@ final class PdfWriter implements OfficeWriter
         $this->html .= "<table class='signatures'>" . $rows . "</table>";
     }
 
-    public function scale(string $label, array $columns, array $items, ?array $scores, ?string $total): void
+    public function scale(string $label, array $columns, array $items, ?array $scores, ?string $total, ?array $itemScores = null): void
     {
         $head = '<tr><th></th>';
         foreach ($columns as $i => $column) {
@@ -160,7 +160,11 @@ final class PdfWriter implements OfficeWriter
         }
         $body = '';
         foreach ($items as $n => $item) {
-            $body .= '<tr><td>' . ($n + 1) . '. ' . self::e($item) . '</td>' . str_repeat("<td class='box'>" . self::BOX . '</td>', count($columns)) . '</tr>';
+            $body .= '<tr><td>' . ($n + 1) . '. ' . self::e($item) . '</td>';
+            foreach ($columns as $i => $unused) {
+                $body .= "<td class='box'>" . self::BOX . (isset($itemScores[$n][$i]) ? ' ' . self::e((string)$itemScores[$n][$i]) : '') . '</td>';
+            }
+            $body .= '</tr>';
         }
         $this->html .= "<div class='label-only'>" . self::e($label) . "</div><table class='grid'>" . $head . '</tr>' . $body . '</table>'
             . ($total !== null ? "<div class='total'><b>" . self::e($total) . ':</b> ____________</div>' : '');

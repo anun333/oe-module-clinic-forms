@@ -99,7 +99,7 @@ final class OdtWriter implements OfficeWriter
         }
     }
 
-    public function scale(string $label, array $columns, array $items, ?array $scores, ?string $total): void
+    public function scale(string $label, array $columns, array $items, ?array $scores, ?string $total, ?array $itemScores = null): void
     {
         $this->body .= $this->p('Label', self::e($label));
         $n = max(1, count($columns));
@@ -111,8 +111,8 @@ final class OdtWriter implements OfficeWriter
         $rows = [$header];
         foreach ($items as $k => $item) {
             $row = [$this->p('Cell', self::e(($k + 1) . '. ' . $item))];
-            foreach ($columns as $unused) {
-                $row[] = $this->p('CellCenter', self::e(self::BOX));
+            foreach ($columns as $i => $unused) {
+                $row[] = $this->p('CellCenter', self::e(self::BOX . (isset($itemScores[$k][$i]) ? ' ' . $itemScores[$k][$i] : '')));
             }
             $rows[] = $row;
         }

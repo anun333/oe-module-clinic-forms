@@ -373,13 +373,22 @@ final class DocumentLibrary
                     }
                     break;
                 case 'scale':
-                    self::onlyKeys($block, ['type', 'label', 'columns', 'items'], ['scores', 'total'], $at);
+                    self::onlyKeys($block, ['type', 'label', 'columns', 'items'], ['scores', 'item_scores', 'total'], $at);
                     $texts[] = self::text($block['label'], "$at label");
                     $texts = array_merge($texts, self::texts($block['columns'], "$at columns", 2, 8), self::texts($block['items'], "$at items", 1, 40));
                     if (isset($block['scores'])) {
                         if (!is_array($block['scores']) || !array_is_list($block['scores']) || count($block['scores']) !== count($block['columns'])
                             || array_filter($block['scores'], static fn(mixed $s): bool => !is_int($s)) !== []) {
                             throw new \InvalidArgumentException("$at scores: must be a whole number for each column");
+                        }
+                    }
+                    // Points per question, for a scale whose questions score differently (reverse-scored items).
+                    if (isset($block['item_scores'])) {
+                        $rowsOk = is_array($block['item_scores']) && array_is_list($block['item_scores']) && count($block['item_scores']) === count($block['items'])
+                            && array_filter($block['item_scores'], static fn(mixed $r): bool => !is_array($r) || !array_is_list($r) || count($r) !== count($block['columns'])
+                                || array_filter($r, static fn(mixed $s): bool => !is_int($s)) !== []) === [];
+                        if (!$rowsOk || isset($block['scores'])) {
+                            throw new \InvalidArgumentException("$at item_scores: a whole number for each column, for each item (and no scores beside it)");
                         }
                     }
                     if (isset($block['total'])) {

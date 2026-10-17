@@ -145,6 +145,24 @@ final class DocumentLibraryTest extends TestCase
         self::assertSame([], $library->problems());
     }
 
+    public function testPointsPerQuestionMustCoverEveryQuestionAndColumn(): void
+    {
+        $base = ['id' => 'x', 'title' => 'X', 'category' => 'C', 'about' => 'A', 'audience' => 'patient'];
+        $scale = ['type' => 'scale', 'label' => 'L', 'columns' => ['Yes', 'No'], 'items' => ['One', 'Two']];
+        $file = $this->dir . '/x.json';
+        file_put_contents($file, json_encode($base + ['blocks' => [$scale + ['item_scores' => [[1, 0], [0, 1]]]]]));
+        self::assertSame([[1, 0], [0, 1]], DocumentLibrary::read($file, 'test', 'clinic')->blocks[0]['item_scores']);
+        foreach ([[[1, 0]], [[1, 0], [0]], [[1, 0], [0, 'x']]] as $bad) {
+            file_put_contents($file, json_encode($base + ['blocks' => [$scale + ['item_scores' => $bad]]]));
+            try {
+                DocumentLibrary::read($file, 'test', 'clinic');
+                self::fail('item_scores ' . json_encode($bad) . ' was accepted');
+            } catch (\InvalidArgumentException $e) {
+                self::assertStringContainsString('item_scores', $e->getMessage());
+            }
+        }
+    }
+
     public function testShippedDocumentsCarryTheirAudienceAndCodes(): void
     {
         $library = DocumentLibrary::shipped();

@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.17.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.18.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -78,12 +78,14 @@ The format, and the rules every document follows, are in [docs/](docs/README.md)
 
 - **LOINC document codes** where an exact one exists (the table above), as OpenEMR's own C-CDA referral uses 57133-1. Each code is checked by its LOINC check digit; a document with no exact code is left uncoded rather than mislabeled.
 - **What the law says goes in.** `data/requirements.json` (the instruments' wording) and the US pack's `data/packs/us/requirements.json` list, for the documents a rule governs, each required element and its citation: the Notice of Privacy Practices (164.520(b)(1), element by element), the patient-rights requests (164.522, 164.524, 164.526, 164.528, 164.508(b)(5)), the Part 2 consent (42 CFR 2.31), the HIPAA authorization (45 CFR 164.508(c)), the privacy notice acknowledgment (164.520(c)(2)(ii)), the sliding fee application (HRSA Compliance Manual, chapter 9), the work or school note's minimum necessary (164.502(b)), and the PHQ-9 and GAD-7 wording. The tests fail if a shipped document loses one. A clinic's own version of one of these documents is checked too, and the Clinic Forms page names anything it can't find (by wording, so check before relying on the warning).
-- **Scored as published.** A screening score means what its validation study found only when the form is the instrument the study used. `data/instruments/` holds a reference for each validated instrument (PHQ-9, PHQ-2, GAD-7, AUDIT-C):
+- **Scored as published.** A screening score means what its validation study found only when the form is the instrument the study used. `data/instruments/` holds a reference for each validated instrument (PHQ-9, PHQ-2, GAD-7, AUDIT-C, PC-PTSD-5, GDS-15 and CDC's Stay Independent falls check):
   - its questions and answers from LOINC's own questionnaire, and each answer's points from LOINC's answer lists;
   - its total range;
   - the published cut-offs, each with its paper (PubMed id) and the sentence that states it.
 
   The tests fail if a document's questions, their order, its answers, the points for each, its total range or a cut-off it prints differ, or if a translation changes any of them. A difference that is deliberate is listed in the reference with its reason (GAD-7's question 2 and PHQ-9's closing question follow Pfizer's printed form, not LOINC's coding of it). `tools/instrument-references.php` refreshes the references from LOINC (a free LOINC account) and keeps what was written by hand.
+
+  Where the published instrument scores differently from LOINC's answer lists, the reference says so under `"scoring"`, with its source. The tools refuse an instrument whose answers have no score until that is written. LOINC scores PC-PTSD-5's trauma question, which the instrument doesn't; it leaves STEADI's first statement and every GDS-15 answer unscored. `tools/import-instrument.php` brings a new instrument in from LOINC: its reference, and a draft document to compare with the instrument's printed form before it is made active.
 
   A clinic's own version of one of these instruments is checked the same way. That means its own file with the instrument's id, or its own document marked validated with a LOINC code there is a reference for. The Clinic Forms page names each question, answer or point that differs, because a score from a changed form may not mean what the published cut-offs say. The PHQ-9 and GAD-7 print their published severity bands in the office-use section, and the check holds those numbers to the papers.
 - **Plain language.** Every patient document reads at an 8th-grade level or below (Flesch-Kincaid), as AHRQ's health literacy toolkit advises; the tests measure it. Validated instruments (PHQ-9, GAD-7) keep their published wording and are exempt.

@@ -38,8 +38,9 @@ interface OfficeWriter
      * @param list<string> $columns
      * @param list<string> $items
      * @param ?list<int>   $scores
+     * @param ?list<list<int>> $itemScores points per question, in place of $scores, when the questions score differently
      */
-    public function scale(string $label, array $columns, array $items, ?array $scores, ?string $total): void;
+    public function scale(string $label, array $columns, array $items, ?array $scores, ?string $total, ?array $itemScores = null): void;
 
     /** @param list<string> $columns */
     public function table(string $label, array $columns, int $rows): void;

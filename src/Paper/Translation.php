@@ -55,6 +55,7 @@ final class Translation
                 'count' => $b['count'] ?? null,
                 'rows' => $b['rows'] ?? null,
                 'scores' => $b['scores'] ?? null,
+                'item_scores' => $b['item_scores'] ?? null,
                 'label' => isset($b['label']),
                 'total' => isset($b['total']),
                 'values' => array_map(static fn(array $f): bool => isset($f['value']), $b['fields'] ?? []),

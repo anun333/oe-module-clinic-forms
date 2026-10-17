@@ -1,0 +1,244 @@
+{
+    "instrument": "Stay Independent",
+    "loinc": "97874-2",
+    "loinc_version": "2.83",
+    "from": "fhir.loinc.org Questionnaire/97874-2 (questions, answers); scores and answer order from LOINC's answer lists via clinicaltables.nlm.nih.gov loinc_items; scoring as published where LOINC differs: see \"scoring\"",
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "questions": [
+        {
+            "code": "52552-7",
+            "text": "I have fallen in the past year",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 2
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "97875-9",
+            "text": "I use or have been advised to use a cane or walker to get around safely",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 2
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "97876-7",
+            "text": "Sometimes I feel unsteady when I am walking",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "97877-5",
+            "text": "I steady myself by holding onto furniture when walking at home",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "97878-3",
+            "text": "I am worried about falling",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "97879-1",
+            "text": "I need to push with my hands to stand up from a chair",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "97880-9",
+            "text": "I have some trouble stepping up onto a curb",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "97881-7",
+            "text": "I often have to rush to the toilet",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "97882-5",
+            "text": "I have lost some feeling in my feet",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "97883-3",
+            "text": "I take medicine that sometimes makes me feel light-headed or more tired than usual",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "97884-1",
+            "text": "I take medicine to help me sleep or improve my mood",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "48527-6",
+            "text": "I often feel sad or depressed",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        }
+    ],
+    "total": {
+        "min": 0,
+        "max": 14
+    },
+    "cutoffs": [
+        {
+            "score": 4,
+            "meaning": "may be at risk for falling: discuss with a clinician"
+        }
+    ],
+    "cutoffs_source": {
+        "citation": "Centers for Disease Control and Prevention. Stay Independent (STEADI brochure).",
+        "short": "CDC STEADI",
+        "url": "https://www.cdc.gov/steadi/pdf/steadi-brochure-stayindependent-508.pdf",
+        "stated": "\"Add up the number of points for each 'yes' answer. If you scored 4 points or more, you may be at risk for falling. Discuss this brochure with your doctor.\""
+    },
+    "accepted": {
+        "questions": []
+    },
+    "licence": {
+        "holder": "Centers for Disease Control and Prevention (STEADI)",
+        "terms": "From CDC's Stay Independent brochure. The checklist was developed by the Greater Los Angeles VA Geriatric Research Education Clinical Center and affiliates (Rubenstein et al., J Safety Res 2011) and adapted with permission of the authors.",
+        "permission": "CDC publishes it for clinical use; keep the credit to the authors."
+    },
+    "source": {
+        "name": "Stay Independent (CDC STEADI), from the fall risk questionnaire of Rubenstein and colleagues",
+        "url": "https://www.cdc.gov/steadi/pdf/steadi-brochure-stayindependent-508.pdf"
+    },
+    "scoring": {
+        "overrides": {
+            "52552-7": {
+                "scores": {
+                    "Yes": 2,
+                    "No": 0
+                }
+            }
+        },
+        "source": {
+            "citation": "Centers for Disease Control and Prevention. Stay Independent (STEADI brochure).",
+            "url": "https://www.cdc.gov/steadi/pdf/steadi-brochure-stayindependent-508.pdf",
+            "stated": "The brochure scores \"I have fallen in the past year\" Yes (2), No (0), as it does the cane or walker statement. LOINC's answer list for 52552-7 has no scores."
+        }
+    }
+}

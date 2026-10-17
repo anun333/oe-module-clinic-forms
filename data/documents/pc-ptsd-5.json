@@ -1,0 +1,109 @@
+{
+    "id": "pc-ptsd-5",
+    "title": "Primary Care PTSD Screen (PC-PTSD-5)",
+    "category": "Screening",
+    "about": "Screens for posttraumatic stress disorder: a question about a frightening or traumatic event, then five yes or no questions about the past month, scored 0 to 5.",
+    "audience": "patient",
+    "code": {
+        "system": "http://loinc.org",
+        "code": "102010-6",
+        "display": "The Primary Care PTSD Screen for DSM-5"
+    },
+    "validated": true,
+    "version": 1,
+    "status": "active",
+    "source": {
+        "kind": "instrument",
+        "name": "Primary Care PTSD Screen for DSM-5 (PC-PTSD-5), National Center for PTSD (2022 form)",
+        "url": "https://www.ptsd.va.gov/professional/assessment/screens/pc-ptsd.asp"
+    },
+    "licence": {
+        "holder": "U.S. Department of Veterans Affairs, National Center for PTSD",
+        "terms": "Developed by staff at VA's National Center for PTSD; in the public domain and not copyrighted.",
+        "permission": "None needed (public domain)."
+    },
+    "blocks": [
+        {
+            "type": "fields",
+            "fields": [
+                {
+                    "label": "Name",
+                    "value": "{patient.name}"
+                },
+                {
+                    "label": "Date of birth",
+                    "value": "{patient.dob}"
+                },
+                {
+                    "label": "Date"
+                }
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "Sometimes things happen to people that are unusually or especially frightening, horrible, or traumatic. For example: a serious accident or fire; a physical or sexual assault or abuse; an earthquake or flood; a war; seeing someone be killed or seriously injured; having a loved one die through homicide or suicide."
+        },
+        {
+            "type": "checklist",
+            "label": "Have you ever experienced this kind of event?",
+            "items": [
+                "Yes",
+                "No"
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "If no, stop here: the screen total is 0. If yes, please answer the questions below."
+        },
+        {
+            "type": "scale",
+            "label": "In the past month, have you…",
+            "columns": [
+                "Yes",
+                "No"
+            ],
+            "items": [
+                "had nightmares about the event(s) or thought about the event(s) when you did not want to?",
+                "tried hard not to think about the event(s) or went out of your way to avoid situations that reminded you of the event(s)?",
+                "been constantly on guard, watchful, or easily startled?",
+                "felt numb or detached from people, activities, or your surroundings?",
+                "felt guilty or unable to stop blaming yourself or others for the event(s) or any problems the event(s) may have caused?"
+            ],
+            "scores": [
+                1,
+                0
+            ]
+        },
+        {
+            "type": "fields",
+            "fields": [
+                {
+                    "label": "Total score (for office use)"
+                }
+            ]
+        },
+        {
+            "type": "heading",
+            "text": "For office use"
+        },
+        {
+            "type": "paragraph",
+            "text": "Published cut-offs (National Center for PTSD): 4 or more, a positive screen: the cut-point that best balanced false negatives and false positives in VA primary care (a lower one may be considered for women)."
+        },
+        {
+            "type": "fields",
+            "fields": [
+                {
+                    "label": "Reviewed by"
+                },
+                {
+                    "label": "Entered into OpenEMR by"
+                }
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "Primary Care PTSD Screen for DSM-5 (PC-PTSD-5), National Center for PTSD. Developed by staff at VA's National Center for PTSD; in the public domain and not copyrighted."
+        }
+    ]
+}

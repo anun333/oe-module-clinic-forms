@@ -1,0 +1,149 @@
+{
+    "instrument": "PC-PTSD-5",
+    "loinc": "102010-6",
+    "loinc_version": "2.83",
+    "from": "fhir.loinc.org Questionnaire/102010-6 (questions, answers); scores and answer order from LOINC's answer lists via clinicaltables.nlm.nih.gov loinc_items; scoring as published where LOINC differs: see \"scoring\"",
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "questions": [
+        {
+            "code": "102011-4",
+            "text": "Have you experienced a frightening, horrible, or traumatic event?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": null
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": null
+                }
+            ]
+        },
+        {
+            "code": "102012-2",
+            "text": "Have you had nightmares or thoughts about the event(s) when you did not want to?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "102013-0",
+            "text": "Have you tried not to think about or avoided situations that reminded you of the event(s)?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "102014-8",
+            "text": "Have you been constantly on guard, watchful, or easily startled?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "102015-5",
+            "text": "Have you felt numb or detached from people, activities, or your surroundings?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "102016-3",
+            "text": "Have you felt guilty or unable to stop blaming yourself or others for the event(s) or any problems the event(s) may have caused?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        }
+    ],
+    "total": {
+        "min": 0,
+        "max": 5
+    },
+    "cutoffs": [
+        {
+            "score": 4,
+            "meaning": "a positive screen: the cut-point that best balanced false negatives and false positives in VA primary care (a lower one may be considered for women)"
+        }
+    ],
+    "cutoffs_source": {
+        "citation": "National Center for PTSD, Primary Care PTSD Screen for DSM-5 (PC-PTSD-5); and Prins A, Bovin MJ, Smolenski DJ, et al. J Gen Intern Med. 2016;31(10):1206-1211.",
+        "short": "National Center for PTSD",
+        "url": "https://www.ptsd.va.gov/professional/assessment/screens/pc-ptsd.asp",
+        "pmid": "27170304",
+        "stated": "VA: \"Research in a large sample of VA primary care patients found that a cut-point of 4 ideally balanced false negatives and false positives for the overall sample and for men.\" ... \"for women, a cut-point of 4 resulted in high numbers of false negatives. Practitioners may consider a lower cut-point for women in some settings.\" Prins 2016 abstract: 3 maximized sensitivity, 4 efficiency, 5 specificity."
+    },
+    "accepted": {
+        "questions": {
+            "1": "The National Center for PTSD's official PC-PTSD-5 (2022 form, ptsd.va.gov), which is public domain: it asks \"Have you ever experienced this kind of event?\" after examples; LOINC 102011-4 condenses this.",
+            "3": "The National Center for PTSD's official PC-PTSD-5 (2022 form, ptsd.va.gov), which is public domain: \"tried hard not to think about the event(s) or went out of your way to avoid situations…\"; LOINC 102013-0 shortens it."
+        }
+    },
+    "licence": {
+        "holder": "U.S. Department of Veterans Affairs, National Center for PTSD",
+        "terms": "Developed by staff at VA's National Center for PTSD; in the public domain and not copyrighted.",
+        "permission": "None needed (public domain)."
+    },
+    "source": {
+        "name": "Primary Care PTSD Screen for DSM-5 (PC-PTSD-5), National Center for PTSD",
+        "url": "https://www.ptsd.va.gov/professional/assessment/screens/pc-ptsd.asp"
+    },
+    "scoring": {
+        "overrides": {
+            "102011-4": {
+                "unscored": true
+            }
+        },
+        "source": {
+            "citation": "National Center for PTSD, PC-PTSD-5",
+            "url": "https://www.ptsd.va.gov/professional/assessment/screens/pc-ptsd.asp",
+            "stated": "\"If a respondent endorses a trauma exposure, they can score a 0-5 on the PC-PTSD-5, which is a count of 'yes' responses to the 5 questions about how the trauma has affected them in the past month.\" \"If no, screen total = 0. Please stop here.\" LOINC's answer list scores the trauma question Yes = 1."
+        }
+    }
+}

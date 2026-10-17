@@ -1,0 +1,380 @@
+{
+    "instrument": "GDS-15",
+    "loinc": "48543-3",
+    "loinc_version": "2.83",
+    "from": "fhir.loinc.org Questionnaire/48543-3 (questions, answers); scores and answer order from LOINC's answer lists via clinicaltables.nlm.nih.gov loinc_items; scoring as published where LOINC differs: see \"scoring\"",
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "questions": [
+        {
+            "code": "48512-8",
+            "text": "Are you basically satisfied with your life",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 0
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 1
+                }
+            ]
+        },
+        {
+            "code": "48513-6",
+            "text": "Have you dropped many of your activities and interests",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "48514-4",
+            "text": "Do you feel that your life is empty",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "48515-1",
+            "text": "Do you often get bored",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "48518-5",
+            "text": "Are you in good spirits most of the time",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 0
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 1
+                }
+            ]
+        },
+        {
+            "code": "48519-3",
+            "text": "Are you afraid that something bad is going to happen to you",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "48520-1",
+            "text": "Do you feel happy most of the time",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 0
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 1
+                }
+            ]
+        },
+        {
+            "code": "48521-9",
+            "text": "Do you often feel helpless",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "48523-5",
+            "text": "Do you prefer to stay at home, rather than going out and doing new things",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "48525-0",
+            "text": "Do you feel you have more problems with memory than most",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "48526-8",
+            "text": "Do you think it is wonderful to be alive now",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 0
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 1
+                }
+            ]
+        },
+        {
+            "code": "48528-4",
+            "text": "Do you feel pretty worthless the way you are now",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "48532-6",
+            "text": "Do you feel full of energy",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 0
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 1
+                }
+            ]
+        },
+        {
+            "code": "48533-4",
+            "text": "Do you feel that your situation is hopeless",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "48534-2",
+            "text": "Do you think that most people are better off than you are",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        }
+    ],
+    "total": {
+        "min": 0,
+        "max": 15
+    },
+    "cutoffs": [
+        {
+            "score": 6,
+            "meaning": "suggestive of depression: a follow-up interview"
+        },
+        {
+            "score": 11,
+            "meaning": "almost always depression"
+        }
+    ],
+    "cutoffs_source": {
+        "citation": "Yesavage JA, Geriatric Depression Scale, short form scoring (Stanford University).",
+        "short": "Yesavage, GDS short form",
+        "url": "https://web.stanford.edu/~yesavage/GDS.english.short.score.html",
+        "stated": "\"For clinical purposes a score > 5 points is suggestive of depression and should warrant a follow-up interview.\" \"Scores > 10 are almost always depression.\""
+    },
+    "accepted": {
+        "questions": []
+    },
+    "licence": {
+        "holder": "Jerome A. Yesavage and colleagues (Stanford University)",
+        "terms": "In the public domain, as partly the result of federal support.",
+        "permission": "None needed (public domain)."
+    },
+    "source": {
+        "name": "Geriatric Depression Scale, Short Form (Sheikh and Yesavage)",
+        "url": "https://web.stanford.edu/~yesavage/GDS.english.short.score.html"
+    },
+    "scoring": {
+        "overrides": {
+            "48512-8": {
+                "scores": {
+                    "Yes": 0,
+                    "No": 1
+                }
+            },
+            "48513-6": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "48514-4": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "48515-1": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "48518-5": {
+                "scores": {
+                    "Yes": 0,
+                    "No": 1
+                }
+            },
+            "48519-3": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "48520-1": {
+                "scores": {
+                    "Yes": 0,
+                    "No": 1
+                }
+            },
+            "48521-9": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "48523-5": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "48525-0": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "48526-8": {
+                "scores": {
+                    "Yes": 0,
+                    "No": 1
+                }
+            },
+            "48528-4": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "48532-6": {
+                "scores": {
+                    "Yes": 0,
+                    "No": 1
+                }
+            },
+            "48533-4": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "48534-2": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            }
+        },
+        "source": {
+            "citation": "Yesavage JA, Geriatric Depression Scale, short form scoring (Stanford University).",
+            "url": "https://web.stanford.edu/~yesavage/GDS.english.short.score.html",
+            "stated": "\"Answers in bold indicate depression\": NO for questions 1, 5, 7, 11 and 13, YES for the others, a point each. LOINC's answer lists for these questions have no scores."
+        }
+    }
+}

@@ -108,7 +108,7 @@ final class WordWriter implements OfficeWriter
         }
     }
 
-    public function scale(string $label, array $columns, array $items, ?array $scores, ?string $total): void
+    public function scale(string $label, array $columns, array $items, ?array $scores, ?string $total, ?array $itemScores = null): void
     {
         $this->body .= $this->p($this->run($label, bold: true), '<w:keepNext/>');
         $first = (int)(self::TEXT_WIDTH * 0.5);
@@ -122,8 +122,8 @@ final class WordWriter implements OfficeWriter
         $rows = [$header];
         foreach ($items as $n => $item) {
             $row = [$this->p($this->run(($n + 1) . '. ' . $item), '<w:spacing w:after="0"/>')];
-            foreach ($columns as $unused) {
-                $row[] = $this->p($this->run(self::BOX), '<w:jc w:val="center"/><w:spacing w:after="0"/>');
+            foreach ($columns as $i => $unused) {
+                $row[] = $this->p($this->run(self::BOX . (isset($itemScores[$n][$i]) ? ' ' . $itemScores[$n][$i] : '')), '<w:jc w:val="center"/><w:spacing w:after="0"/>');
             }
             $rows[] = $row;
         }

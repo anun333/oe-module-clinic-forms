@@ -122,7 +122,7 @@ final readonly class Renderer
                 'checklist' => $this->checklist($block['label'] ?? null, $block['items']),
                 'lines' => $this->lines($block['label'], $block['count']),
                 'signature' => $this->signatures($block['signers']),
-                'scale' => $this->scale($block['label'], $block['columns'], $block['items'], $block['scores'] ?? null, $block['total'] ?? null),
+                'scale' => $this->scale($block['label'], $block['columns'], $block['items'], $block['scores'] ?? null, $block['total'] ?? null, $block['item_scores'] ?? null),
                 'table' => $this->table($block['label'], $block['columns'], $block['rows']),
                 'taglines' => $this->taglines(true),
                 default => '',
@@ -210,7 +210,7 @@ final readonly class Renderer
      * @param list<string>   $items
      * @param ?list<int>     $scores
      */
-    private function scale(string $label, array $columns, array $items, ?array $scores, ?string $total): string
+    private function scale(string $label, array $columns, array $items, ?array $scores, ?string $total, ?array $itemScores = null): string
     {
         $html = "<div class='cf-scale'><div class='cf-label'>" . $this->text($label) . "</div><table class='cf-table cf-scale-table'><tr><th></th>";
         foreach ($columns as $i => $column) {
@@ -218,8 +218,12 @@ final readonly class Renderer
         }
         $html .= "</tr>";
         foreach ($items as $n => $item) {
-            $html .= "<tr><td class='cf-scale-item'>" . self::e((string)($n + 1)) . ". " . $this->text($item) . "</td>"
-                . str_repeat("<td class='cf-scale-box'><span class='cf-box'></span></td>", count($columns)) . "</tr>";
+            $html .= "<tr><td class='cf-scale-item'>" . self::e((string)($n + 1)) . ". " . $this->text($item) . "</td>";
+            foreach ($columns as $i => $unused) {
+                // Each question its own points, beside the box, when the questions score differently.
+                $html .= "<td class='cf-scale-box'><span class='cf-box'></span>" . (isset($itemScores[$n][$i]) ? "<span class='cf-score cf-item-score'>" . self::e((string)$itemScores[$n][$i]) . "</span>" : '') . "</td>";
+            }
+            $html .= "</tr>";
         }
         $html .= "</table>";
         if ($total !== null) {

@@ -80,8 +80,13 @@ final class InstrumentTest extends TestCase
                 self::assertLessThanOrEqual($r['total']['max'], $cut['score'], "$code: a cut-off inside the range");
                 self::assertNotSame('', trim((string)$cut['meaning']), "$code: what the cut-off means");
             }
-            self::assertMatchesRegularExpression('/^\d+$/', (string)($r['cutoffs_source']['pmid'] ?? ''), "$code: the cut-offs' paper, by PubMed id");
+            // A paper, by its PubMed id, or the instrument owner's own page (CDC's brochure, the developers' scoring sheet).
+            self::assertTrue(preg_match('/^\d+$/', (string)($r['cutoffs_source']['pmid'] ?? '')) === 1 || str_starts_with((string)($r['cutoffs_source']['url'] ?? ''), 'https://'),
+                "$code: the cut-offs' source, by PubMed id or the owner's URL");
             self::assertNotSame('', trim((string)($r['cutoffs_source']['stated'] ?? '')), "$code: where the paper states them");
+            if (!empty((array)($r['scoring']['overrides'] ?? []))) {
+                self::assertNotSame('', trim((string)($r['scoring']['source']['stated'] ?? '')), "$code: where the published scoring comes from, where it differs from LOINC");
+            }
             foreach (['questions', 'extra'] as $kind) {
                 foreach ($r['accepted'][$kind] ?? [] as $n => $why) {
                     self::assertNotSame('', trim((string)$why), "$code: accepted $kind $n says why");
@@ -192,6 +197,23 @@ final class InstrumentTest extends TestCase
             rmdir(dirname($folder));
             rmdir($site);
         }
+    }
+
+    public function testAScaleCanScoreEachQuestionItsOwnWay(): void
+    {
+        // The GDS-15 scores No on some questions and Yes on others: points per question (item_scores).
+        $gds = self::doc('gds-15');
+        $questions = Instrument::questions($gds);
+        self::assertSame(1.0, $questions[0]['answers'][1]['score'], 'question 1 scores No');
+        self::assertSame(1.0, $questions[1]['answers'][0]['score'], 'question 2 scores Yes');
+        $blocks = $gds->blocks;
+        foreach ($blocks as &$b) {
+            if ($b['type'] === 'scale') {
+                $b['item_scores'][0] = [1, 0];
+            }
+        }
+        unset($b);
+        self::assertContains('question 1, "Yes" scores 1 where the instrument scores 0', Instrument::differences(self::with($gds, $blocks), self::ref($gds)));
     }
 
     public function testWordingAllowsSpellingButNotAnotherQuestion(): void
