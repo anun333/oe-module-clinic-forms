@@ -69,6 +69,9 @@ final class PdfWriterTest extends TestCase
         foreach ($pages as $n => $text) {
             self::assertStringContainsString('Jane Q Sample', $text, 'page ' . ($n + 1) . ' carries the patient line');
         }
+        // A field's label on one line, not squeezed to a letter a line (mPDF lets a cell's width
+        // override its nowrap, as 0.16.0 to 0.18.0 found out).
+        self::assertMatchesRegularExpression('/Date of birth +1970-01-01/', $pages[0], 'the label and its value side by side');
         self::assertSame(array_fill(0, count($pages), 'WL9001'), $this->codes($pdf), 'every page carries the chart number, as a scanner reads it');
     }
 

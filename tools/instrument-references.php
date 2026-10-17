@@ -4,8 +4,8 @@
  * Writes data/instruments/<loinc>.json for each validated document: the instrument's questions
  * and answers from LOINC's own questionnaire (fhir.loinc.org, needs a free LOINC account), each
  * answer's score from LOINC's answer lists as NLM's Clinical Tables serve them (no account), and the
- * total range. What is written by hand in a reference (the published cut-offs and their source, and
- * any accepted wording difference) is kept.
+ * total range. What is written by hand in a reference (LOINC_HAND_FIELDS: the published cut-offs or
+ * rules and their source, any scoring where LOINC differs, any accepted wording difference) is kept.
  *
  *   LOINC_USER=... LOINC_PASSWORD=... php tools/instrument-references.php          write the references
  *   LOINC_USER=... LOINC_PASSWORD=... php tools/instrument-references.php --check  compare only; exit 1 if LOINC's differ
@@ -38,7 +38,7 @@ foreach (DocumentLibrary::shipped()->all() as $doc) {
     try {
         $fetched = loincInstrument($loinc, $auth);
         // Where the published instrument scores differently from LOINC's lists, its scoring is written by hand.
-        $questions = loincApplyScoring($fetched['questions'], $old['scoring']['overrides'] ?? []);
+        [$questions, $freeText] = loincFreeText(loincApplyScoring($fetched['questions'], $old['scoring']['overrides'] ?? []));
         if (($gaps = loincScoringGaps($questions)) !== []) {
             throw new RuntimeException('some answers have no score in LOINC (' . implode(', ', $gaps) . '); add the published scoring under "scoring"');
         }
@@ -58,12 +58,11 @@ foreach (DocumentLibrary::shipped()->all() as $doc) {
             . (empty($old['scoring']['overrides']) ? '' : '; scoring as published where LOINC differs: see "scoring"'),
         'notice' => LOINC_NOTICE,
         'questions' => $questions,
+    ] + ($freeText === [] ? [] : ['free_text' => $freeText]) + [
         'total' => ['min' => $range['min'] + 0, 'max' => $range['max'] + 0],
-        'cutoffs' => $old['cutoffs'] ?? [],
-        'cutoffs_source' => $old['cutoffs_source'] ?? null,
-        'accepted' => $old['accepted'] ?? ['questions' => new stdClass()],
-    ] + array_intersect_key($old, ['scoring' => 1, 'licence' => 1, 'source' => 1]);
-    $same = array_intersect_key($old, ['questions' => 1, 'total' => 1]) == array_intersect_key($new, ['questions' => 1, 'total' => 1]);
+    ] + array_intersect_key($old, array_flip(LOINC_HAND_FIELDS)) + ['accepted' => ['questions' => new stdClass()]];
+    $fetchedKeys = ['questions' => 1, 'free_text' => 1, 'total' => 1];
+    $same = array_intersect_key($old, $fetchedKeys) == array_intersect_key($new, $fetchedKeys);
     if ($check) {
         echo $same ? "$loinc ($doc->id): matches LOINC $new[loinc_version]\n" : "$loinc ($doc->id): LOINC's questionnaire differs from the reference; run without --check and review the change\n";
         $failed += $same ? 0 : 1;

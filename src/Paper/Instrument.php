@@ -15,6 +15,13 @@
  *                "extra": {"8": "why the document asks an unscored question LOINC's panel doesn't have"}}
  * Question numbers in "questions" count the instrument's questions; in "extra", the document's.
  *
+ * A screen read by rule rather than by a total (the ASQ: "Yes" to any of questions 1 to 4 is a
+ * positive screen) has its published rules in place of cut-offs, by LOINC question code:
+ *   "rules": [{"if": "any", "questions": ["115566-2", ...], "answers": ["Yes"], "meaning": "positive screen"}],
+ *   "rules_source": {"citation": ..., "url": ..., "stated": ...}
+ * and the document must say each one: its meaning, in a paragraph that names its questions by the
+ * numbers the document prints for them.
+ *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
  */
@@ -46,9 +53,10 @@ final class Instrument
 
     /**
      * The document's questions in order: each scale row, and each checklist with a label. A
-     * checklist answer's points are written after it, "Never (0)".
+     * checklist answer's points are written after it, "Never (0)". Each has the number the page
+     * prints for it: a scale numbers its rows from 1, a checklist its label ("5. Are you…"), or none.
      *
-     * @return list<array{text: string, answers: list<array{text: string, score: ?float}>}>
+     * @return list<array{text: string, number: ?int, answers: list<array{text: string, score: ?float}>}>
      */
     public static function questions(Document $doc): array
     {
@@ -63,7 +71,7 @@ final class Instrument
                         $score = $block['item_scores'][$n][$i] ?? $block['scores'][$i] ?? null;
                         $answers[] = ['text' => (string)$column, 'score' => is_numeric($score) ? (float)$score : null];
                     }
-                    $out[] = ['text' => self::unnumbered((string)$item), 'answers' => $answers];
+                    $out[] = ['text' => self::unnumbered((string)$item), 'number' => $n + 1, 'answers' => $answers];
                 }
             } elseif ($type === 'checklist' && ($block['label'] ?? '') !== '') {
                 $answers = [];
@@ -72,7 +80,8 @@ final class Instrument
                         ? ['text' => $m[1], 'score' => (float)$m[2]]
                         : ['text' => (string)$item, 'score' => null];
                 }
-                $out[] = ['text' => self::unnumbered((string)$block['label']), 'answers' => $answers];
+                $label = (string)$block['label'];
+                $out[] = ['text' => self::unnumbered($label), 'number' => preg_match('/^\s*(\d+)[.)]\s/', $label, $m) === 1 ? (int)$m[1] : null, 'answers' => $answers];
             }
         }
         return $out;
@@ -167,7 +176,76 @@ final class Instrument
                     . ($published === [] ? 'not recorded in the reference' : implode(', ', array_map([self::class, 'points'], array_unique($published))));
             }
         }
+        foreach ($reference['rules'] ?? [] as $rule) {
+            $problem = self::ruleProblem($rule, $theirs, $ours, $doc);
+            if ($problem !== null) {
+                $problems[] = $problem;
+            }
+        }
         return $problems;
+    }
+
+    /**
+     * Whether the document says a published rule: a paragraph with the rule's meaning ("positive
+     * screen", but not as part of "non-acute positive screen") that names the rule's questions by
+     * the document's numbers ("questions 1 to 4", "Question #5"). A rule over every question needs
+     * only its meaning.
+     */
+    private static function ruleProblem(array $rule, array $theirs, array $ours, Document $doc): ?string
+    {
+        $meaning = trim((string)($rule['meaning'] ?? ''));
+        $codes = array_column($theirs, 'code');
+        $numbers = [];
+        foreach ($rule['questions'] ?? [] as $code) {
+            $i = array_search((string)$code, $codes, true);
+            if ($i === false) {
+                return "the reference's rule for \"$meaning\" names $code, which isn't one of the instrument's questions";
+            }
+            $numbers[] = $ours[$i]['number'] ?? null;
+        }
+        $every = count($numbers) === count($theirs);
+        $said = '/(?<![\p{L}-])' . preg_quote(mb_strtolower($meaning), '/') . '(?!\p{L})/u';
+        foreach (self::paragraphs($doc) as $p) {
+            if ($meaning !== '' && preg_match($said, mb_strtolower($p)) === 1
+                && ($every || in_array(null, $numbers, true) || self::namesQuestions($p, $numbers))) {
+                return null;
+            }
+        }
+        $which = $every ? 'any question' : (in_array(null, $numbers, true) ? 'its questions' : self::questionNumbers(array_values(array_unique($numbers))));
+        return sprintf('it doesn\'t say the published rule "%s to %s%s: %s"', implode(' or ', $rule['answers'] ?? []),
+            ($rule['if'] ?? 'any') === 'all' && count($numbers) > 1 ? 'all of ' : (count($numbers) > 1 ? 'any of ' : ''), $which, $meaning);
+    }
+
+    /** A paragraph names these question numbers: "questions 1 to 4", "#1–#4", "question 5", "#5", or each in a list. */
+    private static function namesQuestions(string $p, array $numbers): bool
+    {
+        $n = array_values(array_unique($numbers));
+        sort($n);
+        if (count($n) === 1) {
+            return preg_match('/(?:question|pregunta)s?\s*#?' . $n[0] . '(?!\d)|#' . $n[0] . '(?!\d)/iu', $p) === 1;
+        }
+        if ($n === range($n[0], $n[0] + count($n) - 1)
+            && preg_match('/(?<!\d)#?' . $n[0] . '\s*(?:to|through|thru|a|al|-|–|—)\s*#?' . end($n) . '(?!\d)/iu', $p) === 1) {
+            return true;
+        }
+        foreach ($n as $x) {
+            if (preg_match('/(?<!\d)#?' . $x . '(?!\d)/u', $p) !== 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /** @return list<string> the document's description and its paragraphs */
+    private static function paragraphs(Document $doc): array
+    {
+        $out = [$doc->about];
+        foreach ($doc->blocks as $block) {
+            if (($block['type'] ?? '') === 'paragraph') {
+                $out[] = (string)($block['text'] ?? '');
+            }
+        }
+        return $out;
     }
 
     /**

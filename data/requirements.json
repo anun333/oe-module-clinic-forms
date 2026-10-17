@@ -167,6 +167,60 @@
           "signature": true
         }
       ]
+    },
+    "asq": {
+      "source": "ASQ Suicide Risk Screening Tool (NIMH Toolkit, revised 9/29/25); validated wording, public domain",
+      "elements": [
+        {
+          "name": "The four questions and the acuity question",
+          "cite": "instrument",
+          "all": [
+            "have you wished you were dead",
+            "better off if you were dead",
+            "thoughts about killing yourself",
+            "have you ever tried to kill yourself",
+            "thoughts of killing yourself right now"
+          ]
+        },
+        {
+          "name": "What an acute positive screen requires",
+          "cite": "instrument",
+          "all": [
+            "cannot leave until evaluated for safety",
+            "keep the patient in sight",
+            "alert the clinician responsible"
+          ]
+        },
+        {
+          "name": "A brief suicide safety assessment after a non-acute positive screen",
+          "cite": "instrument",
+          "all": [
+            "brief suicide safety assessment"
+          ]
+        },
+        {
+          "name": "Crisis resources for every patient",
+          "cite": "instrument",
+          "all": [
+            "988"
+          ]
+        }
+      ]
+    },
+    "taps-1": {
+      "source": "TAPS Tool Part 1 (NIDA Clinical Trials Network, CTN-0059); validated wording, public domain",
+      "elements": [
+        {
+          "name": "The four substances, over the past 12 months",
+          "cite": "instrument",
+          "all": [
+            "any tobacco product",
+            "drinks containing alcohol in one day",
+            "any drugs including marijuana",
+            "prescription medications just for the feeling"
+          ]
+        }
+      ]
     }
   }
 }

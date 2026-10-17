@@ -1,0 +1,285 @@
+{
+    "instrument": "TAPS-1",
+    "loinc": "96841-2",
+    "loinc_version": "2.83",
+    "from": "fhir.loinc.org Questionnaire/96841-2 (questions, answers); scores and answer order from LOINC's answer lists via clinicaltables.nlm.nih.gov loinc_items; scored from the same answer elsewhere in the panel: 96842-0 LA18933-4, 88037-7 LA18933-4, 75889-6 LA18933-4; scoring as published where LOINC differs: see \"scoring\"",
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "questions": [
+        {
+            "code": "96842-0",
+            "text": "In the PAST 12 MONTHS, how often have you used any tobacco product (for example, cigarettes, e-cigarettes, cigars, pipes, or smokeless tobacco)?",
+            "answers": [
+                {
+                    "code": "LA6270-8",
+                    "text": "Never",
+                    "score": null
+                },
+                {
+                    "code": "LA18933-4",
+                    "text": "Less than monthly",
+                    "score": null
+                },
+                {
+                    "code": "LA18876-5",
+                    "text": "Monthly",
+                    "score": null
+                },
+                {
+                    "code": "LA18891-4",
+                    "text": "Weekly",
+                    "score": null
+                },
+                {
+                    "code": "LA18934-2",
+                    "text": "Daily or almost daily",
+                    "score": null
+                }
+            ]
+        },
+        {
+            "code": "88037-7",
+            "text": "In the PAST 12 MONTHS, how often have you had 5 or more drinks containing alcohol in one day?",
+            "answers": [
+                {
+                    "code": "LA6270-8",
+                    "text": "Never",
+                    "score": null
+                },
+                {
+                    "code": "LA18933-4",
+                    "text": "Less than monthly",
+                    "score": null
+                },
+                {
+                    "code": "LA18876-5",
+                    "text": "Monthly",
+                    "score": null
+                },
+                {
+                    "code": "LA18891-4",
+                    "text": "Weekly",
+                    "score": null
+                },
+                {
+                    "code": "LA18934-2",
+                    "text": "Daily or almost daily",
+                    "score": null
+                }
+            ]
+        },
+        {
+            "code": "75889-6",
+            "text": "In the PAST 12 MONTHS, how often have you had 4 or more drinks containing alcohol in one day?",
+            "answers": [
+                {
+                    "code": "LA6270-8",
+                    "text": "Never",
+                    "score": null
+                },
+                {
+                    "code": "LA18933-4",
+                    "text": "Less than monthly",
+                    "score": null
+                },
+                {
+                    "code": "LA18876-5",
+                    "text": "Monthly",
+                    "score": null
+                },
+                {
+                    "code": "LA18891-4",
+                    "text": "Weekly",
+                    "score": null
+                },
+                {
+                    "code": "LA18934-2",
+                    "text": "Daily or almost daily",
+                    "score": null
+                }
+            ]
+        },
+        {
+            "code": "96843-8",
+            "text": "In the PAST 12 MONTHS, how often have you used any drugs including marijuana, cocaine or crack, heroin, methamphetamine (crystal meth), hallucinogens, ecstasy/MDMA?",
+            "answers": [
+                {
+                    "code": "LA6270-8",
+                    "text": "Never",
+                    "score": null
+                },
+                {
+                    "code": "LA18933-4",
+                    "text": "Less than monthly",
+                    "score": null
+                },
+                {
+                    "code": "LA18876-5",
+                    "text": "Monthly",
+                    "score": null
+                },
+                {
+                    "code": "LA18891-4",
+                    "text": "Weekly",
+                    "score": null
+                },
+                {
+                    "code": "LA18934-2",
+                    "text": "Daily or almost daily",
+                    "score": null
+                }
+            ]
+        },
+        {
+            "code": "96844-6",
+            "text": "In the PAST 12 MONTHS, how often have you used any prescription medications just for the feeling, more than prescribed or that were not prescribed for you?",
+            "answers": [
+                {
+                    "code": "LA6270-8",
+                    "text": "Never",
+                    "score": null
+                },
+                {
+                    "code": "LA18933-4",
+                    "text": "Less than monthly",
+                    "score": null
+                },
+                {
+                    "code": "LA18876-5",
+                    "text": "Monthly",
+                    "score": null
+                },
+                {
+                    "code": "LA18891-4",
+                    "text": "Weekly",
+                    "score": null
+                },
+                {
+                    "code": "LA18934-2",
+                    "text": "Daily or almost daily",
+                    "score": null
+                }
+            ]
+        }
+    ],
+    "total": {
+        "min": 0,
+        "max": 0
+    },
+    "title": "Substance Use Screen (TAPS-1)",
+    "about": "The first part of NIDA's TAPS Tool: how often in the past 12 months you used tobacco, alcohol, drugs and prescription medicines not as prescribed. It has no total; any answer other than Never is a positive screen for that substance.",
+    "instructions": "In the PAST 12 MONTHS, how often have you:",
+    "licence": {
+        "holder": "National Institute on Drug Abuse (NIDA) Clinical Trials Network",
+        "terms": "Developed in the NIDA Clinical Trials Network (CTN-0059); in the public domain.",
+        "permission": "None needed (public domain)."
+    },
+    "source": {
+        "name": "Tobacco, Alcohol, Prescription medication, and other Substance use (TAPS) Tool, Part 1, NIDA Clinical Trials Network",
+        "url": "https://www.phenxtoolkit.org/protocols/view/511601"
+    },
+    "rules": [
+        {
+            "if": "any",
+            "questions": [
+                "96842-0",
+                "88037-7",
+                "75889-6",
+                "96843-8",
+                "96844-6"
+            ],
+            "answers": [
+                "Less than monthly",
+                "Monthly",
+                "Weekly",
+                "Daily or almost daily"
+            ],
+            "meaning": "positive screen"
+        },
+        {
+            "if": "any",
+            "questions": [
+                "96842-0",
+                "88037-7",
+                "75889-6"
+            ],
+            "answers": [
+                "Monthly",
+                "Weekly",
+                "Daily or almost daily"
+            ],
+            "meaning": "possible substance use disorder"
+        },
+        {
+            "if": "any",
+            "questions": [
+                "96843-8",
+                "96844-6"
+            ],
+            "answers": [
+                "Less than monthly",
+                "Monthly",
+                "Weekly",
+                "Daily or almost daily"
+            ],
+            "meaning": "possible substance use disorder"
+        }
+    ],
+    "rules_source": {
+        "citation": "McNeely J, Wu LT, Subramaniam G, et al. Ann Intern Med. 2016;165(10):690-699; Gryczynski J, McNeely J, Wu LT, et al. J Gen Intern Med. 2017;32(9):990-996.",
+        "short": "McNeely 2016; Gryczynski 2017",
+        "pmid": "27595276",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5291717/",
+        "stated": "McNeely 2016: \"For the TAPS-1, any response other than 'never' constitutes a positive screen. Those with a positive screen complete the corresponding items on the TAPS-2.\" Gryczynski 2017 (PMID 28550609), abstract: \"Optimal frequency-of-use cut-points on the self-administered TAPS-1 for identifying SUDs were >= monthly use for tobacco and alcohol ... and any reported use for illicit drugs and prescription medication misuse.\""
+    },
+    "scoring": {
+        "overrides": {
+            "96842-0": {
+                "order": [
+                    "Never",
+                    "Less than monthly",
+                    "Monthly",
+                    "Weekly",
+                    "Daily or almost daily"
+                ]
+            },
+            "88037-7": {
+                "order": [
+                    "Never",
+                    "Less than monthly",
+                    "Monthly",
+                    "Weekly",
+                    "Daily or almost daily"
+                ]
+            },
+            "75889-6": {
+                "order": [
+                    "Never",
+                    "Less than monthly",
+                    "Monthly",
+                    "Weekly",
+                    "Daily or almost daily"
+                ]
+            },
+            "96843-8": {
+                "order": [
+                    "Never",
+                    "Less than monthly",
+                    "Monthly",
+                    "Weekly",
+                    "Daily or almost daily"
+                ]
+            },
+            "96844-6": {
+                "answers_from": "96843-8"
+            }
+        },
+        "source": {
+            "citation": "Gryczynski J, et al. J Gen Intern Med. 2017;32(9):990-996 (PMID 28550609); McNeely J, et al. Ann Intern Med. 2016 (PMID 27595276).",
+            "url": "https://pubmed.ncbi.nlm.nih.gov/28550609/",
+            "stated": "Gryczynski 2017: the TAPS-1's items have \"response options of never, less than monthly, monthly, weekly, and daily or almost daily\". McNeely 2016: \"Respondents choose from five response options ranging from 'never' to 'daily or almost daily.'\" LOINC has the prescription question (96844-6) as free text with no answers, and its list for 96843-8 runs from daily to never."
+        }
+    },
+    "accepted": {
+        "questions": []
+    }
+}

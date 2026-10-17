@@ -1,0 +1,191 @@
+{
+    "instrument": "ASQ",
+    "loinc": "115564-7",
+    "loinc_version": "2.83",
+    "from": "fhir.loinc.org Questionnaire/115564-7 (questions, answers); scores and answer order from LOINC's answer lists via clinicaltables.nlm.nih.gov loinc_items",
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "questions": [
+        {
+            "code": "115566-2",
+            "text": "In the past few weeks, have you wished you were dead?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": null
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": null
+                }
+            ]
+        },
+        {
+            "code": "115567-0",
+            "text": "In the past few weeks, have you felt that you or your family would be better off if you were dead?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": null
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": null
+                }
+            ]
+        },
+        {
+            "code": "115568-8",
+            "text": "In the past week, have you been having thoughts about killing yourself?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": null
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": null
+                }
+            ]
+        },
+        {
+            "code": "115569-6",
+            "text": "Have you ever tried to kill yourself?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": null
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": null
+                }
+            ]
+        },
+        {
+            "code": "115570-4",
+            "text": "If yes, when was the most recent attempt?",
+            "answers": [
+                {
+                    "code": "LA37190-8",
+                    "text": "Within last 12 months",
+                    "score": null
+                },
+                {
+                    "code": "LA37191-6",
+                    "text": "Over 1 year ago",
+                    "score": null
+                }
+            ]
+        },
+        {
+            "code": "115571-2",
+            "text": "Are you having thoughts of killing yourself right now?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": null
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": null
+                }
+            ]
+        }
+    ],
+    "free_text": [
+        {
+            "code": "115565-4",
+            "text": "Ask the Patient:",
+            "after": null
+        },
+        {
+            "code": "115572-0",
+            "text": "If yes, describe briefly:",
+            "after": "115571-2"
+        }
+    ],
+    "total": {
+        "min": 0,
+        "max": 0
+    },
+    "title": "Ask Suicide-Screening Questions (ASQ)",
+    "about": "NIMH's suicide risk screen for patients aged 8 and over in medical settings: four yes or no questions asked by a nurse or clinician, and an acuity question when any is answered Yes. It has no total: the result is a negative, non-acute positive or acute positive screen.",
+    "instructions": "Ask the patient:",
+    "licence": {
+        "holder": "National Institute of Mental Health (NIMH)",
+        "terms": "A public domain tool, free of charge (NIMH ASQ Toolkit).",
+        "permission": "None needed (public domain)."
+    },
+    "source": {
+        "name": "Ask Suicide-Screening Questions (ASQ) Suicide Risk Screening Tool, NIMH Toolkit (revised 9/29/25)",
+        "url": "https://www.nimh.nih.gov/research/research-conducted-at-nimh/asq-toolkit-materials"
+    },
+    "rules": [
+        {
+            "if": "all",
+            "questions": [
+                "115566-2",
+                "115567-0",
+                "115568-8",
+                "115569-6"
+            ],
+            "answers": [
+                "No"
+            ],
+            "meaning": "negative screen"
+        },
+        {
+            "if": "any",
+            "questions": [
+                "115566-2",
+                "115567-0",
+                "115568-8",
+                "115569-6"
+            ],
+            "answers": [
+                "Yes"
+            ],
+            "meaning": "positive screen"
+        },
+        {
+            "if": "any",
+            "questions": [
+                "115571-2"
+            ],
+            "answers": [
+                "Yes"
+            ],
+            "meaning": "acute positive screen"
+        },
+        {
+            "if": "any",
+            "questions": [
+                "115571-2"
+            ],
+            "answers": [
+                "No"
+            ],
+            "meaning": "non-acute positive screen"
+        }
+    ],
+    "rules_source": {
+        "citation": "NIMH Toolkit, Suicide Risk Screening Tool for youth and adults (revised 9/29/25); Horowitz LM, Bridge JA, Teach SJ, et al. Arch Pediatr Adolesc Med. 2012;166(12):1170-1176; Horowitz LM, Snyder DJ, Boudreaux ED, et al. Psychosomatics. 2020;61(6):713-722.",
+        "short": "NIMH ASQ Toolkit",
+        "pmid": "23027429",
+        "url": "https://www.nimh.nih.gov/sites/default/files/documents/research/research-conducted-at-nimh/asq-toolkit-materials/asq-tool/screening_tool_asq_nimh_toolkit_1.pdf",
+        "stated": "Tool: \"If patient answers Yes to any of Questions #1 through #4, ask the following acuity question: 5.\" Next steps: \"No to all Questions #1-#4: Negative screen\"; \"Yes to any of Questions #1-#4 and... Yes to Question #5: Acute positive screen (imminent/acute risk identified)\"; \"...No to Question #5: Non-acute positive screen (potential risk identified)\". Information sheet: \"Positive screen: 'yes' to any of the 4 items\"; \"Public domain tool, free of charge\". Adult validation (medical inpatients): PMID 32487323."
+    },
+    "accepted": {
+        "questions": []
+    }
+}

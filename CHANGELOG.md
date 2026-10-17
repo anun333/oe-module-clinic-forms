@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.19.0 (2026-10-16)
+
+**Two screens read by rule rather than by a total, and a fix for the PDF's field labels.**
+
+- **PDF field labels fixed.** Since 0.16.0, the PDF download and the copy saved to the patient's Documents printed each field label one letter to a line ("N a m e"), because mPDF lets a table cell's width override its no-wrap. Labels now sit on one line beside their value, with room to write. Checked on OpenEMR 8.4.1, whose mPDF (8.3.1) showed the fault. The browser print and the Word and LibreOffice files were not affected. A test and the end-to-end check now fail if a label and its value aren't side by side.
+- **Ask Suicide-Screening Questions (ASQ)**, NIMH's suicide risk screen (the 2025 tool, public domain), for a nurse or clinician to ask patients aged 8 and over:
+  - the four yes or no questions, the follow-up on a past attempt, and the acuity question;
+  - NIMH's next steps for a negative, non-acute positive or acute positive screen, with its exceptions and what a refusal means for youth and for adults;
+  - the 988 Lifeline and Crisis Text Line for every patient.
+
+  A clinic's own version is warned if it loses "cannot leave until evaluated for safety", the brief suicide safety assessment, or the 988 line.
+- **Substance Use Screen (TAPS-1)**, the first part of NIDA's TAPS Tool (public domain): how often in the past 12 months the patient used tobacco, alcohol (5 or more drinks in a day for men, 4 for women), drugs, and prescription medications not as prescribed. Any answer but Never is a positive screen for that substance (McNeely 2016). Monthly or more for tobacco or alcohol, or any drug use or prescription misuse, is the published cut-point for a possible substance use disorder (Gryczynski 2017).
+- **Rules in the instrument check.** A reference can hold its instrument's published rules in place of cut-offs (`"rules"`: which questions, which answers, any or all, and what the result means), with their source. The document must state each rule's meaning in a paragraph that names its questions by the numbers the page prints. Dropping the ASQ's acute line, or saying "questions 1 to 3", is reported.
+- **More of LOINC's faults, handled.** LOINC has TAPS-1's prescription question as free text with no answers, gives three of its questions another instrument's answer list ("Once or twice"), and lists the drugs question's answers backwards. A reference can now give a question another's answers (`"answers_from"`) and put answers in the published order (`"order"`), with the source. LOINC's free-text items (the ASQ's "describe briefly") are kept apart from the questions, and the importer gives them lines. `--audience staff` imports an instrument a clinician asks.
+- **`tools/instrument-references.php` keeps every hand-written field.** It had been dropping the title, description and instructions that the importer writes.
+- **Documents changed in this release:** two new, each at version 1. No existing document changed.
+
 ## 0.18.0 (2026-10-16)
 
 **Three more screening instruments, all public domain, each scored as published and checked against its reference.**

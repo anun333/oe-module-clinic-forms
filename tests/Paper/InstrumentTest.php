@@ -74,16 +74,37 @@ final class InstrumentTest extends TestCase
             $range = Instrument::totalRange(array_map(static fn(array $q): array => ['answers' => array_map(
                 static fn(array $a): array => ['score' => is_numeric($a['score']) ? (float)$a['score'] : null], $q['answers'])], $r['questions']));
             self::assertEquals($range, $r['total'], "$code: the total is its questions' range");
-            self::assertNotEmpty($r['cutoffs'], "$code: the published cut-offs");
-            foreach ($r['cutoffs'] as $cut) {
+            // Cut-offs on a total, or for a screen read by rule (the ASQ, TAPS-1), its published rules.
+            $cutoffs = $r['cutoffs'] ?? [];
+            $rules = $r['rules'] ?? [];
+            self::assertTrue($cutoffs !== [] || $rules !== [], "$code: the published cut-offs, or the published rules");
+            foreach ($cutoffs as $cut) {
                 self::assertGreaterThan($r['total']['min'], $cut['score'], "$code: a cut-off inside the range");
                 self::assertLessThanOrEqual($r['total']['max'], $cut['score'], "$code: a cut-off inside the range");
                 self::assertNotSame('', trim((string)$cut['meaning']), "$code: what the cut-off means");
             }
             // A paper, by its PubMed id, or the instrument owner's own page (CDC's brochure, the developers' scoring sheet).
-            self::assertTrue(preg_match('/^\d+$/', (string)($r['cutoffs_source']['pmid'] ?? '')) === 1 || str_starts_with((string)($r['cutoffs_source']['url'] ?? ''), 'https://'),
-                "$code: the cut-offs' source, by PubMed id or the owner's URL");
-            self::assertNotSame('', trim((string)($r['cutoffs_source']['stated'] ?? '')), "$code: where the paper states them");
+            foreach (array_filter(['cutoffs_source' => $cutoffs, 'rules_source' => $rules]) as $field => $unused) {
+                self::assertTrue(preg_match('/^\d+$/', (string)($r[$field]['pmid'] ?? '')) === 1 || str_starts_with((string)($r[$field]['url'] ?? ''), 'https://'),
+                    "$code: the $field, by PubMed id or the owner's URL");
+                self::assertNotSame('', trim((string)($r[$field]['stated'] ?? '')), "$code: where the $field states them");
+            }
+            $answers = array_column(array_map(static fn(array $q): array => [$q['code'], array_column($q['answers'], 'text')], $r['questions']), 1, 0);
+            foreach ($rules as $rule) {
+                self::assertContains($rule['if'] ?? null, ['any', 'all'], "$code: a rule is \"any\" or \"all\" of its questions");
+                self::assertNotSame('', trim((string)($rule['meaning'] ?? '')), "$code: what a rule means");
+                self::assertNotEmpty($rule['questions'] ?? [], "$code: a rule's questions");
+                self::assertNotEmpty($rule['answers'] ?? [], "$code: a rule's answers");
+                foreach ($rule['questions'] as $q) {
+                    self::assertArrayHasKey($q, $answers, "$code: a rule's question is one of the instrument's");
+                    foreach ($rule['answers'] as $a) {
+                        self::assertContains($a, $answers[$q], "$code: $q offers the rule's answer \"$a\"");
+                    }
+                }
+            }
+            foreach ($r['free_text'] ?? [] as $free) {
+                self::assertNotSame('', trim((string)($free['text'] ?? '')), "$code: free text has its wording");
+            }
             if (!empty((array)($r['scoring']['overrides'] ?? []))) {
                 self::assertNotSame('', trim((string)($r['scoring']['source']['stated'] ?? '')), "$code: where the published scoring comes from, where it differs from LOINC");
             }
@@ -147,6 +168,28 @@ final class InstrumentTest extends TestCase
         $phq9 = self::doc('phq-9');
         $wrong = new Document($phq9->id, $phq9->title, $phq9->category, str_replace('0 to 27', '0 to 21', $phq9->about), $phq9->blocks, $phq9->uses, code: $phq9->code, validated: true);
         self::assertContains('the description says "scored 0 to 21" but the questions total 0 to 27', Instrument::differences($wrong, self::ref($phq9)));
+    }
+
+    public function testAScreenReadByRuleMustSayItsRules(): void
+    {
+        // The ASQ's result is a rule, not a total: dropping the acute line leaves "non-acute positive
+        // screen" on the page, which doesn't say it.
+        $asq = self::doc('asq');
+        self::assertSame([], Instrument::differences($asq, self::ref($asq)));
+        $without = array_values(array_filter($asq->blocks, static fn(array $b): bool => !($b['type'] === 'paragraph' && str_starts_with($b['text'], 'Yes to question 5'))));
+        self::assertSame(['it doesn\'t say the published rule "Yes to question 5: acute positive screen"'], Instrument::differences(self::with($asq, $without), self::ref($asq)));
+        // The right words with the wrong questions.
+        $renumbered = array_map(static fn(array $b): array => $b['type'] === 'paragraph' && str_starts_with($b['text'], 'Yes to any of questions 1 to 4')
+            ? ['type' => 'paragraph', 'text' => 'Yes to any of questions 1 to 3 is a positive screen.'] : $b, $asq->blocks);
+        self::assertSame(['it doesn\'t say the published rule "Yes to any of questions 1 to 4: positive screen"'], Instrument::differences(self::with($asq, $renumbered), self::ref($asq)));
+        // TAPS-1's cut-points for a possible substance use disorder are two rules in one paragraph.
+        $taps = self::doc('taps-1');
+        $cut = array_values(array_filter($taps->blocks, static fn(array $b): bool => !($b['type'] === 'paragraph' && str_contains($b['text'], 'Gryczynski'))));
+        self::assertCount(2, Instrument::differences(self::with($taps, $cut), self::ref($taps)));
+        // And a rule naming a question the instrument doesn't have is the reference's fault, said as such.
+        $ref = self::ref($asq);
+        $ref['rules'][0]['questions'][] = '44250-9';
+        self::assertStringContainsString("names 44250-9, which isn't one of the instrument's questions", implode("\n", Instrument::differences($asq, $ref)));
     }
 
     public function testCatchesATranslationThatChangesTheScoring(): void

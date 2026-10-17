@@ -32,8 +32,8 @@ final class PdfWriter implements OfficeWriter
         .lh .line { font-size: 8.5pt; }
         .fields { width: 100%; margin: 3pt 0 5pt 0; }
         .fields td { padding: 2pt 4pt 2pt 0; vertical-align: bottom; }
-        .fields .label { font-weight: bold; white-space: nowrap; width: 1%; }
-        .fields .value { border-bottom: 0.6pt solid #000; }
+        .fields .label { font-weight: bold; white-space: nowrap; }
+        .fields .value { border-bottom: 0.6pt solid #000; width: 30%; }
         .label-only { font-weight: bold; margin: 6pt 0 2pt 0; }
         .item { margin: 1pt 0 1pt 0; }
         .rules { width: 100%; }

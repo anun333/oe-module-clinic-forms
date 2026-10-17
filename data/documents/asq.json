@@ -1,0 +1,139 @@
+{
+    "id": "asq",
+    "title": "Ask Suicide-Screening Questions (ASQ)",
+    "category": "Screening",
+    "about": "NIMH's suicide risk screen for patients aged 8 and over in medical settings: four yes or no questions asked by a nurse or clinician, and an acuity question when any is answered Yes. There is no total; the result is a negative, non-acute positive or acute positive screen.",
+    "audience": "staff",
+    "code": {
+        "system": "http://loinc.org",
+        "code": "115564-7",
+        "display": "Ask Suicide-Screening Questions (ASQ) Tool"
+    },
+    "validated": true,
+    "version": 1,
+    "status": "active",
+    "source": {
+        "kind": "instrument",
+        "name": "Ask Suicide-Screening Questions (ASQ) Suicide Risk Screening Tool, NIMH Toolkit (revised 9/29/25)",
+        "url": "https://www.nimh.nih.gov/research/research-conducted-at-nimh/asq-toolkit-materials"
+    },
+    "licence": {
+        "holder": "National Institute of Mental Health (NIMH)",
+        "terms": "A public domain tool, free of charge (NIMH ASQ Toolkit).",
+        "permission": "None needed (public domain)."
+    },
+    "blocks": [
+        {
+            "type": "fields",
+            "fields": [
+                {
+                    "label": "Name",
+                    "value": "{patient.name}"
+                },
+                {
+                    "label": "Date of birth",
+                    "value": "{patient.dob}"
+                },
+                {
+                    "label": "Date"
+                }
+            ]
+        },
+        {
+            "type": "scale",
+            "label": "Ask the patient:",
+            "columns": [
+                "Yes",
+                "No"
+            ],
+            "items": [
+                "In the past few weeks, have you wished you were dead?",
+                "In the past few weeks, have you felt that you or your family would be better off if you were dead?",
+                "In the past week, have you been having thoughts about killing yourself?",
+                "Have you ever tried to kill yourself?"
+            ]
+        },
+        {
+            "type": "checklist",
+            "label": "If yes, when was the most recent attempt?",
+            "items": [
+                "Within last 12 months",
+                "Over 1 year ago"
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "If the patient answers Yes to any of questions 1 to 4, ask the following acuity question:"
+        },
+        {
+            "type": "checklist",
+            "label": "5. Are you having thoughts of killing yourself right now?",
+            "items": [
+                "Yes",
+                "No"
+            ]
+        },
+        {
+            "type": "lines",
+            "label": "If yes, describe briefly:",
+            "count": 2
+        },
+        {
+            "type": "heading",
+            "text": "Screening result and next steps"
+        },
+        {
+            "type": "paragraph",
+            "text": "No to all of questions 1 to 4: negative screen. No intervention is necessary at this time. Clinical judgment can always override a negative screen."
+        },
+        {
+            "type": "paragraph",
+            "text": "Yes to any of questions 1 to 4 is a positive screen. Then question 5 decides what happens next."
+        },
+        {
+            "type": "paragraph",
+            "text": "Yes to question 5: acute positive screen (imminent or acute risk identified). The patient requires a STAT or urgent safety and full mental health evaluation, and cannot leave until evaluated for safety. Keep the patient in sight. Remove dangerous objects from the room if possible. Alert the clinician responsible for the patient's care."
+        },
+        {
+            "type": "paragraph",
+            "text": "No to question 5: non-acute positive screen (potential risk identified). The patient needs a brief suicide safety assessment to decide whether a full mental health evaluation is needed, and when. Non-acute positive status does not require 1-to-1 observation while the patient waits, unless there are other safety concerns. Alert the clinician responsible for the patient's care."
+        },
+        {
+            "type": "paragraph",
+            "text": "Exceptions: when the positive screen is only from Yes on question 4 (a suicide attempt in the patient's lifetime), a brief suicide safety assessment may not be necessary if, for adults, the most recent attempt was over 1 year ago; for youth and young adults (for example under age 25), the most recent attempt was over 1 year ago and a brief suicide safety assessment has been documented since that attempt."
+        },
+        {
+            "type": "paragraph",
+            "text": "If an adult patient, or the parent or guardian of a youth patient, refuses the brief suicide safety assessment, document the refusal. The patient can be permitted to leave unless there are other safety concerns. A follow-up call is recommended."
+        },
+        {
+            "type": "paragraph",
+            "text": "If the patient refuses to answer the screening questions: for youth, refusal is considered a non-acute positive screen. For adults, refusal is not considered a positive screen; no intervention is necessary at this time unless there are other safety concerns. Document the refusal."
+        },
+        {
+            "type": "paragraph",
+            "text": "Provide resources to all patients: the 988 Suicide and Crisis Lifeline (call or text 988, or 988lifeline.org) and the Crisis Text Line (text HOME or HOLA to 741741, or crisistextline.org)."
+        },
+        {
+            "type": "fields",
+            "fields": [
+                {
+                    "label": "Screening result"
+                },
+                {
+                    "label": "Asked by"
+                },
+                {
+                    "label": "Clinician alerted (if positive)"
+                },
+                {
+                    "label": "Entered into OpenEMR by"
+                }
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "Ask Suicide-Screening Questions (ASQ) Suicide Risk Screening Tool, NIMH Toolkit (revised 9/29/25), www.nimh.nih.gov/asq. A public domain tool, free of charge."
+        }
+    ]
+}

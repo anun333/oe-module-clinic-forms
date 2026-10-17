@@ -13,6 +13,12 @@ declare(strict_types=1);
 
 const LOINC_NOTICE = 'This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.';
 
+/**
+ * What a reference holds that LOINC can't give, written by hand with its source and kept when the
+ * reference is fetched again.
+ */
+const LOINC_HAND_FIELDS = ['instrument', 'title', 'about', 'instructions', 'licence', 'source', 'cutoffs', 'cutoffs_source', 'rules', 'rules_source', 'scoring', 'accepted'];
+
 /** The Authorization header for fhir.loinc.org, from LOINC_USER and LOINC_PASSWORD; exits without them. */
 function loincAuth(): string
 {
@@ -123,30 +129,36 @@ function loincInstrument(string $loinc, string $auth): array
 
 /**
  * The published instrument's scoring where LOINC's differs or is missing, written by hand in a
- * reference's "scoring": {"overrides": {"<question code>": {"unscored": true} | {"scores": {"Yes": 2, "No": 0}}}, "source": {...}}.
- * A question or answer an override names that LOINC doesn't have is an error, not ignored.
+ * reference's "scoring": {"overrides": {"<question code>": {"unscored": true} | {"scores": {"Yes": 2, "No": 0}}
+ * | {"order": ["Never", ...]} | {"answers_from": "<question code>"}}, "source": {...}}. "scores" and
+ * "order" put the answers in the order they list, as the published form prints them. "answers_from"
+ * gives a question LOINC has as free text the answers of another, as they stand after that one's own
+ * override (TAPS's prescription question has none in LOINC, and the published tool asks it with the
+ * same five as the others). A question or answer an override names that LOINC doesn't have is an
+ * error, not ignored.
  */
 function loincApplyScoring(array $questions, array $overrides): array
 {
     $codes = array_column($questions, 'code');
-    foreach (array_keys($overrides) as $code) {
-        if (!in_array((string)$code, $codes, true)) {
-            throw new RuntimeException("scoring override for $code, which isn't one of the instrument's questions");
+    foreach ($overrides as $code => $o) {
+        foreach (array_filter([(string)$code, (string)($o['answers_from'] ?? '')]) as $named) {
+            if (!in_array($named, $codes, true)) {
+                throw new RuntimeException("scoring override names $named, which isn't one of the instrument's questions");
+            }
         }
     }
     foreach ($questions as &$q) {
         $o = $overrides[$q['code']] ?? null;
-        if ($o === null) {
+        if ($o === null || isset($o['answers_from'])) {
             continue;
         }
+        $texts = array_column($q['answers'], 'text');
         if (!empty($o['unscored'])) {
             foreach ($q['answers'] as &$a) {
                 $a['score'] = null;
             }
             unset($a);
-            continue;
         }
-        $texts = array_column($q['answers'], 'text');
         foreach (array_keys($o['scores'] ?? []) as $text) {
             if (!in_array((string)$text, $texts, true)) {
                 throw new RuntimeException("scoring override for {$q['code']} names the answer \"$text\", which LOINC's question doesn't have");
@@ -160,11 +172,47 @@ function loincApplyScoring(array $questions, array $overrides): array
         unset($a);
         // The answers in the order the override lists them, as the published form prints them
         // (LOINC's list for STEADI's "I have fallen in the past year" runs No, Yes; the form, Yes, No).
-        $order = array_flip(array_map('strval', array_keys($o['scores'] ?? [])));
+        $listed = isset($o['order']) ? array_map('strval', $o['order']) : array_map('strval', array_keys($o['scores'] ?? []));
+        if (isset($o['order']) && (count($listed) !== count($texts) || array_diff($texts, $listed) !== [])) {
+            throw new RuntimeException("scoring override for {$q['code']} orders the answers " . implode(', ', $listed) . ' where LOINC has ' . implode(', ', $texts));
+        }
+        $order = array_flip($listed);
         usort($q['answers'], static fn(array $x, array $y): int => ($order[$x['text']] ?? PHP_INT_MAX) <=> ($order[$y['text']] ?? PHP_INT_MAX));
     }
     unset($q);
+    $byCode = array_combine($codes, $questions);
+    foreach ($questions as &$q) {
+        $from = $overrides[$q['code']]['answers_from'] ?? null;
+        if ($from === null) {
+            continue;
+        }
+        if ($q['answers'] !== []) {
+            throw new RuntimeException("{$q['code']} has answers in LOINC; \"answers_from\" is for a question that has none");
+        }
+        $q['answers'] = $byCode[(string)$from]['answers'];
+    }
+    unset($q);
     return $questions;
+}
+
+/**
+ * LOINC's questionnaire items with no answers: free text ("If yes, describe briefly"), not questions
+ * a check can compare. Each is kept with the question it follows, for the document to give it lines.
+ *
+ * @return array{0: list<array>, 1: list<array{code: string, text: string, after: ?string}>} the questions, and the free text
+ */
+function loincFreeText(array $questions): array
+{
+    $choice = [];
+    $free = [];
+    foreach ($questions as $q) {
+        if ($q['answers'] === []) {
+            $free[] = ['code' => $q['code'], 'text' => $q['text'], 'after' => $choice === [] ? null : end($choice)['code']];
+        } else {
+            $choice[] = $q;
+        }
+    }
+    return [$choice, $free];
 }
 
 /** Questions some of whose answers have a score and others none: a gap in the scoring to fill by hand. */

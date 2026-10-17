@@ -1,0 +1,96 @@
+{
+    "id": "taps-1",
+    "title": "Substance Use Screen (TAPS-1)",
+    "category": "Screening",
+    "about": "The first part of NIDA's TAPS Tool: how often in the past 12 months the patient used tobacco, alcohol, drugs, and prescription medications not as prescribed. There is no total; any answer other than Never is a positive screen for that substance.",
+    "audience": "patient",
+    "code": {
+        "system": "http://loinc.org",
+        "code": "96841-2",
+        "display": "Tobacco, Alcohol, Prescription medications, and other Substance use screen"
+    },
+    "validated": true,
+    "version": 1,
+    "status": "active",
+    "source": {
+        "kind": "instrument",
+        "name": "Tobacco, Alcohol, Prescription medication, and other Substance use (TAPS) Tool, Part 1, NIDA Clinical Trials Network",
+        "url": "https://www.phenxtoolkit.org/protocols/view/511601"
+    },
+    "licence": {
+        "holder": "National Institute on Drug Abuse (NIDA) Clinical Trials Network",
+        "terms": "Developed in the NIDA Clinical Trials Network (CTN-0059); in the public domain.",
+        "permission": "None needed (public domain)."
+    },
+    "blocks": [
+        {
+            "type": "fields",
+            "fields": [
+                {
+                    "label": "Name",
+                    "value": "{patient.name}"
+                },
+                {
+                    "label": "Date of birth",
+                    "value": "{patient.dob}"
+                },
+                {
+                    "label": "Date"
+                }
+            ]
+        },
+        {
+            "type": "scale",
+            "label": "Check one box for each question. Answer question 2 or question 3, not both.",
+            "columns": [
+                "Never",
+                "Less than monthly",
+                "Monthly",
+                "Weekly",
+                "Daily or almost daily"
+            ],
+            "items": [
+                "In the PAST 12 MONTHS, how often have you used any tobacco product (for example, cigarettes, e-cigarettes, cigars, pipes, or smokeless tobacco)?",
+                "For men: In the PAST 12 MONTHS, how often have you had 5 or more drinks containing alcohol in one day?",
+                "For women: In the PAST 12 MONTHS, how often have you had 4 or more drinks containing alcohol in one day?",
+                "In the PAST 12 MONTHS, how often have you used any drugs including marijuana, cocaine or crack, heroin, methamphetamine (crystal meth), hallucinogens, ecstasy/MDMA?",
+                "In the PAST 12 MONTHS, how often have you used any prescription medications just for the feeling, more than prescribed or that were not prescribed for you?"
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "One standard drink is about 1 small glass of wine (5 oz), 1 beer (12 oz), or 1 single shot of liquor."
+        },
+        {
+            "type": "paragraph",
+            "text": "Prescription medications that may be used this way include opiate pain relievers (for example, OxyContin, Vicodin, Percocet, methadone), medications for anxiety or sleeping (for example, Xanax, Ativan, Klonopin), and medications for ADHD (for example, Adderall or Ritalin)."
+        },
+        {
+            "type": "heading",
+            "text": "For office use"
+        },
+        {
+            "type": "paragraph",
+            "text": "Any answer other than Never is a positive screen for that substance (McNeely 2016). The TAPS Tool goes on to ask about that substance in the past 3 months (TAPS-2)."
+        },
+        {
+            "type": "paragraph",
+            "text": "Published cut-points for a possible substance use disorder (Gryczynski 2017): Monthly or more often on questions 1 to 3 (tobacco and alcohol), or any use on questions 4 and 5 (drugs, and prescription medications not used as prescribed). They are a reason to assess further, not a diagnosis."
+        },
+        {
+            "type": "fields",
+            "fields": [
+                {
+                    "label": "Reviewed by"
+                },
+                {
+                    "label": "Entered into OpenEMR by"
+                }
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "TAPS Tool Part 1 (TAPS-1), developed in the NIDA Clinical Trials Network (CTN-0059); in the public domain."
+        }
+    ]
+}
