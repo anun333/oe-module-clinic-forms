@@ -1,0 +1,139 @@
+{
+    "instrument": "Hunger Vital Sign",
+    "loinc": "88121-9",
+    "loinc_version": "2.83",
+    "from": "fhir.loinc.org Questionnaire/88121-9 (questions, answers); scores and answer order from LOINC's answer lists via clinicaltables.nlm.nih.gov loinc_items; scoring as published where LOINC differs: see \"scoring\"",
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "questions": [
+        {
+            "code": "88122-7",
+            "text": "Within the past 12Mo we worried whether our food would run out before we got money to buy more",
+            "answers": [
+                {
+                    "code": "LA28397-0",
+                    "text": "Often true",
+                    "score": null
+                },
+                {
+                    "code": "LA6729-3",
+                    "text": "Sometimes true",
+                    "score": null
+                },
+                {
+                    "code": "LA28398-8",
+                    "text": "Never true",
+                    "score": null
+                }
+            ]
+        },
+        {
+            "code": "88123-5",
+            "text": "Within the past 12Mo the food we bought just didn't last and we didn't have money to get more",
+            "answers": [
+                {
+                    "code": "LA28397-0",
+                    "text": "Often true",
+                    "score": null
+                },
+                {
+                    "code": "LA6729-3",
+                    "text": "Sometimes true",
+                    "score": null
+                },
+                {
+                    "code": "LA28398-8",
+                    "text": "Never true",
+                    "score": null
+                }
+            ]
+        },
+        {
+            "code": "88124-3",
+            "text": "Food insecurity risk",
+            "answers": [
+                {
+                    "code": "LA19952-3",
+                    "text": "At risk",
+                    "score": null
+                },
+                {
+                    "code": "LA19983-8",
+                    "text": "No risk",
+                    "score": null
+                }
+            ]
+        }
+    ],
+    "total": {
+        "min": 0,
+        "max": 0
+    },
+    "title": "Hunger Vital Sign™ (Food Insecurity Screen)",
+    "about": "Two statements about the household's food in the past 12 months, from Children's HealthWatch. It has no total: often or sometimes true to either is a positive screen, at risk for food insecurity.",
+    "instructions": "For each statement, check whether it was often true, sometimes true, or never true for your household.",
+    "licence": {
+        "holder": "Children's HealthWatch (© 2010 Dr. Erin Hager, Dr. Anna Quigg and the Children's HealthWatch research team)",
+        "terms": "No fee or license is required to use it; cite Hager ER, Quigg AM, Black MM, et al. Development and validity of a 2-item screen to identify families at risk for food insecurity. Pediatrics. 2010;126(1):e26-32. Hunger Vital Sign™ is a trademark of Children's HealthWatch.",
+        "permission": "None needed beyond the citation (Children's HealthWatch; CMS's AHC screening tool citation table, September 2021: any organization can use these questions as long as they cite them)."
+    },
+    "source": {
+        "name": "The Hunger Vital Sign™, Children's HealthWatch",
+        "url": "https://childrenshealthwatch.org/public-policy/hunger-vital-sign/"
+    },
+    "rules": [
+        {
+            "if": "any",
+            "questions": [
+                "88122-7",
+                "88123-5"
+            ],
+            "answers": [
+                "Often true",
+                "Sometimes true"
+            ],
+            "meaning": "positive screen"
+        },
+        {
+            "if": "all",
+            "questions": [
+                "88122-7",
+                "88123-5"
+            ],
+            "answers": [
+                "Never true"
+            ],
+            "meaning": "negative screen"
+        }
+    ],
+    "rules_source": {
+        "citation": "Hager ER, Quigg AM, Black MM, et al. Pediatrics. 2010;126(1):e26-32; Children's HealthWatch, The Hunger Vital Sign.",
+        "short": "Hager 2010",
+        "pmid": "20595453",
+        "url": "https://childrenshealthwatch.org/public-policy/hunger-vital-sign/",
+        "stated": "Hager 2010 abstract: \"An affirmative response to either question 1 or 2 had a sensitivity of 97% and specificity of 83%.\" Children's HealthWatch: a household screens positive if it answers that either or both statements is \"often true\" or \"sometimes true\" (versus \"never true\")."
+    },
+    "scoring": {
+        "overrides": {
+            "88122-7": {
+                "unscored": true,
+                "leave_out": [
+                    "DK or Refused"
+                ]
+            },
+            "88123-5": {
+                "unscored": true,
+                "leave_out": [
+                    "DK or Refused"
+                ]
+            }
+        },
+        "source": {
+            "citation": "Children's HealthWatch, The Hunger Vital Sign",
+            "url": "https://childrenshealthwatch.org/public-policy/hunger-vital-sign/",
+            "stated": "The tool asks whether each statement is \"often true,\" \"sometimes true,\" or \"never true\"; it has no total, a positive screen being either statement often or sometimes true. LOINC's answer lists add \"DK or Refused\" (unscored) and score the other answers 1, 1, 0."
+        }
+    },
+    "accepted": {
+        "questions": []
+    }
+}

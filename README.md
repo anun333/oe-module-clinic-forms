@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.22.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.23.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -50,6 +50,7 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Screening | Geriatric Depression Scale, Short Form (GDS-15) | Fifteen yes or no questions for older adults, scored 0 to 15 | 48543-3 | any |
 | Screening | Check Your Risk for Falling (Stay Independent) | CDC's STEADI falls checklist, scored 0 to 14 | 97874-2 | any |
 | Screening | Ask Suicide-Screening Questions (ASQ) | NIMH's suicide risk screen, asked by a nurse or clinician, with NIMH's next steps for each result | 115564-7 | any |
+| Screening | Hunger Vital Sign™ (Food Insecurity Screen) | Children's HealthWatch's two statements; often or sometimes true to either is a positive screen | 88121-9 | US |
 | Screening | Food Security Screen (USDA Six-Item) | USDA's six questions on affording food in the last 12 months, scored 0 to 6 | 95361-2 | US |
 | Screening | Substance Use Screen (TAPS-1) | Tobacco, alcohol, drugs and prescription medications not used as prescribed, in the past year; any use is a positive screen for that substance | 96841-2 | any |
 | Care coordination | Referral letter | To the Address Book recipient, with urgency, the question to answer and what is enclosed | 57133-1 | any |
@@ -84,7 +85,7 @@ The format, and the rules every document follows, are in [docs/](docs/README.md)
 
 - **LOINC document codes** where an exact one exists (the table above), as OpenEMR's own C-CDA referral uses 57133-1. Each code is checked by its LOINC check digit; a document with no exact code is left uncoded rather than mislabeled.
 - **What the law says goes in.** `data/requirements.json` (the instruments' wording) and the US pack's `data/packs/us/requirements.json` list, for the documents a rule governs, each required element and its citation: the Notice of Privacy Practices (164.520(b)(1), element by element), the patient-rights requests (164.522, 164.524, 164.526, 164.528, 164.508(b)(5)), the Part 2 consent (42 CFR 2.31), the HIPAA authorization (45 CFR 164.508(c)), the privacy notice acknowledgment (164.520(c)(2)(ii)), the sliding fee application (HRSA Compliance Manual, chapter 9), the work or school note's minimum necessary (164.502(b)), and the PHQ-9 and GAD-7 wording. The tests fail if a shipped document loses one. A clinic's own version of one of these documents is checked too, and the Clinic Forms page names anything it can't find (by wording, so check before relying on the warning).
-- **Scored as published.** A screening score means what its validation study found only when the form is the instrument the study used. `data/instruments/` holds a reference for each validated instrument (PHQ-9, PHQ-2, GAD-7, AUDIT-C, PC-PTSD-5, GDS-15, CDC's Stay Independent falls check, the ASQ, TAPS-1 and USDA's six-item food security screen):
+- **Scored as published.** A screening score means what its validation study found only when the form is the instrument the study used. `data/instruments/` holds a reference for each validated instrument (PHQ-9, PHQ-2, GAD-7, AUDIT-C, PC-PTSD-5, GDS-15, CDC's Stay Independent falls check, the ASQ, TAPS-1, the Hunger Vital Sign and USDA's six-item food security screen):
   - its questions and answers from LOINC's own questionnaire, and each answer's points from LOINC's answer lists;
   - its total range;
   - the published cut-offs, each with its paper (PubMed id) or the owner's document, and the sentence that states it;
@@ -98,7 +99,7 @@ The format, and the rules every document follows, are in [docs/](docs/README.md)
 - **Plain language.** Every patient document reads at an 8th-grade level or below (Flesch-Kincaid), as AHRQ's health literacy toolkit advises; the tests measure it. Validated instruments (PHQ-9, GAD-7) keep their published wording and are exempt.
 - Each document says who reads it (patient, staff or provider) and whether its wording is a validated instrument's.
 - **Each document has a version**, printed small at the foot of every page with its id (`consent-to-treat v1`) and recorded in the audit event, so a signed copy names the wording the patient signed. A version means one wording: the tests fail if a document's wording changes without its version being raised.
-- **Each document says where its wording comes from and on what terms:** written for Clinic Forms, written to a rule's elements (with a link to the rule), or a published instrument (with its holder, terms and the permission they give: PHQ-9, PHQ-2 and GAD-7 from Pfizer, "no permission required"; AUDIT-C from the WHO manual; PC-PTSD-5 from the VA, the ASQ from NIMH, TAPS-1 from NIDA, Stay Independent from CDC and the GDS-15 from its developers, all public domain).
+- **Each document says where its wording comes from and on what terms:** written for Clinic Forms, written to a rule's elements (with a link to the rule), or a published instrument (with its holder, terms and the permission they give: PHQ-9, PHQ-2 and GAD-7 from Pfizer, "no permission required"; AUDIT-C from the WHO manual; the Hunger Vital Sign from Children's HealthWatch, free with its citation; PC-PTSD-5 from the VA, the ASQ from NIMH, TAPS-1 from NIDA, Stay Independent from CDC and the GDS-15 from its developers, all public domain; documents written for Clinic Forms, CC0).
 
 ### The documents are starting points
 
@@ -289,4 +290,9 @@ The tests need no database: they cover the document library (every shipped docum
 
 ## License
 
-GPL-3.0-or-later. See [LICENSE](LICENSE).
+- **The code** (`src/`, `public/`, `tools/`, `tests/` and the module's wiring) is GPL-3.0-or-later, as OpenEMR is. See [LICENSE](LICENSE).
+- **The documents written for Clinic Forms**, their translations, the packets and the lists of required elements (`data/`) are dedicated to the public domain under CC0 1.0 ([LICENSES/CC0-1.0.txt](LICENSES/CC0-1.0.txt)). They are forms to adapt and print: use them, change them and share them with no credit needed. Each document's own `"licence"` says which terms it is under.
+- **Except what other people own**, which keeps its owners' terms. Each document names its holder and terms:
+  - the screening instruments: PHQ-9, PHQ-2 and GAD-7 from Pfizer ("no permission required to reproduce, translate, display or distribute"); AUDIT-C from the WHO manual (not for sale); the Hunger Vital Sign™ from Children's HealthWatch (no fee or license, with its citation; the name is their trademark); the rest public domain (VA, NIMH, NIDA, CDC, USDA, and the GDS-15's developers);
+  - LOINC's codes, names and questionnaires in `data/instruments/`, under the [LOINC licence](https://loinc.org/license/) (Regenstrief Institute);
+  - the CIEL concept numbers in `data/ciel.json`, under CC BY 4.0 (Columbia International eHealth Laboratory, via Open Concept Lab).

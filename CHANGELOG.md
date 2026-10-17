@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.23.0 (2026-10-17)
+
+**The documents are CC0, and the Hunger Vital Sign.**
+
+- **Licences.**
+  - **The documents written for Clinic Forms**, their translations, the packets and the lists of required elements are now dedicated to the public domain under **CC0 1.0** ([LICENSES/CC0-1.0.txt](LICENSES/CC0-1.0.txt)). They were GPL-3.0-or-later, like the code. A consent or notice is a form to adapt and print. Under GPL, it was unclear what counted as the "source" of a clinic's changed form. Attribution under CC BY would put a credit line on every patient form. With CC0, clinics and other projects can use them as they are, or change them, with no conditions.
+  - **The code** stays GPL-3.0-or-later.
+  - **The instruments keep their owners' terms**, which each document names, as do LOINC's content and CIEL's concept numbers.
+  - No document's wording or version changed.
+- **Hunger Vital Sign™ (Food Insecurity Screen)**, in the US pack: Children's HealthWatch's two statements about the household's food in the past 12 months.
+  - Often or sometimes true to either is a positive screen, at risk for food insecurity (Hager 2010: sensitivity 97%, specificity 83%). It is checked as a screen read by rule, with an office line for the result.
+  - It is printed in Children's HealthWatch's wording with their three answers. LOINC's "DK or Refused" is left out: a reference can now leave out answers the published form doesn't print (`"leave_out"`), with the source.
+  - Children's HealthWatch asks no fee or license, only the citation, which the document prints.
+- **CMS's social-needs screen (AHC HRSN) is not included yet.** CMS secured its questions' permissions for its own model only. Outside it, several questions' authors ask to be told before their questions are used:
+  - the PRAPARE living-situation and transportation questions;
+  - the utilities question;
+  - the four HITS safety questions.
+
+  Its food questions are the Hunger Vital Sign, now here.
+- **Documents changed in this release:** one new (version 1).
+
 ## 0.22.0 (2026-10-17)
 
 **OpenMRS 3 forms for the instruments CIEL carries.**

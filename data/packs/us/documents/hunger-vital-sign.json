@@ -1,0 +1,91 @@
+{
+  "id": "hunger-vital-sign",
+  "title": "Hunger Vital Sign™ (Food Insecurity Screen)",
+  "category": "Screening",
+  "about": "Two statements about the household's food in the past 12 months, from Children's HealthWatch. It has no total: often or sometimes true to either is a positive screen, at risk for food insecurity.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "88121-9",
+    "display": "Children's HealthWatch Hunger Vital Sign"
+  },
+  "validated": true,
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "instrument",
+    "name": "The Hunger Vital Sign™, Children's HealthWatch",
+    "url": "https://childrenshealthwatch.org/public-policy/hunger-vital-sign/"
+  },
+  "licence": {
+    "holder": "Children's HealthWatch (© 2010 Dr. Erin Hager, Dr. Anna Quigg and the Children's HealthWatch research team)",
+    "terms": "No fee or license is required to use it; cite Hager ER, Quigg AM, Black MM, et al. Development and validity of a 2-item screen to identify families at risk for food insecurity. Pediatrics. 2010;126(1):e26-32. Hunger Vital Sign™ is a trademark of Children's HealthWatch.",
+    "permission": "None needed beyond the citation (Children's HealthWatch; CMS's AHC screening tool citation table, September 2021: any organization can use these questions as long as they cite them)."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "For each statement, check whether it was often true, sometimes true, or never true for your household.",
+      "columns": [
+        "Often true",
+        "Sometimes true",
+        "Never true"
+      ],
+      "items": [
+        "Within the past 12 months we worried whether our food would run out before we got money to buy more.",
+        "Within the past 12 months the food we bought just didn't last and we didn't have money to get more."
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "paragraph",
+      "text": "Often true or Sometimes true to either question 1 or 2: positive screen, at risk for food insecurity (Hager 2010)."
+    },
+    {
+      "type": "paragraph",
+      "text": "Never true to both questions 1 and 2: negative screen."
+    },
+    {
+      "type": "checklist",
+      "label": "Food insecurity risk",
+      "items": [
+        "At risk",
+        "No risk"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Entered into OpenEMR by"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "The Hunger Vital Sign™, Children's HealthWatch. No fee or license is required to use it; cite Hager ER, Quigg AM, Black MM, et al. Development and validity of a 2-item screen to identify families at risk for food insecurity. Pediatrics. 2010;126(1):e26-32. Hunger Vital Sign™ is a trademark of Children's HealthWatch."
+    }
+  ]
+}

@@ -130,7 +130,8 @@ function loincInstrument(string $loinc, string $auth): array
 /**
  * The published instrument's scoring where LOINC's differs or is missing, written by hand in a
  * reference's "scoring": {"overrides": {"<question code>": {"unscored": true} | {"scores": {"Yes": 2, "No": 0}}
- * | {"order": ["Never", ...]} | {"answers_from": "<question code>"}}, "source": {...}}. "scores" and
+ * | {"order": ["Never", ...]} | {"leave_out": ["DK or Refused"]} | {"answers_from": "<question code>"}}, "source": {...}}.
+ * "leave_out" drops answers LOINC lists that the published form doesn't print. "scores" and
  * "order" put the answers in the order they list, as the published form prints them. "answers_from"
  * gives a question LOINC has as free text the answers of another, as they stand after that one's own
  * override (TAPS's prescription question has none in LOINC, and the published tool asks it with the
@@ -152,6 +153,12 @@ function loincApplyScoring(array $questions, array $overrides): array
         if ($o === null || isset($o['answers_from'])) {
             continue;
         }
+        foreach ($o['leave_out'] ?? [] as $text) {
+            if (!in_array((string)$text, array_column($q['answers'], 'text'), true)) {
+                throw new RuntimeException("scoring override for {$q['code']} leaves out \"$text\", which LOINC's question doesn't have");
+            }
+        }
+        $q['answers'] = array_values(array_filter($q['answers'], static fn(array $a): bool => !in_array($a['text'], array_map('strval', $o['leave_out'] ?? []), true)));
         $texts = array_column($q['answers'], 'text');
         if (!empty($o['unscored'])) {
             foreach ($q['answers'] as &$a) {
