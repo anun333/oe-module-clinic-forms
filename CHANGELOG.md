@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.22.0 (2026-10-17)
+
+**OpenMRS 3 forms for the instruments CIEL carries.**
+
+- **`tools/export-o3.php`** writes each validated instrument that CIEL can carry as an OpenMRS 3 form, the JSON the O3 Form Builder takes.
+  - Questions and answers are saved as CIEL concepts, by the UUIDs OpenMRS stores CIEL under. The answers are in the instrument's order and the document's words; text is shown as markdown.
+  - A form is written only when every question that counts (scored, or named by a published rule) has a CIEL concept whose answers are the instrument's.
+  - An unscored question CIEL lacks is left out and named in the form's description: PHQ-9's closing "how difficult…".
+  - Today that is **PHQ-9, PHQ-2 and GAD-7, in English and Spanish**.
+- **CIEL has no concepts for the other instruments' questions:** AUDIT-C, PC-PTSD-5, GDS-15, the ASQ, TAPS-1, Stay Independent and USDA's food security screen. They have no OpenMRS form; their FHIR Questionnaires carry LOINC's codes.
+  - This is read from CIEL's latest release (v2026-09-24), where CIEL links its PHQ-9 and GAD-7 questions to LOINC's as narrower terms ("over past two weeks").
+  - One of those links, for GAD-7's first question, carries a stray tab after the code.
+- **`data/ciel.json`** holds the concepts, by LOINC code. It is written from the CIEL release and names it, with CIEL's CC BY 4.0 attribution.
+- **How the forms were checked.**
+  - The six forms pass OpenMRS's published form schema.
+  - Each question is a coded CIEL question in use, and each answer is one of that question's own answers in CIEL, so the form engine offers and saves it.
+  - They have not yet been loaded into a running OpenMRS.
+- **One mapping for both exports.** Which of a document's questions are its instrument's now lives in `Instrument::matched()`, shared by the FHIR and OpenMRS exports.
+- **Documents changed in this release:** none.
+
 ## 0.21.2 (2026-10-17)
 
 - **FOOTPRINT.md counted local output.** 0.21.0's footprint listed 68 "other" files: the questionnaires `tools/export-questionnaires.php` writes to `build/`, which git ignores. CI checks out a fresh copy without them, so its footprint check failed on 0.21.0. The footprint now skips `build/`, and agrees between a working copy and a fresh clone. Nothing else changed.

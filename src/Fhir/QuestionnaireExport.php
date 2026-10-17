@@ -72,7 +72,7 @@ final readonly class QuestionnaireExport
      */
     public function questionnaire(Document $doc, ?Document $english = null): array
     {
-        $codes = self::instrumentCodes($doc, $english);
+        $codes = Instrument::matched($doc, $english);
         $q = ['resourceType' => 'Questionnaire', 'id' => $doc->id . ($doc->language !== 'en' ? '-' . $doc->language : '')];
         $q['language'] = $doc->language;
         if ($doc->source !== 'clinic') {
@@ -276,36 +276,6 @@ final readonly class QuestionnaireExport
             $item['answerOption'][] = $option;
         }
         return $item;
-    }
-
-    /**
-     * The instrument's question for each of the document's questions, by the document's question
-     * number (1 for the first scale row or labelled checklist), when the document is the instrument:
-     * a validated document whose check against its reference finds nothing, or a translation of one
-     * that keeps it. Questions the reference accepts as extra have none.
-     *
-     * @return ?array{reference: array, map: array<int, array>}
-     */
-    private static function instrumentCodes(Document $doc, ?Document $english): ?array
-    {
-        $checked = $doc->language !== 'en' ? $english : $doc;
-        if ($checked === null || !$checked->validated || ($checked->code['system'] ?? '') !== Loinc::SYSTEM) {
-            return null;
-        }
-        $reference = Instrument::reference((string)$checked->code['code']);
-        if ($reference === null || Instrument::differences($checked, $reference) !== []
-            || ($checked !== $doc && Instrument::translationDifferences($checked, $doc) !== [])) {
-            return null;
-        }
-        $extra = array_map('intval', array_keys($reference['accepted']['extra'] ?? []));
-        $map = [];
-        $next = 0;
-        foreach (array_keys(Instrument::questions($doc)) as $i) {
-            if (!in_array($i + 1, $extra, true) && isset($reference['questions'][$next])) {
-                $map[$i + 1] = $reference['questions'][$next++];
-            }
-        }
-        return ['reference' => $reference, 'map' => $map];
     }
 
     /**

@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.21.2, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.22.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -176,6 +176,8 @@ Choose **Español** as the language at the top of the Clinic Forms page. Documen
   - the HL7 FHIR validator (with the SDC guide). It notes three things that are expected: answer wording that differs from LOINC's display, the ASQ's codes being newer than the terminology server's LOINC, and LOINC's questionnaires not being fetchable;
   - OpenEMR 8.4.1's questionnaire import check;
   - OpenEMR's questionnaire runtime, which works out each instrument's total correctly.
+
+**For OpenMRS.** `tools/export-o3.php` writes each validated instrument that CIEL, the concept dictionary most OpenMRS sites load, can carry as an OpenMRS 3 form, for the O3 Form Builder. Its questions and answers are saved as CIEL concepts (`data/ciel.json`, from CIEL's latest release). Today that is the PHQ-9, PHQ-2 and GAD-7, in English and Spanish; PHQ-9's unscored closing question, which CIEL lacks, is left out and named in the form. CIEL has no concepts yet for the other instruments' questions (AUDIT-C, PC-PTSD-5, GDS-15, the ASQ, TAPS-1, Stay Independent and USDA's food security screen), so they have no OpenMRS form; their FHIR Questionnaires carry LOINC's codes. The forms pass OpenMRS's published form schema, and each concept and answer is checked against the CIEL release.
 
 **Your own documents, written in Word or LibreOffice.** Write a letter or form as you normally would, type placeholders where details belong, and an administrator adds it under **Add your own Word or LibreOffice documents** at the foot of the Clinic Forms page. It then appears under *Your Word and LibreOffice documents*, and staff download it filled with the letterhead, recipient and patient chosen at the top of the page.
 

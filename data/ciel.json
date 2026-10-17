@@ -1,0 +1,167 @@
+{
+  "about": "CIEL concepts for the validated instruments' questions and answers, by LOINC code, for OpenMRS forms. Written by the openhealthcare workspace's dev/ciel_map.py from the CIEL release named here; an instrument any of whose questions or answers isn't here has no OpenMRS form.",
+  "attribution": "Concept numbers from CIEL (Columbia International eHealth Laboratory), via Open Concept Lab, licensed CC BY 4.0. LOINC codes are LOINC's (Regenstrief Institute), under the LOINC licence.",
+  "ciel_release": "v2026-09-24",
+  "questions": {
+    "44250-9": {
+      "ciel": "167006",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    },
+    "44255-8": {
+      "ciel": "167007",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    },
+    "44259-0": {
+      "ciel": "167068",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    },
+    "44254-1": {
+      "ciel": "167069",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    },
+    "44251-7": {
+      "ciel": "167070",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    },
+    "44258-2": {
+      "ciel": "167071",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    },
+    "44252-5": {
+      "ciel": "167072",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    },
+    "44253-3": {
+      "ciel": "167073",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    },
+    "44260-8": {
+      "ciel": "167074",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    },
+    "69725-0": {
+      "ciel": "167003",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    },
+    "68509-9": {
+      "ciel": "167005",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    },
+    "69733-4": {
+      "ciel": "168591",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    },
+    "69734-2": {
+      "ciel": "167064",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    },
+    "69735-9": {
+      "ciel": "167065",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    },
+    "69689-8": {
+      "ciel": "167066",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    },
+    "69736-7": {
+      "ciel": "167067",
+      "map": "NARROWER-THAN",
+      "answers": {
+        "LA6568-5": "160215",
+        "LA6569-3": "167000",
+        "LA6570-1": "167001",
+        "LA6571-9": "167002"
+      }
+    }
+  }
+}

@@ -250,6 +250,37 @@ final class Instrument
     }
 
     /**
+     * The instrument's question for each of the document's questions, by the document's question
+     * number (1 for the first scale row or labelled checklist), when the document is the instrument:
+     * a validated document whose check against its reference finds nothing, or a translation of one
+     * that keeps it (checked through its English document). Questions the reference accepts as
+     * extra have none. Null when the document isn't its instrument, so an export claims no codes.
+     *
+     * @return ?array{reference: array, map: array<int, array>}
+     */
+    public static function matched(Document $doc, ?Document $english = null): ?array
+    {
+        $checked = $doc->language !== 'en' ? $english : $doc;
+        if ($checked === null || !$checked->validated || ($checked->code['system'] ?? '') !== Loinc::SYSTEM) {
+            return null;
+        }
+        $reference = self::reference((string)$checked->code['code']);
+        if ($reference === null || self::differences($checked, $reference) !== []
+            || ($checked !== $doc && self::translationDifferences($checked, $doc) !== [])) {
+            return null;
+        }
+        $extra = array_map('intval', array_keys($reference['accepted']['extra'] ?? []));
+        $map = [];
+        $next = 0;
+        foreach (array_keys(self::questions($doc)) as $i) {
+            if (!in_array($i + 1, $extra, true) && isset($reference['questions'][$next])) {
+                $map[$i + 1] = $reference['questions'][$next++];
+            }
+        }
+        return ['reference' => $reference, 'map' => $map];
+    }
+
+    /**
      * A clinic's own version of a validated instrument, checked like the shipped one: its own file
      * with a shipped instrument's id (a copy of the PHQ-9 is still the PHQ-9, whether or not it says
      * "validated"), or its own document marked validated with a LOINC code there is a reference for.
