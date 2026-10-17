@@ -482,8 +482,9 @@ $it = new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root, Filesy
 foreach ($it as $f) {
     $rel = substr($f->getPathname(), strlen($root) + 1);
     // Documentation and licence text change nothing a reviewer must check, and
-    // counting them would make every doc edit fail --check.
-    if (preg_match('#^(\.git|\.github|vendor|\.phpunit\.cache)/#', $rel) || str_ends_with($rel, '.md')
+    // counting them would make every doc edit fail --check. build/ is local output
+    // (git-ignored, absent from a fresh clone), so counting it made CI disagree.
+    if (preg_match('#^(\.git|\.github|vendor|\.phpunit\.cache|build)/#', $rel) || str_ends_with($rel, '.md')
         || in_array($rel, ['composer.lock', 'LICENSE', '.gitignore'], true)) {
         continue;
     }

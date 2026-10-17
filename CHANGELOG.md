@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.21.2 (2026-10-17)
+
+- **FOOTPRINT.md counted local output.** 0.21.0's footprint listed 68 "other" files: the questionnaires `tools/export-questionnaires.php` writes to `build/`, which git ignores. CI checks out a fresh copy without them, so its footprint check failed on 0.21.0. The footprint now skips `build/`, and agrees between a working copy and a fresh clone. Nothing else changed.
+
+## 0.21.1 (2026-10-17)
+
+- Tagged by mistake on 0.21.0's commit, before the fix above was committed: it is the same as 0.21.0. Use 0.21.2.
+
 ## 0.21.0 (2026-10-16)
 
 **Documents as FHIR Questionnaires, to fill on screen.**
