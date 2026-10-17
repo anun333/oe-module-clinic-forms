@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.20.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.21.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -166,6 +166,16 @@ Choose **Español** as the language at the top of the Clinic Forms page. Documen
 ## Word and LibreOffice
 
 **Edit before printing.** Tick documents and click **Word (.docx)** or **LibreOffice (.odt)** instead of *Open for printing*. You get one file with the same letterhead, recipient and patient details the printed packet would have, to change before printing: a referral letter's wording, a note's restrictions. It opens in Word, LibreOffice and Google Docs, and every page carries the patient line in its header. Layout forms (Demographics and the like) print from the browser only.
+
+**Fill on screen (FHIR Questionnaire).** Tick documents and click **FHIR Questionnaire (.json)** to download them as FHIR R4 Questionnaires: one file, or a Bundle when several are ticked. They are blank forms with the clinic's details and never a patient's (a field the chart fills, such as the patient's name, is left out, since a response names its patient), so no audit event is written. Register one in OpenEMR's Questionnaire Assessments form, or in another system that fills FHIR Questionnaires.
+
+- The validated instruments carry LOINC's question and answer codes, with the answers in the published order and each answer's points. Their total line adds the points up as the questions are answered, in OpenEMR's own questionnaire runtime (OpenEMR 8.3 and later).
+- A Spanish questionnaire shows its Spanish wording, with the same codes, when it keeps its English instrument. A clinic's own version that differs from its instrument carries no codes.
+- Each answer shows the paper form's wording, with LOINC's code.
+- Every shipped document and translation passes:
+  - the HL7 FHIR validator (with the SDC guide). It notes three things that are expected: answer wording that differs from LOINC's display, the ASQ's codes being newer than the terminology server's LOINC, and LOINC's questionnaires not being fetchable;
+  - OpenEMR 8.4.1's questionnaire import check;
+  - OpenEMR's questionnaire runtime, which works out each instrument's total correctly.
 
 **Your own documents, written in Word or LibreOffice.** Write a letter or form as you normally would, type placeholders where details belong, and an administrator adds it under **Add your own Word or LibreOffice documents** at the foot of the Clinic Forms page. It then appears under *Your Word and LibreOffice documents*, and staff download it filled with the letterhead, recipient and patient chosen at the top of the page.
 

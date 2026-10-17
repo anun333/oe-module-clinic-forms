@@ -32,6 +32,7 @@ final class Words
         'Date of birth' => 'Fecha de nacimiento',
         'Patient ID' => 'Número de paciente',
         'Date' => 'Fecha',
+        'Name' => 'Nombre',
         'please check and correct' => 'revise y corrija, por favor',
         'This is what we have on file. Cross out anything that is wrong and write the correction beside it, and fill in anything missing.'
             => 'Esta es la información que tenemos. Tache lo que esté mal, escriba la corrección al lado y complete lo que falte.',

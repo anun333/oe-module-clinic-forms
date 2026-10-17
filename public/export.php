@@ -3,7 +3,8 @@
 /**
  * Clinic Forms as files: the chosen documents as one Word (.docx), LibreOffice (.odt) or PDF file,
  * or one of the clinic's own Word or LibreOffice documents, filled with the same details the
- * printed packet would have. The file is built in memory and sent; nothing is stored, except with
+ * printed packet would have; or as FHIR Questionnaires ("fhir"), blank forms with the clinic's
+ * details and never a patient's. The file is built in memory and sent; nothing is stored, except with
  * "pdf-documents", which files the PDF in the patient's Documents instead of sending it.
  *
  * @package   OpenHealthcare\ClinicForms
@@ -18,6 +19,7 @@ use OpenHealthcare\ClinicForms\Office\OfficeExport;
 use OpenHealthcare\ClinicForms\Office\PdfWriter;
 use OpenHealthcare\ClinicForms\Office\TemplateFiller;
 use OpenHealthcare\ClinicForms\Compat\OpenEmr;
+use OpenHealthcare\ClinicForms\Fhir\QuestionnaireExport;
 use OpenHealthcare\ClinicForms\Office\TemplateLibrary;
 use OpenHealthcare\ClinicForms\Office\WordWriter;
 use OpenHealthcare\ClinicForms\Paper\Context;
@@ -42,7 +44,8 @@ $pid = (int)(OpenEmr::session('pid') ?? 0);
 $format = (string)($_POST['format'] ?? '');
 // A copy for the patient's Documents always names the patient whose chart it goes in.
 $toDocuments = $format === 'pdf-documents';
-$patient = ($toDocuments || !empty($_POST['fill_patient'])) && $pid > 0 ? $site->patient($pid) : [];
+$fhir = $format === 'fhir';
+$patient = !$fhir && ($toDocuments || !empty($_POST['fill_patient'])) && $pid > 0 ? $site->patient($pid) : [];
 $recipientId = (int)($_POST['recipient'] ?? 0);
 $today = function_exists('oeFormatShortDate') ? (string)oeFormatShortDate(date('Y-m-d')) : date('Y-m-d');
 $context = new Context(
@@ -94,11 +97,6 @@ if ($template !== '') {
     if ($toDocuments && ($patient === [] || !OpenEmr::canWriteDocuments())) {
         clinicFormsRefuse(403, $patient === [] ? xl('Choose a patient first: the PDF is saved in their Documents.') : xl('You are not allowed to add to patients Documents.'));
     }
-    $writer = match (true) {
-        $format === 'odt' => new OdtWriter(Words::t('Date', $language)),
-        str_starts_with($format, 'pdf') => new PdfWriter(Words::t('Date', $language), $context->value('patient.id')),
-        default => new WordWriter(Words::t('Date', $language)),
-    };
     $library = DocumentLibrary::forSite($siteDir, $language, $pack?->id, $region);
     $documents = [];
     foreach (explode(',', (string)($_POST['order'] ?? '')) as $item) {
@@ -112,9 +110,29 @@ if ($template !== '') {
     if ($documents === []) {
         clinicFormsRefuse(400, xl('Tick at least one document. Layout forms (Demographics, History and the like) print from the browser only.'));
     }
-    $out = (new OfficeExport($context, $language, $taglines))->write($documents, $writer, $paper);
-    $ext = $writer->extension();
-    $mime = $writer->mimeType();
+    if ($fhir) {
+        // A translation carries its instrument's codes only when it keeps the English document's instrument.
+        $english = [];
+        $englishLibrary = $language === 'en' ? null : DocumentLibrary::forSite($siteDir, 'en', $pack?->id, $region);
+        foreach ($documents as $doc) {
+            $en = $englishLibrary?->get($doc->id);
+            if ($en !== null && $doc->language !== 'en') {
+                $english[$doc->id] = $en;
+            }
+        }
+        $out = json_encode((new QuestionnaireExport($context->withoutPatient(), $language, $taglines))->export($documents, $english), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR) . "\n";
+        $ext = 'json';
+        $mime = 'application/fhir+json';
+    } else {
+        $writer = match (true) {
+            $format === 'odt' => new OdtWriter(Words::t('Date', $language)),
+            str_starts_with($format, 'pdf') => new PdfWriter(Words::t('Date', $language), $context->value('patient.id')),
+            default => new WordWriter(Words::t('Date', $language)),
+        };
+        $out = (new OfficeExport($context, $language, $taglines))->write($documents, $writer, $paper);
+        $ext = $writer->extension();
+        $mime = $writer->mimeType();
+    }
     $titles = array_map(static fn($d): string => $d->title, $documents);
     $versions = array_map(static fn($d): string => $d->stamp(), $documents);
     $stem = count($documents) === 1 ? $documents[0]->id : 'clinic-forms';

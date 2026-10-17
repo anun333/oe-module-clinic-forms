@@ -296,6 +296,10 @@ foreach ($layouts as $form) {
                 <button type="submit" class="btn btn-outline-primary mt-2" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="pdf-documents"><?php echo xlt('Save a PDF copy in the patient chart'); ?></button>
                 <small class="form-text text-muted"><?php echo xlt('The ticked documents, filled for this patient, filed under Documents'); ?> (<?php echo text($documentsCategory); ?>).</small>
             <?php } ?>
+            <div class="mt-2">
+                <button type="submit" class="btn btn-outline-secondary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="fhir"><?php echo xlt('FHIR Questionnaire'); ?> (.json)</button>
+                <small class="form-text text-muted"><?php echo xlt('The ticked documents as blank forms to fill on screen, in OpenEMR questionnaires or another system. Never with patient details. Validated screening instruments carry their LOINC codes and points.'); ?></small>
+            </div>
         </div>
     </form>
 

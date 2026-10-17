@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.21.0 (2026-10-16)
+
+**Documents as FHIR Questionnaires, to fill on screen.**
+
+- **FHIR Questionnaire (.json)**, beside Word, LibreOffice and PDF. The ticked documents download as FHIR R4 Questionnaires: one file, or a Bundle of several.
+  - **Blank forms.** They carry the clinic's details and never a patient's, even with a patient chosen and filling ticked: a field the chart fills is left out, since a response names its patient. No audit event is written.
+  - **Coded instruments.** The validated instruments carry LOINC's question and answer codes, the published answer order, and each answer's points. Their total line adds the points up as the patient answers, in the FHIRPath that OpenEMR's own questionnaire runtime (8.3 and later) evaluates. LOINC's own questionnaires carry no points, and list PHQ-9's answers out of order.
+  - **Translations.** A Spanish questionnaire shows its Spanish wording with the same codes, when it keeps its English instrument.
+  - **Clinic versions.** A clinic's version that differs from its instrument carries no codes.
+  - **The rest of a document:** paragraphs are text; headings are groups; fields, lines, tables and signature blocks are things to fill in; ticked statements are yes or no.
+- **`tools/export-questionnaires.php`** writes every shipped document and translation as a Questionnaire.
+- **How the questionnaires were checked.** All 68 (46 documents, 22 translations) pass:
+  - **the HL7 FHIR validator**, with the SDC guide. It notes three things that are expected: answers show the form's wording rather than LOINC's display (a translation, or AUDIT-C's "2 to 4 times a month"); the ASQ's codes are newer than the terminology server's LOINC; and LOINC's questionnaires, named as each instrument's source, can't be fetched;
+  - **OpenEMR 8.4.1's questionnaire import check**, the same strict one its import uses;
+  - **OpenEMR's questionnaire runtime**, where every one compiles, and each of the 12 totals comes out right with the lowest-scoring answers and with the highest.
+
+  The end-to-end check downloads them from the page, finds no patient details, and has OpenEMR's runtime work out the PHQ-9 total.
+- **Documents changed in this release:** none.
+
 ## 0.20.0 (2026-10-16)
 
 **USDA's six-item food security screen, and two screening packets.**
