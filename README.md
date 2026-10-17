@@ -2,13 +2,13 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.23.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.24.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
 - **Paperwork.** Consents, releases, referral letters and office slips, filled from the facility record and, optionally, the open patient and an Address Book entry.
 - **Paper versions of layout forms.** Demographics, History, any active encounter form (LBF) and any transaction form (Referral and the like), printed as a blank form with tick boxes, date boxes and ruled lines. With the US pack, a short **UDS form** prints only the Demographics fields health center reporting reads (sex, gender identity and sexual orientation, race, ethnicity, language, household size and income, housing, agricultural work, military service), with the site's own answer lists. Clinics without a computer in every room can do intake on paper and type it in later, in the same order.
-- **Ready-made packets.** New patient intake, annual update, telehealth, referral and a downtime kit, and four screening packets: depression and anxiety; depression and alcohol; behavioral health, which adds PTSD and substance use; and older adults (falls and depression). Each opens as one document to print.
+- **Ready-made packets.** New patient intake, annual update, telehealth, referral and a downtime kit, and five screening packets: depression and anxiety; depression and alcohol; behavioral health, which adds PTSD and substance use; substance use (TAPS-1, then TAPS-2); and older adults (falls and depression). Each opens as one document to print.
 - **Spanish.** Every patient document prints in Spanish too, with the language assistance notices Section 1557 requires (see [Spanish and language assistance](#spanish-and-language-assistance)).
 - **Word and LibreOffice.** Any document downloads as a filled Word (.docx) or LibreOffice (.odt) file to edit before printing, and a clinic can write its own letters and forms in Word or LibreOffice and have them filled in (see [Word and LibreOffice](#word-and-libreoffice)).
 - **A PDF, and a copy in the chart.** The ticked documents download as one PDF, or are saved, filled for the patient, as a PDF in the patient's **Documents** (see [The chart number on every page, and a copy in the chart](#the-chart-number-on-every-page-and-a-copy-in-the-chart)).
@@ -53,6 +53,7 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Screening | Hunger Vital Sign™ (Food Insecurity Screen) | Children's HealthWatch's two statements; often or sometimes true to either is a positive screen | 88121-9 | US |
 | Screening | Food Security Screen (USDA Six-Item) | USDA's six questions on affording food in the last 12 months, scored 0 to 6 | 95361-2 | US |
 | Screening | Substance Use Screen (TAPS-1) | Tobacco, alcohol, drugs and prescription medications not used as prescribed, in the past year; any use is a positive screen for that substance | 96841-2 | any |
+| Screening | Substance Use Assessment (TAPS-2) | For a positive TAPS-1: yes or no questions about each substance in the past 3 months, each substance scored on its own | 96845-3 | any |
 | Care coordination | Referral letter | To the Address Book recipient, with urgency, the question to answer and what is enclosed | 57133-1 | any |
 | Care coordination | Request for Records | A request to another provider for a patient's records | — | any |
 | Office workflow | Patient Routing Slip | Travels with the patient: check-in, rooming, provider, checkout | — | any |
@@ -85,11 +86,12 @@ The format, and the rules every document follows, are in [docs/](docs/README.md)
 
 - **LOINC document codes** where an exact one exists (the table above), as OpenEMR's own C-CDA referral uses 57133-1. Each code is checked by its LOINC check digit; a document with no exact code is left uncoded rather than mislabeled.
 - **What the law says goes in.** `data/requirements.json` (the instruments' wording) and the US pack's `data/packs/us/requirements.json` list, for the documents a rule governs, each required element and its citation: the Notice of Privacy Practices (164.520(b)(1), element by element), the patient-rights requests (164.522, 164.524, 164.526, 164.528, 164.508(b)(5)), the Part 2 consent (42 CFR 2.31), the HIPAA authorization (45 CFR 164.508(c)), the privacy notice acknowledgment (164.520(c)(2)(ii)), the sliding fee application (HRSA Compliance Manual, chapter 9), the work or school note's minimum necessary (164.502(b)), and the PHQ-9 and GAD-7 wording. The tests fail if a shipped document loses one. A clinic's own version of one of these documents is checked too, and the Clinic Forms page names anything it can't find (by wording, so check before relying on the warning).
-- **Scored as published.** A screening score means what its validation study found only when the form is the instrument the study used. `data/instruments/` holds a reference for each validated instrument (PHQ-9, PHQ-2, GAD-7, AUDIT-C, PC-PTSD-5, GDS-15, CDC's Stay Independent falls check, the ASQ, TAPS-1, the Hunger Vital Sign and USDA's six-item food security screen):
+- **Scored as published.** A screening score means what its validation study found only when the form is the instrument the study used. `data/instruments/` holds a reference for each validated instrument (PHQ-9, PHQ-2, GAD-7, AUDIT-C, PC-PTSD-5, GDS-15, CDC's Stay Independent falls check, the ASQ, TAPS-1 and TAPS-2, the Hunger Vital Sign and USDA's six-item food security screen):
   - its questions and answers from LOINC's own questionnaire, and each answer's points from LOINC's answer lists;
   - its total range;
   - the published cut-offs, each with its paper (PubMed id) or the owner's document, and the sentence that states it;
-  - or, for a screen read by rule rather than by a total (the ASQ: Yes to any of questions 1 to 4 is a positive screen), its published rules, with their source.
+  - or, for a screen read by rule rather than by a total (the ASQ: Yes to any of questions 1 to 4 is a positive screen), its published rules, with their source;
+  - or, for an instrument scored in parts (TAPS-2 scores each substance), each part's questions and published cut-offs.
 
   The tests fail if a document's questions, their order, its answers, the points for each, its total range or a cut-off it prints differ, if it doesn't say a published rule with the questions it names, or if a translation changes any of them. A difference that is deliberate is listed in the reference with its reason (GAD-7's question 2 and PHQ-9's closing question follow Pfizer's printed form, not LOINC's coding of it). `tools/instrument-references.php` refreshes the references from LOINC (a free LOINC account) and keeps what was written by hand.
 

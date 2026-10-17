@@ -1,0 +1,805 @@
+{
+    "instrument": "TAPS-2",
+    "loinc": "96845-3",
+    "loinc_version": "2.83",
+    "from": "fhir.loinc.org Questionnaire/96845-3 (questions, answers); scores and answer order from LOINC's answer lists via clinicaltables.nlm.nih.gov loinc_items; scoring as published where LOINC differs: see \"scoring\"",
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "questions": [
+        {
+            "code": "96846-1",
+            "text": "In the PAST 3 MONTHS, did you smoke a cigarette containing tobacco?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96847-9",
+            "text": "In the PAST 3 MONTHS, did you usually smoke more than 10 cigarettes each day?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96848-7",
+            "text": "In the PAST 3 MONTHS, did you usually smoke within 30 minutes after waking?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96849-5",
+            "text": "In the PAST 3 MONTHS, did you have a drink containing alcohol?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96850-3",
+            "text": "In the PAST 3 MONTHS, did you have 4 or more drinks containing alcohol in a day?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96851-1",
+            "text": "In the PAST 3 MONTHS, did you have 5 or more drinks containing alcohol in a day?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96852-9",
+            "text": "In the PAST 3 MONTHS, have you tried and failed to control, cut down or stop drinking?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96853-7",
+            "text": "In the PAST 3 MONTHS, has anyone expressed concern about your drinking?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96854-5",
+            "text": "In the PAST 3 MONTHS, did you use marijuana (hash, weed)?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96855-2",
+            "text": "In the PAST 3 MONTHS, have you had a strong desire or urge to use marijuana at least once a week or more often?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96856-0",
+            "text": "In the PAST 3 MONTHS, has anyone expressed concern about your use of marijuana?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96857-8",
+            "text": "In the PAST 3 MONTHS, did you use cocaine, crack, or methamphetamine (crystal meth)?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96858-6",
+            "text": "In the PAST 3 MONTHS, did you use cocaine, crack, or methamphetamine (crystal meth) at least once a week or more often?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96859-4",
+            "text": "In the PAST 3 MONTHS, has anyone expressed concern about your use of cocaine, crack, or methamphetamine (crystal meth)?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96860-2",
+            "text": "In the PAST 3 MONTHS, did you use heroin?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96861-0",
+            "text": "In the PAST 3 MONTHS, have you tried and failed to control, cut down or stop using heroin?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96862-8",
+            "text": "In the PAST 3 MONTHS, has anyone expressed concern about your use of heroin?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96863-6",
+            "text": "In the PAST 3 MONTHS, did you use a prescription opiate pain reliever (for example, Percocet, Vicodin) not as prescribed or that was not prescribed for you?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96864-4",
+            "text": "In the PAST 3 MONTHS, have you tried and failed to control, cut down or stop using an opiate pain reliever?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96865-1",
+            "text": "In the PAST 3 MONTHS, has anyone expressed concern about your use of an opiate pain reliever?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96866-9",
+            "text": "In the PAST 3 MONTHS, did you use a medication for anxiety or sleep (for example, Xanax, Ativan, or Klonopin) not as prescribed or that was not prescribed for you?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96867-7",
+            "text": "In the PAST 3 MONTHS, have you had a strong desire or urge to use medications for anxiety or sleep at least once a week or more often?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96868-5",
+            "text": "In the PAST 3 MONTHS, has anyone expressed concern about your use of medication for anxiety or sleep?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96869-3",
+            "text": "In the PAST 3 MONTHS, did you use a medication for ADHD (for example, Adderall, Ritalin) not as prescribed or that was not prescribed for you?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96870-1",
+            "text": "In the PAST 3 MONTHS, did you use a medication for ADHD (for example, Adderall, Ritalin) at least once a week or more often?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96871-9",
+            "text": "In the PAST 3 MONTHS, has anyone expressed concern about your use of a medication for ADHD (for example, Adderall or Ritalin)?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "96872-7",
+            "text": "In the PAST 3 MONTHS, did you use any other illegal or recreational drug (for example, ecstasy/molly, GHB, poppers, LSD, mushrooms, special K, bath salts, synthetic marijuana ('spice'), whip-its, etc.)?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        }
+    ],
+    "free_text": [
+        {
+            "code": "96873-5",
+            "text": "In the PAST 3 MONTHS, what were the other drug(s) you used?",
+            "after": "96872-7"
+        },
+        {
+            "code": "86467-8",
+            "text": "Comments",
+            "after": "96872-7"
+        }
+    ],
+    "total": {
+        "min": 0,
+        "max": 27
+    },
+    "title": "Substance Use Assessment (TAPS-2)",
+    "about": "The second part of NIDA's TAPS Tool, for a positive TAPS-1: yes or no questions about each substance in the past 3 months. Each substance is scored on its own, by its number of Yes answers.",
+    "instructions": "In the PAST 3 MONTHS:",
+    "licence": {
+        "holder": "National Institute on Drug Abuse (NIDA) Clinical Trials Network",
+        "terms": "Developed in the NIDA Clinical Trials Network (CTN-0059); in the public domain.",
+        "permission": "None needed (public domain)."
+    },
+    "source": {
+        "name": "The TAPS Tool, Part 2, NIDA Clinical Trials Network (Web Version 2.0, 09-19-17)",
+        "url": "https://www.mass.gov/doc/substance-use-101-handout-1-taps-tool-parts-i-and-ii/download"
+    },
+    "subscales": [
+        {
+            "name": "Tobacco",
+            "questions": [
+                "96846-1",
+                "96847-9",
+                "96848-7"
+            ],
+            "field": "Tobacco score",
+            "cutoffs": [
+                {
+                    "score": 1,
+                    "meaning": "problem use"
+                },
+                {
+                    "score": 2,
+                    "meaning": "higher risk, a likely substance use disorder"
+                }
+            ]
+        },
+        {
+            "name": "Alcohol",
+            "questions": [
+                "96849-5",
+                "96850-3",
+                "96851-1",
+                "96852-9",
+                "96853-7"
+            ],
+            "one_of": [
+                [
+                    "96850-3",
+                    "96851-1"
+                ]
+            ],
+            "field": "Alcohol score",
+            "cutoffs": [
+                {
+                    "score": 1,
+                    "meaning": "problem use"
+                },
+                {
+                    "score": 2,
+                    "meaning": "higher risk, a likely substance use disorder"
+                }
+            ]
+        },
+        {
+            "name": "Marijuana",
+            "questions": [
+                "96854-5",
+                "96855-2",
+                "96856-0"
+            ],
+            "field": "Marijuana score",
+            "cutoffs": [
+                {
+                    "score": 1,
+                    "meaning": "problem use"
+                },
+                {
+                    "score": 2,
+                    "meaning": "higher risk, a likely substance use disorder"
+                }
+            ]
+        },
+        {
+            "name": "Cocaine or methamphetamine",
+            "questions": [
+                "96857-8",
+                "96858-6",
+                "96859-4"
+            ],
+            "field": "Cocaine or methamphetamine score",
+            "cutoffs": [
+                {
+                    "score": 1,
+                    "meaning": "assess further for a substance use disorder"
+                }
+            ]
+        },
+        {
+            "name": "Heroin",
+            "questions": [
+                "96860-2",
+                "96861-0",
+                "96862-8"
+            ],
+            "field": "Heroin score",
+            "cutoffs": [
+                {
+                    "score": 1,
+                    "meaning": "assess further for a substance use disorder"
+                }
+            ]
+        },
+        {
+            "name": "Prescription opiates",
+            "questions": [
+                "96863-6",
+                "96864-4",
+                "96865-1"
+            ],
+            "field": "Prescription opiates score",
+            "cutoffs": [
+                {
+                    "score": 1,
+                    "meaning": "assess further for a substance use disorder"
+                }
+            ]
+        },
+        {
+            "name": "Medications for anxiety or sleep",
+            "questions": [
+                "96866-9",
+                "96867-7",
+                "96868-5"
+            ],
+            "field": "Medications for anxiety or sleep score",
+            "cutoffs": [
+                {
+                    "score": 1,
+                    "meaning": "assess further for a substance use disorder"
+                }
+            ]
+        },
+        {
+            "name": "Medications for ADHD",
+            "questions": [
+                "96869-3",
+                "96870-1",
+                "96871-9"
+            ],
+            "field": "Medications for ADHD score",
+            "cutoffs": [
+                {
+                    "score": 1,
+                    "meaning": "assess further for a substance use disorder"
+                }
+            ]
+        },
+        {
+            "name": "Other drugs",
+            "questions": [
+                "96872-7"
+            ],
+            "field": "Other drugs score",
+            "cutoffs": [
+                {
+                    "score": 1,
+                    "meaning": "assess further for a substance use disorder"
+                }
+            ]
+        }
+    ],
+    "subscales_source": {
+        "citation": "McNeely J, Wu LT, Subramaniam G, et al. Performance of the Tobacco, Alcohol, Prescription Medication, and Other Substance Use (TAPS) Tool for Substance Use Screening in Primary Care Patients. Ann Intern Med. 2016;165(10):690-699.",
+        "short": "McNeely 2016",
+        "pmid": "27595276",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5291717/",
+        "stated": "\"Responses are summed within each substance class to generate a substance-specific risk score. TAPS Tool scores have a potential range of 0-3 for tobacco and other drugs, and 0-4 for alcohol.\" \"While the TAPS Tool cutoffs of 1+ for problem use and 2+ for SUD can be applied for alcohol, tobacco, and marijuana, for other drugs, any patient with a score of 1+ should be further assessed for presence of a SUD.\" NIDA's form: the 4-or-more drinks question \"should only be answered by females\", the 5-or-more \"by males\"."
+    },
+    "scoring": {
+        "overrides": {
+            "96846-1": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96847-9": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96848-7": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96849-5": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96850-3": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96851-1": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96852-9": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96853-7": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96854-5": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96855-2": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96856-0": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96857-8": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96858-6": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96859-4": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96860-2": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96861-0": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96862-8": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96863-6": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96864-4": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96865-1": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96866-9": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96867-7": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96868-5": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96869-3": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96870-1": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96871-9": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            },
+            "96872-7": {
+                "scores": {
+                    "Yes": 1,
+                    "No": 0
+                }
+            }
+        },
+        "source": {
+            "citation": "McNeely 2016 (PMID 27595276); NIDA's TAPS Tool Part 2 form",
+            "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC5291717/",
+            "stated": "Each Yes counts toward its substance's score (\"responses are summed within each substance class\"); NIDA's form prints Yes before No. LOINC's answer lists give no scores."
+        }
+    },
+    "accepted": {
+        "questions": []
+    }
+}

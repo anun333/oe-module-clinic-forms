@@ -74,6 +74,14 @@
       ]
     },
     {
+      "id": "substance-use",
+      "title": "Substance use (TAPS-1, then TAPS-2 for any substance it finds)",
+      "items": [
+        "doc:taps-1",
+        "doc:taps-2"
+      ]
+    },
+    {
       "id": "older-adult-screening",
       "title": "Older adult screening (falls and depression)",
       "items": [

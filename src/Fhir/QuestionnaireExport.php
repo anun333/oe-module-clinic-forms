@@ -149,7 +149,7 @@ final readonly class QuestionnaireExport
                     break;
                 case 'fields':
                     foreach ($block['fields'] as $n => $field) {
-                        $item = $this->field($field, "$id.$n", $codes !== null);
+                        $item = $this->field($field, "$id.$n", $codes);
                         if ($item !== null) {
                             $add($item);
                         }
@@ -226,7 +226,7 @@ final readonly class QuestionnaireExport
      * @param array{label: string, value?: string} $field
      * @return ?array<string, mixed>
      */
-    private function field(array $field, string $linkId, bool $coded): ?array
+    private function field(array $field, string $linkId, ?array $codes): ?array
     {
         $value = $field['value'] ?? '';
         preg_match_all('/\{([a-z]+)\.[a-z]+\}/', $value, $m);
@@ -234,8 +234,14 @@ final readonly class QuestionnaireExport
             return null;
         }
         $label = $this->text($field['label']);
-        if ($coded && preg_match('/^(Total score|Puntuación total|Puntaje total)/iu', $label) === 1) {
+        if ($codes !== null && preg_match('/^(Total score|Puntuación total|Puntaje total)/iu', $label) === 1) {
             return self::total($linkId, $label, true);
+        }
+        // A part's score line (TAPS-2's "Alcohol score") adds up that part's answers only.
+        foreach ($codes['reference']['subscales'] ?? [] as $subscale) {
+            if (($subscale['field'] ?? null) === $field['label']) {
+                return self::total($linkId, $label, true, $subscale['questions']);
+            }
         }
         $item = ['linkId' => $linkId, 'text' => $label, 'type' => preg_match('/\b(date|fecha)\b/iu', $label) === 1 ? 'date' : 'string'];
         $filled = $this->value($value);
@@ -285,14 +291,18 @@ final readonly class QuestionnaireExport
      *
      * @return array<string, mixed>
      */
-    private static function total(string $linkId, string $text, bool $calculated): array
+    private static function total(string $linkId, string $text, bool $calculated, ?array $questions = null): array
     {
         $item = ['linkId' => $linkId, 'text' => $text, 'type' => 'decimal', 'readOnly' => true];
         if ($calculated) {
             $points = ".answer.valueCoding.extension.where(url = '" . self::ORDINAL . "').valueDecimal.sum()";
-            $item['extension'] = [['url' => self::CALCULATED, 'valueExpression' => ['language' => 'text/fhirpath', 'expression' => implode(' + ', [
-                '%resource.item' . $points, '%resource.item.item' . $points, '%resource.item.item.item' . $points,
-            ])]]];
+            $depths = ['%resource.item', '%resource.item.item', '%resource.item.item.item'];
+            // All the answers given, or only those of the named questions (a part's), by their linkIds.
+            $terms = $questions === null
+                ? array_map(static fn(string $d): string => $d . $points, $depths)
+                : array_merge(...array_map(static fn(string $code): array => array_map(
+                    static fn(string $d): string => "$d.where(linkId = '/$code')$points", $depths), $questions));
+            $item['extension'] = [['url' => self::CALCULATED, 'valueExpression' => ['language' => 'text/fhirpath', 'expression' => implode(' + ', $terms)]]];
         }
         return $item;
     }

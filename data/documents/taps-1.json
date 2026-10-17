@@ -10,12 +10,12 @@
         "display": "Tobacco, Alcohol, Prescription medications, and other Substance use screen"
     },
     "validated": true,
-    "version": 1,
+    "version": 2,
     "status": "active",
     "source": {
         "kind": "instrument",
-        "name": "Tobacco, Alcohol, Prescription medication, and other Substance use (TAPS) Tool, Part 1, NIDA Clinical Trials Network",
-        "url": "https://www.phenxtoolkit.org/protocols/view/511601"
+        "name": "The TAPS Tool, Part 1, NIDA Clinical Trials Network (Web Version 2.0, 09-19-17)",
+        "url": "https://www.mass.gov/doc/substance-use-101-handout-1-taps-tool-parts-i-and-ii/download"
     },
     "licence": {
         "holder": "National Institute on Drug Abuse (NIDA) Clinical Trials Network",
@@ -41,13 +41,13 @@
         },
         {
             "type": "scale",
-            "label": "Check one box for each question. Answer question 2 or question 3, not both.",
+            "label": "Check one box for each question. Question 2 is only for men, and question 3 only for women.",
             "columns": [
-                "Never",
-                "Less than monthly",
-                "Monthly",
+                "Daily or almost daily",
                 "Weekly",
-                "Daily or almost daily"
+                "Monthly",
+                "Less than monthly",
+                "Never"
             ],
             "items": [
                 "In the PAST 12 MONTHS, how often have you used any tobacco product (for example, cigarettes, e-cigarettes, cigars, pipes, or smokeless tobacco)?",

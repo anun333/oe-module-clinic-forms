@@ -35,6 +35,7 @@ final class PdfWriter implements OfficeWriter
         .fields .label { font-weight: bold; white-space: nowrap; }
         .fields .value { border-bottom: 0.6pt solid #000; width: 30%; }
         .label-only { font-weight: bold; margin: 6pt 0 2pt 0; }
+        h3.label-only { font-size: 10pt; }
         .item { margin: 1pt 0 1pt 0; }
         .rules { width: 100%; }
         .rules td { border-bottom: 0.6pt solid #000; height: 18pt; }
@@ -166,7 +167,8 @@ final class PdfWriter implements OfficeWriter
             }
             $body .= '</tr>';
         }
-        $this->html .= "<div class='label-only'>" . self::e($label) . "</div><table class='grid'>" . $head . '</tr>' . $body . '</table>'
+        // A heading, so mPDF keeps it on the page with its table (use_kwt) rather than leaving it at the foot of the one before.
+        $this->html .= "<h3 class='label-only'>" . self::e($label) . "</h3><table class='grid'>" . $head . '</tr>' . $body . '</table>'
             . ($total !== null ? "<div class='total'><b>" . self::e($total) . ':</b> ____________</div>' : '');
     }
 
@@ -207,6 +209,7 @@ final class PdfWriter implements OfficeWriter
         $mpdf = new \Mpdf\Mpdf(array_merge($this->config ?? self::openEmrConfig(), [
             'format' => $paper === 'A4' ? 'A4' : 'Letter',
             'orientation' => 'P',
+            'use_kwt' => true,
             'margin_left' => 15,
             'margin_right' => 15,
             'margin_top' => 22,

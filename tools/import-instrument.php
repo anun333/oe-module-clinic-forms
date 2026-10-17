@@ -43,7 +43,7 @@ if (!Loinc::isValid($loinc) || preg_match('/^[a-z0-9][a-z0-9-]*$/', $id) !== 1 |
 }
 $refFile = Instrument::dir() . "/$loinc.json";
 $old = Instrument::reference($loinc);
-if ($old === null || trim((string)($old['title'] ?? '')) === '' || (($old['cutoffs'] ?? []) === [] && ($old['rules'] ?? []) === [])) {
+if ($old === null || trim((string)($old['title'] ?? '')) === '' || (($old['cutoffs'] ?? []) === [] && ($old['rules'] ?? []) === [] && ($old['subscales'] ?? []) === [])) {
     if ($old === null) {
         @mkdir(Instrument::dir());
         file_put_contents($refFile, json_encode([
@@ -52,6 +52,7 @@ if ($old === null || trim((string)($old['title'] ?? '')) === '' || (($old['cutof
             'source' => ['name' => '', 'url' => ''],
             'cutoffs' => [], 'cutoffs_source' => ['citation' => '', 'pmid' => '', 'url' => '', 'stated' => ''],
             'rules' => [], 'rules_source' => ['citation' => '', 'pmid' => '', 'url' => '', 'stated' => ''],
+            'subscales' => [], 'subscales_source' => ['citation' => '', 'pmid' => '', 'url' => '', 'stated' => ''],
             'scoring' => ['overrides' => new stdClass(), 'source' => ['citation' => '', 'url' => '', 'stated' => '']],
             'accepted' => ['questions' => new stdClass()],
         ], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) . "\n");
@@ -105,6 +106,12 @@ $blocks = [['type' => 'fields', 'fields' => [['label' => 'Name', 'value' => '{pa
 // Questions with the same answers, one after another, share a scale; the rest are checklists, and
 // free text has lines. The page's numbers: a scale numbers its rows from 1; a checklist carries its
 // number in its label; a follow-up ("If yes, when…") has none.
+$subscaleOf = [];  // question code => the name of its subscale
+foreach ($old['subscales'] ?? [] as $s) {
+    foreach ($s['questions'] as $c) {
+        $subscaleOf[$c] = $s['name'];
+    }
+}
 $n = 0;
 $printed = 0;
 $numbers = [];  // question code => the number the page prints
@@ -115,9 +122,9 @@ while ($n < count($items)) {
         $n++;
         continue;
     }
-    // A run shares its answers, and whether it is scored: an unscored question (a gate, such as
-    // PC-PTSD-5's trauma question) stands alone.
-    $key = static fn(array $q): string => json_encode([array_column($q['answers'], 'text'), in_array(null, array_column($q['answers'], 'score'), true)]);
+    // A run shares its answers, whether it is scored (an unscored question, a gate such as
+    // PC-PTSD-5's trauma question, stands alone), and its subscale (TAPS-2's substances).
+    $key = static fn(array $q): string => json_encode([array_column($q['answers'], 'text'), in_array(null, array_column($q['answers'], 'score'), true), $subscaleOf[$q['code']] ?? null]);
     $texts = array_column($items[$n]['answers'], 'text');
     $run = [$items[$n]];
     while (isset($items[$n + count($run)]) && $items[$n + count($run)]['answers'] !== [] && $key($items[$n + count($run)]) === $key($items[$n])) {
@@ -126,7 +133,7 @@ while ($n < count($items)) {
     if (count($run) > 1) {
         $rows = array_map(static fn(array $q): array => array_column($q['answers'], 'score'), $run);
         $scored = !in_array(null, array_merge(...$rows), true);
-        $scale = ['type' => 'scale', 'label' => $label, 'columns' => $texts, 'items' => array_column($run, 'text')];
+        $scale = ['type' => 'scale', 'label' => isset($subscaleOf[$run[0]['code']]) ? $subscaleOf[$run[0]['code']] . '. ' . $label : $label, 'columns' => $texts, 'items' => array_column($run, 'text')];
         if ($scored) {
             count(array_unique(array_map('json_encode', $rows))) === 1 ? $scale['scores'] = $rows[0] : $scale['item_scores'] = $rows;
         }
@@ -143,10 +150,16 @@ while ($n < count($items)) {
     }
     $n += count($run);
 }
-if ($reference['total']['max'] > $reference['total']['min']) {
+if (($old['subscales'] ?? []) === [] && $reference['total']['max'] > $reference['total']['min']) {
     $blocks[] = ['type' => 'fields', 'fields' => [['label' => 'Total score (for office use)']]];
 }
 $blocks[] = ['type' => 'heading', 'text' => 'For office use'];
+if (($old['subscales'] ?? []) !== []) {
+    // Each part's score has its line, and its published cut-offs are said with it.
+    $blocks[] = ['type' => 'fields', 'fields' => array_map(static fn(array $s): array => ['label' => $s['field'] ?? $s['name'] . ' score'], $old['subscales'])];
+    $parts = array_map(static fn(array $s): string => $s['name'] . ': ' . implode('; ', array_map(static fn(array $c): string => $c['score'] . ' or more, ' . $c['meaning'], $s['cutoffs'] ?? [])), $old['subscales']);
+    $blocks[] = ['type' => 'paragraph', 'text' => 'Published cut-offs (' . preg_replace('/\.$/', '', (string)($old['subscales_source']['short'] ?? $old['subscales_source']['citation'] ?? '')) . '): ' . implode('. ', $parts) . '.'];
+}
 if (($old['cutoffs'] ?? []) !== []) {
     $cuts = array_map(static fn(array $c): string => $c['score'] . ' or more' . (isset($c['for']) ? ' for ' . $c['for'] : '') . ', ' . $c['meaning'], $old['cutoffs']);
     $blocks[] = ['type' => 'paragraph', 'text' => 'Published cut-offs (' . preg_replace('/\.$/', '', (string)($old['cutoffs_source']['short'] ?? $old['cutoffs_source']['citation'])) . '): ' . implode('; ', $cuts) . '.'];

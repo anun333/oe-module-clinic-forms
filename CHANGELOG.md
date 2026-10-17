@@ -1,5 +1,22 @@
 # Changelog
 
+## 0.24.0 (2026-10-17)
+
+**TAPS-2, scored by substance; TAPS-1 corrected to NIDA's form.**
+
+- **Substance Use Assessment (TAPS-2)**, the second part of NIDA's TAPS Tool (public domain), for a patient whose TAPS-1 is positive.
+  - Yes or no questions about each substance in the past 3 months, in NIDA's wording and sections: tobacco, alcohol, marijuana, cocaine or methamphetamine, heroin, prescription opiates, medications for anxiety or sleep, medications for ADHD, and other drugs.
+  - Each substance is scored on its own, by its number of Yes answers. Alcohol counts the 4-or-more question (women) or the 5-or-more (men), not both, so it runs 0 to 4.
+  - It prints McNeely 2016's cut-offs: for tobacco, alcohol and marijuana, 1 or more is problem use and 2 or more higher risk, a likely substance use disorder; for the other substances, 1 or more means assess further.
+  - Each substance has its own score line. In the FHIR export, each line adds up that substance's answers on screen.
+- **Instruments scored in parts.** A reference can now hold subscales: each part's questions, the questions a person answers only one of, its score line and its published cut-offs. The check holds each part's range to the instrument's, and every printed cut-off to the parts' published ones.
+- **TAPS-1, version 2.** NIDA's own form (TAPS Tool Parts I and II, version 2.0) lists each question's answers from "Daily or almost daily" to "Never".
+  - Version 1 listed them the other way round. Its order came from the validation papers' sentence "never, less than monthly, monthly, weekly, and daily or almost daily", which describes the answers rather than how the form prints them.
+  - The order and the instruction about who answers questions 2 and 3 now follow NIDA's form. The questions and the scoring rule are unchanged.
+- **Packet:** substance use, TAPS-1 then TAPS-2.
+- **PDF:** a scale's label stays on the page with its table, rather than being left at the foot of the page before.
+- **Documents changed in this release:** TAPS-2 new (version 1); TAPS-1 to version 2.
+
 ## 0.23.0 (2026-10-17)
 
 **The documents are CC0, and the Hunger Vital Sign.**

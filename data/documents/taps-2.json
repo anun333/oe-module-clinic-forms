@@ -1,0 +1,262 @@
+{
+    "id": "taps-2",
+    "title": "Substance Use Assessment (TAPS-2)",
+    "category": "Screening",
+    "about": "The second part of NIDA's TAPS Tool, for a positive TAPS-1: yes or no questions about each substance in the past 3 months. Each substance is scored on its own, by its number of Yes answers.",
+    "audience": "patient",
+    "code": {
+        "system": "http://loinc.org",
+        "code": "96845-3",
+        "display": "Tobacco, Alcohol, Prescription medications, and other Substance use assessment"
+    },
+    "validated": true,
+    "version": 1,
+    "status": "active",
+    "source": {
+        "kind": "instrument",
+        "name": "The TAPS Tool, Part 2, NIDA Clinical Trials Network (Web Version 2.0, 09-19-17)",
+        "url": "https://www.mass.gov/doc/substance-use-101-handout-1-taps-tool-parts-i-and-ii/download"
+    },
+    "licence": {
+        "holder": "National Institute on Drug Abuse (NIDA) Clinical Trials Network",
+        "terms": "Developed in the NIDA Clinical Trials Network (CTN-0059); in the public domain.",
+        "permission": "None needed (public domain)."
+    },
+    "blocks": [
+        {
+            "type": "fields",
+            "fields": [
+                {
+                    "label": "Name",
+                    "value": "{patient.name}"
+                },
+                {
+                    "label": "Date of birth",
+                    "value": "{patient.dob}"
+                },
+                {
+                    "label": "Date"
+                }
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "These questions are about tobacco, alcohol, drugs and prescription medications in the PAST 3 MONTHS ONLY. Each question is answered Yes or No. Check the box to select your answer."
+        },
+        {
+            "type": "scale",
+            "label": "1. Tobacco. Answer questions 2 and on only if you answered Yes to question 1.",
+            "columns": [
+                "Yes",
+                "No"
+            ],
+            "items": [
+                "In the PAST 3 MONTHS, did you smoke a cigarette containing tobacco?",
+                "In the PAST 3 MONTHS, did you usually smoke more than 10 cigarettes each day?",
+                "In the PAST 3 MONTHS, did you usually smoke within 30 minutes after waking?"
+            ],
+            "scores": [
+                1,
+                0
+            ]
+        },
+        {
+            "type": "scale",
+            "label": "2. Alcohol. Answer questions 2 and on only if you answered Yes to question 1.",
+            "columns": [
+                "Yes",
+                "No"
+            ],
+            "items": [
+                "In the PAST 3 MONTHS, did you have a drink containing alcohol?",
+                "For women: In the PAST 3 MONTHS, did you have 4 or more drinks containing alcohol in a day?",
+                "For men: In the PAST 3 MONTHS, did you have 5 or more drinks containing alcohol in a day?",
+                "In the PAST 3 MONTHS, have you tried and failed to control, cut down or stop drinking?",
+                "In the PAST 3 MONTHS, has anyone expressed concern about your drinking?"
+            ],
+            "scores": [
+                1,
+                0
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "One standard drink is about 1 small glass of wine (5 oz), 1 beer (12 oz), or 1 single shot of liquor."
+        },
+        {
+            "type": "scale",
+            "label": "3. Marijuana. Answer questions 2 and on only if you answered Yes to question 1.",
+            "columns": [
+                "Yes",
+                "No"
+            ],
+            "items": [
+                "In the PAST 3 MONTHS, did you use marijuana (hash, weed)?",
+                "In the PAST 3 MONTHS, have you had a strong desire or urge to use marijuana at least once a week or more often?",
+                "In the PAST 3 MONTHS, has anyone expressed concern about your use of marijuana?"
+            ],
+            "scores": [
+                1,
+                0
+            ]
+        },
+        {
+            "type": "scale",
+            "label": "4. Cocaine or methamphetamine. Answer questions 2 and on only if you answered Yes to question 1.",
+            "columns": [
+                "Yes",
+                "No"
+            ],
+            "items": [
+                "In the PAST 3 MONTHS, did you use cocaine, crack, or methamphetamine (crystal meth)?",
+                "In the PAST 3 MONTHS, did you use cocaine, crack, or methamphetamine (crystal meth) at least once a week or more often?",
+                "In the PAST 3 MONTHS, has anyone expressed concern about your use of cocaine, crack, or methamphetamine (crystal meth)?"
+            ],
+            "scores": [
+                1,
+                0
+            ]
+        },
+        {
+            "type": "scale",
+            "label": "5. Heroin. Answer questions 2 and on only if you answered Yes to question 1.",
+            "columns": [
+                "Yes",
+                "No"
+            ],
+            "items": [
+                "In the PAST 3 MONTHS, did you use heroin?",
+                "In the PAST 3 MONTHS, have you tried and failed to control, cut down or stop using heroin?",
+                "In the PAST 3 MONTHS, has anyone expressed concern about your use of heroin?"
+            ],
+            "scores": [
+                1,
+                0
+            ]
+        },
+        {
+            "type": "scale",
+            "label": "6. Prescription opiates. Answer questions 2 and on only if you answered Yes to question 1.",
+            "columns": [
+                "Yes",
+                "No"
+            ],
+            "items": [
+                "In the PAST 3 MONTHS, did you use a prescription opiate pain reliever (for example, Percocet, Vicodin) not as prescribed or that was not prescribed for you?",
+                "In the PAST 3 MONTHS, have you tried and failed to control, cut down or stop using an opiate pain reliever?",
+                "In the PAST 3 MONTHS, has anyone expressed concern about your use of an opiate pain reliever?"
+            ],
+            "scores": [
+                1,
+                0
+            ]
+        },
+        {
+            "type": "scale",
+            "label": "7. Medications for anxiety or sleep. Answer questions 2 and on only if you answered Yes to question 1.",
+            "columns": [
+                "Yes",
+                "No"
+            ],
+            "items": [
+                "In the PAST 3 MONTHS, did you use a medication for anxiety or sleep (for example, Xanax, Ativan, or Klonopin) not as prescribed or that was not prescribed for you?",
+                "In the PAST 3 MONTHS, have you had a strong desire or urge to use medications for anxiety or sleep at least once a week or more often?",
+                "In the PAST 3 MONTHS, has anyone expressed concern about your use of medication for anxiety or sleep?"
+            ],
+            "scores": [
+                1,
+                0
+            ]
+        },
+        {
+            "type": "scale",
+            "label": "8. Medications for ADHD. Answer questions 2 and on only if you answered Yes to question 1.",
+            "columns": [
+                "Yes",
+                "No"
+            ],
+            "items": [
+                "In the PAST 3 MONTHS, did you use a medication for ADHD (for example, Adderall, Ritalin) not as prescribed or that was not prescribed for you?",
+                "In the PAST 3 MONTHS, did you use a medication for ADHD (for example, Adderall, Ritalin) at least once a week or more often?",
+                "In the PAST 3 MONTHS, has anyone expressed concern about your use of a medication for ADHD (for example, Adderall or Ritalin)?"
+            ],
+            "scores": [
+                1,
+                0
+            ]
+        },
+        {
+            "type": "checklist",
+            "label": "9. Other drugs. In the PAST 3 MONTHS, did you use any other illegal or recreational drug (for example, ecstasy/molly, GHB, poppers, LSD, mushrooms, special K, bath salts, synthetic marijuana ('spice'), whip-its, etc.)?",
+            "items": [
+                "Yes (1)",
+                "No (0)"
+            ]
+        },
+        {
+            "type": "lines",
+            "label": "If Yes: in the PAST 3 MONTHS, what were the other drug(s) you used?",
+            "count": 2
+        },
+        {
+            "type": "lines",
+            "label": "Comments",
+            "count": 2
+        },
+        {
+            "type": "heading",
+            "text": "For office use"
+        },
+        {
+            "type": "fields",
+            "fields": [
+                {
+                    "label": "Tobacco score"
+                },
+                {
+                    "label": "Alcohol score"
+                },
+                {
+                    "label": "Marijuana score"
+                },
+                {
+                    "label": "Cocaine or methamphetamine score"
+                },
+                {
+                    "label": "Heroin score"
+                },
+                {
+                    "label": "Prescription opiates score"
+                },
+                {
+                    "label": "Medications for anxiety or sleep score"
+                },
+                {
+                    "label": "Medications for ADHD score"
+                },
+                {
+                    "label": "Other drugs score"
+                }
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "Each substance's score is its number of Yes answers; for alcohol, count the 4-or-more or the 5-or-more question, whichever was answered. Published cut-offs (McNeely 2016): for tobacco, alcohol and marijuana, 1 or more is problem use and 2 or more higher risk, a likely substance use disorder; for the other substances, 1 or more means assess further for a substance use disorder."
+        },
+        {
+            "type": "fields",
+            "fields": [
+                {
+                    "label": "Reviewed by"
+                },
+                {
+                    "label": "Entered into OpenEMR by"
+                }
+            ]
+        },
+        {
+            "type": "paragraph",
+            "text": "The TAPS Tool, Part 2, NIDA Clinical Trials Network (Web Version 2.0, 09-19-17). Developed in the NIDA Clinical Trials Network (CTN-0059); in the public domain."
+        }
+    ]
+}

@@ -77,14 +77,15 @@ final class InstrumentTest extends TestCase
             // Cut-offs on a total, or for a screen read by rule (the ASQ, TAPS-1), its published rules.
             $cutoffs = $r['cutoffs'] ?? [];
             $rules = $r['rules'] ?? [];
-            self::assertTrue($cutoffs !== [] || $rules !== [], "$code: the published cut-offs, or the published rules");
+            $subscales = $r['subscales'] ?? [];
+            self::assertTrue($cutoffs !== [] || $rules !== [] || $subscales !== [], "$code: the published cut-offs, rules, or subscales with their cut-offs");
             foreach ($cutoffs as $cut) {
                 self::assertGreaterThan($r['total']['min'], $cut['score'], "$code: a cut-off inside the range");
                 self::assertLessThanOrEqual($r['total']['max'], $cut['score'], "$code: a cut-off inside the range");
                 self::assertNotSame('', trim((string)$cut['meaning']), "$code: what the cut-off means");
             }
             // A paper, by its PubMed id, or the instrument owner's own page (CDC's brochure, the developers' scoring sheet).
-            foreach (array_filter(['cutoffs_source' => $cutoffs, 'rules_source' => $rules]) as $field => $unused) {
+            foreach (array_filter(['cutoffs_source' => $cutoffs, 'rules_source' => $rules, 'subscales_source' => $subscales]) as $field => $unused) {
                 self::assertTrue(preg_match('/^\d+$/', (string)($r[$field]['pmid'] ?? '')) === 1 || str_starts_with((string)($r[$field]['url'] ?? ''), 'https://'),
                     "$code: the $field, by PubMed id or the owner's URL");
                 self::assertNotSame('', trim((string)($r[$field]['stated'] ?? '')), "$code: where the $field states them");
@@ -105,6 +106,23 @@ final class InstrumentTest extends TestCase
             if (isset($r['questions_from'])) {
                 foreach (['name', 'url', 'why'] as $key) {
                     self::assertNotSame('', trim((string)($r['questions_from'][$key] ?? '')), "$code: written by hand, so whose instrument, where, and why LOINC's isn't used ($key)");
+                }
+            }
+            $byCode = array_column($r['questions'], 'answers', 'code');
+            foreach ($subscales as $s) {
+                self::assertNotSame('', trim((string)($s['name'] ?? '')), "$code: a subscale's name");
+                self::assertNotSame('', trim((string)($s['field'] ?? '')), "$code: the line a subscale's score goes on");
+                foreach ($s['questions'] as $q) {
+                    self::assertArrayHasKey($q, $byCode, "$code: subscale {$s['name']}'s question is one of the instrument's");
+                }
+                foreach ($s['one_of'] ?? [] as $group) {
+                    self::assertSame([], array_diff($group, $s['questions']), "$code: subscale {$s['name']}'s one-of group is among its questions");
+                }
+                $range = Instrument::subscaleRange(array_intersect_key($byCode, array_flip($s['questions'])), $s['one_of'] ?? []);
+                self::assertNotEmpty($s['cutoffs'] ?? [], "$code: subscale {$s['name']}'s published cut-offs");
+                foreach ($s['cutoffs'] as $cut) {
+                    self::assertGreaterThan($range['min'], $cut['score'], "$code: {$s['name']} cut-off inside its range");
+                    self::assertLessThanOrEqual($range['max'], $cut['score'], "$code: {$s['name']} cut-off inside its range");
                 }
             }
             foreach ($r['free_text'] ?? [] as $free) {
@@ -195,6 +213,27 @@ final class InstrumentTest extends TestCase
         $ref = self::ref($asq);
         $ref['rules'][0]['questions'][] = '44250-9';
         self::assertStringContainsString("names 44250-9, which isn't one of the instrument's questions", implode("\n", Instrument::differences($asq, $ref)));
+    }
+
+    public function testAnInstrumentScoredInPartsIsCheckedPartByPart(): void
+    {
+        // TAPS-2 scores each substance: alcohol runs 0 to 4, since a person answers the 4-or-more
+        // question (women) or the 5-or-more (men), not both.
+        $taps2 = self::doc('taps-2');
+        $ref = self::ref($taps2);
+        $alcohol = array_values(array_filter($ref['subscales'], static fn(array $s): bool => $s['name'] === 'Alcohol'))[0];
+        $answers = array_intersect_key(array_column($ref['questions'], 'answers', 'code'), array_flip($alcohol['questions']));
+        self::assertSame(['min' => 0.0, 'max' => 4.0], Instrument::subscaleRange($answers, $alcohol['one_of']));
+        self::assertSame(['min' => 0.0, 'max' => 5.0], Instrument::subscaleRange($answers), 'counting both would be 5');
+        self::assertSame([], Instrument::differences($taps2, $ref));
+        // A cut-off no part publishes.
+        $blocks = array_map(static fn(array $b): array => $b['type'] === 'paragraph' && str_contains($b['text'], 'McNeely')
+            ? ['type' => 'paragraph', 'text' => 'Published cut-offs: 3 or more is a likely substance use disorder.'] : $b, $taps2->blocks);
+        self::assertSame(['it prints a cut-off of 3 where the published ones are 1, 2'], Instrument::differences(self::with($taps2, $blocks), $ref));
+        // A part naming a question the instrument doesn't have is the reference's fault, said as such.
+        $broken = $ref;
+        $broken['subscales'][0]['questions'][] = '44250-9';
+        self::assertStringContainsString("subscale \"Tobacco\" names 44250-9", implode("\n", Instrument::differences($taps2, $broken)));
     }
 
     public function testCatchesATranslationThatChangesTheScoring(): void

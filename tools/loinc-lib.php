@@ -17,7 +17,7 @@ const LOINC_NOTICE = 'This material contains content from LOINC (http://loinc.or
  * What a reference holds that LOINC can't give, written by hand with its source and kept when the
  * reference is fetched again.
  */
-const LOINC_HAND_FIELDS = ['instrument', 'title', 'about', 'instructions', 'licence', 'source', 'cutoffs', 'cutoffs_source', 'rules', 'rules_source', 'scoring', 'accepted'];
+const LOINC_HAND_FIELDS = ['instrument', 'title', 'about', 'instructions', 'licence', 'source', 'cutoffs', 'cutoffs_source', 'rules', 'rules_source', 'subscales', 'subscales_source', 'scoring', 'accepted'];
 
 /** The Authorization header for fhir.loinc.org, from LOINC_USER and LOINC_PASSWORD; exits without them. */
 function loincAuth(): string

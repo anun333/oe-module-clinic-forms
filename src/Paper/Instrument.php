@@ -23,6 +23,13 @@
  * and the document must say each one: its meaning, in a paragraph that names its questions by the
  * numbers the document prints for them.
  *
+ * An instrument scored in parts (TAPS-2 scores each substance on its own) has subscales, each with
+ * its questions, any of them only one of which a person answers (alcohol: 4 or more drinks for
+ * women, 5 or more for men), the line the document gives its score, and its published cut-offs:
+ *   "subscales": [{"name": "Alcohol", "questions": [...], "one_of": [["96850-3", "96851-1"]],
+ *                  "field": "Alcohol score", "cutoffs": [{"score": 1, "meaning": "problem use"}]}],
+ *   "subscales_source": {"citation": ..., "pmid": ..., "stated": ...}
+ *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
  */
@@ -170,7 +177,14 @@ final class Instrument
         if (preg_match('/scored (\d+) to (\d+)/', $doc->about, $m) === 1 && ((float)$m[1] !== $total['min'] || (float)$m[2] !== $total['max'])) {
             $problems[] = "the description says \"scored $m[1] to $m[2]\" but the questions total " . self::points($total['min']) . ' to ' . self::points($total['max']);
         }
-        $published = array_map(static fn(array $c): float => (float)$c['score'], $reference['cutoffs'] ?? []);
+        foreach ($reference['subscales'] ?? [] as $subscale) {
+            $problem = self::subscaleProblem($subscale, $theirs, $ours);
+            if ($problem !== null) {
+                $problems[] = $problem;
+            }
+        }
+        $cutoffs = array_merge($reference['cutoffs'] ?? [], ...array_map(static fn(array $s): array => $s['cutoffs'] ?? [], $reference['subscales'] ?? [[]]));
+        $published = array_map(static fn(array $c): float => (float)$c['score'], $cutoffs);
         foreach (self::printedCutoffs($doc) as $cut) {
             if (!in_array($cut, $published, true)) {
                 $problems[] = 'it prints a cut-off of ' . self::points($cut) . ' where the published ones are '
@@ -184,6 +198,63 @@ final class Instrument
             }
         }
         return $problems;
+    }
+
+    /**
+     * A subscale's range on the page against the instrument's: its questions found by code in the
+     * reference, and the document's question in the same place.
+     */
+    private static function subscaleProblem(array $subscale, array $theirs, array $ours): ?string
+    {
+        $codes = array_column($theirs, 'code');
+        $mine = [];
+        $refs = [];
+        foreach ($subscale['questions'] ?? [] as $code) {
+            $i = array_search((string)$code, $codes, true);
+            if ($i === false) {
+                return "the reference's subscale \"{$subscale['name']}\" names $code, which isn't one of the instrument's questions";
+            }
+            $refs[(string)$code] = $theirs[$i]['answers'];
+            $mine[(string)$code] = $ours[$i]['answers'] ?? [];
+        }
+        $range = self::subscaleRange($mine, $subscale['one_of'] ?? []);
+        $refRange = self::subscaleRange($refs, $subscale['one_of'] ?? []);
+        if ($range !== $refRange) {
+            return sprintf('the %s score runs %s to %s where the instrument\'s runs %s to %s', $subscale['name'], self::points($range['min']),
+                self::points($range['max']), self::points($refRange['min']), self::points($refRange['max']));
+        }
+        return null;
+    }
+
+    /**
+     * The lowest and highest score of a subscale: its questions' points added up, counting only the
+     * higher of each group a person answers just one of.
+     *
+     * @param array<string, list<array{score: mixed}>> $answers question code => its answers
+     * @param list<list<string>> $oneOf
+     * @return array{min: float, max: float}
+     */
+    public static function subscaleRange(array $answers, array $oneOf = []): array
+    {
+        $range = static function (array $list): array {
+            $scores = array_map('floatval', array_filter(array_column($list, 'score'), 'is_numeric'));
+            return $scores === [] ? [0.0, 0.0] : [min($scores), max($scores)];
+        };
+        $grouped = array_merge(...array_map(static fn(array $g): array => array_map('strval', $g), $oneOf ?: [[]]));
+        $min = $max = 0.0;
+        foreach ($answers as $code => $list) {
+            if (!in_array((string)$code, $grouped, true)) {
+                [$lo, $hi] = $range($list);
+                $min += $lo;
+                $max += $hi;
+            }
+        }
+        foreach ($oneOf as $group) {
+            $ranges = array_map(static fn(string $c): array => $range($answers[$c] ?? []), array_map('strval', $group));
+            $min += min(array_column($ranges, 0));
+            $max += max(array_column($ranges, 1));
+        }
+        return ['min' => $min, 'max' => $max];
     }
 
     /**
