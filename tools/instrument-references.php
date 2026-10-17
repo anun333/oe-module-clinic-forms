@@ -10,6 +10,10 @@
  *   LOINC_USER=... LOINC_PASSWORD=... php tools/instrument-references.php          write the references
  *   LOINC_USER=... LOINC_PASSWORD=... php tools/instrument-references.php --check  compare only; exit 1 if LOINC's differ
  *
+ * A reference whose questions LOINC can't give whole is written by hand from the owner's
+ * instrument, with LOINC's codes where it has them, and says so under "questions_from" (USDA's
+ * six-item food security module: LOINC's questionnaire leaves out AD1a). This leaves it alone.
+ *
  * The tests read these files; they don't fetch anything.
  *
  * @package   OpenHealthcare\ClinicForms
@@ -35,6 +39,10 @@ foreach (DocumentLibrary::shipped()->all() as $doc) {
         continue;
     }
     $old = Instrument::reference($loinc) ?? [];
+    if (isset($old['questions_from'])) {
+        echo "$loinc ($doc->id): written by hand from {$old['questions_from']['name']}; not fetched\n";
+        continue;
+    }
     try {
         $fetched = loincInstrument($loinc, $auth);
         // Where the published instrument scores differently from LOINC's lists, its scoring is written by hand.

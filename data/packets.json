@@ -62,6 +62,24 @@
         "doc:phq-2",
         "doc:audit-c"
       ]
+    },
+    {
+      "id": "behavioral-health-full",
+      "title": "Behavioral health screening (depression, anxiety, PTSD, substance use)",
+      "items": [
+        "doc:phq-9",
+        "doc:gad-7",
+        "doc:pc-ptsd-5",
+        "doc:taps-1"
+      ]
+    },
+    {
+      "id": "older-adult-screening",
+      "title": "Older adult screening (falls and depression)",
+      "items": [
+        "doc:stay-independent",
+        "doc:gds-15"
+      ]
     }
   ]
 }

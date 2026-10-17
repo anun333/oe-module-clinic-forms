@@ -102,6 +102,11 @@ final class InstrumentTest extends TestCase
                     }
                 }
             }
+            if (isset($r['questions_from'])) {
+                foreach (['name', 'url', 'why'] as $key) {
+                    self::assertNotSame('', trim((string)($r['questions_from'][$key] ?? '')), "$code: written by hand, so whose instrument, where, and why LOINC's isn't used ($key)");
+                }
+            }
             foreach ($r['free_text'] ?? [] as $free) {
                 self::assertNotSame('', trim((string)($free['text'] ?? '')), "$code: free text has its wording");
             }

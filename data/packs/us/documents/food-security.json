@@ -1,0 +1,131 @@
+{
+  "id": "food-security",
+  "title": "Food Security Screen (USDA Six-Item)",
+  "category": "Screening",
+  "about": "USDA's six questions about whether the household could afford the food it needed in the last 12 months, scored 0 to 6. It doesn't ask about children's food.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "95361-2",
+    "display": "U.S. Household Food Security Survey - Six-Item Short Form"
+  },
+  "validated": true,
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "instrument",
+    "name": "U.S. Household Food Security Survey Module: Six-Item Short Form, Economic Research Service, USDA (May 2024)",
+    "url": "https://www.ers.usda.gov/sites/default/files/_laserfiche/DataFiles/50764/short2024.pdf"
+  },
+  "licence": {
+    "holder": "Economic Research Service, U.S. Department of Agriculture",
+    "terms": "A work of the U.S. government, in the public domain.",
+    "permission": "None needed (public domain)."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "These statements are about the food eaten in your household in the last 12 months. Check whether each was often true, sometimes true, or never true for you or your household.",
+      "columns": [
+        "Often true",
+        "Sometimes true",
+        "Never true",
+        "Don't know"
+      ],
+      "scores": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "items": [
+        "The food that we bought just didn't last, and we didn't have money to get more.",
+        "We couldn't afford to eat balanced meals."
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "3. In the last 12 months, did you or other adults in your household ever cut the size of your meals or skip meals because there wasn't enough money for food?",
+      "items": [
+        "Yes (1)",
+        "No (0)",
+        "Don't know (0)"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "If yes, how often did this happen?",
+      "items": [
+        "Almost every month (1)",
+        "Some months but not every month (1)",
+        "Only 1 or 2 months (0)",
+        "Don't know (0)"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "4. In the last 12 months, did you ever eat less than you felt you should because there wasn't enough money for food?",
+      "items": [
+        "Yes (1)",
+        "No (0)",
+        "Don't know (0)"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "5. In the last 12 months, were you ever hungry but didn't eat because there wasn't enough money for food?",
+      "items": [
+        "Yes (1)",
+        "No (0)",
+        "Don't know (0)"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Total score (for office use)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "paragraph",
+      "text": "One point for each Often true or Sometimes true, each Yes, and Almost every month or Some months on the follow-up. Published ranges (USDA): 0 to 1, high or marginal food security; 2 or more, low food security (food insecure); 5 or more, very low food security."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Entered into OpenEMR by"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "USDA Six-Item Short Form Food Security Survey Module (Economic Research Service, May 2024); public domain."
+    }
+  ]
+}

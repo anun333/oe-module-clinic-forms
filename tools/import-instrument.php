@@ -60,6 +60,10 @@ if ($old === null || trim((string)($old['title'] ?? '')) === '' || (($old['cutof
     exit(1);
 }
 
+if (isset($old['questions_from'])) {
+    fwrite(STDERR, "$refFile is written by hand from {$old['questions_from']['name']}: edit it and the document directly\n");
+    exit(1);
+}
 $fetched = loincInstrument($loinc, loincAuth());
 // Every item in LOINC's order, for the document; the reference keeps the questions and lists the free text apart.
 $items = loincApplyScoring($fetched['questions'], $old['scoring']['overrides'] ?? []);

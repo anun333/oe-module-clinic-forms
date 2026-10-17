@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.20.0 (2026-10-16)
+
+**USDA's six-item food security screen, and two screening packets.**
+
+- **Food Security Screen (USDA Six-Item)**, in the US pack: USDA's six questions on whether the household could afford the food it needed in the last 12 months (public domain, May 2024 module). One point for each affirmative answer, as USDA's user notes code them, scored 0 to 6. It prints USDA's ranges: 2 or more is low food security (food insecure), 5 or more very low. It is self-administered, so "Don't know" is shown as an answer, as USDA's notes allow for paper.
+- **A reference written by hand where LOINC's is incomplete.** LOINC's questionnaire for the six-item module leaves out the follow-up question on how often meals were cut, which the six items count. This reference is written from USDA's own module, with LOINC's codes (the follow-up's is in LOINC's 18-item form), and says whose instrument it is and why under `"questions_from"`. The reference tools leave it alone rather than overwrite it from LOINC.
+- **Two screening packets:**
+  - **Behavioral health screening:** PHQ-9, GAD-7, PC-PTSD-5 and TAPS-1.
+  - **Older adult screening:** Stay Independent and GDS-15.
+
+  The ASQ isn't in a packet, because a nurse or clinician asks it.
+- **Documents changed in this release:** one new (version 1). No existing document changed.
+
 ## 0.19.0 (2026-10-16)
 
 **Two screens read by rule rather than by a total, and a fix for the PDF's field labels.**

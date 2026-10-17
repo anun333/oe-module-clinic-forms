@@ -1,0 +1,188 @@
+{
+    "instrument": "USDA Six-Item Food Security Module",
+    "loinc": "95361-2",
+    "questions_from": {
+        "name": "U.S. Household Food Security Survey Module: Six-Item Short Form, Economic Research Service, USDA (May 2024)",
+        "url": "https://www.ers.usda.gov/sites/default/files/_laserfiche/DataFiles/50764/short2024.pdf",
+        "why": "LOINC's questionnaire for 95361-2 leaves out the follow-up AD1a, which the six items count, and has AD1 (95249-9) as free text with no answers. The questions here are USDA's, in the self-administered form its user notes allow (\"don't know\" shown as an answer, the household fills as \"we\" and \"you or other adults in your household\"), with LOINC's codes: AD1a is 95250-7 in LOINC's 18-item form."
+    },
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "questions": [
+        {
+            "code": "88123-5",
+            "text": "The food that (I/we) bought just didn't last, and (I/we) didn't have money to get more.",
+            "answers": [
+                {
+                    "code": "LA28397-0",
+                    "text": "Often true",
+                    "score": 1
+                },
+                {
+                    "code": "LA6729-3",
+                    "text": "Sometimes true",
+                    "score": 1
+                },
+                {
+                    "code": "LA28398-8",
+                    "text": "Never true",
+                    "score": 0
+                },
+                {
+                    "code": "LA30968-4",
+                    "text": "Don't know",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "95248-1",
+            "text": "(I/We) couldn't afford to eat balanced meals.",
+            "answers": [
+                {
+                    "code": "LA28397-0",
+                    "text": "Often true",
+                    "score": 1
+                },
+                {
+                    "code": "LA6729-3",
+                    "text": "Sometimes true",
+                    "score": 1
+                },
+                {
+                    "code": "LA28398-8",
+                    "text": "Never true",
+                    "score": 0
+                },
+                {
+                    "code": "LA30968-4",
+                    "text": "Don't know",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "95249-9",
+            "text": "In the last 12 months, did (you/you or other adults in your household) ever cut the size of your meals or skip meals because there wasn't enough money for food?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                },
+                {
+                    "code": "LA14226-7",
+                    "text": "Don't know",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "95250-7",
+            "text": "How often did this happen?",
+            "answers": [
+                {
+                    "code": "LA30970-0",
+                    "text": "Almost every month",
+                    "score": 1
+                },
+                {
+                    "code": "LA30971-8",
+                    "text": "Some months but not every month",
+                    "score": 1
+                },
+                {
+                    "code": "LA30972-6",
+                    "text": "Only 1 or 2 months",
+                    "score": 0
+                },
+                {
+                    "code": "LA14226-7",
+                    "text": "Don't know",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "95251-5",
+            "text": "In the last 12 months, did you ever eat less than you felt you should because there wasn't enough money for food?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                },
+                {
+                    "code": "LA14226-7",
+                    "text": "Don't know",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "95252-3",
+            "text": "In the last 12 months, were you ever hungry but didn't eat because there wasn't enough money for food?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                },
+                {
+                    "code": "LA14226-7",
+                    "text": "Don't know",
+                    "score": 0
+                }
+            ]
+        }
+    ],
+    "total": {
+        "min": 0,
+        "max": 6
+    },
+    "licence": {
+        "holder": "Economic Research Service, U.S. Department of Agriculture",
+        "terms": "A work of the U.S. government, in the public domain.",
+        "permission": "None needed (public domain)."
+    },
+    "source": {
+        "name": "U.S. Household Food Security Survey Module: Six-Item Short Form, Economic Research Service, USDA (May 2024)",
+        "url": "https://www.ers.usda.gov/sites/default/files/_laserfiche/DataFiles/50764/short2024.pdf"
+    },
+    "cutoffs": [
+        {
+            "score": 2,
+            "meaning": "low food security (food insecure)"
+        },
+        {
+            "score": 5,
+            "meaning": "very low food security"
+        }
+    ],
+    "cutoffs_source": {
+        "citation": "USDA Economic Research Service, U.S. Household Food Security Survey Module: Six-Item Short Form (May 2024), user notes; Blumberg SJ, Bialostosky K, Hamilton WL, Briefel RR. Am J Public Health. 1999;89(8):1231-1234.",
+        "short": "USDA",
+        "url": "https://www.ers.usda.gov/sites/default/files/_laserfiche/DataFiles/50764/short2024.pdf",
+        "pmid": "10432912",
+        "stated": "User notes: \"Responses of 'often' or 'sometimes' on questions HH3 and HH4, and 'yes' on AD1, AD2, and AD3 are coded as affirmative (yes). Responses of 'almost every month' and 'some months but not every month' on AD1a are coded as affirmative (yes). The sum of affirmative responses to the six questions in the module is the household's raw score\"; \"Raw score 0-1 - High or marginal food security ... Raw score 2-4 - Low food security; Raw score 5-6 - Very low food security\"; low and very low \"in combination are referred to as food insecure\". \"For self-administered surveys, 'don't know' is presented as a response option.\""
+    },
+    "accepted": {
+        "questions": {
+            "4": "USDA's AD1a is asked only after Yes on AD1 (\"[IF YES ABOVE, ASK] How often did this happen\"); on a self-administered page that instruction is written into the question as \"If yes, how often did this happen?\""
+        }
+    }
+}

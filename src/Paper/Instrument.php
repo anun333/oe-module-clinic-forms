@@ -6,7 +6,8 @@
  * the answers and the points for each are the instrument's, and the cut-offs printed beside it are
  * the published ones; so those are what is checked, not the wording alone.
  *
- * A reference holds, from LOINC (tools/instrument-references.php fetches them):
+ * A reference holds, from LOINC (tools/instrument-references.php fetches them), or written by hand
+ * from the owner's instrument where LOINC's is incomplete ("questions_from" says whose and why):
  *   "questions": [{"code": "44250-9", "text": "...", "answers": [{"code": "LA6568-5", "text": "Not at all", "score": 0}]}]
  *   "total": {"min": 0, "max": 27}
  * and, written by hand with their source:
