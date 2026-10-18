@@ -1,0 +1,92 @@
+{
+  "id": "hark",
+  "title": "HARK: Relationship Safety Questions",
+  "category": "Screening",
+  "about": "Four yes or no questions about a partner or ex-partner in the past year (Humiliation, Afraid, Rape, Kick). One point for each yes; 1 or more is a positive screen for intimate partner violence. Give it when the patient is alone, never with a partner present.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "76499-3",
+    "display": "Humiliation, Afraid, Rape, and Kick questionnaire"
+  },
+  "validated": true,
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "instrument",
+    "name": "HARK, Sohal, Eldridge and Feder, BMC Family Practice 2007 (Table 1)",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2034562/"
+  },
+  "licence": {
+    "holder": "Sohal H, Eldridge S, Feder G (© 2007; licensee BioMed Central Ltd.)",
+    "terms": "Creative Commons Attribution 2.0 (https://creativecommons.org/licenses/by/2.0/). Cite: Sohal H, Eldridge S, Feder G. The sensitivity and specificity of four questions (HARK) to identify intimate partner violence: a diagnostic accuracy study in general practice. BMC Fam Pract. 2007;8:49. doi:10.1186/1471-2296-8-49.",
+    "permission": "None needed beyond the attribution: the article is open access under CC BY 2.0, and the questions are its Table 1. The article says the afraid and kick questions were kept from the Abuse Assessment Screen; that instrument's own terms are not checked here."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "These questions are about a partner or ex-partner. Please answer them on your own, and check Yes or No for each.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "items": [
+        "Within the last year, have you been humiliated or emotionally abused in other ways by your partner or your ex-partner?",
+        "Within the last year, have you been afraid of your partner or ex-partner?",
+        "Within the last year, have you been raped or forced to have any kind of sexual activity by your partner or ex-partner?",
+        "Within the last year, have you been kicked, hit, slapped or otherwise physically hurt by your partner or ex-partner?"
+      ],
+      "scores": [
+        1,
+        0
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Total score (for office use)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "paragraph",
+      "text": "Published cut-offs (Sohal 2007): 1 or more, positive screen for intimate partner violence in the past year. Give this form when the patient is alone. For a positive screen, follow the clinic's protocol: talk with the patient privately, and offer support and local resources."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Entered into OpenEMR by"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "HARK, Sohal, Eldridge and Feder, BMC Family Practice 2007 (Table 1). Creative Commons Attribution 2.0 (https://creativecommons.org/licenses/by/2.0/). Cite: Sohal H, Eldridge S, Feder G. The sensitivity and specificity of four questions (HARK) to identify intimate partner violence: a diagnostic accuracy study in general practice. BMC Fam Pract. 2007;8:49. doi:10.1186/1471-2296-8-49."
+    }
+  ]
+}

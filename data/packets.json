@@ -39,6 +39,25 @@
       ]
     },
     {
+      "id": "after-visit",
+      "title": "After the visit (summary and work or school note)",
+      "about": "For the patient to take home: what was found and what to do next, and a note confirming the visit without saying why.",
+      "items": [
+        "doc:after-visit-summary",
+        "doc:work-school-note"
+      ]
+    },
+    {
+      "id": "procedure-visit",
+      "title": "Procedure visit (consent, then the visit summary)",
+      "about": "Consent signed before the procedure starts, then the summary and a work or school note to take home.",
+      "items": [
+        "doc:procedure-consent",
+        "doc:after-visit-summary",
+        "doc:work-school-note"
+      ]
+    },
+    {
       "id": "downtime",
       "title": "Downtime kit",
       "items": [
@@ -49,20 +68,36 @@
     },
     {
       "id": "yearly-adult-screen",
-      "title": "Yearly adult screen (depression and substance use)",
-      "about": "Every adult, once a year: the short first stage of each screen. A positive answer opens its follow-up: the PHQ-9 after the PHQ-2, TAPS-2 after TAPS-1.",
+      "title": "Yearly adult screen (anxiety, depression and substance use)",
+      "about": "Every adult, once a year: the short first stage of each screen. A positive answer opens its follow-up: the GAD-7 or PHQ-9 after the PHQ-4, TAPS-2 after TAPS-1.",
       "items": [
-        "doc:phq-2",
+        "doc:phq-4",
         "doc:taps-1"
       ]
     },
     {
       "id": "depression-follow-up",
       "title": "After a positive depression screen (PHQ-9, then the ASQ)",
-      "about": "For a positive PHQ-2. The ASQ follows a positive answer to question 9, or whenever clinic protocol calls for it. A repeat PHQ-9 at follow-up shows remission (CMS159).",
+      "about": "For a positive PHQ-4 depression score or PHQ-2. The ASQ follows a positive answer to question 9, or whenever clinic protocol calls for it. A repeat PHQ-9 at follow-up shows remission (CMS159).",
       "items": [
         "doc:phq-9",
         "doc:asq"
+      ]
+    },
+    {
+      "id": "anxiety-follow-up",
+      "title": "After a positive anxiety screen (GAD-7)",
+      "about": "For a positive PHQ-4 anxiety score: the GAD-7 and its severity bands.",
+      "items": [
+        "doc:gad-7"
+      ]
+    },
+    {
+      "id": "relationship-safety",
+      "title": "Relationship safety (HARK), given in private",
+      "about": "Four questions about a partner or ex-partner in the past year. Give it when the patient is alone, never with a partner present; 1 or more yes is a positive screen.",
+      "items": [
+        "doc:hark"
       ]
     },
     {
@@ -101,6 +136,25 @@
       "items": [
         "doc:taps-1",
         "doc:taps-2"
+      ]
+    },
+    {
+      "id": "positive-screen-handoff",
+      "title": "Positive screen handoff (internal referral and staff handoff)",
+      "about": "For staff, with a follow-up packet: the warm handoff to behavioral health, care management, nutrition or social work, recorded so the referral can be followed to completion.",
+      "items": [
+        "doc:internal-referral",
+        "doc:staff-handoff"
+      ]
+    },
+    {
+      "id": "controlled-medicine-start",
+      "title": "Starting a controlled medicine (agreement, substance use and depression screens)",
+      "about": "Before a long-term opioid, sedative or stimulant: the agreement, with TAPS-1 for substance use and the PHQ-9 for depression.",
+      "items": [
+        "doc:controlled-substance-agreement",
+        "doc:taps-1",
+        "doc:phq-9"
       ]
     },
     {

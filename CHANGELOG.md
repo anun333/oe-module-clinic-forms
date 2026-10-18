@@ -1,5 +1,40 @@
 # Changelog
 
+## 0.27.0 (2026-10-17)
+
+**Four new documents, and packets for the visits clinics run most.**
+
+- **New documents:**
+  - **PHQ-4** (Pfizer, no permission needed): two anxiety questions (the GAD-2) and two depression questions (the PHQ-2) on one page, as Pfizer prints it. Each part scores 0 to 6, and 3 or more on either is a positive screen, to be followed by the GAD-7 or PHQ-9 and a clinical interview (Pfizer's instruction manual; Kroenke 2009). The total of 0 to 12 is printed with no bands, since the owner's manual gives none. In the FHIR export each part and the total add up on screen, and the total carries LOINC 70272-0.
+  - **HARK: Relationship Safety Questions**, four yes or no questions about a partner or ex-partner in the past year, from Sohal, Eldridge and Feder 2007 (Table 1), under CC BY 2.0 with the article's citation. 1 or more is a positive screen (sensitivity 81%, specificity 95%). It is given when the patient is alone. LOINC 76504-0 is its total. The USPSTF (2025) names HARK among the tools for screening women of reproductive age for intimate partner violence.
+  - **Health Risk Assessment (Annual Wellness Visit)**, US pack: every topic 42 CFR 410.15 asks the Medicare wellness visit's health risk assessment to address, as amended for 2026: about you, your health, feelings, habits and safety, everyday activities including balance and falls. It adds the other providers and the medicines and supplements the first visit lists, and planning ahead. A required-elements check holds it to (v)(A) to (F). Reading grade 5.
+  - **Preventive Care Questions**, US pack: the answers the chart doesn't hold that decide which USPSTF A and B screenings and preventive medicines are due:
+    - pack-years and quit year;
+    - past cancers, polyps and bowel disease;
+    - hysterectomy;
+    - cancers, aortic aneurysm and a parent's hip fracture in close relatives;
+    - sexual health in the past 6 months;
+    - where the patient was born and has lived;
+    - injection drug use and hepatitis B contacts;
+    - pregnancy.
+
+    The office section, written in our own words from the recommendations, lists what each answer may point to, and the clinician decides.
+- **New packets:**
+  - **Core:** after the visit, procedure visit, anxiety follow-up (GAD-7), relationship safety (HARK, in private), positive-screen handoff (internal referral and staff handoff), and starting a controlled medicine (agreement, TAPS-1, PHQ-9).
+  - **US pack:**
+    - the Medicare Annual Wellness Visit (health risk assessment, PHQ-4, Stay Independent, TAPS-1, preventive care questions);
+    - pregnancy and postpartum (PHQ-9, TAPS-1, Hunger Vital Sign, HARK);
+    - preventive care, language help, records from another office, and patient requests (blank forms to stock the front desk).
+- **Changed packets:**
+  - The yearly adult screen starts with the PHQ-4 instead of the PHQ-2, so anxiety is screened too.
+  - The US downtime kit adds the superbill and the visit summary.
+  - The US new-patient packet adds the sliding fee notice.
+- **Not included yet; permission asked first:**
+  - Mini-Cog: clinics may reproduce it, but a software package isn't among the users its terms name.
+  - CRAFFT 2.1: approval needed to republish it in another format.
+  - The PHQ-9 Modified for Teens: the REACH Institute's written permission.
+- **Documents changed in this release:** PHQ-4, HARK, the health risk assessment and the preventive care questions are new, all version 1.
+
 ## 0.26.0 (2026-10-17)
 
 **Screening packets labelled by when they're used, and three new ones.**

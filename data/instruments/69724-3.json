@@ -1,0 +1,174 @@
+{
+    "instrument": "PHQ-4",
+    "loinc": "69724-3",
+    "loinc_version": "2.83",
+    "from": "fhir.loinc.org Questionnaire/69724-3 (questions, answers); scores and answer order from LOINC's answer lists via clinicaltables.nlm.nih.gov loinc_items; scored from the same answer elsewhere in the panel: 68509-9 LA6570-1",
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "questions": [
+        {
+            "code": "69725-0",
+            "text": "Feeling nervous, anxious or on edge",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA6569-3",
+                    "text": "Several days",
+                    "score": 1
+                },
+                {
+                    "code": "LA6570-1",
+                    "text": "More than half the days",
+                    "score": 2
+                },
+                {
+                    "code": "LA6571-9",
+                    "text": "Nearly every day",
+                    "score": 3
+                }
+            ]
+        },
+        {
+            "code": "68509-9",
+            "text": "Over the past 2 weeks have you not been able to stop or control worrying",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA6569-3",
+                    "text": "Several days",
+                    "score": 1
+                },
+                {
+                    "code": "LA6570-1",
+                    "text": "More than half the days",
+                    "score": 2
+                },
+                {
+                    "code": "LA6571-9",
+                    "text": "Nearly every day",
+                    "score": 3
+                }
+            ]
+        },
+        {
+            "code": "44250-9",
+            "text": "Little interest or pleasure in doing things",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA6569-3",
+                    "text": "Several days",
+                    "score": 1
+                },
+                {
+                    "code": "LA6570-1",
+                    "text": "More than half the days",
+                    "score": 2
+                },
+                {
+                    "code": "LA6571-9",
+                    "text": "Nearly every day",
+                    "score": 3
+                }
+            ]
+        },
+        {
+            "code": "44255-8",
+            "text": "Feeling down, depressed, or hopeless",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA6569-3",
+                    "text": "Several days",
+                    "score": 1
+                },
+                {
+                    "code": "LA6570-1",
+                    "text": "More than half the days",
+                    "score": 2
+                },
+                {
+                    "code": "LA6571-9",
+                    "text": "Nearly every day",
+                    "score": 3
+                }
+            ]
+        }
+    ],
+    "total": {
+        "min": 0,
+        "max": 12
+    },
+    "title": "Patient Health Questionnaire-4 (PHQ-4)",
+    "about": "Four questions about anxiety and depression in the past two weeks: the GAD-2 and the PHQ-2. Each part scores 0 to 6, and 3 or more on either part is a positive screen, to be followed by the GAD-7 or the PHQ-9 and a clinical interview.",
+    "instructions": "Over the last 2 weeks, how often have you been bothered by the following problems?",
+    "licence": {
+        "holder": "Pfizer Inc.",
+        "terms": "No permission required to reproduce, translate, display or distribute. Developed by Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc.",
+        "permission": "None needed: the statement printed on the PHQ-4 and on phqscreeners.com, which offers it. It is printed unchanged."
+    },
+    "source": {
+        "name": "PHQ-4 (Kroenke, Spitzer, Williams and Löwe), from phqscreeners.com",
+        "url": "https://www.phqscreeners.com/select-screener"
+    },
+    "subscales": [
+        {
+            "name": "Anxiety",
+            "questions": [
+                "69725-0",
+                "68509-9"
+            ],
+            "field": "Anxiety score (questions 1 and 2)",
+            "cutoffs": [
+                {
+                    "score": 3,
+                    "meaning": "positive anxiety screen: give the GAD-7 and a clinical interview"
+                }
+            ]
+        },
+        {
+            "name": "Depression",
+            "questions": [
+                "44250-9",
+                "44255-8"
+            ],
+            "field": "Depression score (questions 3 and 4)",
+            "cutoffs": [
+                {
+                    "score": 3,
+                    "meaning": "positive depression screen: give the PHQ-9 and a clinical interview"
+                }
+            ]
+        }
+    ],
+    "subscales_source": {
+        "citation": "Kroenke K, Spitzer RL, Williams JBW, Löwe B. An ultra-brief screening scale for anxiety and depression: the PHQ-4. Psychosomatics. 2009;50(6):613-621; and the PHQ Screeners Instruction Manual (Pfizer).",
+        "short": "Kroenke 2009",
+        "pmid": "19996233",
+        "doi": "10.1176/appi.psy.50.6.613",
+        "url": "https://www.phqscreeners.com/images/sites/g/files/g10016261/f/201412/instructions.pdf",
+        "stated": "The Instruction Manual: the PHQ-4's anxiety (GAD-2) and depression (PHQ-2) parts each score 0 to 6, and \"the recommended cutpoints for each when used as screeners is a score of 3 or greater\"; a score of 3 or greater \"should prompt administration of the full PHQ-9 and/or GAD-7, as well as a clinical interview\". The total of 0 to 12 is a measure of caseness; the manual gives no bands for it, so none are printed."
+    },
+    "accepted": {
+        "questions": {
+            "2": "Pfizer's printed PHQ-4 (phqscreeners.com) asks \"Not being able to stop or control worrying\"; LOINC 68509-9 writes the time frame into this one item, as in the GAD-7."
+        }
+    },
+    "total_code": "70272-0",
+    "total_code_source": "LOINC 70272-0, Patient Health Questionnaire 4 item (PHQ-4) total score [Reported]: written by hand, since LOINC's questionnaire leaves its total item uncoded; tools/instrument-references.php checks it is active and its component is that item's text"
+}

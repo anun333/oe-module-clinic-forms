@@ -1182,6 +1182,85 @@
           ]
         }
       ]
+    },
+    "health-risk-assessment": {
+      "source": "42 CFR 410.15(a), health risk assessment, (v)(A) to (F): the topics it addresses at a minimum (as amended, 90 FR 50007, in effect 2026-01-01)",
+      "elements": [
+        {
+          "name": "Demographic data (age, sex or gender, race, ethnicity)",
+          "cite": "410.15(a) HRA (v)(A)",
+          "all": [
+            "date of birth",
+            "sex",
+            "race",
+            "ethnicity"
+          ]
+        },
+        {
+          "name": "Self-assessment of health status, frailty and physical functioning",
+          "cite": "410.15(a) HRA (v)(B)",
+          "all": [
+            "how is your health",
+            "worn out",
+            "climbing a flight of stairs"
+          ]
+        },
+        {
+          "name": "Psychosocial risks: depression or life satisfaction, stress, anger, loneliness or social isolation, pain, fatigue",
+          "cite": "410.15(a) HRA (v)(C)",
+          "all": [
+            "down or sad",
+            "stressed",
+            "angry",
+            "lonely",
+            "in pain",
+            "tired",
+            "happy are you with your life"
+          ]
+        },
+        {
+          "name": "Behavioral risks: tobacco, physical activity, nutrition and oral health, alcohol, sexual health, motor vehicle safety, home safety",
+          "cite": "410.15(a) HRA (v)(D)",
+          "all": [
+            "tobacco",
+            "exercise",
+            "fruit or vegetables",
+            "dentist",
+            "alcohol",
+            "sexual health",
+            "seat belt",
+            "smoke alarms"
+          ]
+        },
+        {
+          "name": "Activities of daily living: dressing, feeding, toileting, grooming, walking including balance and fall risk, bathing",
+          "cite": "410.15(a) HRA (v)(E)",
+          "all": [
+            "getting dressed",
+            "eating",
+            "using the toilet",
+            "grooming",
+            "walking",
+            "unsteady",
+            "fallen",
+            "bathing"
+          ]
+        },
+        {
+          "name": "Instrumental activities of daily living: shopping, food preparation, telephone, housekeeping, laundry, transportation, medications, finances",
+          "cite": "410.15(a) HRA (v)(F)",
+          "all": [
+            "shopping",
+            "making meals",
+            "using the phone",
+            "housework",
+            "laundry",
+            "getting to places",
+            "taking your medicines",
+            "handling money"
+          ]
+        }
+      ]
     }
   }
 }

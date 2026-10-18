@@ -1,0 +1,111 @@
+{
+    "instrument": "HARK",
+    "loinc": "76499-3",
+    "loinc_version": "2.83",
+    "from": "fhir.loinc.org Questionnaire/76499-3 (questions, answers); scores and answer order from LOINC's answer lists via clinicaltables.nlm.nih.gov loinc_items",
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "questions": [
+        {
+            "code": "76500-8",
+            "text": "Within the last year, have you been humiliated or emotionally abused in other ways by your partner or ex-partner?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "76501-6",
+            "text": "Within the last year, have you been afraid of your partner or ex-partner?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "76502-4",
+            "text": "Within the last year, have you been raped or forced to have any kind of sexual activity by your partner or ex-partner?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        },
+        {
+            "code": "76503-2",
+            "text": "Within the last year, have you been kicked, hit, slapped, or otherwise physically hurt by your partner or ex-partner?",
+            "answers": [
+                {
+                    "code": "LA33-6",
+                    "text": "Yes",
+                    "score": 1
+                },
+                {
+                    "code": "LA32-8",
+                    "text": "No",
+                    "score": 0
+                }
+            ]
+        }
+    ],
+    "total": {
+        "min": 0,
+        "max": 4
+    },
+    "title": "HARK: Relationship Safety Questions",
+    "about": "Four yes or no questions about a partner or ex-partner in the past year (Humiliation, Afraid, Rape, Kick). One point for each yes; 1 or more is a positive screen for intimate partner violence. Give it when the patient is alone, never with a partner present.",
+    "instructions": "These questions are about a partner or ex-partner. Check Yes or No for each.",
+    "licence": {
+        "holder": "Sohal H, Eldridge S, Feder G (© 2007; licensee BioMed Central Ltd.)",
+        "terms": "Creative Commons Attribution 2.0 (https://creativecommons.org/licenses/by/2.0/). Cite: Sohal H, Eldridge S, Feder G. The sensitivity and specificity of four questions (HARK) to identify intimate partner violence: a diagnostic accuracy study in general practice. BMC Fam Pract. 2007;8:49. doi:10.1186/1471-2296-8-49.",
+        "permission": "None needed beyond the attribution: the article is open access under CC BY 2.0, and the questions are its Table 1. The article says the afraid and kick questions were kept from the Abuse Assessment Screen; that instrument's own terms are not checked here."
+    },
+    "source": {
+        "name": "HARK, Sohal, Eldridge and Feder, BMC Family Practice 2007 (Table 1)",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2034562/"
+    },
+    "cutoffs": [
+        {
+            "score": 1,
+            "meaning": "positive screen for intimate partner violence in the past year"
+        }
+    ],
+    "cutoffs_source": {
+        "citation": "Sohal H, Eldridge S, Feder G. The sensitivity and specificity of four questions (HARK) to identify intimate partner violence: a diagnostic accuracy study in general practice. BMC Fam Pract. 2007;8:49.",
+        "short": "Sohal 2007",
+        "pmid": "17727730",
+        "doi": "10.1186/1471-2296-8-49",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC2034562/",
+        "stated": "Table 1: \"one point is given for every yes answer\". At a score of 1 or more: sensitivity 81% (95% CI 69-90%), specificity 95% (91-98%), against the Composite Abuse Scale; 232 women in general practice in east London."
+    },
+    "accepted": {
+        "questions": {
+            "1": "Sohal 2007's Table 1, the published form, asks \"by your partner or your ex-partner?\"; LOINC 76500-8 has \"by your partner or ex-partner?\".",
+            "4": "Sohal 2007's Table 1 has \"kicked, hit, slapped or otherwise physically hurt\"; LOINC 76503-2 adds a comma before \"or\"."
+        }
+    },
+    "total_code": "76504-0",
+    "total_code_source": "LOINC 76504-0, Total score [HARK]: written by hand, since LOINC's questionnaire leaves its total item uncoded; tools/instrument-references.php checks it is active and its component is that item's text"
+}

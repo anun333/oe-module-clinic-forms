@@ -1,0 +1,292 @@
+{
+  "id": "health-risk-assessment",
+  "title": "Health Risk Assessment (Annual Wellness Visit)",
+  "category": "Screening",
+  "about": "The health risk assessment Medicare's Annual Wellness Visit starts from, with every topic 42 CFR 410.15 lists (as amended for 2026): about you, your health, how you have been feeling, habits and safety, everyday activities including balance and falls, and planning ahead, plus the providers and medicines the first visit lists. The patient fills it in before the visit, in under 20 minutes; the clinician reviews it in the visit.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "Medicare Annual Wellness Visit health risk assessment, 42 CFR 410.15",
+    "url": "https://www.ecfr.gov/current/title-42/chapter-IV/subchapter-B/part-410/subpart-B/section-410.15"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Please fill this in before your yearly wellness visit. Your answers help you and your care team make a plan to keep you well. You can skip any question you would rather not answer."
+    },
+    {
+      "type": "heading",
+      "text": "About you"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Sex",
+          "value": "{patient.sex}"
+        },
+        {
+          "label": "Gender, if different"
+        },
+        {
+          "label": "Race"
+        },
+        {
+          "label": "Ethnicity"
+        },
+        {
+          "label": "Who you live with"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Your health"
+    },
+    {
+      "type": "scale",
+      "label": "In general, how is your health?",
+      "columns": [
+        "Excellent",
+        "Very good",
+        "Good",
+        "Fair",
+        "Poor"
+      ],
+      "items": [
+        "My health is"
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "Do you have trouble with any of these?",
+      "columns": [
+        "No",
+        "Some",
+        "A lot"
+      ],
+      "items": [
+        "Walking one block",
+        "Climbing a flight of stairs",
+        "Getting up from a chair without using your arms",
+        "Feeling weak or worn out",
+        "Losing weight without trying"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "How you have been feeling"
+    },
+    {
+      "type": "scale",
+      "label": "In the past month, how often have you felt:",
+      "columns": [
+        "Often",
+        "Sometimes",
+        "Rarely or never"
+      ],
+      "items": [
+        "Down or sad",
+        "Stressed",
+        "Angry or easily upset",
+        "Lonely or cut off from other people",
+        "Tired, with little energy",
+        "In pain"
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "Overall, how happy are you with your life?",
+      "columns": [
+        "Very happy",
+        "Somewhat happy",
+        "Not very happy",
+        "Not happy at all"
+      ],
+      "items": [
+        "I am"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Habits and safety"
+    },
+    {
+      "type": "scale",
+      "label": "Please check one answer for each.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "items": [
+        "Do you smoke or use tobacco or vaping products now?",
+        "Do you drink alcohol on most days?",
+        "Do you exercise at least 30 minutes on 5 or more days a week?",
+        "Do you eat fruit or vegetables every day?",
+        "Have you seen a dentist in the past year?",
+        "Do you have trouble chewing or a sore mouth?",
+        "Do you always wear a seat belt in a car?",
+        "Do you have working smoke alarms at home?",
+        "Do you have loose rugs, clutter or poor lighting where you walk at home?",
+        "If there is a gun in your home, is it locked up?",
+        "Do you have questions or concerns about sex or your sexual health?",
+        "Do you have trouble hearing, even with hearing aids?",
+        "Do you have trouble seeing, even with glasses?"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Everyday activities"
+    },
+    {
+      "type": "scale",
+      "label": "Do you need help from another person with:",
+      "columns": [
+        "No help",
+        "Some help",
+        "Can't do it"
+      ],
+      "items": [
+        "Getting dressed",
+        "Eating",
+        "Grooming, such as brushing your hair or teeth",
+        "Bathing or showering",
+        "Using the toilet",
+        "Getting in and out of bed or a chair",
+        "Walking"
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "Do you need help from another person with:",
+      "columns": [
+        "No help",
+        "Some help",
+        "Can't do it"
+      ],
+      "items": [
+        "Shopping",
+        "Making meals",
+        "Using the phone",
+        "Housework",
+        "Laundry",
+        "Getting to places you need to go",
+        "Taking your medicines the right way",
+        "Paying bills and handling money"
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "Please check one answer for each.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "items": [
+        "Do you feel unsteady or worry about falling when you walk?",
+        "Have you fallen in the past year?"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "How do you usually get to places you need to go? (tick all that apply)",
+      "items": [
+        "I drive",
+        "Family or friends drive me",
+        "Bus or other public transport",
+        "A van or ride service",
+        "I walk"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Your care"
+    },
+    {
+      "type": "lines",
+      "label": "Other doctors, therapists, home health agencies or medical equipment suppliers you use",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "Medicines you take, including vitamins, calcium and other supplements",
+      "count": 4
+    },
+    {
+      "type": "heading",
+      "text": "Planning ahead"
+    },
+    {
+      "type": "checklist",
+      "label": "Have you written down the care you would want if you could not speak for yourself? (tick all that apply)",
+      "items": [
+        "Yes, I have an advance directive or living will",
+        "Yes, I have named someone to make health care decisions for me",
+        "No, not yet",
+        "I would like to talk about this at my visit"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "One health goal I have for this year"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Anything else you want to talk about at your visit",
+      "count": 3
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "checklist",
+      "label": "Reviewed at the visit",
+      "items": [
+        "Depression risk, with a screening tool",
+        "Functional ability and safety: hearing, everyday activities, fall risk and home safety",
+        "Cognitive function, by direct observation, with what the patient, family and others report",
+        "Substance use risk, with referral if needed; opioid prescriptions reviewed",
+        "Screening schedule for the next 5 to 10 years, and risk factors listed",
+        "Advance care planning offered, if the patient wishes"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+{
+  "id": "phq-4",
+  "title": "Patient Health Questionnaire-4 (PHQ-4)",
+  "category": "Screening",
+  "about": "Four questions about anxiety and depression in the past two weeks: the GAD-2 and the PHQ-2. Each part scores 0 to 6, and 3 or more on either part is a positive screen, to be followed by the GAD-7 or the PHQ-9 and a clinical interview.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "69724-3",
+    "display": "Patient health questionnaire 4 item"
+  },
+  "validated": true,
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "instrument",
+    "name": "PHQ-4 (Kroenke, Spitzer, Williams and Löwe), from phqscreeners.com",
+    "url": "https://www.phqscreeners.com/select-screener"
+  },
+  "licence": {
+    "holder": "Pfizer Inc.",
+    "terms": "No permission required to reproduce, translate, display or distribute. Developed by Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc.",
+    "permission": "None needed: the statement printed on the PHQ-4 and on phqscreeners.com, which offers it. It is printed unchanged."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "Over the last 2 weeks, how often have you been bothered by the following problems?",
+      "columns": [
+        "Not at all",
+        "Several days",
+        "More than half the days",
+        "Nearly every day"
+      ],
+      "items": [
+        "Feeling nervous, anxious or on edge",
+        "Not being able to stop or control worrying",
+        "Little interest or pleasure in doing things",
+        "Feeling down, depressed, or hopeless"
+      ],
+      "scores": [
+        0,
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Anxiety score (questions 1 and 2)"
+        },
+        {
+          "label": "Depression score (questions 3 and 4)"
+        },
+        {
+          "label": "Total score (questions 1 to 4)"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Published cut-offs (Kroenke 2009): Anxiety: 3 or more, positive anxiety screen: give the GAD-7 and a clinical interview. Depression: 3 or more, positive depression screen: give the PHQ-9 and a clinical interview."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Entered into OpenEMR by"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "PHQ-4 (Kroenke, Spitzer, Williams and Löwe), from phqscreeners.com. No permission required to reproduce, translate, display or distribute. Developed by Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc."
+    }
+  ]
+}

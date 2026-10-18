@@ -1,0 +1,233 @@
+{
+  "id": "preventive-care-questions",
+  "title": "Preventive Care Questions",
+  "category": "Screening",
+  "about": "The answers the chart doesn't hold that decide which USPSTF grade A and B screenings and preventive medicines a patient is due: tobacco history in pack-years, past cancers and bowel disease, cancers and other conditions in close relatives, sexual health in the past 6 months, where they were born and have lived, and pregnancy. Ask once, and again when something changes. The office section, written from the recommendations (USPSTF wording isn't reproduced), lists what each answer may point to; the clinician decides.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "U.S. Preventive Services Task Force, recommendations rated A and B",
+    "url": "https://www.uspreventiveservicestaskforce.org/uspstf/recommendation-topics/uspstf-a-and-b-recommendations"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "These questions help us know which tests and care may help you stay well. You can skip any question you would rather not answer."
+    },
+    {
+      "type": "heading",
+      "text": "Tobacco"
+    },
+    {
+      "type": "scale",
+      "label": "Please check one answer for each.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "items": [
+        "Have you smoked at least 100 cigarettes in your entire life?",
+        "Do you smoke cigarettes now?"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If you have ever smoked: packs a day, on average"
+        },
+        {
+          "label": "For how many years"
+        },
+        {
+          "label": "If you quit, the year you quit"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Your health history"
+    },
+    {
+      "type": "scale",
+      "label": "Please check one answer for each.",
+      "columns": [
+        "Yes",
+        "No",
+        "Not sure"
+      ],
+      "items": [
+        "Have you had breast, ovarian, fallopian tube or peritoneal cancer?",
+        "Have you had colon polyps, colon cancer, Crohn's disease or ulcerative colitis?",
+        "Have you had a hysterectomy that removed your cervix?"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Your family"
+    },
+    {
+      "type": "scale",
+      "label": "Has your mother, father, sister, brother, daughter or son had any of these?",
+      "columns": [
+        "Yes",
+        "No",
+        "Not sure"
+      ],
+      "items": [
+        "Breast cancer",
+        "Ovarian, fallopian tube or peritoneal cancer",
+        "Colon or rectal cancer",
+        "An aortic aneurysm (a bulge in the main blood vessel)",
+        "A broken hip (a parent)",
+        "Is your family Ashkenazi Jewish?"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "For each yes: who, and their age when it was found",
+      "count": 3
+    },
+    {
+      "type": "heading",
+      "text": "Sexual health"
+    },
+    {
+      "type": "checklist",
+      "label": "In the past year, I have had sex with (tick one)",
+      "items": [
+        "Men",
+        "Women",
+        "Both men and women",
+        "I have not had sex"
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "In the past 6 months:",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "items": [
+        "Have you had sex with a new partner, or with more than one partner?",
+        "Has a partner of yours had HIV, an STI, or other partners at the same time?",
+        "Have you had a sexually transmitted infection (STI), such as syphilis, gonorrhea or chlamydia?",
+        "Have you had sex without a condom with someone whose HIV status you did not know?",
+        "Have you traded sex for money, drugs or a place to stay?"
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "Please check one answer for each.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "items": [
+        "Would you like a test for HIV or other STIs?",
+        "Would you like to talk about medicine that prevents HIV (PrEP)?"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Where you have lived"
+    },
+    {
+      "type": "scale",
+      "label": "Please check one answer for each.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "items": [
+        "Were you born outside the United States?",
+        "Were either of your parents born outside the United States?",
+        "Have you lived outside the United States for a year or more?",
+        "Have you ever lived in a homeless shelter, jail or prison?",
+        "Have you ever injected drugs, even once?",
+        "Has anyone you live with or have sex with had hepatitis B?"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Countries you were born in or lived in"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Pregnancy"
+    },
+    {
+      "type": "checklist",
+      "label": "Which is true for you? (tick one)",
+      "items": [
+        "I could become pregnant",
+        "I am pregnant now",
+        "I am planning a pregnancy in the next year",
+        "This does not apply to me"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For office use: what the answers may point to"
+    },
+    {
+      "type": "paragraph",
+      "text": "Check each against the current USPSTF advice and the patient's age and history. The clinician decides."
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Lung cancer scan: age 50 to 80, 20 or more pack-years, smokes now or quit in the last 15 years (Medicare: 50 to 77)",
+        "Aortic aneurysm scan, once: a man 65 to 75 who has ever smoked; Medicare also covers family history",
+        "BRCA risk tool: a woman with breast, ovarian, tube or peritoneal cancer in her or her family, or Ashkenazi Jewish ancestry",
+        "HIV PrEP: a partner with HIV, a recent STI, sex without condoms, shared needles, or asks for it",
+        "HIV, syphilis, chlamydia and gonorrhea tests: higher risk, or asks for a test",
+        "Hepatitis B test: born where it is common, parents from there, needles, men who have sex with men, or a contact with it",
+        "Hepatitis C test outside ages 18 to 79: ever injected drugs",
+        "TB test: born or lived where TB is common, or lived in a shelter, jail or prison",
+        "Bone density risk before 65 after menopause: a parent broke a hip, smoking, heavy drinking or low weight",
+        "Colon cancer screening from 45 is for average risk; past polyps, cancer, Crohn's or colitis need a different plan",
+        "Cervical screening stops after a hysterectomy that removed the cervix, with no past high-grade change",
+        "Folic acid 0.4 to 0.8 mg a day: could become pregnant, or plans to"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    }
+  ]
+}

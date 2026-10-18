@@ -15,6 +15,7 @@
         "doc:financial-policy",
         "doc:communication-consent",
         "doc:sliding-fee-application",
+        "doc:sliding-fee-notice",
         "doc:notice-of-nondiscrimination"
       ]
     },
@@ -39,13 +40,65 @@
       ]
     },
     {
-      "id": "yearly-adult-screen",
-      "title": "Yearly adult screen (depression, substance use and food)",
-      "about": "Every adult, once a year: the short first stage of each screen. A positive answer opens its follow-up: the PHQ-9 after the PHQ-2, TAPS-2 after TAPS-1, the six-item survey after the Hunger Vital Sign. A positive food screen counts in UDS Table 6A (line 40) once it is recorded as a coded problem.",
+      "id": "downtime",
+      "title": "Downtime kit",
+      "about": "For a system outage: registration, the routing slip, the visit note, the superbill for charges and the summary the patient takes home, all on paper to enter afterwards.",
       "items": [
-        "doc:phq-2",
+        "layout:DEM",
+        "doc:routing-slip",
+        "doc:downtime-visit-note",
+        "doc:superbill",
+        "doc:after-visit-summary"
+      ]
+    },
+    {
+      "id": "language-help",
+      "title": "Language help (notice of availability, interpreter request)",
+      "about": "For a patient who prefers another language: the Section 1557 notice of free language help, the interpreter request, and how they want to be contacted.",
+      "items": [
+        "doc:notice-of-availability",
+        "doc:interpreter-request",
+        "doc:communication-consent"
+      ]
+    },
+    {
+      "id": "records-from-another-office",
+      "title": "Records from another office (records request and release)",
+      "about": "To get records from another provider: the request, with the signed release of information.",
+      "items": [
+        "doc:records-request",
+        "doc:release-of-information"
+      ]
+    },
+    {
+      "id": "patient-requests",
+      "title": "Patient requests: blank forms to stock the front desk",
+      "about": "One of each request a patient may make under HIPAA and Section 1557: their records, a correction, a restriction, a list of disclosures, taking back an authorization, and a grievance. Print to stock; hand out the one asked for.",
+      "items": [
+        "doc:records-access-request",
+        "doc:amendment-request",
+        "doc:restriction-request",
+        "doc:accounting-request",
+        "doc:authorization-revocation",
+        "doc:grievance-form"
+      ]
+    },
+    {
+      "id": "yearly-adult-screen",
+      "title": "Yearly adult screen (anxiety, depression, substance use and food)",
+      "about": "Every adult, once a year: the short first stage of each screen. A positive answer opens its follow-up: the GAD-7 or PHQ-9 after the PHQ-4, TAPS-2 after TAPS-1, the six-item survey after the Hunger Vital Sign. A positive food screen counts in UDS Table 6A (line 40) once it is recorded as a coded problem.",
+      "items": [
+        "doc:phq-4",
         "doc:taps-1",
         "doc:hunger-vital-sign"
+      ]
+    },
+    {
+      "id": "preventive-care",
+      "title": "Preventive care questions (once, and when things change)",
+      "about": "The answers that decide which USPSTF screenings and preventive medicines are due: pack-years, cancers in close relatives, sexual health, where the patient was born and has lived, and pregnancy.",
+      "items": [
+        "doc:preventive-care-questions"
       ]
     },
     {
@@ -54,6 +107,29 @@
       "about": "For a positive Hunger Vital Sign: the USDA six-item survey says how severe the food insecurity is.",
       "items": [
         "doc:food-security"
+      ]
+    },
+    {
+      "id": "annual-wellness-visit",
+      "title": "Medicare Annual Wellness Visit (health risk assessment and screens)",
+      "about": "Before a Medicare Annual Wellness Visit: the health risk assessment, a depression screen, falls risk, a substance use screen, and the preventive care questions that set the screening schedule. Cognition is checked in the visit by direct observation.",
+      "items": [
+        "doc:health-risk-assessment",
+        "doc:phq-4",
+        "doc:stay-independent",
+        "doc:taps-1",
+        "doc:preventive-care-questions"
+      ]
+    },
+    {
+      "id": "pregnancy",
+      "title": "Pregnancy and postpartum screen (depression, substance use, food, relationship safety)",
+      "about": "At a prenatal or postpartum visit: the PHQ-9 for perinatal depression, TAPS-1, the Hunger Vital Sign and HARK. Give HARK when the patient is alone.",
+      "items": [
+        "doc:phq-9",
+        "doc:taps-1",
+        "doc:hunger-vital-sign",
+        "doc:hark"
       ]
     },
     {
