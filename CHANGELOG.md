@@ -1,8 +1,9 @@
 # Changelog
 
-## Unreleased
+## 0.29.0 (2026-10-18)
 
 - **A scale can number on from an earlier part.** The new optional `"start"` gives the first row's number, so an instrument that asks questions 1 to 3 one way and 4 to 9 another, like the CRAFFT, prints its own numbers. The print page, the Word, LibreOffice and PDF files, the instrument check and the FHIR and OpenMRS exports all use it, and a start below 1 is refused when the document is read. No shipped document uses it yet.
+- **No document changed**, so no document version moved and no clinic sees a "copied from an earlier version" notice.
 
 ## 0.28.0 (2026-10-18)
 
