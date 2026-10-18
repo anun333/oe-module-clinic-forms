@@ -66,8 +66,9 @@ if (isset($old['questions_from'])) {
     exit(1);
 }
 $fetched = loincInstrument($loinc, loincAuth());
-// Every item in LOINC's order, for the document; the reference keeps the questions and lists the free text apart.
-$items = loincApplyScoring($fetched['questions'], $old['scoring']['overrides'] ?? []);
+// Every item in LOINC's order, or the published order a question_order gives, for the document; the
+// reference keeps the questions and lists the free text apart.
+$items = loincApplyQuestionOrder(loincApplyScoring($fetched['questions'], $old['scoring']['overrides'] ?? []), $old['question_order'] ?? []);
 [$questions, $freeText] = loincFreeText($items);
 if (($gaps = loincScoringGaps($questions)) !== []) {
     fwrite(STDERR, 'Some answers have no score in LOINC (' . implode(', ', $gaps) . "): add the published scoring under \"scoring\" in $refFile\n");

@@ -121,6 +121,10 @@ final class Instrument
         $ours = self::questions($doc);
         $theirs = $reference['questions'] ?? [];
         $accepted = $reference['accepted']['questions'] ?? [];
+        // An answer the printed form words differently from LOINC's list (Pfizer's PHQ-15 prints "Not
+        // bothered at all" where LOINC has "Not bothered") is allowed when listed with LOINC's text and why:
+        // "answers": {"<printed>": {"instead_of": "<LOINC's>", "why": "..."}}.
+        $acceptedAnswers = $reference['accepted']['answers'] ?? [];
         // A question the printed form asks that LOINC's panel doesn't code (GAD-7's closing "how
         // difficult…") is allowed when it is listed with its reason and carries no score.
         foreach ($reference['accepted']['extra'] ?? [] as $n => $why) {
@@ -155,7 +159,8 @@ final class Instrument
             }
             foreach ($refAnswers as $j => $refAnswer) {
                 $a = $q['answers'][$j];
-                if (!self::same($a['text'], (string)$refAnswer['text'])) {
+                $insteadOf = $acceptedAnswers[$a['text']]['instead_of'] ?? null;
+                if (!self::same($a['text'], (string)$refAnswer['text']) && $insteadOf !== $refAnswer['text']) {
                     $answerProblems[sprintf('answer %d is "%s" where the instrument has "%s"', $j + 1, $a['text'], $refAnswer['text'])][] = $n;
                 }
                 $refScore = isset($refAnswer['score']) && is_numeric($refAnswer['score']) ? (float)$refAnswer['score'] : null;

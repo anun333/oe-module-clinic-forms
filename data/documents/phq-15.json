@@ -1,0 +1,105 @@
+{
+  "id": "phq-15",
+  "title": "Physical Symptoms (PHQ-15)",
+  "category": "Screening",
+  "about": "Fifteen physical symptoms in the past 4 weeks, each answered from 0 (not bothered at all) to 2 (bothered a lot), scored 0 to 30. Scores of 5, 10 and 15 mark low, medium and high somatic symptom severity (Kroenke 2002). Question 4 (d on Pfizer's form) is for women only.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "69728-4",
+    "display": "Patient health questionnaire 15 item"
+  },
+  "validated": true,
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "instrument",
+    "name": "PHQ-15 (Kroenke, Spitzer and Williams), from phqscreeners.com",
+    "url": "https://www.phqscreeners.com/select-screener"
+  },
+  "licence": {
+    "holder": "Pfizer Inc.",
+    "terms": "No permission required to reproduce, translate, display or distribute. Developed by Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc.",
+    "permission": "None needed: the statement printed on the PHQ-15 (phqscreeners.com). It is printed unchanged."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "During the past 4 weeks, how much have you been bothered by any of the following problems?",
+      "columns": [
+        "Not bothered at all",
+        "Bothered a little",
+        "Bothered a lot"
+      ],
+      "items": [
+        "Stomach pain",
+        "Back pain",
+        "Pain in your arms, legs, or joints (knees, hips, etc.)",
+        "Menstrual cramps or other problems with your periods (women only)",
+        "Headaches",
+        "Chest pain",
+        "Dizziness",
+        "Fainting spells",
+        "Feeling your heart pound or race",
+        "Shortness of breath",
+        "Pain or problems during sexual intercourse",
+        "Constipation, loose bowels, or diarrhea",
+        "Nausea, gas, or indigestion",
+        "Feeling tired or having low energy",
+        "Trouble sleeping"
+      ],
+      "scores": [
+        0,
+        1,
+        2
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Total score (for office use)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "paragraph",
+      "text": "Published cut-offs (Kroenke 2002): 5 or more, low somatic symptom severity; 10 or more, medium somatic symptom severity; 15 or more, high somatic symptom severity."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Entered into OpenEMR by"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "PHQ-15 (Kroenke, Spitzer and Williams), from phqscreeners.com. No permission required to reproduce, translate, display or distribute. Developed by Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc."
+    }
+  ]
+}

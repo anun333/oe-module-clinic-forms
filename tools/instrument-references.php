@@ -57,7 +57,7 @@ foreach (DocumentLibrary::shipped()->all() as $doc) {
     try {
         $fetched = loincInstrument($loinc, $auth);
         // Where the published instrument scores differently from LOINC's lists, its scoring is written by hand.
-        [$questions, $freeText] = loincFreeText(loincApplyScoring($fetched['questions'], $old['scoring']['overrides'] ?? []));
+        [$questions, $freeText] = loincFreeText(loincApplyQuestionOrder(loincApplyScoring($fetched['questions'], $old['scoring']['overrides'] ?? []), $old['question_order'] ?? []));
         if (($gaps = loincScoringGaps($questions)) !== []) {
             throw new RuntimeException('some answers have no score in LOINC (' . implode(', ', $gaps) . '); add the published scoring under "scoring"');
         }

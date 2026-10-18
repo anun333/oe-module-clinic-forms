@@ -136,6 +136,10 @@ final class InstrumentTest extends TestCase
                     self::assertNotSame('', trim((string)$why), "$code: accepted $kind $n says why");
                 }
             }
+            foreach ($r['accepted']['answers'] ?? [] as $printed => $a) {
+                self::assertNotSame('', trim((string)($a['why'] ?? '')), "$code: accepted answer \"$printed\" says why");
+                self::assertNotSame('', trim((string)($a['instead_of'] ?? '')), "$code: accepted answer \"$printed\" names LOINC's text");
+            }
         }
     }
 

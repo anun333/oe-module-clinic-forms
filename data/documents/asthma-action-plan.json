@@ -1,0 +1,158 @@
+{
+  "id": "asthma-action-plan",
+  "title": "Asthma Action Plan",
+  "category": "After the visit",
+  "about": "A plan the clinician fills in with the patient: daily medicines, and what to do when asthma is getting worse or is an emergency, by green, yellow and red zones and peak flow. It follows the zones of NHLBI's Asthma Action Plan (NIH Pub. 20-HL-5251, 2021).",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms, following the zones of NHLBI's Asthma Action Plan (2020 update)",
+    "url": "https://www.nhlbi.nih.gov/resources/asthma-action-plan-2020"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Clinician",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Clinic phone",
+          "value": "{facility.phone}"
+        },
+        {
+          "label": "Emergency department phone"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "My best peak flow"
+        },
+        {
+          "label": "My asthma triggers"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Green zone: doing well"
+    },
+    {
+      "type": "paragraph",
+      "text": "No cough, wheeze, chest tightness or shortness of breath, day or night. I can do my usual activities. Peak flow is 80 percent or more of my best."
+    },
+    {
+      "type": "table",
+      "label": "Take these every day",
+      "columns": [
+        "Medicine",
+        "How much",
+        "When"
+      ],
+      "rows": 3
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Before exercise, take"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Yellow zone: asthma is getting worse"
+    },
+    {
+      "type": "paragraph",
+      "text": "Cough, wheeze, chest tightness or shortness of breath. Or I wake up at night with asthma. Or I can do some, but not all, of my usual activities. Peak flow is 50 to 79 percent of my best."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Take this quick-relief medicine, and keep taking my green zone medicines"
+        },
+        {
+          "label": "How much and how often"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "If I am back in the green zone 1 hour later, I keep watching to be sure I stay there. If I am not, I take the medicine below and call my clinician."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Then take"
+        },
+        {
+          "label": "For how many days"
+        },
+        {
+          "label": "Call my clinician within (hours)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Red zone: medical alert"
+    },
+    {
+      "type": "paragraph",
+      "text": "I am very short of breath. Or my quick-relief medicine has not helped. Or I cannot do my usual activities. Or I have been in the yellow zone for 24 hours and am not better. Peak flow is less than 50 percent of my best."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Take this medicine now"
+        },
+        {
+          "label": "How much"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Then call my clinician now. Go to the hospital or call 911 if I am still in the red zone after 15 minutes and have not reached my clinician."
+    },
+    {
+      "type": "heading",
+      "text": "Danger signs: call 911 now"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Trouble walking or talking because I am short of breath",
+        "Lips or fingernails are blue or gray"
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Clinician"
+      ]
+    }
+  ]
+}

@@ -2,18 +2,18 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.27.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.28.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
 - **Paperwork.** Consents, releases, referral letters and office slips, filled from the facility record and, optionally, the open patient and an Address Book entry.
 - **Paper versions of layout forms.** Demographics, History, any active encounter form (LBF) and any transaction form (Referral and the like), printed as a blank form with tick boxes, date boxes and ruled lines. With the US pack, a short **UDS form** prints only the Demographics fields health center reporting reads (sex, gender identity and sexual orientation, race, ethnicity, language, household size and income, housing, agricultural work, military service), with the site's own answer lists. Clinics without a computer in every room can do intake on paper and type it in later, in the same order.
-- **Ready-made packets.** New patient intake, annual update, telehealth, referral, after the visit, a procedure visit, and a downtime kit (in the US pack with the superbill and visit summary). The screening packets are labelled by when they are used:
+- **Ready-made packets.** New patient intake, annual update, telehealth, referral, after the visit, a procedure visit, a chronic care visit (home logs and a medicine review), an asthma visit, and a downtime kit (in the US pack with the superbill and visit summary). The screening packets are labelled by when they are used:
   - **every adult, yearly:** the yearly adult screen, the short first stage of each screen (PHQ-4 and TAPS-1, and in the US pack the Hunger Vital Sign);
-  - **after a positive screen:** depression (the PHQ-9, then the ASQ), anxiety (the GAD-7), substance use (TAPS-1, then TAPS-2) and, in the US pack, food (the six-item survey); and a positive-screen handoff for staff (internal referral and handoff);
+  - **after a positive screen:** depression (the PHQ-9, then the ASQ), anxiety (the GAD-7), PTSD (the PCL-5), substance use (TAPS-1, then TAPS-2) and, in the US pack, food (the six-item survey); and a positive-screen handoff for staff;
   - **at 65 and over:** the older adult add-on (falls and depression), and in the US pack the Medicare Annual Wellness Visit (health risk assessment, PHQ-4, Stay Independent, TAPS-1 and the preventive care questions);
-  - **for a visit about it:** depression and anxiety; depression and alcohol; behavioral health, which adds PTSD and substance use; starting a controlled medicine; relationship safety (HARK, given in private); and, in the US pack, pregnancy and postpartum;
-  - **in the US pack:** who we serve (the UDS questions and the sliding fee), preventive care, language help, records from another office, and patient requests (blank forms to stock the front desk).
+  - **for a visit about it:** depression and anxiety; depression and alcohol; behavioral health, which adds PTSD and substance use; starting a controlled medicine; relationship safety (HARK, given in private); and, in the US pack, pregnancy and postpartum, and a vaccine visit;
+  - **in the US pack:** who we serve (the UDS questions and the sliding fee), preventive care, care management enrollment, uninsured or self-pay (the good faith estimate and the sliding fee), Medicare other insurance, notices to post in the office, language help, records from another office, and patient requests (blank forms to stock the front desk).
 
   Each packet opens as one document to print, and says what it is for when you point at its button.
 - **Spanish.** Every patient document prints in Spanish too, with the language assistance notices Section 1557 requires (see [Spanish and language assistance](#spanish-and-language-assistance)).
@@ -54,6 +54,10 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Screening | Alcohol Use Screen (AUDIT-C) | The WHO AUDIT's first three questions, scored 0 to 12 | 72109-2 | any |
 | Screening | Patient Health Questionnaire (PHQ-9) | Depression screening, scored 0 to 27, with an office prompt to follow the clinic's safety protocol on question 9 | 44249-1 | any |
 | Screening | Generalized Anxiety Disorder Scale (GAD-7) | Anxiety screening, scored 0 to 21 | 69737-5 | any |
+| Screening | PTSD Checklist for DSM-5 (PCL-5) | The VA's 20 questions for a positive PC-PTSD-5, scored 0 to 80; 31 or more suggests probable PTSD | 101697-1 | any |
+| Screening | Physical Symptoms (PHQ-15) | Fifteen physical symptoms, scored 0 to 30; 5, 10 and 15 mark low, medium and high severity | 69728-4 | any |
+| Screening | Healthy Days (CDC HRQOL-4) | CDC's four questions on general health and unhealthy days in the past 30 | | any |
+| Screening | Everyday Discrimination Scale | David Williams's nine questions on unfair treatment in day-to-day life, and its reasons; no cut-off | 112307-4 | any |
 | Screening | Primary Care PTSD Screen (PC-PTSD-5) | A question about a traumatic event, then five yes or no questions, scored 0 to 5 | 102010-6 | any |
 | Screening | Geriatric Depression Scale, Short Form (GDS-15) | Fifteen yes or no questions for older adults, scored 0 to 15 | 48543-3 | any |
 | Screening | Check Your Risk for Falling (Stay Independent) | CDC's STEADI falls checklist, scored 0 to 14 | 97874-2 | any |
@@ -63,6 +67,15 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Screening | Substance Use Screen (TAPS-1) | Tobacco, alcohol, drugs and prescription medications not used as prescribed, in the past year; any use is a positive screen for that substance | 96841-2 | any |
 | Screening | HARK: Relationship Safety Questions | Four yes or no questions about a partner or ex-partner in the past year; 1 or more is a positive screen. Given when the patient is alone | 76499-3 | any |
 | Screening | Health Risk Assessment (Annual Wellness Visit) | Every topic 42 CFR 410.15 asks a Medicare wellness visit's health risk assessment to address, plus the providers and medicines the first visit lists | | US |
+| Front desk | Good Faith Estimate | The No Surprises Act estimate for an uninsured or self-pay patient, with every element of 45 CFR 149.610(c) | | US |
+| Front desk | Your Right to a Good Faith Estimate | The notice to post, adapted from CMS's model | | US |
+| Front desk | Care Management Services: Consent | What CMS says a patient must be told before chronic care management and related services | | US |
+| Front desk | Medicare: Other Insurance Questions | CMS's model questions on whether another payer pays before Medicare, in plainer words | | US |
+| Screening | Vaccine Record and Vaccine Information Statements | What the vaccine injury law asks a provider to record for each vaccine, with the information statement given | | US |
+| After the visit | Asthma Action Plan | Daily medicines and what to do by green, yellow and red zones, following NHLBI's plan | | any |
+| After the visit | Home Blood Pressure Log | Readings at home, with the steps for an accurate reading | | any |
+| After the visit | Blood Sugar Log | Two weeks of glucose readings at the times the clinician asks for | | any |
+| After the visit | My Medicines: Review | The medicines on file to check and correct, and everything else the patient takes | | any |
 | Screening | Preventive Care Questions | The answers the chart doesn't hold that decide which USPSTF A and B screenings are due: pack-years, family history, sexual health, where the patient has lived, pregnancy | | US |
 | Screening | Substance Use Assessment (TAPS-2) | For a positive TAPS-1: yes or no questions about each substance in the past 3 months, each substance scored on its own | 96845-3 | any |
 | Care coordination | Referral letter | To the Address Book recipient, with urgency, the question to answer and what is enclosed | 57133-1 | any |
@@ -112,7 +125,7 @@ The format, and the rules every document follows, are in [docs/](docs/README.md)
 - **Plain language.** Every patient document reads at an 8th-grade level or below (Flesch-Kincaid), as AHRQ's health literacy toolkit advises; the tests measure it. Validated instruments (PHQ-9, GAD-7) keep their published wording and are exempt.
 - Each document says who reads it (patient, staff or provider) and whether its wording is a validated instrument's.
 - **Each document has a version**, printed small at the foot of every page with its id (`consent-to-treat v1`) and recorded in the audit event, so a signed copy names the wording the patient signed. A version means one wording: the tests fail if a document's wording changes without its version being raised.
-- **Each document says where its wording comes from and on what terms:** written for Clinic Forms, written to a rule's elements (with a link to the rule), or a published instrument (with its holder, terms and the permission they give: PHQ-9, PHQ-4, PHQ-2 and GAD-7 from Pfizer, "no permission required"; AUDIT-C from the WHO manual; the Hunger Vital Sign from Children's HealthWatch, free with its citation; PC-PTSD-5 from the VA, the ASQ from NIMH, TAPS-1 from NIDA, Stay Independent from CDC and the GDS-15 from its developers, all public domain; documents written for Clinic Forms, CC0).
+- **Each document says where its wording comes from and on what terms:** written for Clinic Forms, written to a rule's elements (with a link to the rule), or a published instrument (with its holder, terms and the permission they give: PHQ-9, PHQ-4, PHQ-2, PHQ-15 and GAD-7 from Pfizer, "no permission required"; AUDIT-C from the WHO manual; the Hunger Vital Sign from Children's HealthWatch, free with its citation; PC-PTSD-5 from the VA, the ASQ from NIMH, TAPS-1 from NIDA, Stay Independent from CDC and the GDS-15 from its developers, all public domain; documents written for Clinic Forms, CC0).
 
 ### The documents are starting points
 
@@ -316,6 +329,6 @@ The tests need no database: they cover the document library (every shipped docum
 - **The code** (`src/`, `public/`, `tools/`, `tests/` and the module's wiring) is GPL-3.0-or-later, as OpenEMR is. See [LICENSE](LICENSE).
 - **The documents written for Clinic Forms**, their translations, the packets and the lists of required elements (`data/`) are dedicated to the public domain under CC0 1.0 ([LICENSES/CC0-1.0.txt](LICENSES/CC0-1.0.txt)). They are forms to adapt and print: use them, change them and share them with no credit needed. Each document's own `"licence"` says which terms it is under.
 - **Except what other people own**, which keeps its owners' terms. Each document names its holder and terms:
-  - the screening instruments: PHQ-9, PHQ-4, PHQ-2 and GAD-7 from Pfizer ("no permission required to reproduce, translate, display or distribute"); AUDIT-C from the WHO manual (not for sale); the Hunger Vital Sign™ from Children's HealthWatch (no fee or license, with its citation; the name is their trademark); HARK under CC BY 2.0 from its authors' open-access article (Sohal, Eldridge and Feder 2007), with that citation and licence on the page; the rest public domain (VA, NIMH, NIDA, CDC, USDA, and the GDS-15's developers);
+  - the screening instruments: PHQ-9, PHQ-4, PHQ-2, PHQ-15 and GAD-7 from Pfizer ("no permission required to reproduce, translate, display or distribute"); AUDIT-C from the WHO manual (not for sale); the Hunger Vital Sign™ from Children's HealthWatch (no fee or license, with its citation; the name is their trademark); HARK under CC BY 2.0 from its authors' open-access article (Sohal, Eldridge and Feder 2007), with that citation and licence on the page; the Everyday Discrimination Scale from David Williams (publicly available, no permission needed); the rest free to use: the VA's PC-PTSD-5 and PCL-5, CDC's Healthy Days, NIMH's ASQ, NIDA's TAPS and USDA's food security survey (US government works); CDC's Stay Independent, which the Greater Los Angeles VA Geriatric Research Education Clinical Center developed (Rubenstein et al. 2011) and CDC adapted with the authors' permission, a credit it keeps on the page; and the GDS-15, which its developers placed in the public domain;
   - LOINC's codes, names and questionnaires in `data/instruments/`, under the [LOINC licence](https://loinc.org/license/) (Regenstrief Institute);
   - the CIEL concept numbers in `data/ciel.json`, under CC BY 4.0 (Columbia International eHealth Laboratory, via Open Concept Lab).

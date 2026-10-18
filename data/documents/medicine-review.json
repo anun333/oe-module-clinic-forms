@@ -1,0 +1,107 @@
+{
+  "id": "medicine-review",
+  "title": "My Medicines: Review",
+  "category": "After the visit",
+  "about": "A review of everything the patient takes, as at a brown-bag visit: the medicines on file, printed when a patient is chosen, to check and correct, then anything else they take, including over-the-counter medicines, vitamins and supplements, and how they take them. For chronic care and wellness visits.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Allergies on file",
+          "value": "{patient.allergies}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Please bring all your medicines to your visit, in their bottles. Include ones you buy without a prescription, vitamins, supplements, herbs, inhalers, creams and eye drops."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Medicines on file",
+          "value": "{patient.medications}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Cross out any you no longer take. Add anything else you take below."
+    },
+    {
+      "type": "table",
+      "label": "Other medicines, vitamins and supplements I take",
+      "columns": [
+        "Name",
+        "How much",
+        "How often",
+        "What it is for",
+        "Who prescribed it"
+      ],
+      "rows": 8
+    },
+    {
+      "type": "scale",
+      "label": "Please check one answer for each.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "items": [
+        "Do you sometimes forget to take your medicines?",
+        "Do you ever skip or cut doses because of the cost?",
+        "Do any of your medicines cause problems or side effects?",
+        "Do you take medicines prescribed by more than one clinician?",
+        "Do you use more than one pharmacy?"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Questions I have about my medicines",
+      "count": 3
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Medicine list updated in the chart",
+        "Changes explained, and the patient said back how to take them"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    }
+  ]
+}

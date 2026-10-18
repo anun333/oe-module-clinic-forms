@@ -1,0 +1,97 @@
+{
+  "id": "care-management-consent",
+  "title": "Care Management Services: Consent",
+  "category": "Front desk",
+  "about": "Records the consent Medicare asks for before care management services: chronic and principal care management, chronic pain management, behavioral health integration, remote monitoring, community health integration and principal illness navigation. It covers each thing CMS says the patient must be told (the CCM booklet, MLN909188; for FQHCs and RHCs, the Benefit Policy Manual chapter 13, section 230.2). Consent may be written or spoken; staff record which.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "Medicare care management consent: MLN909188 (CCM) and Medicare Benefit Policy Manual chapter 13, section 230.2 (RHC and FQHC)",
+    "url": "https://www.cms.gov/files/document/chroniccaremanagement.pdf"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "{facility.name} offers care management. Between visits, a member of your care team checks in with you, helps you manage your health conditions and medicines, and helps you get the care you need. This can be by phone, by video, or through monitoring devices."
+    },
+    {
+      "type": "checklist",
+      "label": "Please read each one",
+      "items": [
+        "You may have to pay part of the cost, such as a deductible or coinsurance, for care management, including care you get by phone or online.",
+        "Only one practitioner or clinic can give you these services and bill for them in any calendar month.",
+        "You can stop at any time. If you stop, it ends at the end of that calendar month.",
+        "We may share your health information with specialists who care for you, and talk with them about your care.",
+        "If you get behavioral health care through us, we may talk with a psychiatric consultant about your care."
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "My choice (tick one)",
+      "items": [
+        "Yes, I want care management services",
+        "No, I do not want care management services"
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "checklist",
+      "label": "Consent was",
+      "items": [
+        "Written (signed above)",
+        "Spoken, and recorded here"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Services discussed",
+      "items": [
+        "Chronic care management",
+        "Principal care management",
+        "Chronic pain management",
+        "Behavioral health integration",
+        "Remote patient or therapeutic monitoring",
+        "Community health integration or principal illness navigation"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Explained by"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    }
+  ]
+}

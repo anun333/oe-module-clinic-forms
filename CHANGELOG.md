@@ -1,5 +1,43 @@
 # Changelog
 
+## 0.28.0 (2026-10-18)
+
+**Thirteen new documents: the front-desk rules for self-pay and Medicare patients, chronic care, and four free instruments.**
+
+- **Written to federal rules, US pack** (each with a required-elements check):
+  - **Good Faith Estimate:** the No Surprises Act estimate for an uninsured or self-pay patient, with every element of 45 CFR 149.610(c). Service codes only, since CPT descriptions are the AMA's. FQHCs apply the sliding fee as CMS's FAQ describes.
+  - **Your Right to a Good Faith Estimate:** the notice to post (149.610(b)(1)(iii)), adapted from CMS's model notice, a U.S. government work.
+  - **Care Management Services: Consent:** what CMS says the patient must be told before chronic or principal care management, chronic pain management, behavioral health integration, remote monitoring and the navigation services (MLN909188; Benefit Policy Manual ch. 13, 230.2).
+  - **Medicare: Other Insurance Questions:** CMS's model questions on whether another payer pays first (MSP Manual ch. 3, 20.2.1), in plainer words.
+  - **Vaccine Record and Vaccine Information Statements:** what 42 U.S.C. 300aa-25 and 300aa-26 ask a provider to record. Print each statement from CDC at the time, since CDC revises them several times a year.
+- **Written for Clinic Forms, core:**
+  - an asthma action plan by green, yellow and red zones, following NHLBI's 2020 plan;
+  - a home blood pressure log;
+  - a blood sugar log;
+  - a medicine review, which prints the medicines on file for the patient to check and correct.
+- **Free instruments:**
+  - **PCL-5:** the VA's PTSD Checklist for DSM-5, public domain, for a positive PC-PTSD-5. Total 0 to 80; 31 or more suggests probable PTSD (Bovin 2016). LOINC's questionnaire lists its 20 items in reverse; ours follows the VA's form.
+  - **PHQ-15** (Pfizer): physical symptoms, total 0 to 30; 5, 10 and 15 are low, medium and high severity (Kroenke 2002). It uses Pfizer's order and column wording.
+  - **Healthy Days (CDC HRQOL-4):** public domain; unhealthy days and frequent distress.
+  - **Everyday Discrimination Scale:** David Williams, publicly available with no permission needed. It has no cut-off.
+- **References can follow the printed form where LOINC differs:**
+  - `question_order` lists the questions in the published order. Both tools apply it, and refuse a code that's missing, extra or repeated.
+  - `accepted.answers` lets the page print the owner's answer wording, such as Pfizer's "Not bothered at all", in place of LOINC's. It names LOINC's text and says why, and the check fails if LOINC's text is wrong.
+- **New packets:**
+  - **Core:** PTSD follow-up (PCL-5), chronic care visit (home logs and medicine review), asthma visit.
+  - **US pack:** uninsured or self-pay (good faith estimate and sliding fee), notices to post in the office, Medicare other insurance, care management enrollment, vaccine visit.
+- **Credits:**
+  - The README no longer calls Stay Independent public domain. The Greater Los Angeles VA developed it and CDC adapted it with the authors' permission, a credit the document already printed.
+  - Shipped files may now hold CMS's No Surprises help line and email, beside HHS's.
+- **Not included, and why:**
+  - **BIMS:** its terms limit distribution to the United States.
+  - **PRAPARE:** now licensed for a fee.
+  - **PEG:** built from the Brief Pain Inventory, so it needs MD Anderson's permission.
+  - **AD8, Epworth, Insomnia Severity Index, M-CHAT-R/F and Morisky:** licensed.
+  - **NIDA Quick Screen and NIDA-modified ASSIST:** TAPS covers them.
+  - **Asked first:** BSTAD, S2BI, SWYC and the PSC, for children and adolescents.
+- **Documents changed in this release:** thirteen new, all version 1.
+
 ## 0.27.0 (2026-10-17)
 
 **Four new documents, and packets for the visits clinics run most.**

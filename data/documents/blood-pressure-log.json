@@ -1,0 +1,64 @@
+{
+  "id": "blood-pressure-log",
+  "title": "Home Blood Pressure Log",
+  "category": "After the visit",
+  "about": "A log for blood pressure readings taken at home, with the usual steps for an accurate reading. Bring it to the next visit.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "My blood pressure goal"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "For a good reading",
+      "items": [
+        "Do not smoke, exercise or have caffeine for 30 minutes before.",
+        "Empty your bladder first.",
+        "Sit with your back supported and your feet flat on the floor. Rest for 5 minutes.",
+        "Rest your arm on a table, with the cuff on bare skin at the level of your heart.",
+        "Do not talk while the cuff is on.",
+        "Take 2 readings, 1 minute apart, and write both down."
+      ]
+    },
+    {
+      "type": "table",
+      "label": "My readings",
+      "columns": [
+        "Date",
+        "Time",
+        "Top number (systolic)",
+        "Bottom number (diastolic)",
+        "Pulse",
+        "Notes"
+      ],
+      "rows": 21
+    },
+    {
+      "type": "paragraph",
+      "text": "Call us if your top number is often above your goal. If it is 180 or higher, or the bottom number is 120 or higher, wait 5 minutes and check again. If it is still that high and you have chest pain, shortness of breath, back pain, numbness, weakness, trouble seeing or trouble speaking, call 911."
+    }
+  ]
+}

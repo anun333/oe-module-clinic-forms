@@ -1,0 +1,76 @@
+{
+  "id": "blood-sugar-log",
+  "title": "Blood Sugar Log",
+  "category": "After the visit",
+  "about": "A two-week log for blood sugar (glucose) readings at home, with the times the clinician asks for, and insulin doses if used. Bring it to the next visit.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "My target before meals"
+        },
+        {
+          "label": "My target 2 hours after meals"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Check my blood sugar (the times my clinician ticked)",
+      "items": [
+        "When I wake up, before eating",
+        "Before meals",
+        "2 hours after meals",
+        "At bedtime",
+        "When I feel shaky, sweaty or confused"
+      ]
+    },
+    {
+      "type": "table",
+      "label": "My readings",
+      "columns": [
+        "Date",
+        "When I wake up",
+        "Before lunch",
+        "Before dinner",
+        "Bedtime",
+        "2 hours after a meal (which meal)",
+        "Insulin",
+        "Notes"
+      ],
+      "rows": 14
+    },
+    {
+      "type": "paragraph",
+      "text": "If your blood sugar is below 70, eat or drink something with sugar, like 4 ounces of juice, and check again in 15 minutes. Call us if it is often below 70 or above the number your clinician gave you."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Call us if it is above"
+        }
+      ]
+    }
+  ]
+}

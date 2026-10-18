@@ -197,8 +197,9 @@ final class MetadataTest extends TestCase
     {
         // A shipped file holds placeholders, never a real clinic's phone, email or street address,
         // except the official contacts a rule makes us print: HHS Office for Civil Rights (Section 1557
-        // complaints, and the HIPAA complaint line the privacy notice gives).
-        $official = ['1-800-368-1019', '1-800-537-7697', '1-877-696-6775', '200 Independence Avenue'];
+        // complaints, and the HIPAA complaint line the privacy notice gives), and CMS's No Surprises
+        // help line and email, where a good faith estimate says how to dispute a bill (45 CFR 149.610).
+        $official = ['1-800-368-1019', '1-800-537-7697', '1-877-696-6775', '200 Independence Avenue', '1-800-985-3059', 'FederalPPDRQuestions@cms.hhs.gov'];
         $files = array_merge(glob(dirname(__DIR__, 2) . '/data/*.json') ?: [], glob(dirname(__DIR__, 2) . '/data/documents/{,es/}*.json', GLOB_BRACE) ?: [], glob(dirname(__DIR__, 2) . '/data/packs/*/{,documents/,documents/es/}*.json', GLOB_BRACE) ?: []);
         self::assertGreaterThan(50, count($files));
         $seen = [];

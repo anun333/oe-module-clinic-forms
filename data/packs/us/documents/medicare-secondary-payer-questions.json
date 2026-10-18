@@ -1,0 +1,166 @@
+{
+  "id": "medicare-secondary-payer-questions",
+  "title": "Medicare: Other Insurance Questions",
+  "category": "Front desk",
+  "about": "The questions Medicare asks providers to use to find out whether another payer pays before Medicare (the model questions in the Medicare Secondary Payer Manual, chapter 3, section 20.2.1, a U.S. government work, in plainer words). Ask at the first visit; after that, ask whether anything has changed. The patient need not sign. Keep the answers 10 years. Medicare Advantage members are exempt.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "Medicare Secondary Payer Manual (Pub. 100-05), chapter 3, section 20.2.1: model questions",
+    "url": "https://www.cms.gov/regulations-and-guidance/guidance/manuals/downloads/msp105c03.pdf"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed. Adapted from CMS's model questions, a U.S. government work (17 U.S.C. 105)."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Medicare number"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Medicare asks us to find out whether any other insurance should pay for your care before Medicare does. Please answer each question."
+    },
+    {
+      "type": "heading",
+      "text": "Part 1. Injuries, accidents and black lung"
+    },
+    {
+      "type": "scale",
+      "label": "Please check one answer for each.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "items": [
+        "Do you get benefits under the Black Lung Benefits Act?",
+        "Is your illness or injury from an accident or condition at work?",
+        "Is this care for an injury covered by no-fault, car or medical payment insurance?",
+        "Is this care for an injury or illness that someone else may be responsible for?"
+      ]
+    },
+    {
+      "type": "table",
+      "label": "For each yes: the details",
+      "columns": [
+        "Kind (black lung, work, no-fault, liability)",
+        "Insurance company or employer, and address",
+        "Policy or claim number",
+        "Date it began or date of injury"
+      ],
+      "rows": 3
+    },
+    {
+      "type": "heading",
+      "text": "Part 2. Medicare and work health insurance"
+    },
+    {
+      "type": "checklist",
+      "label": "I have Medicare because of (tick all that apply)",
+      "items": [
+        "My age",
+        "A disability",
+        "Kidney failure (end-stage renal disease)"
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "Please check one answer.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "items": [
+        "Do you have health insurance through a job that you, your spouse or another family member has now?"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "If yes: how many people work for that employer? (tick one)",
+      "items": [
+        "1 to 19",
+        "20 to 99",
+        "100 or more"
+      ]
+    },
+    {
+      "type": "table",
+      "label": "If yes: the work health insurance",
+      "columns": [
+        "Employer, and address",
+        "Insurance plan, and address",
+        "Policy number",
+        "Group number",
+        "Date it began",
+        "Policy holder, and relationship to you"
+      ],
+      "rows": 2
+    },
+    {
+      "type": "heading",
+      "text": "Part 3. Only if you have Medicare because of kidney failure"
+    },
+    {
+      "type": "scale",
+      "label": "Please check one answer for each.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "items": [
+        "Do you have health insurance through a job, your own or a spouse's or family member's?",
+        "Have you had a kidney transplant?",
+        "Have you had regular dialysis?",
+        "Did you have that work health insurance before and on the day your Medicare began?"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date of transplant"
+        },
+        {
+          "label": "Date dialysis began"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "paragraph",
+      "text": "If kidney failure applies, check whether the patient is in the 30-month coordination period. Keep these answers for 10 years after the date of service."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Who pays first"
+        },
+        {
+          "label": "Asked by"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    }
+  ]
+}

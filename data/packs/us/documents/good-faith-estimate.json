@@ -1,0 +1,132 @@
+{
+  "id": "good-faith-estimate",
+  "title": "Good Faith Estimate",
+  "category": "Front desk",
+  "about": "The written estimate of expected charges an uninsured or self-pay patient gets when care is scheduled or asked about, with every element of 45 CFR 149.610(c)(1). Service codes only: CPT descriptions are the AMA's. An FQHC lists a new patient's full charge with the sliding fee schedule, and an established patient's discounted charge (CMS FAQ Part 4).",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "No Surprises Act: good faith estimates for uninsured or self-pay patients, 45 CFR 149.610(c)",
+    "url": "https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-B/part-149/subpart-G/section-149.610"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date of this estimate",
+          "value": "{clinic.today}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "The care this estimate is for, in plain words"
+        },
+        {
+          "label": "Date it is scheduled, if it is"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "label": "Providers and facilities in this estimate",
+      "columns": [
+        "Name",
+        "NPI",
+        "Tax ID (TIN)",
+        "Where the care will be given (address and state)"
+      ],
+      "rows": 3
+    },
+    {
+      "type": "table",
+      "label": "Items and services we expect, grouped by provider or facility",
+      "columns": [
+        "Provider or facility",
+        "Item or service",
+        "Diagnosis code",
+        "Service code",
+        "Quantity",
+        "Expected charge"
+      ],
+      "rows": 8
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Total estimated cost for all items and services"
+        },
+        {
+          "label": "Sliding fee discount applied, if any"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Care to be scheduled separately"
+    },
+    {
+      "type": "paragraph",
+      "text": "We will give you a separate estimate for each item below. You get it when the care is scheduled, or when you ask. Its codes, costs and provider details will be in that estimate, not here. To get one, call the provider listed."
+    },
+    {
+      "type": "table",
+      "label": "Items or services scheduled separately",
+      "columns": [
+        "Item or service",
+        "Provider or facility, and how to ask them for an estimate"
+      ],
+      "rows": 3
+    },
+    {
+      "type": "heading",
+      "text": "Please read"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "This is only an estimate. It shows the care we expect today, as far as we know now.",
+        "The actual care or charges may be different.",
+        "Your provider may suggest other care that is scheduled or asked for on its own. That care is not in this estimate.",
+        "Is your bill $400 or more above this estimate for any one provider or clinic? Then you can start a dispute with the federal government. This is called patient-provider dispute resolution.",
+        "You must start it within 120 days of the date on the bill.",
+        "Starting a dispute will not change the care we give you.",
+        "To learn how to start one, go to www.cms.gov/nosurprises/consumers, or call 1-800-985-3059.",
+        "This estimate is not a contract. You do not have to get this care from any provider or clinic listed here."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Keep this estimate. You may need it if you dispute a bill."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Estimate prepared by"
+        },
+        {
+          "label": "Phone"
+        }
+      ]
+    }
+  ]
+}

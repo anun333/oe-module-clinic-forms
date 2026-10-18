@@ -1,0 +1,79 @@
+{
+  "id": "vaccine-record",
+  "title": "Vaccine Record and Vaccine Information Statements",
+  "category": "Screening",
+  "about": "A paper record of each vaccine given, with what the National Childhood Vaccine Injury Act asks a provider to record: the date, the manufacturer and lot number, the name, title and address of the person who gave it, and the edition date of the Vaccine Information Statement and the date it was given (42 U.S.C. 300aa-25 and 300aa-26). For outreach clinics and downtime; the vaccines then go into OpenEMR's Immunizations. Print each VIS from CDC at the time: CDC revises them several times a year.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "National Childhood Vaccine Injury Act: recording and Vaccine Information Statements, 42 U.S.C. 300aa-25 and 300aa-26",
+    "url": "https://www.law.cornell.edu/uscode/text/42/300aa-26"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Before each vaccine, we give you the Vaccine Information Statement for it. It tells you about the vaccine's benefits and risks. Please read it and ask us anything. You can also read them at www.cdc.gov/vaccines/hcp/about-vis."
+    },
+    {
+      "type": "table",
+      "label": "Vaccines given",
+      "columns": [
+        "Date",
+        "Vaccine",
+        "Manufacturer and lot number",
+        "Site and route",
+        "VIS edition date",
+        "Date VIS given",
+        "Given by (name and title)"
+      ],
+      "rows": 6
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Clinic address",
+          "value": "{facility.address}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "paragraph",
+      "text": "Enter each vaccine in OpenEMR's Immunizations, with the same details. Report adverse events to VAERS (vaers.hhs.gov)."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Entered into OpenEMR by"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    }
+  ]
+}

@@ -84,6 +84,35 @@
       ]
     },
     {
+      "id": "self-pay",
+      "title": "Uninsured or self-pay (good faith estimate and sliding fee)",
+      "about": "For a patient with no insurance, or not using it: the good faith estimate the No Surprises Act requires, with the sliding fee application and notice.",
+      "items": [
+        "doc:good-faith-estimate",
+        "doc:sliding-fee-application",
+        "doc:sliding-fee-notice"
+      ]
+    },
+    {
+      "id": "notices-to-post",
+      "title": "Notices to post in the office",
+      "about": "The notices a US health center posts where patients see them: nondiscrimination, free language help, the sliding fee discount, and the right to a good faith estimate.",
+      "items": [
+        "doc:notice-of-nondiscrimination",
+        "doc:notice-of-availability",
+        "doc:sliding-fee-notice",
+        "doc:good-faith-estimate-notice"
+      ]
+    },
+    {
+      "id": "medicare-other-insurance",
+      "title": "Medicare patient: other insurance questions",
+      "about": "The questions Medicare asks providers to use to find out whether another payer pays first. Ask at the first visit, then ask whether anything has changed.",
+      "items": [
+        "doc:medicare-secondary-payer-questions"
+      ]
+    },
+    {
       "id": "yearly-adult-screen",
       "title": "Yearly adult screen (anxiety, depression, substance use and food)",
       "about": "Every adult, once a year: the short first stage of each screen. A positive answer opens its follow-up: the GAD-7 or PHQ-9 after the PHQ-4, TAPS-2 after TAPS-1, the six-item survey after the Hunger Vital Sign. A positive food screen counts in UDS Table 6A (line 40) once it is recorded as a coded problem.",
@@ -119,6 +148,23 @@
         "doc:stay-independent",
         "doc:taps-1",
         "doc:preventive-care-questions"
+      ]
+    },
+    {
+      "id": "care-management",
+      "title": "Care management enrollment (consent and medicine review)",
+      "about": "Before Medicare care management services: the consent, with each thing CMS says the patient must be told, and a medicine review.",
+      "items": [
+        "doc:care-management-consent",
+        "doc:medicine-review"
+      ]
+    },
+    {
+      "id": "vaccine-visit",
+      "title": "Vaccine visit (vaccine record and information statements)",
+      "about": "A paper record of each vaccine given, with the Vaccine Information Statement edition and date the law asks for. Print each statement from CDC at the time.",
+      "items": [
+        "doc:vaccine-record"
       ]
     },
     {

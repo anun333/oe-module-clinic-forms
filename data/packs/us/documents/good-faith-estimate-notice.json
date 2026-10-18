@@ -1,0 +1,48 @@
+{
+  "id": "good-faith-estimate-notice",
+  "title": "Your Right to a Good Faith Estimate",
+  "category": "Front desk",
+  "about": "The notice 45 CFR 149.610(b)(1)(iii) requires: tells patients without insurance, or not using it, that they can get a written estimate of expected charges. Post it in the office and where visits are scheduled, and put it on the website. Adapted from CMS's model notice (CMS-10791, Appendix 1), a U.S. government work.",
+  "audience": "patient",
+  "poster": true,
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "No Surprises Act: good faith estimates for uninsured or self-pay patients, 45 CFR 149.610",
+    "url": "https://www.ecfr.gov/current/title-45/subtitle-A/subchapter-B/part-149/subpart-G/section-149.610"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed. Adapted from CMS's model notice, a U.S. government work (17 U.S.C. 105)."
+  },
+  "blocks": [
+    {
+      "type": "heading",
+      "text": "You have the right to a Good Faith Estimate of what your care will cost"
+    },
+    {
+      "type": "paragraph",
+      "text": "Do you have no health insurance? Or are you not using it for this care? Then the law says we must give you an estimate of your bill before your care."
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "You can ask for a Good Faith Estimate of the total cost of your care. Ask when you schedule care, or at any time.",
+        "The estimate includes related costs, like tests, medicines, equipment and hospital fees.",
+        "Schedule care 3 or more work days ahead, and you should get the estimate in writing within 1 work day.",
+        "Schedule care 10 or more work days ahead, and you should get it within 3 work days.",
+        "Ask before you schedule, and you should get it within 3 work days.",
+        "Is your bill $400 or more above the estimate for any one provider or clinic? Then you can dispute the bill."
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Ask us for your estimate: {facility.name}, {facility.phone}."
+    },
+    {
+      "type": "paragraph",
+      "text": "To learn more, go to the web page www.cms.gov/nosurprises/consumers. Or call 1-800-985-3059. Or email your questions to FederalPPDRQuestions@cms.hhs.gov and ask for help."
+    }
+  ]
+}

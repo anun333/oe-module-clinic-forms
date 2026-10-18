@@ -1,0 +1,110 @@
+{
+  "id": "everyday-discrimination",
+  "title": "Everyday Discrimination Scale",
+  "category": "Screening",
+  "about": "David Williams's Everyday Discrimination Scale: how often nine kinds of unfair treatment happen in day-to-day life, and what the person thinks is the main reason. It has no published cut-off. For health equity work and social needs conversations.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "112307-4",
+    "display": "The Everyday Discrimination Scale [EDS]"
+  },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "instrument",
+    "name": "Everyday Discrimination Scale, the original and still recommended version (Williams, Measuring Discrimination Resource, 2023)",
+    "url": "https://hsph.harvard.edu/research/williams-group/measuring-discrimination-resource/"
+  },
+  "licence": {
+    "holder": "David R. Williams",
+    "terms": "The scale is publicly available. No permission is necessary for its use (Measuring Discrimination Resource, 2023). Cite: Williams DR, Yu Y, Jackson JS, Anderson NB. Racial differences in physical and mental health: socioeconomic status, stress and discrimination. J Health Psychol. 1997;2(3):335-351.",
+    "permission": "None needed: the author's statement that it is publicly available."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "In your day-to-day life, how often do any of the following things happen to you?",
+      "columns": [
+        "Almost everyday",
+        "At least once a week",
+        "A few times a month",
+        "A few times a year",
+        "Less than once a year",
+        "Never"
+      ],
+      "items": [
+        "You are treated with less courtesy than other people are.",
+        "You are treated with less respect than other people are.",
+        "You receive poorer service than other people at restaurants or stores.",
+        "People act as if they think you are not smart.",
+        "People act as if they are afraid of you.",
+        "People act as if they think you are dishonest.",
+        "People act as if they're better than you are.",
+        "You are called names or insulted.",
+        "You are threatened or harassed."
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "If you answered A few times a year or more often to any of these: what do you think is the main reason for these experiences? (tick all that apply)",
+      "items": [
+        "Your ancestry or national origins",
+        "Your gender",
+        "Your race",
+        "Your age",
+        "Your religion",
+        "Your height",
+        "Your weight",
+        "Some other aspect of your physical appearance",
+        "Your sexual orientation",
+        "Your education or income level",
+        "A physical disability",
+        "Other"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Other reason"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Everyday Discrimination Scale, by David R. Williams. Free to use."
+    }
+  ]
+}

@@ -83,7 +83,8 @@ final class QuestionnaireExportTest extends TestCase
         ksort($coded);
         self::assertSame([
             'audit-c' => ['75626-2'], 'food-security' => ['95379-4'], 'gad-7' => ['70274-6'], 'gds-15' => ['48545-8'], 'hark' => ['76504-0'],
-            'pc-ptsd-5' => ['102017-1'], 'phq-2' => ['55758-7'], 'phq-4' => ['70272-0'], 'phq-9' => ['44261-6'], 'stay-independent' => ['97885-8'],
+            'pc-ptsd-5' => ['102017-1'], 'pcl-5' => ['101698-9'], 'phq-15' => ['70273-8'], 'phq-2' => ['55758-7'], 'phq-4' => ['70272-0'],
+            'phq-9' => ['44261-6'], 'stay-independent' => ['97885-8'],
         ], $coded, "one coded total each; TAPS-2's per-substance scores and the screens read by rule have none");
     }
 

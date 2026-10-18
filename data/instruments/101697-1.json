@@ -1,0 +1,693 @@
+{
+    "instrument": "PCL-5",
+    "loinc": "101697-1",
+    "loinc_version": "2.83",
+    "from": "fhir.loinc.org Questionnaire/101697-1 (questions, answers); scores and answer order from LOINC's answer lists via clinicaltables.nlm.nih.gov loinc_items",
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "questions": [
+        {
+            "code": "101703-7",
+            "text": "Repeated, disturbing, and unwanted memories of the stressful experience?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101704-5",
+            "text": "Repeated, disturbing dreams of the stressful experience?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101705-2",
+            "text": "Suddenly feeling or acting as if the stressful experience were actually happening again (as if you were actually back there reliving it)?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101706-0",
+            "text": "Feeling very upset when something reminded you of the stressful experience?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101707-8",
+            "text": "Having strong physical reactions when something reminded you of the stressful experience (for example, heart pounding, trouble breathing, sweating)?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101708-6",
+            "text": "Avoiding memories, thoughts, or feelings related to the stressful experience?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101709-4",
+            "text": "Avoiding external reminders of the stressful experience (for example, people, places, conversations, activities, objects, or situations)?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101710-2",
+            "text": "Trouble remembering important parts of the stressful experience?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101699-7",
+            "text": "Having strong negative beliefs about yourself, others, or the world?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101700-3",
+            "text": "Blaming yourself or someone else for the stressful experience or what happened after it?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101701-1",
+            "text": "Having strong negative feelings such as fear, horror, anger, guilt, or shame?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101711-0",
+            "text": "Loss of interest in activities that you used to enjoy?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101712-8",
+            "text": "Feeling distant or cut off from other people?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101713-6",
+            "text": "Trouble experiencing positive feelings (for example, being unable to feel happiness or have loving feelings for people close to you)?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101714-4",
+            "text": "Irritable behavior, angry outbursts, or acting aggressively?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101702-9",
+            "text": "Taking too many risks or doing things that could cause you harm?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101715-1",
+            "text": "Being superalert or watchful or on guard?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101716-9",
+            "text": "Feeling jumpy or easily startled?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101717-7",
+            "text": "Having difficulty concentrating?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        },
+        {
+            "code": "101718-5",
+            "text": "Trouble falling or staying asleep?",
+            "answers": [
+                {
+                    "code": "LA6568-5",
+                    "text": "Not at all",
+                    "score": 0
+                },
+                {
+                    "code": "LA13863-8",
+                    "text": "A little bit",
+                    "score": 1
+                },
+                {
+                    "code": "LA13939-6",
+                    "text": "Moderately",
+                    "score": 2
+                },
+                {
+                    "code": "LA13902-4",
+                    "text": "Quite a bit",
+                    "score": 3
+                },
+                {
+                    "code": "LA14868-6",
+                    "text": "Extremely",
+                    "score": 4
+                }
+            ]
+        }
+    ],
+    "total": {
+        "min": 0,
+        "max": 80
+    },
+    "title": "PTSD Checklist for DSM-5 (PCL-5)",
+    "about": "Twenty questions about problems after a very stressful experience, in the past month, each answered from 0 (not at all) to 4 (extremely), scored 0 to 80. A total of 31 or more suggests probable PTSD (Bovin 2016); confirm with a clinical assessment. For a positive PC-PTSD-5. The VA intends it for use by qualified health professionals.",
+    "instructions": "Below is a list of problems that people sometimes have in response to a very stressful experience. Keeping your worst event in mind, please read each problem carefully and then select one of the numbers to the right to indicate how much you have been bothered by that problem in the past month.",
+    "licence": {
+        "holder": "U.S. Department of Veterans Affairs, National Center for PTSD",
+        "terms": "Developed by staff at VA's National Center for PTSD; in the public domain and not copyrighted. Intended for use by qualified health professionals and researchers. Cite: Weathers FW, Litz BT, Keane TM, Palmieri PA, Marx BP, Schnurr PP. The PTSD Checklist for DSM-5 (PCL-5). National Center for PTSD, 2013.",
+        "permission": "None needed: the VA states it is in the public domain (ptsd.va.gov)."
+    },
+    "source": {
+        "name": "PCL-5, Past Month, VA National Center for PTSD (version date 29 August 2023)",
+        "url": "https://www.ptsd.va.gov/professional/assessment/adult-sr/ptsd-checklist.asp"
+    },
+    "cutoffs": [
+        {
+            "score": 31,
+            "meaning": "probable PTSD (Bovin 2016, against the CAPS-5); confirm with a clinical assessment"
+        }
+    ],
+    "cutoffs_source": {
+        "citation": "Bovin MJ, Marx BP, Weathers FW, et al. Psychometric properties of the PTSD Checklist for Diagnostic and Statistical Manual of Mental Disorders-Fifth Edition (PCL-5) in veterans. Psychol Assess. 2016;28(11):1379-1391.",
+        "short": "Bovin 2016",
+        "pmid": "26653052",
+        "doi": "10.1037/pas0000254",
+        "stated": "Abstract: \"Signal detection analyses using the CAPS-5 revealed that PCL-5 scores of 31 to 33 were optimally efficient for diagnosing PTSD\"; studied in veterans. The lowest of the three, 31, is printed."
+    },
+    "accepted": {
+        "questions": {
+            "9": "The VA's printed item 9 gives examples (\"for example, having thoughts such as: I am bad, there is something seriously wrong with me, no one can be trusted, the world is completely dangerous\"); LOINC's item shortens it to \"Having strong negative beliefs about yourself, others, or the world?\".",
+            "17": "The VA's form puts \"superalert\" in quotation marks; LOINC's item has none."
+        }
+    },
+    "question_order": [
+        "101703-7",
+        "101704-5",
+        "101705-2",
+        "101706-0",
+        "101707-8",
+        "101708-6",
+        "101709-4",
+        "101710-2",
+        "101699-7",
+        "101700-3",
+        "101701-1",
+        "101711-0",
+        "101712-8",
+        "101713-6",
+        "101714-4",
+        "101702-9",
+        "101715-1",
+        "101716-9",
+        "101717-7",
+        "101718-5"
+    ],
+    "question_order_source": {
+        "citation": "PCL-5, Past Month, VA National Center for PTSD (version date 29 August 2023)",
+        "url": "https://www.ptsd.va.gov/professional/assessment/documents/PCL5_Standard_form.pdf",
+        "stated": "The VA's form numbers the questions 1 (\"Repeated, disturbing, and unwanted memories of the stressful experience?\") to 20 (\"Trouble falling or staying asleep?\"); LOINC's questionnaire 101697-1 lists the same 20 in reverse."
+    },
+    "total_code": "101698-9",
+    "total_code_source": "LOINC 101698-9, PTSD PCL-5 score [PCL-5]: written by hand, since LOINC's questionnaire leaves its total item uncoded; tools/instrument-references.php checks it is active and its component is that item's text"
+}

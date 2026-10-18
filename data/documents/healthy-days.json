@@ -1,0 +1,88 @@
+{
+  "id": "healthy-days",
+  "title": "Healthy Days (CDC HRQOL-4)",
+  "category": "Screening",
+  "about": "CDC's four Healthy Days questions, asked in national surveys since 1993: general health, and the number of days in the past 30 that physical health, mental health, or either kept the person from usual activities. Physically and mentally unhealthy days added together (up to 30) are the unhealthy days; 14 or more mentally unhealthy days is frequent mental distress (CDC; Moriarty 2003). Useful for comparing a clinic's patients with state and national figures.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "instrument",
+    "name": "CDC Healthy Days Core Module (CDC HRQOL-4)",
+    "url": "https://archive.cdc.gov/www_cdc_gov/hrqol/faqs.htm"
+  },
+  "licence": {
+    "holder": "Centers for Disease Control and Prevention",
+    "terms": "The CDC HRQOL measures are free for public use, are not copyrighted, are in the public domain, and do not require permission for use or licensing fees (CDC HRQOL FAQ). Cite: Moriarty DG, Zack MM, Kobau R. The Centers for Disease Control and Prevention's Healthy Days Measures. Health Qual Life Outcomes. 2003;1:37.",
+    "permission": "None needed: public domain (CDC)."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "1. Would you say that in general your health is",
+      "columns": [
+        "Excellent",
+        "Very good",
+        "Good",
+        "Fair",
+        "Poor"
+      ],
+      "items": [
+        "My health is"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "2. Now thinking about your physical health, which includes physical illness and injury, for how many days during the past 30 days was your physical health not good? Number of days (0 to 30)"
+        },
+        {
+          "label": "3. Now thinking about your mental health, which includes stress, depression, and problems with emotions, for how many days during the past 30 days was your mental health not good? Number of days (0 to 30)"
+        },
+        {
+          "label": "4. During the past 30 days, for about how many days did poor physical or mental health keep you from doing your usual activities, such as self-care, work, or recreation? Number of days (0 to 30)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "paragraph",
+      "text": "Unhealthy days: add the days in questions 2 and 3, up to 30. 14 or more days in question 3 is frequent mental distress; 14 or more in question 2 is frequent physical distress (CDC)."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Unhealthy days"
+        },
+        {
+          "label": "Reviewed by"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "CDC Healthy Days Core Module (CDC HRQOL-4). Public domain."
+    }
+  ]
+}

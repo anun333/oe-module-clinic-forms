@@ -58,6 +58,25 @@
       ]
     },
     {
+      "id": "chronic-care",
+      "title": "Chronic care visit (home logs and medicine review)",
+      "about": "For high blood pressure or diabetes: logs for readings at home, and a review of every medicine and supplement the patient takes.",
+      "items": [
+        "doc:blood-pressure-log",
+        "doc:blood-sugar-log",
+        "doc:medicine-review"
+      ]
+    },
+    {
+      "id": "asthma-visit",
+      "title": "Asthma visit (action plan and medicine review)",
+      "about": "The asthma action plan by green, yellow and red zones, filled in with the patient, and a medicine review.",
+      "items": [
+        "doc:asthma-action-plan",
+        "doc:medicine-review"
+      ]
+    },
+    {
       "id": "downtime",
       "title": "Downtime kit",
       "items": [
@@ -90,6 +109,14 @@
       "about": "For a positive PHQ-4 anxiety score: the GAD-7 and its severity bands.",
       "items": [
         "doc:gad-7"
+      ]
+    },
+    {
+      "id": "ptsd-follow-up",
+      "title": "After a positive PTSD screen (PCL-5)",
+      "about": "For a positive PC-PTSD-5: the 20-question PTSD Checklist for DSM-5. A total of 31 or more suggests probable PTSD; confirm with a clinical assessment.",
+      "items": [
+        "doc:pcl-5"
       ]
     },
     {

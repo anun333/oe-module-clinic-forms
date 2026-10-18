@@ -17,7 +17,7 @@ const LOINC_NOTICE = 'This material contains content from LOINC (http://loinc.or
  * What a reference holds that LOINC can't give, written by hand with its source and kept when the
  * reference is fetched again.
  */
-const LOINC_HAND_FIELDS = ['instrument', 'title', 'about', 'instructions', 'licence', 'source', 'total_code', 'total_code_source', 'cutoffs', 'cutoffs_source', 'rules', 'rules_source', 'subscales', 'subscales_source', 'scoring', 'accepted'];
+const LOINC_HAND_FIELDS = ['instrument', 'title', 'about', 'instructions', 'licence', 'source', 'question_order', 'question_order_source', 'total_code', 'total_code_source', 'cutoffs', 'cutoffs_source', 'rules', 'rules_source', 'subscales', 'subscales_source', 'scoring', 'accepted'];
 
 /** The Authorization header for fhir.loinc.org, from LOINC_USER and LOINC_PASSWORD; exits without them. */
 function loincAuth(): string
@@ -295,4 +295,27 @@ function loincTotalCodeProblem(string $loinc, string $totalCode, string $auth): 
         return "total_code $totalCode has component \"$component\", where $loinc's total item says \"$text\"";
     }
     return null;
+}
+
+/**
+ * The questions in the order the published instrument prints them, where LOINC's questionnaire
+ * lists them differently (its PCL-5 runs backwards, 20 to 1). Written by hand in a reference's
+ * "question_order", a list of every question's LOINC code, with "question_order_source". A code
+ * missing, extra or repeated is an error, not ignored.
+ *
+ * @param list<array{code: string}> $questions
+ * @param list<string> $order
+ * @return list<array{code: string}>
+ */
+function loincApplyQuestionOrder(array $questions, array $order): array
+{
+    if ($order === []) {
+        return $questions;
+    }
+    $byCode = array_column($questions, null, 'code');
+    if (count($order) !== count(array_unique($order)) || count($order) !== count($byCode) || array_diff($order, array_keys($byCode)) !== []) {
+        throw new RuntimeException('question_order must list each of the questionnaire\'s ' . count($byCode) . ' question codes once: '
+            . implode(', ', array_keys($byCode)));
+    }
+    return array_map(static fn(string $code): array => $byCode[$code], $order);
 }

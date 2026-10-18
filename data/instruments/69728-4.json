@@ -1,0 +1,396 @@
+{
+    "instrument": "PHQ-15",
+    "loinc": "69728-4",
+    "loinc_version": "2.83",
+    "from": "fhir.loinc.org Questionnaire/69728-4 (questions, answers); scores and answer order from LOINC's answer lists via clinicaltables.nlm.nih.gov loinc_items",
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "questions": [
+        {
+            "code": "69671-6",
+            "text": "Stomach pain",
+            "answers": [
+                {
+                    "code": "LA18334-5",
+                    "text": "Not bothered",
+                    "score": 0
+                },
+                {
+                    "code": "LA18335-2",
+                    "text": "Bothered a little",
+                    "score": 1
+                },
+                {
+                    "code": "LA18336-0",
+                    "text": "Bothered a lot",
+                    "score": 2
+                }
+            ]
+        },
+        {
+            "code": "69672-4",
+            "text": "Back pain",
+            "answers": [
+                {
+                    "code": "LA18334-5",
+                    "text": "Not bothered",
+                    "score": 0
+                },
+                {
+                    "code": "LA18335-2",
+                    "text": "Bothered a little",
+                    "score": 1
+                },
+                {
+                    "code": "LA18336-0",
+                    "text": "Bothered a lot",
+                    "score": 2
+                }
+            ]
+        },
+        {
+            "code": "69673-2",
+            "text": "Pain in your arms, legs, or joints (knees, hips, etc.)",
+            "answers": [
+                {
+                    "code": "LA18334-5",
+                    "text": "Not bothered",
+                    "score": 0
+                },
+                {
+                    "code": "LA18335-2",
+                    "text": "Bothered a little",
+                    "score": 1
+                },
+                {
+                    "code": "LA18336-0",
+                    "text": "Bothered a lot",
+                    "score": 2
+                }
+            ]
+        },
+        {
+            "code": "69674-0",
+            "text": "Menstrual cramps or other problems with your periods",
+            "answers": [
+                {
+                    "code": "LA18334-5",
+                    "text": "Not bothered",
+                    "score": 0
+                },
+                {
+                    "code": "LA18335-2",
+                    "text": "Bothered a little",
+                    "score": 1
+                },
+                {
+                    "code": "LA18336-0",
+                    "text": "Bothered a lot",
+                    "score": 2
+                }
+            ]
+        },
+        {
+            "code": "69675-7",
+            "text": "Headaches",
+            "answers": [
+                {
+                    "code": "LA18334-5",
+                    "text": "Not bothered",
+                    "score": 0
+                },
+                {
+                    "code": "LA18335-2",
+                    "text": "Bothered a little",
+                    "score": 1
+                },
+                {
+                    "code": "LA18336-0",
+                    "text": "Bothered a lot",
+                    "score": 2
+                }
+            ]
+        },
+        {
+            "code": "69676-5",
+            "text": "Chest pain",
+            "answers": [
+                {
+                    "code": "LA18334-5",
+                    "text": "Not bothered",
+                    "score": 0
+                },
+                {
+                    "code": "LA18335-2",
+                    "text": "Bothered a little",
+                    "score": 1
+                },
+                {
+                    "code": "LA18336-0",
+                    "text": "Bothered a lot",
+                    "score": 2
+                }
+            ]
+        },
+        {
+            "code": "69677-3",
+            "text": "Dizziness",
+            "answers": [
+                {
+                    "code": "LA18334-5",
+                    "text": "Not bothered",
+                    "score": 0
+                },
+                {
+                    "code": "LA18335-2",
+                    "text": "Bothered a little",
+                    "score": 1
+                },
+                {
+                    "code": "LA18336-0",
+                    "text": "Bothered a lot",
+                    "score": 2
+                }
+            ]
+        },
+        {
+            "code": "69678-1",
+            "text": "Fainting spells",
+            "answers": [
+                {
+                    "code": "LA18334-5",
+                    "text": "Not bothered",
+                    "score": 0
+                },
+                {
+                    "code": "LA18335-2",
+                    "text": "Bothered a little",
+                    "score": 1
+                },
+                {
+                    "code": "LA18336-0",
+                    "text": "Bothered a lot",
+                    "score": 2
+                }
+            ]
+        },
+        {
+            "code": "69679-9",
+            "text": "Feeling your heart pound or race",
+            "answers": [
+                {
+                    "code": "LA18334-5",
+                    "text": "Not bothered",
+                    "score": 0
+                },
+                {
+                    "code": "LA18335-2",
+                    "text": "Bothered a little",
+                    "score": 1
+                },
+                {
+                    "code": "LA18336-0",
+                    "text": "Bothered a lot",
+                    "score": 2
+                }
+            ]
+        },
+        {
+            "code": "69680-7",
+            "text": "Shortness of breath",
+            "answers": [
+                {
+                    "code": "LA18334-5",
+                    "text": "Not bothered",
+                    "score": 0
+                },
+                {
+                    "code": "LA18335-2",
+                    "text": "Bothered a little",
+                    "score": 1
+                },
+                {
+                    "code": "LA18336-0",
+                    "text": "Bothered a lot",
+                    "score": 2
+                }
+            ]
+        },
+        {
+            "code": "69717-7",
+            "text": "Pain or problems during sexual intercourse",
+            "answers": [
+                {
+                    "code": "LA18334-5",
+                    "text": "Not bothered",
+                    "score": 0
+                },
+                {
+                    "code": "LA18335-2",
+                    "text": "Bothered a little",
+                    "score": 1
+                },
+                {
+                    "code": "LA18336-0",
+                    "text": "Bothered a lot",
+                    "score": 2
+                }
+            ]
+        },
+        {
+            "code": "69681-5",
+            "text": "Constipation, loose bowels, or diarrhea",
+            "answers": [
+                {
+                    "code": "LA18334-5",
+                    "text": "Not bothered",
+                    "score": 0
+                },
+                {
+                    "code": "LA18335-2",
+                    "text": "Bothered a little",
+                    "score": 1
+                },
+                {
+                    "code": "LA18336-0",
+                    "text": "Bothered a lot",
+                    "score": 2
+                }
+            ]
+        },
+        {
+            "code": "69682-3",
+            "text": "Nausea, gas, or indigestion",
+            "answers": [
+                {
+                    "code": "LA18334-5",
+                    "text": "Not bothered",
+                    "score": 0
+                },
+                {
+                    "code": "LA18335-2",
+                    "text": "Bothered a little",
+                    "score": 1
+                },
+                {
+                    "code": "LA18336-0",
+                    "text": "Bothered a lot",
+                    "score": 2
+                }
+            ]
+        },
+        {
+            "code": "69731-8",
+            "text": "Feeling tired or having low energy",
+            "answers": [
+                {
+                    "code": "LA18334-5",
+                    "text": "Not bothered",
+                    "score": 0
+                },
+                {
+                    "code": "LA18335-2",
+                    "text": "Bothered a little",
+                    "score": 1
+                },
+                {
+                    "code": "LA18336-0",
+                    "text": "Bothered a lot",
+                    "score": 2
+                }
+            ]
+        },
+        {
+            "code": "69732-6",
+            "text": "Trouble sleeping",
+            "answers": [
+                {
+                    "code": "LA18334-5",
+                    "text": "Not bothered",
+                    "score": 0
+                },
+                {
+                    "code": "LA18335-2",
+                    "text": "Bothered a little",
+                    "score": 1
+                },
+                {
+                    "code": "LA18336-0",
+                    "text": "Bothered a lot",
+                    "score": 2
+                }
+            ]
+        }
+    ],
+    "total": {
+        "min": 0,
+        "max": 30
+    },
+    "title": "Physical Symptoms (PHQ-15)",
+    "about": "Fifteen physical symptoms in the past 4 weeks, each answered from 0 (not bothered at all) to 2 (bothered a lot), scored 0 to 30. Scores of 5, 10 and 15 mark low, medium and high somatic symptom severity (Kroenke 2002). Question 4 (d on Pfizer's form) is for women only.",
+    "instructions": "During the past 4 weeks, how much have you been bothered by any of the following problems?",
+    "licence": {
+        "holder": "Pfizer Inc.",
+        "terms": "No permission required to reproduce, translate, display or distribute. Developed by Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc.",
+        "permission": "None needed: the statement printed on the PHQ-15 (phqscreeners.com). It is printed unchanged."
+    },
+    "source": {
+        "name": "PHQ-15 (Kroenke, Spitzer and Williams), from phqscreeners.com",
+        "url": "https://www.phqscreeners.com/select-screener"
+    },
+    "cutoffs": [
+        {
+            "score": 5,
+            "meaning": "low somatic symptom severity"
+        },
+        {
+            "score": 10,
+            "meaning": "medium somatic symptom severity"
+        },
+        {
+            "score": 15,
+            "meaning": "high somatic symptom severity"
+        }
+    ],
+    "cutoffs_source": {
+        "citation": "Kroenke K, Spitzer RL, Williams JBW. The PHQ-15: validity of a new measure for evaluating the severity of somatic symptoms. Psychosom Med. 2002;64(2):258-266.",
+        "short": "Kroenke 2002",
+        "pmid": "11914441",
+        "doi": "10.1097/00006842-200203000-00008",
+        "stated": "Abstract: \"PHQ-15 scores of 5, 10, 15, represented cutoff points for low, medium, and high somatic symptom severity, respectively.\""
+    },
+    "accepted": {
+        "questions": {
+            "4": "Pfizer's printed PHQ-15 marks this item WOMEN ONLY; LOINC's item text doesn't say so."
+        },
+        "answers": {
+            "Not bothered at all": {
+                "instead_of": "Not bothered",
+                "why": "Pfizer's printed PHQ-15 heads the first column \"Not bothered at all\"; LOINC's answer list has \"Not bothered\"."
+            }
+        }
+    },
+    "total_code": "70273-8",
+    "total_code_source": "LOINC 70273-8, Patient Health Questionnaire 15 item (PHQ-15) total score [Reported]: written by hand, since LOINC's questionnaire leaves its total item uncoded; tools/instrument-references.php checks it is active and its component is that item's text",
+    "question_order": [
+        "69671-6",
+        "69672-4",
+        "69673-2",
+        "69674-0",
+        "69675-7",
+        "69676-5",
+        "69677-3",
+        "69678-1",
+        "69679-9",
+        "69680-7",
+        "69717-7",
+        "69681-5",
+        "69682-3",
+        "69731-8",
+        "69732-6"
+    ],
+    "question_order_source": {
+        "citation": "PHQ-15, Pfizer (phqscreeners.com)",
+        "url": "https://www.phqscreeners.com/select-screener",
+        "stated": "Pfizer's printed PHQ-15 lists the symptoms a to o with \"Pain or problems during sexual intercourse\" as k, after \"Shortness of breath\"; LOINC's questionnaire 69728-4 puts it fifth."
+    }
+}

@@ -1261,6 +1261,231 @@
           ]
         }
       ]
+    },
+    "good-faith-estimate": {
+      "source": "45 CFR 149.610(c)(1), content of a good faith estimate for an uninsured or self-pay individual",
+      "elements": [
+        {
+          "name": "Patient name and date of birth",
+          "cite": "149.610(c)(1)(i)",
+          "all": [
+            "name",
+            "date of birth"
+          ]
+        },
+        {
+          "name": "The primary item or service in plain words, and its scheduled date",
+          "cite": "149.610(c)(1)(ii)",
+          "all": [
+            "the care this estimate is for",
+            "date it is scheduled"
+          ]
+        },
+        {
+          "name": "Itemized items and services, grouped by provider or facility",
+          "cite": "149.610(c)(1)(iii)",
+          "all": [
+            "items and services we expect, grouped by provider or facility"
+          ]
+        },
+        {
+          "name": "Diagnosis codes, service codes and expected charges",
+          "cite": "149.610(c)(1)(iv)",
+          "all": [
+            "diagnosis code",
+            "service code",
+            "expected charge"
+          ]
+        },
+        {
+          "name": "Each provider's name, NPI, TIN and location",
+          "cite": "149.610(c)(1)(v)",
+          "all": [
+            "npi",
+            "tax id",
+            "where the care will be given"
+          ]
+        },
+        {
+          "name": "Separately scheduled items, with the disclaimer above them",
+          "cite": "149.610(c)(1)(vi)",
+          "all": [
+            "scheduled separately",
+            "separate estimate",
+            "to get one"
+          ]
+        },
+        {
+          "name": "Other recommended care is not included",
+          "cite": "149.610(c)(1)(viii)",
+          "all": [
+            "not in this estimate"
+          ]
+        },
+        {
+          "name": "Only an estimate; actual items or charges may differ",
+          "cite": "149.610(c)(1)(ix)",
+          "all": [
+            "only an estimate",
+            "may be different"
+          ]
+        },
+        {
+          "name": "Right to patient-provider dispute resolution, where to learn how, and no effect on quality of care",
+          "cite": "149.610(c)(1)(x)",
+          "all": [
+            "dispute resolution",
+            "nosurprises",
+            "will not change the care"
+          ]
+        },
+        {
+          "name": "Not a contract; no obligation to use the listed providers",
+          "cite": "149.610(c)(1)(xi)",
+          "all": [
+            "not a contract",
+            "do not have to get this care"
+          ]
+        }
+      ]
+    },
+    "good-faith-estimate-notice": {
+      "source": "45 CFR 149.610(b)(1)(iii), informing uninsured or self-pay individuals that good faith estimates are available",
+      "elements": [
+        {
+          "name": "A good faith estimate is available on request or when care is scheduled",
+          "cite": "149.610(b)(1)(iii)",
+          "all": [
+            "good faith estimate",
+            "when you schedule",
+            "at any time"
+          ]
+        },
+        {
+          "name": "Where to learn more and how to dispute a bill",
+          "cite": "149.610(b)(1)(iii); 149.620",
+          "all": [
+            "dispute",
+            "nosurprises"
+          ]
+        }
+      ]
+    },
+    "care-management-consent": {
+      "source": "Medicare care management consent: MLN909188 (CCM); Medicare Benefit Policy Manual ch. 13, 230.2.1 (RHC and FQHC)",
+      "elements": [
+        {
+          "name": "The services are available",
+          "cite": "MLN909188; BPM 13 230.2.1",
+          "any": [
+            "offers care management"
+          ]
+        },
+        {
+          "name": "Possible cost-sharing, including for non-face-to-face services",
+          "cite": "MLN909188; BPM 13 230.2.1",
+          "all": [
+            "deductible or coinsurance",
+            "by phone or online"
+          ]
+        },
+        {
+          "name": "Only one practitioner can furnish and bill in a calendar month",
+          "cite": "MLN909188; BPM 13 230.2.1",
+          "all": [
+            "only one practitioner",
+            "calendar month"
+          ]
+        },
+        {
+          "name": "Right to stop at any time, effective at the end of the calendar month",
+          "cite": "MLN909188; BPM 13 230.2.1",
+          "all": [
+            "stop at any time",
+            "end of that calendar month"
+          ]
+        },
+        {
+          "name": "Permission to consult relevant specialists (RHC and FQHC)",
+          "cite": "BPM 13 230.2.1",
+          "all": [
+            "specialists"
+          ]
+        },
+        {
+          "name": "Explained, and whether the patient accepted or declined",
+          "cite": "MLN909188",
+          "all": [
+            "explained by",
+            "yes, i want",
+            "no, i do not want"
+          ]
+        }
+      ]
+    },
+    "medicare-secondary-payer-questions": {
+      "source": "Medicare Secondary Payer Manual (Pub. 100-05), ch. 3, 20.2.1: model questions",
+      "elements": [
+        {
+          "name": "Black lung, workers' compensation, no-fault and liability",
+          "cite": "20.2.1 Part I",
+          "all": [
+            "black lung",
+            "at work",
+            "no-fault",
+            "someone else may be responsible"
+          ]
+        },
+        {
+          "name": "Basis of Medicare entitlement and current-employment group health plan, with employer size",
+          "cite": "20.2.1 Part II",
+          "all": [
+            "my age",
+            "a disability",
+            "through a job",
+            "how many people work for that employer"
+          ]
+        },
+        {
+          "name": "End-stage renal disease: transplant, dialysis and coverage at entitlement",
+          "cite": "20.2.1 Part III",
+          "all": [
+            "kidney transplant",
+            "dialysis",
+            "before and on the day your medicare began"
+          ]
+        }
+      ]
+    },
+    "vaccine-record": {
+      "source": "42 U.S.C. 300aa-25(a) (what a provider records for each vaccine) and 300aa-26 (Vaccine Information Statements)",
+      "elements": [
+        {
+          "name": "Date given, manufacturer and lot number",
+          "cite": "300aa-25(a)",
+          "all": [
+            "date",
+            "manufacturer and lot number"
+          ]
+        },
+        {
+          "name": "Name and title of the person who gave it, and the address",
+          "cite": "300aa-25(a)",
+          "all": [
+            "given by (name and title)",
+            "clinic address"
+          ]
+        },
+        {
+          "name": "The Vaccine Information Statement given, its edition date and the date given",
+          "cite": "300aa-26; CDC VIS instructions",
+          "all": [
+            "vis edition date",
+            "date vis given",
+            "vaccine information statement"
+          ]
+        }
+      ]
     }
   }
 }

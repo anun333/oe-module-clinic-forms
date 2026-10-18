@@ -1,0 +1,126 @@
+{
+  "id": "pcl-5",
+  "title": "PTSD Checklist for DSM-5 (PCL-5)",
+  "category": "Screening",
+  "about": "Twenty questions about problems after a very stressful experience, in the past month, each answered from 0 (not at all) to 4 (extremely), scored 0 to 80. A total of 31 or more suggests probable PTSD (Bovin 2016); confirm with a clinical assessment. For a positive PC-PTSD-5. The VA intends it for use by qualified health professionals.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "101697-1",
+    "display": "Post traumatic stress disorder checklist - civilian version DSM-5"
+  },
+  "validated": true,
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "instrument",
+    "name": "PCL-5, Past Month, VA National Center for PTSD (version date 29 August 2023)",
+    "url": "https://www.ptsd.va.gov/professional/assessment/adult-sr/ptsd-checklist.asp"
+  },
+  "licence": {
+    "holder": "U.S. Department of Veterans Affairs, National Center for PTSD",
+    "terms": "Developed by staff at VA's National Center for PTSD; in the public domain and not copyrighted. Intended for use by qualified health professionals and researchers. Cite: Weathers FW, Litz BT, Keane TM, Palmieri PA, Marx BP, Schnurr PP. The PTSD Checklist for DSM-5 (PCL-5). National Center for PTSD, 2013.",
+    "permission": "None needed: the VA states it is in the public domain (ptsd.va.gov)."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Below is a list of problems that people sometimes have in response to a very stressful experience. Keeping your worst event in mind, please read each problem carefully and then select one of the numbers to the right to indicate how much you have been bothered by that problem in the past month."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Your worst event"
+        }
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "In the past month, how much were you bothered by:",
+      "columns": [
+        "Not at all",
+        "A little bit",
+        "Moderately",
+        "Quite a bit",
+        "Extremely"
+      ],
+      "items": [
+        "Repeated, disturbing, and unwanted memories of the stressful experience?",
+        "Repeated, disturbing dreams of the stressful experience?",
+        "Suddenly feeling or acting as if the stressful experience were actually happening again (as if you were actually back there reliving it)?",
+        "Feeling very upset when something reminded you of the stressful experience?",
+        "Having strong physical reactions when something reminded you of the stressful experience (for example, heart pounding, trouble breathing, sweating)?",
+        "Avoiding memories, thoughts, or feelings related to the stressful experience?",
+        "Avoiding external reminders of the stressful experience (for example, people, places, conversations, activities, objects, or situations)?",
+        "Trouble remembering important parts of the stressful experience?",
+        "Having strong negative beliefs about yourself, other people, or the world (for example, having thoughts such as: I am bad, there is something seriously wrong with me, no one can be trusted, the world is completely dangerous)?",
+        "Blaming yourself or someone else for the stressful experience or what happened after it?",
+        "Having strong negative feelings such as fear, horror, anger, guilt, or shame?",
+        "Loss of interest in activities that you used to enjoy?",
+        "Feeling distant or cut off from other people?",
+        "Trouble experiencing positive feelings (for example, being unable to feel happiness or have loving feelings for people close to you)?",
+        "Irritable behavior, angry outbursts, or acting aggressively?",
+        "Taking too many risks or doing things that could cause you harm?",
+        "Being “superalert” or watchful or on guard?",
+        "Feeling jumpy or easily startled?",
+        "Having difficulty concentrating?",
+        "Trouble falling or staying asleep?"
+      ],
+      "scores": [
+        0,
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Total score (for office use)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "paragraph",
+      "text": "Published cut-offs (Bovin 2016): 31 or more, probable PTSD (Bovin 2016, against the CAPS-5); confirm with a clinical assessment."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Entered into OpenEMR by"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "PCL-5, Past Month, VA National Center for PTSD (version date 29 August 2023). Developed by staff at VA's National Center for PTSD; in the public domain and not copyrighted. Intended for use by qualified health professionals and researchers. Cite: Weathers FW, Litz BT, Keane TM, Palmieri PA, Marx BP, Schnurr PP. The PTSD Checklist for DSM-5 (PCL-5). National Center for PTSD, 2013."
+    }
+  ]
+}
