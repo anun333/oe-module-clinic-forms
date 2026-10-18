@@ -153,7 +153,7 @@ final class PdfWriter implements OfficeWriter
         $this->html .= "<table class='signatures'>" . $rows . "</table>";
     }
 
-    public function scale(string $label, array $columns, array $items, ?array $scores, ?string $total, ?array $itemScores = null): void
+    public function scale(string $label, array $columns, array $items, ?array $scores, ?string $total, ?array $itemScores = null, int $start = 1): void
     {
         $head = '<tr><th></th>';
         foreach ($columns as $i => $column) {
@@ -161,7 +161,7 @@ final class PdfWriter implements OfficeWriter
         }
         $body = '';
         foreach ($items as $n => $item) {
-            $body .= '<tr><td>' . ($n + 1) . '. ' . self::e($item) . '</td>';
+            $body .= '<tr><td>' . ($start + $n) . '. ' . self::e($item) . '</td>';
             foreach ($columns as $i => $unused) {
                 $body .= "<td class='box'>" . self::BOX . (isset($itemScores[$n][$i]) ? ' ' . self::e((string)$itemScores[$n][$i]) : '') . '</td>';
             }

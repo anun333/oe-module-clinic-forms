@@ -72,6 +72,15 @@ final class OfficeExportTest extends TestCase
         unlink($file);
     }
 
+    public function testAScaleNumbersOnFromItsStartInWord(): void
+    {
+        $doc = new \OpenHealthcare\ClinicForms\Paper\Document('sample', 'Sample', 'Screening', 'A sample.', [
+            ['type' => 'scale', 'label' => 'Circle one', 'columns' => ['No', 'Yes'], 'items' => ['Ridden in a car?'], 'start' => 4],
+        ], []);
+        $entries = Zip::read((new OfficeExport(new Context(['name' => 'C'])))->write([$doc], new WordWriter(), 'letter'));
+        self::assertStringContainsString('4. Ridden in a car?', $entries['word/document.xml']);
+    }
+
     public function testABlankExportLeavesLinesToWriteOn(): void
     {
         $entries = Zip::read((new OfficeExport(new Context(['name' => 'C'])))->write([DocumentLibrary::shipped()->get('consent-to-treat') ?? throw new \LogicException()], new WordWriter(), 'letter'));

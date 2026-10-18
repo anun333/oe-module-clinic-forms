@@ -194,6 +194,17 @@ final class RendererTest extends TestCase
         self::assertMatchesRegularExpression("/Happy\?<\/td><td class='cf-scale-box'><span class='cf-box'><\/span><span class='cf-score cf-item-score'>0<\/span>/", $html);
     }
 
+    public function testAScaleCanNumberOnFromAnEarlierPart(): void
+    {
+        // CRAFFT asks questions 1 to 3 as counts, then 4 to 9 as No or Yes.
+        $html = (new Renderer(new Context(self::FACILITY)))->document($this->doc([
+            ['type' => 'scale', 'label' => 'Circle one', 'columns' => ['No', 'Yes'], 'items' => ['Ridden in a car?', 'To relax?'], 'start' => 4],
+        ]));
+        self::assertStringContainsString('4. Ridden in a car?', $html);
+        self::assertStringContainsString('5. To relax?', $html);
+        self::assertStringNotContainsString('1. Ridden', $html);
+    }
+
     private function doc(array $blocks): Document
     {
         return new Document('sample', 'Sample', 'Front desk', 'A sample.', $blocks, []);

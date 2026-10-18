@@ -90,7 +90,7 @@ final class O3FormExport
                     $section = ['label' => (string)$block['label'], 'isExpanded' => 'true', 'questions' => []];
                     foreach ($block['items'] as $n => $item) {
                         $asked++;
-                        $question = self::question($matched['map'][$asked] ?? null, ($n + 1) . '. ' . $item, $block['columns'], $concepts);
+                        $question = self::question($matched['map'][$asked] ?? null, (($block['start'] ?? 1) + $n) . '. ' . $item, $block['columns'], $concepts);
                         if ($question !== null) {
                             $section['questions'][] = $question;
                         }

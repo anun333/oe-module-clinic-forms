@@ -14,6 +14,7 @@
  *   scale      {"type": "scale", "label": "...", "columns": ["Not at all", "Several days"], "items": ["...", "..."],
  *               "scores": [0, 1], "total": "Total score"}     a question per row, a box per answer; scores and total optional
  *               "item_scores": [[1, 0], [0, 1]] in place of scores, when each question scores its answers differently
+ *               "start": 4, the first row's number, where the instrument numbers on from an earlier part (default 1)
  *   table      {"type": "table", "label": "...", "columns": ["Name", "Age"], "rows": 6}   a grid of blank rows
  *   taglines   {"type": "taglines"}   the language assistance taglines (data/taglines.json and the clinic's own)
  *

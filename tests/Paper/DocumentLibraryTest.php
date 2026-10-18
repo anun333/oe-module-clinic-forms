@@ -95,6 +95,7 @@ final class DocumentLibraryTest extends TestCase
         yield 'code from another system' => [static fn(array $d): array => $d + ['code' => ['system' => 'http://snomed.info/sct', 'code' => '57133-1', 'display' => 'x']], 'code: must be a LOINC code'];
         yield 'validated not a boolean' => [static fn(array $d): array => $d + ['validated' => 'yes'], 'validated: must be true or false'];
         yield 'id not the file name' => [static fn(array $d): array => ['id' => 'other'] + $d, "must be the file's name"];
+        yield 'scale start below 1' => [static fn(array $d): array => ['blocks' => [['type' => 'scale', 'label' => 'L', 'columns' => ['No', 'Yes'], 'items' => ['Q'], 'start' => 0]]] + $d, "start: the first row's number"];
     }
 
     /** @param callable(array<string, mixed>): array<string, mixed> $break */

@@ -175,7 +175,7 @@ final readonly class QuestionnaireExport
                             $score = $block['item_scores'][$n][$i] ?? $block['scores'][$i] ?? null;
                             $answers[] = [$this->text($column), is_numeric($score) ? $score + 0 : null];
                         }
-                        $children[] = $this->choice("$id.$n", ($n + 1) . '. ' . $question, $answers, $codes['map'][++$asked] ?? null, false);
+                        $children[] = $this->choice("$id.$n", (($block['start'] ?? 1) + $n) . '. ' . $question, $answers, $codes['map'][++$asked] ?? null, false);
                     }
                     $add(['linkId' => $id, 'text' => $this->text($block['label']), 'type' => 'group', 'item' => $children]);
                     if (isset($block['total'])) {

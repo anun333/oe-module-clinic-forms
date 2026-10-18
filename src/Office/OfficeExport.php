@@ -73,6 +73,7 @@ final readonly class OfficeExport
                     $block['scores'] ?? null,
                     isset($block['total']) ? $this->text($block['total']) : null,
                     $block['item_scores'] ?? null,
+                    $block['start'] ?? 1,
                 ),
                 'table' => $writer->table($this->text($block['label']), array_map($this->text(...), $block['columns']), $block['rows']),
                 'taglines' => $this->taglines($writer),

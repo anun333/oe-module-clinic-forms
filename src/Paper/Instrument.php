@@ -79,7 +79,7 @@ final class Instrument
                         $score = $block['item_scores'][$n][$i] ?? $block['scores'][$i] ?? null;
                         $answers[] = ['text' => (string)$column, 'score' => is_numeric($score) ? (float)$score : null];
                     }
-                    $out[] = ['text' => self::unnumbered((string)$item), 'number' => $n + 1, 'answers' => $answers];
+                    $out[] = ['text' => self::unnumbered((string)$item), 'number' => ($block['start'] ?? 1) + $n, 'answers' => $answers];
                 }
             } elseif ($type === 'checklist' && ($block['label'] ?? '') !== '') {
                 $answers = [];
