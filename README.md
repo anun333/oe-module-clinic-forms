@@ -324,6 +324,18 @@ The tests need no database: they cover the document library (every shipped docum
 - A document filed without a name (the grievance form, `"anonymous": true`) never prints the patient's details, patient line or barcode. In a Word or LibreOffice file, though, the patient line is one header for the whole file: download a grievance form on its own, or print it from the browser or as a PDF. Placeholders in footnotes and comments of your own documents aren't filled.
 - Questionnaires and Patient Portal document templates don't print from here.
 
+## Other modules for OpenEMR
+
+From the same project. Each installs with `composer require anun333/<module>` and is then enabled in Modules › Manage Modules.
+
+| Module | What it does |
+|---|---|
+| [UDS Report](https://github.com/anun333/oe-module-uds-report) | HRSA's Uniform Data System report for health centers: the patient, visit and diagnosis tables, eCQM readiness, a Table 9D worksheet and grant evidence |
+| [Staff Worklist](https://github.com/anun333/oe-module-staff-worklist) | One queue of outstanding staff work: unsigned results, orders with no result, referrals with no reply, screening and claims follow-up |
+| [Sliding Fee Discount](https://github.com/anun333/oe-module-sliding-fee) | HRSA's sliding fee discount program: the schedule checked against Chapter 9, income assessments, and the discount applied |
+| [Care Management](https://github.com/anun333/oe-module-care-management) | CCM, PCM and BHI enrollment with CMS's consent elements, monthly time logging, and the codes each month meets |
+| [Migration](https://github.com/anun333/oe-module-migration) | Records from another EHR, read from the FHIR export certified EHRs offer, checked before import and safe to rerun |
+
 ## License
 
 - **The code** (`src/`, `public/`, `tools/`, `tests/` and the module's wiring) is GPL-3.0-or-later, as OpenEMR is. See [LICENSE](LICENSE).
