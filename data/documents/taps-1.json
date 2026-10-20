@@ -7,7 +7,7 @@
     "code": {
         "system": "http://loinc.org",
         "code": "96841-2",
-        "display": "Tobacco, Alcohol, Prescription medications, and other Substance use screen"
+        "display": "Tobacco, Alcohol, Prescription medications, and other Substance use screen [TAPS]"
     },
     "validated": true,
     "version": 2,

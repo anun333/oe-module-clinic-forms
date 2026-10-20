@@ -6,7 +6,7 @@
         "url": "https://www.ers.usda.gov/sites/default/files/_laserfiche/DataFiles/50764/short2024.pdf",
         "why": "LOINC's questionnaire for 95361-2 leaves out the follow-up AD1a, which the six items count, and has AD1 (95249-9) as free text with no answers. The questions here are USDA's, in the self-administered form its user notes allow (\"don't know\" shown as an answer, the household fills as \"we\" and \"you or other adults in your household\"), with LOINC's codes: AD1a is 95250-7 in LOINC's 18-item form."
     },
-    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
+    "notice": "This material contains content from LOINC (http://loinc.org). LOINC is copyright © Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.",
     "questions": [
         {
             "code": "88123-5",

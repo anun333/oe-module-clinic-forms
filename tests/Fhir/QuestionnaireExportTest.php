@@ -13,6 +13,7 @@ use OpenHealthcare\ClinicForms\Fhir\QuestionnaireExport;
 use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\Document;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
+use OpenHealthcare\ClinicForms\Paper\Loinc;
 use OpenHealthcare\ClinicForms\Paper\Words;
 use PHPUnit\Framework\TestCase;
 
@@ -29,11 +30,13 @@ final class QuestionnaireExportTest extends TestCase
         $q = $this->export('phq-9');
         self::assertSame('Questionnaire', $q['resourceType']);
         self::assertSame(['http://loinc.org/q/44249-1'], $q['derivedFrom']);
-        self::assertSame([['system' => 'http://loinc.org', 'code' => '44249-1']], $q['code']);
+        self::assertSame([['system' => 'http://loinc.org', 'code' => '44249-1', 'display' => 'PHQ-9 quick depression assessment panel [Reported.PHQ]']], $q['code'],
+            "every LOINC code with LOINC's name for it, as the LOINC licence asks");
         $items = self::flatten($q['item']);
         $first = $items['/44250-9'];
         self::assertSame('1.', $first['prefix']);
         self::assertSame('Little interest or pleasure in doing things', $first['text']);
+        self::assertSame([['system' => 'http://loinc.org', 'code' => '44250-9', 'display' => 'Little interest or pleasure in doing things in last 2 weeks']], $first['code']);
         self::assertSame(['LA6568-5', 'LA6569-3', 'LA6570-1', 'LA6571-9'], array_map(static fn(array $o): string => $o['valueCoding']['code'], $first['answerOption']));
         self::assertSame([0, 1, 2, 3], array_map(static fn(array $o): int => $o['valueCoding']['extension'][0]['valueDecimal'], $first['answerOption']),
             'the points on the Coding, where a response answer carries them');
@@ -42,7 +45,8 @@ final class QuestionnaireExportTest extends TestCase
         self::assertCount(1, $total);
         self::assertTrue($total[0]['readOnly']);
         self::assertSame(QuestionnaireExport::CALCULATED, $total[0]['extension'][0]['url']);
-        self::assertSame([['system' => 'http://loinc.org', 'code' => '44261-6']], $total[0]['code'], "LOINC's term for the total, from the reference");
+        self::assertSame([['system' => 'http://loinc.org', 'code' => '44261-6', 'display' => 'Patient Health Questionnaire 9 item (PHQ-9) total score [Reported]']], $total[0]['code'],
+            "LOINC's term for the total, from the reference");
         self::assertSame([], array_filter($items, static fn(array $i): bool => in_array($i['text'] ?? '', ['Name', 'Date of birth'], true)),
             "the patient's own fields are left out: the response names its patient");
         self::assertSame('date', array_values(array_filter($items, static fn(array $i): bool => ($i['text'] ?? '') === 'Date'))[0]['type']);
@@ -99,9 +103,43 @@ final class QuestionnaireExportTest extends TestCase
         self::assertSame(['phq-9-es', 'es'], [$q['id'], $q['language']]);
         $first = self::flatten($q['item'])['/44250-9'] ?? null;
         self::assertNotNull($first, 'the LOINC codes, through its English document');
-        self::assertSame('LA6568-5', $first['answerOption'][0]['valueCoding']['code']);
-        self::assertSame('Ningún día', $first['answerOption'][0]['valueCoding']['display'], 'shown in Spanish');
+        self::assertSame('44250-9', $first['code'][0]['code'], "the question keeps LOINC's code and name");
+        self::assertSame(['system' => QuestionnaireExport::ANSWER_SYSTEM, 'code' => '1', 'display' => 'Ningún día'],
+            array_diff_key($first['answerOption'][0]['valueCoding'], ['extension' => 1]),
+            "shown in Spanish, Pfizer's words, so coded in the module's own system rather than given as LOINC's answer");
+        self::assertSame([0, 1, 2, 3], array_map(static fn(array $o): int => $o['valueCoding']['extension'][0]['valueDecimal'], $first['answerOption']), 'with the same points');
         self::assertArrayNotHasKey('/44250-9', self::flatten($export->questionnaire($spanish)['item']), 'without its English document, no codes');
+    }
+
+    public function testEveryLoincCodeGoesWithLoincsNameForIt(): void
+    {
+        $checked = 0;
+        foreach (array_keys(Words::LANGUAGES) as $language) {
+            $export = new QuestionnaireExport(new Context(['name' => 'Seed Clinic']), $language);
+            foreach (DocumentLibrary::shipped($language)->all() as $doc) {
+                if ($doc->language !== $language) {
+                    continue;
+                }
+                $english = $language === 'en' ? null : DocumentLibrary::shipped()->get($doc->id);
+                $walk = static function (mixed $node) use (&$walk, &$checked, $language, $doc): void {
+                    if (!is_array($node)) {
+                        return;
+                    }
+                    if (($node['system'] ?? null) === Loinc::SYSTEM && isset($node['code'])) {
+                        $code = (string)$node['code'];
+                        $want = Loinc::name($code, $language);
+                        self::assertNotNull($want, "$language/$doc->id: LOINC code $code has a LOINC name to go with it");
+                        self::assertSame($want, $node['display'] ?? null, "$language/$doc->id: LOINC code $code goes with LOINC's name");
+                        $checked++;
+                    }
+                    foreach ($node as $child) {
+                        $walk($child);
+                    }
+                };
+                $walk($export->questionnaire($doc, $english));
+            }
+        }
+        self::assertGreaterThan(300, $checked, 'the walk found the codes: a control against a walk that sees none');
     }
 
     public function testEveryShippedDocumentMakesAWellFormedQuestionnaireWithNoPatient(): void

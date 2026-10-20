@@ -16,6 +16,39 @@ final class Loinc
 {
     public const SYSTEM = 'http://loinc.org';
 
+    /** @var ?array{en: array<string, string>, es: array<string, string>} */
+    private static ?array $names = null;
+
+    /** data/loinc-names.json: LOINC's long common name for every LOINC code the module sends, written by tools/loinc-names.php. */
+    public static function namesFile(): string
+    {
+        return dirname(__DIR__, 2) . '/data/loinc-names.json';
+    }
+
+    /** An answer code as LOINC writes them: LA, a number, a hyphen and a digit (not the terms' check digit). */
+    public static function isAnswer(string $code): bool
+    {
+        return preg_match('/^LA\d{1,8}-\d$/', $code) === 1;
+    }
+
+    /**
+     * LOINC's name for a code (a term's long common name, an answer's display text), which the LOINC
+     * licence asks to go with the code wherever the module passes LOINC content on. In Spanish, LOINC's
+     * Spanish long common name where it has one, else the English. Null when the names file doesn't
+     * have the code.
+     */
+    public static function name(string $code, string $language = 'en'): ?string
+    {
+        if (self::$names === null) {
+            $data = is_file(self::namesFile()) ? json_decode((string)file_get_contents(self::namesFile()), true) : null;
+            self::$names = [
+                'en' => is_array($data['names'] ?? null) ? array_map('strval', $data['names']) : [],
+                'es' => is_array($data['names_es'] ?? null) ? array_map('strval', $data['names_es']) : [],
+            ];
+        }
+        return ($language === 'es' ? self::$names['es'][$code] ?? null : null) ?? self::$names['en'][$code] ?? null;
+    }
+
     public static function isValid(string $code): bool
     {
         if (preg_match('/^(\d{1,7})-(\d)$/', $code, $m) !== 1) {

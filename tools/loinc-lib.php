@@ -11,7 +11,13 @@
 
 declare(strict_types=1);
 
-const LOINC_NOTICE = 'This material contains content from LOINC (http://loinc.org). LOINC is copyright Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.';
+if (PHP_SAPI !== 'cli') {
+    // Composer installs the package under the web root; the tools are for the command line only.
+    http_response_code(404);
+    exit;
+}
+
+const LOINC_NOTICE = 'This material contains content from LOINC (http://loinc.org). LOINC is copyright © Regenstrief Institute, Inc. and the Logical Observation Identifiers Names and Codes (LOINC) Committee and is available at no cost under the license at http://loinc.org/license. LOINC® is a registered United States trademark of Regenstrief Institute, Inc.';
 
 /**
  * What a reference holds that LOINC can't give, written by hand with its source and kept when the

@@ -7,7 +7,7 @@
   "code": {
     "system": "http://loinc.org",
     "code": "88121-9",
-    "display": "Children's HealthWatch Hunger Vital Sign"
+    "display": "Children's HealthWatch Hunger Vital Sign [HVS]"
   },
   "validated": true,
   "version": 2,

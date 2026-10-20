@@ -7,7 +7,7 @@
     "code": {
         "system": "http://loinc.org",
         "code": "115564-7",
-        "display": "Ask Suicide-Screening Questions (ASQ) Tool"
+        "display": "Ask Suicide-Screening Questions Tool [ASQ]"
     },
     "validated": true,
     "version": 1,

@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.31.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.32.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -119,7 +119,7 @@ The format, and the rules every document follows, are in [docs/](docs/README.md)
   - or, for a screen read by rule rather than by a total (the ASQ: Yes to any of questions 1 to 4 is a positive screen), its published rules, with their source;
   - or, for an instrument scored in parts (TAPS-2 scores each substance), each part's questions and published cut-offs.
 
-  The tests fail if a document's questions, their order, its answers, the points for each, its total range or a cut-off it prints differ, if it doesn't say a published rule with the questions it names, or if a translation changes any of them. A difference that is deliberate is listed in the reference with its reason (GAD-7's question 2 and PHQ-9's closing question follow Pfizer's printed form, not LOINC's coding of it). `tools/instrument-references.php` refreshes the references from LOINC (a free LOINC account) and keeps what was written by hand.
+  The tests fail if a document's questions, their order, its answers, the points for each, its total range or a cut-off it prints differ, if it doesn't say a published rule with the questions it names, or if a translation changes any of them. A difference that is deliberate is listed in the reference with its reason (GAD-7's question 2 and PHQ-9's closing question follow Pfizer's printed form, not LOINC's coding of it). `tools/instrument-references.php` refreshes the references from LOINC (a free LOINC account) and keeps what was written by hand. `tools/loinc-names.php` does the same for `data/loinc-names.json`, LOINC's long common name for every LOINC code the documents and references use, and the tests hold each document's code to that name.
 
   Where the published instrument scores differently from LOINC's answer lists, the reference says so under `"scoring"`, with its source. The tools refuse an instrument whose answers have no score until that is written. LOINC scores PC-PTSD-5's trauma question, which the instrument doesn't; it leaves STEADI's first statement and every GDS-15 answer unscored. It has TAPS-1's prescription question as free text with no answers, and lists another question's answers backwards: a reference can give a question another's answers and put them in the published order. LOINC's six-item food security questionnaire leaves out one of the six questions, so that reference is written from USDA's own module, with LOINC's codes, and says so. `tools/import-instrument.php` brings a new instrument in from LOINC: its reference, and a draft document to compare with the instrument's printed form before it is made active.
 
@@ -199,10 +199,12 @@ Choose **Español** as the language at the top of the Clinic Forms page. Documen
 **Fill on screen (FHIR Questionnaire).** Tick documents and click **FHIR Questionnaire (.json)** to download them as FHIR R4 Questionnaires: one file, or a Bundle when several are ticked. They are blank forms with the clinic's details and never a patient's (a field the chart fills, such as the patient's name, is left out, since a response names its patient), so no audit event is written. Use them in another system that fills FHIR Questionnaires, or add them straight to OpenEMR's own questionnaires, as described next.
 
 - The validated instruments carry LOINC's question and answer codes, with the answers in the published order and each answer's points. Their total line adds the points up as the questions are answered, in OpenEMR's own questionnaire runtime (OpenEMR 8.3 and later).
-- A Spanish questionnaire shows its Spanish wording, with the same codes, when it keeps its English instrument. A clinic's own version that differs from its instrument carries no codes.
-- Each answer shows the paper form's wording, with LOINC's code.
+- Every LOINC code goes with LOINC's own name for it, as the [LOINC licence](https://loinc.org/license/) asks of LOINC content passed on:
+  - a document's, question's or total's code with its long common name, from `data/loinc-names.json`;
+  - an answer's code with LOINC's answer text. Where that differs from the paper form, the screen shows LOINC's: AUDIT-C's "2-4 times a month" for WHO's "2 to 4 times a month". The printed form keeps the paper's wording.
+- A Spanish questionnaire, when it keeps its English instrument, has the same question codes and points. Its answers are the instrument owner's Spanish, not LOINC's wording, so they are coded in the module's own system, by position, and still add up to the same total. A clinic's own version that differs from its instrument carries no codes.
 - Every shipped document and translation passes:
-  - the HL7 FHIR validator (with the SDC guide). It notes three things that are expected: answer wording that differs from LOINC's display, the ASQ's codes being newer than the terminology server's LOINC, and LOINC's questionnaires not being fetchable;
+  - the HL7 FHIR validator (with the SDC guide). It notes four things that are expected: a Spanish questionnaire's codes carrying LOINC's English names where LOINC has no Spanish one; the ASQ's codes, and LOINC 2.83's new names for the food security survey's, being newer than the terminology server's LOINC (2.82); and LOINC's questionnaires not being fetchable;
   - OpenEMR 8.4.1's questionnaire import check;
   - OpenEMR's questionnaire runtime, which works out each instrument's total correctly.
 

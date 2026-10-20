@@ -11,10 +11,15 @@
  * answer's Coding, where a response's answer carries it too, so its total line can add them up
  * (an SDC calculatedExpression, in the FHIRPath OpenEMR's questionnaire runtime evaluates); a
  * translation carries them when it keeps its English document's instrument. A document that
- * differs from its instrument claims no codes. An answer shows the paper form's wording (AUDIT-C's
- * "2 to 4 times a month", WHO's, where LOINC's display says "2-4"; a translation's own words), with
- * LOINC's code: the HL7 validator reports such a display as differing from LOINC's, as warnings with
- * -display-issues-are-warnings.
+ * differs from its instrument claims no codes.
+ *
+ * Every LOINC code goes with LOINC's own name for it (data/loinc-names.json), as the LOINC licence
+ * asks of content passed on: a document's, question's or total's code with its long common name, in
+ * Spanish where LOINC has one, and an answer's code with LOINC's answer text, which an English form
+ * then shows (AUDIT-C's "2-4 times a month" where WHO's paper says "2 to 4 times a month"). A
+ * translation's answers are in its own words, the instrument owner's, so they aren't LOINC's: they're
+ * coded in the module's own system, by position, with the same points, and its questions keep LOINC's
+ * codes and names.
  *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
@@ -36,6 +41,8 @@ final readonly class QuestionnaireExport
     public const CANONICAL = 'https://github.com/anun333/oe-module-clinic-forms/questionnaire/';
     public const ORDINAL = 'http://hl7.org/fhir/StructureDefinition/ordinalValue';
     public const CALCULATED = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression';
+    /** A translated instrument's answers, coded by their position in the question ("1", "2"...). */
+    public const ANSWER_SYSTEM = 'https://github.com/anun333/oe-module-clinic-forms/answers';
     private const BLANK = '__________';
 
     private Context $context;
@@ -95,8 +102,7 @@ final readonly class QuestionnaireExport
             $q['derivedFrom'] = ['http://loinc.org/q/' . $doc->code['code']];
         }
         if (($doc->code['system'] ?? '') !== '' && ($doc->code['code'] ?? '') !== '') {
-            // Its display is the code system's to give (LOINC's term name), so it is left out.
-            $q['code'] = [['system' => $doc->code['system'], 'code' => $doc->code['code']]];
+            $q['code'] = [self::loincCoding((string)$doc->code['code'], $doc->language)];
         }
         $copyright = implode('. ', array_filter([rtrim(trim((string)($doc->licence['holder'] ?? '')), '.'), trim((string)($doc->licence['terms'] ?? ''))]));
         if ($codes !== null) {
@@ -151,7 +157,7 @@ final readonly class QuestionnaireExport
                     break;
                 case 'fields':
                     foreach ($block['fields'] as $n => $field) {
-                        $item = $this->field($field, "$id.$n", $codes);
+                        $item = $this->field($field, "$id.$n", $codes, $doc->language);
                         if ($item !== null) {
                             $add($item);
                         }
@@ -159,7 +165,7 @@ final readonly class QuestionnaireExport
                     break;
                 case 'checklist':
                     if (isset($block['label'])) {
-                        $add($this->choice("$id", (string)$block['label'], array_map(fn(string $i): array => self::scored($this->text($i)), $block['items']), $codes['map'][++$asked] ?? null, !$doc->validated));
+                        $add($this->choice("$id", (string)$block['label'], array_map(fn(string $i): array => self::scored($this->text($i)), $block['items']), $codes['map'][++$asked] ?? null, !$doc->validated, $doc->language));
                     } else {
                         // Statements to tick, each on its own.
                         foreach ($block['items'] as $n => $statement) {
@@ -175,11 +181,11 @@ final readonly class QuestionnaireExport
                             $score = $block['item_scores'][$n][$i] ?? $block['scores'][$i] ?? null;
                             $answers[] = [$this->text($column), is_numeric($score) ? $score + 0 : null];
                         }
-                        $children[] = $this->choice("$id.$n", (($block['start'] ?? 1) + $n) . '. ' . $question, $answers, $codes['map'][++$asked] ?? null, false);
+                        $children[] = $this->choice("$id.$n", (($block['start'] ?? 1) + $n) . '. ' . $question, $answers, $codes['map'][++$asked] ?? null, false, $doc->language);
                     }
                     $add(['linkId' => $id, 'text' => $this->text($block['label']), 'type' => 'group', 'item' => $children]);
                     if (isset($block['total'])) {
-                        $add(self::total("$id.total", $this->text($block['total']), $codes !== null, null, self::totalCode($codes)));
+                        $add(self::total("$id.total", $this->text($block['total']), $codes !== null, null, self::totalCode($codes), $doc->language));
                     }
                     break;
                 case 'lines':
@@ -228,7 +234,7 @@ final readonly class QuestionnaireExport
      * @param array{label: string, value?: string} $field
      * @return ?array<string, mixed>
      */
-    private function field(array $field, string $linkId, ?array $codes): ?array
+    private function field(array $field, string $linkId, ?array $codes, string $language = 'en'): ?array
     {
         $value = $field['value'] ?? '';
         preg_match_all('/\{([a-z]+)\.[a-z]+\}/', $value, $m);
@@ -237,7 +243,7 @@ final readonly class QuestionnaireExport
         }
         $label = $this->text($field['label']);
         if ($codes !== null && preg_match('/^(Total score|Puntuación total|Puntaje total)/iu', $label) === 1) {
-            return self::total($linkId, $label, true, null, self::totalCode($codes));
+            return self::total($linkId, $label, true, null, self::totalCode($codes), $language);
         }
         // A part's score line (TAPS-2's "Alcohol score") adds up that part's answers only.
         foreach ($codes['reference']['subscales'] ?? [] as $subscale) {
@@ -259,15 +265,15 @@ final readonly class QuestionnaireExport
      *
      * @param list<array{0: string, 1: int|float|null}> $answers text and points
      * @param ?array{code: string, text: string, answers: list<array>} $coded the instrument's question, when the document is the instrument
+     * @param string $language the document's language: an English one shows LOINC's answer text, a translation its own words
      * @return array<string, mixed>
      */
-    private function choice(string $linkId, string $label, array $answers, ?array $coded, bool $repeats): array
+    private function choice(string $linkId, string $label, array $answers, ?array $coded, bool $repeats, string $language): array
     {
         $text = $this->text($label);
         $item = ['linkId' => $coded !== null ? '/' . $coded['code'] : $linkId];
         if ($coded !== null) {
-            // LOINC's display for a question is its term's full name, not the form's wording: left out.
-            $item['code'] = [['system' => Loinc::SYSTEM, 'code' => $coded['code']]];
+            $item['code'] = [self::loincCoding($coded['code'], $language)];
         }
         if (preg_match('/^\s*(\d+[.)])\s+(.*)$/su', $text, $m) === 1) {
             $item['prefix'] = $m[1];
@@ -278,9 +284,11 @@ final readonly class QuestionnaireExport
         foreach ($answers as $i => [$answer, $points]) {
             $ordinal = $points === null ? [] : ['extension' => [['url' => self::ORDINAL, 'valueDecimal' => $points]]];
             // The points ride on a Coding, which a response's answer copies; a plain string answer can't carry them, so its option does.
-            $option = $coded !== null
-                ? ['valueCoding' => $ordinal + ['system' => Loinc::SYSTEM, 'code' => $coded['answers'][$i]['code'], 'display' => $answer]]
-                : $ordinal + ['valueString' => $answer];
+            $option = match (true) {
+                $coded === null => $ordinal + ['valueString' => $answer],
+                $language === 'en' => ['valueCoding' => $ordinal + self::loincCoding((string)$coded['answers'][$i]['code'], 'en')],
+                default => ['valueCoding' => $ordinal + ['system' => self::ANSWER_SYSTEM, 'code' => (string)($i + 1), 'display' => $answer]],
+            };
             $item['answerOption'][] = $option;
         }
         return $item;
@@ -293,10 +301,10 @@ final readonly class QuestionnaireExport
      *
      * @return array<string, mixed>
      */
-    private static function total(string $linkId, string $text, bool $calculated, ?array $questions = null, ?string $loinc = null): array
+    private static function total(string $linkId, string $text, bool $calculated, ?array $questions = null, ?string $loinc = null, string $language = 'en'): array
     {
         // The instrument's own total carries LOINC's term for it; a part's score has none here.
-        $item = ['linkId' => $linkId] + ($loinc !== null ? ['code' => [['system' => Loinc::SYSTEM, 'code' => $loinc]]] : [])
+        $item = ['linkId' => $linkId] + ($loinc !== null ? ['code' => [self::loincCoding($loinc, $language)]] : [])
             + ['text' => $text, 'type' => 'decimal', 'readOnly' => true];
         if ($calculated) {
             $points = ".answer.valueCoding.extension.where(url = '" . self::ORDINAL . "').valueDecimal.sum()";
@@ -320,6 +328,20 @@ final readonly class QuestionnaireExport
     {
         $code = $codes['reference']['total_code'] ?? null;
         return is_string($code) && Loinc::isValid($code) ? $code : null;
+    }
+
+    /**
+     * A LOINC code with LOINC's name for it: in Spanish where LOINC has one and the document is Spanish.
+     *
+     * @return array{system: string, code: string, display: string}
+     */
+    private static function loincCoding(string $code, string $language): array
+    {
+        $name = Loinc::name($code, $language);
+        if ($name === null) {
+            throw new \LogicException("LOINC code $code has no name in data/loinc-names.json; run tools/loinc-names.php");
+        }
+        return ['system' => Loinc::SYSTEM, 'code' => $code, 'display' => $name];
     }
 
     /** @return array{0: string, 1: int|float|null} "Never (0)" as its text and points */

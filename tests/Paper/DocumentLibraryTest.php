@@ -11,6 +11,7 @@ namespace OpenHealthcare\ClinicForms\Tests\Paper;
 
 use OpenHealthcare\ClinicForms\Paper\Document;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
+use OpenHealthcare\ClinicForms\Paper\Loinc;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
@@ -206,5 +207,19 @@ final class DocumentLibraryTest extends TestCase
         $file = $this->dir . "/$name.json";
         file_put_contents($file, json_encode($data, JSON_THROW_ON_ERROR));
         return $file;
+    }
+
+    public function testEachDocumentsLoincCodeHasLoincsNameForIt(): void
+    {
+        $checked = 0;
+        foreach (DocumentLibrary::shipped()->all() as $doc) {
+            if (($doc->code['system'] ?? null) !== Loinc::SYSTEM) {
+                continue;
+            }
+            self::assertSame(Loinc::name((string)$doc->code['code']), $doc->code['display'] ?? null,
+                "$doc->id: its LOINC code {$doc->code['code']} goes with LOINC's long common name (data/loinc-names.json)");
+            $checked++;
+        }
+        self::assertGreaterThan(20, $checked, 'the documents with LOINC codes were found');
     }
 }

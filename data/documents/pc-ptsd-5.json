@@ -7,7 +7,7 @@
     "code": {
         "system": "http://loinc.org",
         "code": "102010-6",
-        "display": "The Primary Care PTSD Screen for DSM-5"
+        "display": "The Primary Care PTSD Screen for DSM-5 [PC-PTSD-5]"
     },
     "validated": true,
     "version": 1,

@@ -7,7 +7,7 @@
   "code": {
     "system": "http://loinc.org",
     "code": "101697-1",
-    "display": "Post traumatic stress disorder checklist - civilian version DSM-5"
+    "display": "Post traumatic stress disorder checklist - civilian version DSM-5 [PCL-5]"
   },
   "validated": true,
   "version": 1,

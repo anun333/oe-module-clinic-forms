@@ -7,7 +7,7 @@
   "code": {
     "system": "http://loinc.org",
     "code": "95361-2",
-    "display": "U.S. Household Food Security Survey - Six-Item Short Form"
+    "display": "U.S. Household Food Security Survey - Six-Item Short Form [U.S. FSS-6]"
   },
   "validated": true,
   "version": 2,

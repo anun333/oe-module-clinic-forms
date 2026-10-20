@@ -7,7 +7,7 @@
     "code": {
         "system": "http://loinc.org",
         "code": "96845-3",
-        "display": "Tobacco, Alcohol, Prescription medications, and other Substance use assessment"
+        "display": "Tobacco, Alcohol, Prescription medications, and other Substance use assessment [TAPS]"
     },
     "validated": true,
     "version": 1,

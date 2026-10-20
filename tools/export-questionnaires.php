@@ -14,6 +14,12 @@
 
 declare(strict_types=1);
 
+if (PHP_SAPI !== 'cli') {
+    // Composer installs the package under the web root; the tools are for the command line only.
+    http_response_code(404);
+    exit;
+}
+
 require dirname(__DIR__) . '/vendor/autoload.php';
 
 use OpenHealthcare\ClinicForms\Fhir\QuestionnaireExport;

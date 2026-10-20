@@ -7,7 +7,7 @@
   "code": {
     "system": "http://loinc.org",
     "code": "69724-3",
-    "display": "Patient health questionnaire 4 item"
+    "display": "Patient Health Questionnaire 4 item (PHQ-4) [Reported]"
   },
   "validated": true,
   "version": 1,

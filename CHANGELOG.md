@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.32.0 (2026-10-20)
+
+**Every LOINC code now goes with LOINC's own name for it, as the LOINC licence asks.**
+
+The LOINC licence (read 2026-10-20, last updated 2026-08-06) lets LOINC content be built into software if each LOINC code travels with one of LOINC's names for it and LOINC's own text isn't changed. The FHIR export didn't do that.
+
+- **FHIR Questionnaires:**
+  - Each document's, question's and total's LOINC code carries LOINC's long common name. The export used to leave the name out.
+  - English answers carry LOINC's answer text with LOINC's code. Where the paper form words an answer differently, the screen now shows LOINC's (AUDIT-C: "2-4 times a month" for WHO's "2 to 4 times a month"); the printed form doesn't change.
+  - A Spanish instrument's answers are the owner's Spanish, not LOINC's words, so they're no longer given LOINC's answer codes. They're coded in the module's own system (`https://github.com/anun333/oe-module-clinic-forms/answers`) by position, with the same points, so totals still add up, in OpenEMR's runtime and in the Staff Worklist. The questions keep LOINC's codes and names.
+- **New: `data/loinc-names.json`**, LOINC's long common name for each of the 180 LOINC codes the documents and references use, written and checked by `tools/loinc-names.php` (a free LOINC account) against LOINC 2.83. The tests hold every document's code to it.
+  - Eleven instrument documents named their LOINC code in their own words, and now use LOINC's: ASQ, HARK, PC-PTSD-5, PCL-5, PHQ-15, PHQ-4, Stay Independent, TAPS-1, TAPS-2, and in the US pack the six-item food security survey and the Hunger Vital Sign. No document's wording or version changed.
+- **LOINC's notice** now reads exactly as the licence gives it ("copyright ©"), in every instrument reference and in the README, which is the package's download page.
+- **The command-line tools refuse web requests.** Composer installs the package under OpenEMR's web root, so `tools/` can be reached from a browser. Every tool now answers anything but the command line with a 404.
+
 ## 0.31.0 (2026-10-19)
 
 **The BSTAD for adolescents, NIMH's Spanish ASQ, and long questions printed at a size people can read.**
