@@ -2,7 +2,7 @@
 
 Printable clinic paperwork, with the clinic's own name, address, phone, fax and logo filled in. Each piece can be printed blank to fill in by hand, or with the current patient's details filled in.
 
-**Status: 0.29.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
+**Status: 0.30.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
 It does three things:
 
@@ -50,7 +50,7 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Front desk | We Offer Discounts Based on Income | A notice to post or hand out: the sliding fee discount, who qualifies, and that no one is turned away; the clinic writes in its own schedule | — | US |
 | Front desk | Sliding Fee Discount Application | Household members and income, proof attached, and a clinic section for the poverty-guideline percentage and discount level (the facts UDS Table 4 reports) | — | US |
 | Screening | Patient Health Questionnaire-4 (PHQ-4) | Two anxiety and two depression questions; each part scored 0 to 6, and 3 or more on either is a positive screen | 69724-3 | any |
-| Screening | Patient Health Questionnaire (PHQ-2) | The two-question depression screen, scored 0 to 6 | 55757-9 | any |
+| Screening | Patient Health Questionnaire (PHQ-2) | The two-question depression screen, scored 0 to 6. The office section notes that it doesn't ask about self-harm | 55757-9 | any |
 | Screening | Alcohol Use Screen (AUDIT-C) | The WHO AUDIT's first three questions, scored 0 to 12 | 72109-2 | any |
 | Screening | Patient Health Questionnaire (PHQ-9) | Depression screening, scored 0 to 27, with an office prompt to follow the clinic's safety protocol on question 9 | 44249-1 | any |
 | Screening | Generalized Anxiety Disorder Scale (GAD-7) | Anxiety screening, scored 0 to 21 | 69737-5 | any |
@@ -78,12 +78,12 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | After the visit | My Medicines: Review | The medicines on file to check and correct, and everything else the patient takes | | any |
 | Screening | Preventive Care Questions | The answers the chart doesn't hold that decide which USPSTF A and B screenings are due: pack-years, family history, sexual health, where the patient has lived, pregnancy | | US |
 | Screening | Substance Use Assessment (TAPS-2) | For a positive TAPS-1: yes or no questions about each substance in the past 3 months, each substance scored on its own | 96845-3 | any |
-| Care coordination | Referral letter | To the Address Book recipient, with urgency, the question to answer and what is enclosed | 57133-1 | any |
+| Care coordination | Referral Letter | To the Address Book recipient, with urgency, the question to answer, the problems, medicines and allergies on file, and what is enclosed | 57133-1 | any |
 | Care coordination | Request for Records | A request to another provider for a patient's records | — | any |
 | Office workflow | Patient Routing Slip | Travels with the patient: check-in, rooming, provider, checkout | — | any |
 | Office workflow | Staff Handoff (SBAR) | Handing a patient from one staff member, shift or site to another | — | any |
 | Office workflow | Internal Referral | To behavioral health, care management, nutrition, social work or another of the clinic's sites | 57133-1 | any |
-| Downtime | Encounter Form (Superbill) | One visit's charges on paper: CPT or HCPCS services, ICD-10-CM diagnoses, sliding fee level, payment | — | US |
+| Downtime | Encounter Form (Superbill) | One visit's charges on paper: CPT or HCPCS services, ICD-10-CM diagnoses A to L as on the claim form, the billing NPI, sliding fee level, payment | — | US |
 | Downtime | Downtime Visit Note | A paper visit note for when OpenEMR is down, with a box to record when it was entered | 11506-3 | any |
 | Privacy and patient rights | Notice of Privacy Practices | The notice itself (45 CFR 164.520), with the 42 CFR Part 2 statements required from February 16, 2026; fill in the effective date and privacy contact | 57017-6 | US |
 | Privacy and patient rights | Request to See or Get a Copy of My Health Record | Right of access (164.524): paper or electronic, to the patient or a person they name | — | US |

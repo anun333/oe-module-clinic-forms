@@ -1,5 +1,34 @@
 # Changelog
 
+## 0.30.0 (2026-10-19)
+
+**Fourteen documents reworded, from the review before 1.0.** Each one's version went up, so a signed copy names the wording the patient signed.
+
+- **Core:**
+  - **PHQ-2:** the office section says the PHQ-2 doesn't ask about self-harm, so a total under 3 doesn't rule out risk. Ask directly, or give the PHQ-9 or the ASQ.
+  - **Your Rights and Responsibilities:** a complaint can be made to any staff member or in writing. A discount is mentioned beside payment plans.
+  - **Referral Letter:** now in title case. It prints the problems, medicines and allergies on file, with lines for other history. An urgent referral says "we will also call".
+  - **Patient Routing Slip and Staff Handoff:** the date is left blank, since slips printed ahead would carry the print date. The routing slip has an interpreter check at check-in.
+  - **Missed Appointments:** the patient keeps it, so the signature line reads "I received a copy".
+  - **Communication Preferences:** a "For clinic use" section, where staff tick that the choices and any other mailing address are entered in the chart, so letters go where the patient asked.
+- **US pack:**
+  - **Notice of Privacy Practices for Substance Use Disorder Records:**
+    - A consent given for a court, probation or parole referral may last until the time or event it names (42 CFR 2.35).
+    - The notice gives the Office for Civil Rights' address, phone and website for complaints to the Secretary.
+    - The heading stays as 42 CFR 2.22(b)(1)(i) words it.
+  - **Request to Correct My Health Record:** a fourth reason to say no, a record the patient may not see or copy (164.526(a)(2)(iii)).
+  - **Authorization to Release Health Information:**
+    - It says which substance use disorder records need the Part 2 consent: those from a federally assisted program.
+    - It gives the one case where care can depend on signing: care given only to make information for someone else, such as an employer's exam (164.508(b)(4)(iii)).
+  - **Request to Limit How My Information Is Shared:**
+    - Ask before the clinic bills the health plan.
+    - An agreed limit still allows sharing for emergency treatment.
+    - The clinic may end a limit after telling the patient, except one on care paid for in full (164.522(a)).
+  - **Notice of Nondiscrimination:** the Section 1557 Coordinator's mailing address, from the facility's address.
+  - **Encounter Form (Superbill):** 12 diagnosis rows, A to L as on the claim form, and the billing NPI from the facility.
+  - **Personal Representative:** says that the other forms call this person a legal representative.
+- **Spanish:** the Spanish PHQ-2, Communication Preferences, amendment request, authorization, restriction request and nondiscrimination notice carry the same changes, so they keep printing in Spanish. The PHQ-2's questions are still the official Spanish wording; only the office note is ours.
+
 ## 0.29.0 (2026-10-18)
 
 - **A scale can number on from an earlier part.** The new optional `"start"` gives the first row's number, so an instrument that asks questions 1 to 3 one way and 4 to 9 another, like the CRAFFT, prints its own numbers. The print page, the Word, LibreOffice and PDF files, the instrument check and the FHIR and OpenMRS exports all use it, and a start below 1 is refused when the document is read. No shipped document uses it yet.
