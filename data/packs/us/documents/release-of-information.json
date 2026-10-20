@@ -9,7 +9,7 @@
     "code": "64292-6",
     "display": "Release of Information Consent Document"
   },
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "rule",
@@ -123,7 +123,7 @@
       "items": [
         "____ HIV/AIDS testing or treatment",
         "____ Mental health treatment (not psychotherapy notes, which need a separate authorization)",
-        "____ Substance use disorder treatment records (records covered by 42 CFR Part 2 need a Part 2 consent)",
+        "____ Substance use disorder treatment records (records from a federally assisted substance use disorder program, covered by 42 CFR Part 2, need our Part 2 consent form instead)",
         "____ Genetic testing",
         "____ Sexual and reproductive health"
       ]
@@ -169,7 +169,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Signing is your choice. Your treatment, payment, enrollment or eligibility for benefits will not depend on whether you sign."
+      "text": "Signing is your choice. Your treatment, payment, enrollment or eligibility for benefits will not depend on whether you sign. The one exception is care given only to make information for someone else, such as an exam an employer or insurer asked for: we may need your signature before we give that care."
     },
     {
       "type": "paragraph",

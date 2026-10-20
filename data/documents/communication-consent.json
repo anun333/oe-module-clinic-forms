@@ -9,7 +9,7 @@
     "code": "59284-0",
     "display": "Consent Document"
   },
-  "version": 2,
+  "version": 3,
   "status": "active",
   "source": {
     "kind": "written",
@@ -95,6 +95,28 @@
         },
         {
           "label": "Relationship or legal authority"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For clinic use"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Choices entered in the patient's chart",
+        "Other address for mail entered, so letters go there"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "By"
+        },
+        {
+          "label": "Date"
         }
       ]
     }

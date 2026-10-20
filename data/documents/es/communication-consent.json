@@ -1,6 +1,6 @@
 {
   "id": "communication-consent",
-  "translates": "4d4c0339201bbba6",
+  "translates": "8f44bc63ca87e13a",
   "title": "Preferencias de comunicación",
   "category": "Recepción",
   "about": "Cómo puede comunicarse la clínica con el paciente: teléfono, buzón de voz, mensajes de texto, correo electrónico y portal del paciente.",
@@ -80,6 +80,28 @@
         },
         {
           "label": "Relación o autoridad legal"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Para uso de la clínica"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Opciones registradas en el expediente del paciente",
+        "Otra dirección para el correo registrada, para que las cartas lleguen allí"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Por"
+        },
+        {
+          "label": "Fecha"
         }
       ]
     }

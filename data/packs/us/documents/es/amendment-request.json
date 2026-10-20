@@ -1,6 +1,6 @@
 {
   "id": "amendment-request",
-  "translates": "76da8c2d43cfce18",
+  "translates": "fed4f8a81243689a",
   "title": "Solicitud para corregir mi expediente médico",
   "category": "Privacidad y derechos del paciente",
   "about": "Solicitud del paciente para corregir o completar su expediente. HIPAA, derecho a enmendar, 45 CFR 164.526.",
@@ -112,6 +112,7 @@
         "Corregido en parte (explique abajo)",
         "No corregido: no creamos este registro",
         "No corregido: no forma parte del expediente",
+        "No corregido: el paciente no tiene derecho a verlo ni a copiarlo",
         "No corregido: el registro está correcto y completo"
       ]
     },

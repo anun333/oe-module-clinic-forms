@@ -1,6 +1,6 @@
 {
   "id": "phq-2",
-  "translates": "a32256eab8a9e178",
+  "translates": "bc9ab32b55fea0a5",
   "title": "Cuestionario sobre la salud del paciente (PHQ-2)",
   "category": "Detección",
   "about": "Detección de depresión con dos preguntas, con puntuación de 0 a 6. Una puntuación de 3 o más es el punto habitual para aplicar el PHQ-9.",
@@ -49,6 +49,10 @@
     {
       "type": "paragraph",
       "text": "Un total de 3 o más es el punto de corte habitual para aplicar el PHQ-9 completo."
+    },
+    {
+      "type": "paragraph",
+      "text": "El PHQ-2 no pregunta sobre pensamientos de hacerse daño, así que un total menor de 3 no descarta un riesgo. Pregunte directamente, o aplique el PHQ-9 o el ASQ, si hay preocupación."
     },
     {
       "type": "fields",

@@ -4,7 +4,7 @@
   "category": "Downtime",
   "about": "Charges for one visit on paper: services by CPT or HCPCS code, diagnoses by ICD-10-CM, the sliding fee level and what was paid. For downtime, or clinics that bill from paper.",
   "audience": "staff",
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -47,6 +47,10 @@
           "value": "{provider.npi}"
         },
         {
+          "label": "Billing NPI",
+          "value": "{facility.npi}"
+        },
+        {
           "label": "Place of service"
         },
         {
@@ -75,13 +79,13 @@
     },
     {
       "type": "table",
-      "label": "Diagnoses (ICD-10-CM)",
+      "label": "Diagnoses (ICD-10-CM), pointers A to L as on the claim form",
       "columns": [
         "Pointer",
         "Code",
         "Description"
       ],
-      "rows": 4
+      "rows": 12
     },
     {
       "type": "fields",

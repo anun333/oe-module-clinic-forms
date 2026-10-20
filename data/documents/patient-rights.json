@@ -4,7 +4,7 @@
   "category": "Front desk",
   "about": "What patients can expect from the clinic, and what the clinic asks of them. Give it at the first visit and post it.",
   "audience": "patient",
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -61,7 +61,7 @@
     },
     {
       "type": "paragraph",
-      "text": "• Make a complaint and get an answer, without being treated differently."
+      "text": "• Make a complaint, by telling any of our staff or in writing, and get an answer, without being treated differently."
     },
     {
       "type": "paragraph",
@@ -89,7 +89,7 @@
     },
     {
       "type": "paragraph",
-      "text": "• Pay your bills or talk with us about a payment plan."
+      "text": "• Pay your bills, or talk with us about a payment plan or a discount if paying is hard."
     },
     {
       "type": "paragraph",

@@ -10,7 +10,7 @@
     "display": "Patient Health Questionnaire 2 item (PHQ-2) [Reported]"
   },
   "validated": true,
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "instrument",
@@ -67,6 +67,10 @@
     {
       "type": "paragraph",
       "text": "A total of 3 or more is the usual cut-off for giving the full PHQ-9."
+    },
+    {
+      "type": "paragraph",
+      "text": "The PHQ-2 does not ask about thoughts of self-harm, so a total under 3 does not rule out risk. Ask directly, or give the PHQ-9 or the ASQ, when there is concern."
     },
     {
       "type": "fields",

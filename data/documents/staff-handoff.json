@@ -4,7 +4,7 @@
   "category": "Office workflow",
   "about": "Hands a patient's care from one staff member, shift or site to another: situation, background, assessment, recommendation.",
   "audience": "staff",
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -36,8 +36,7 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Date and time",
-          "value": "{clinic.today}"
+          "label": "Date and time"
         },
         {
           "label": "From"

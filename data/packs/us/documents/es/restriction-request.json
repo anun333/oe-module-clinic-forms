@@ -1,6 +1,6 @@
 {
   "id": "restriction-request",
-  "translates": "4605deed3c1fed0b",
+  "translates": "5be9f5d3c8c53bab",
   "title": "Solicitud para limitar cómo se comparte mi información",
   "category": "Privacidad y derechos del paciente",
   "about": "Solicitud del paciente para limitar el uso o la divulgación, incluido no informar a su plan de salud de la atención que pagó completa. HIPAA, 45 CFR 164.522(a).",
@@ -80,7 +80,15 @@
     },
     {
       "type": "paragraph",
+      "text": "Pídalo antes de que facturemos esta atención a su plan de salud."
+    },
+    {
+      "type": "paragraph",
       "text": "No estamos obligados a aceptar la mayoría de las solicitudes, y le avisaremos si no las aceptamos. Debemos aceptar no compartir con su plan de salud, para fines de pago o de nuestras operaciones, la atención que usted pagó completa, salvo que una ley nos obligue a hacerlo."
+    },
+    {
+      "type": "paragraph",
+      "text": "Si aceptamos un límite, aún podemos compartir la información si usted necesita tratamiento de emergencia. Podemos terminar un límite que aceptamos después de avisarle; deja de aplicarse solo a la información que creemos o recibamos después de eso. No podemos terminar un límite sobre la atención que usted pagó completa de su bolsillo."
     },
     {
       "type": "signature",

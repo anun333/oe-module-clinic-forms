@@ -1,6 +1,6 @@
 {
   "id": "referral-letter",
-  "title": "Referral letter",
+  "title": "Referral Letter",
   "category": "Care coordination",
   "about": "A referral letter to a provider or organization in the Address Book.",
   "audience": "provider",
@@ -9,7 +9,7 @@
     "code": "57133-1",
     "display": "Referral Note"
   },
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -92,7 +92,7 @@
       "items": [
         "Routine",
         "Soon (within two weeks)",
-        "Urgent (within two days)"
+        "Urgent (within two days; we will also call)"
       ]
     },
     {
@@ -111,9 +111,26 @@
       "count": 5
     },
     {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Problems",
+          "value": "{patient.problems}"
+        },
+        {
+          "label": "Medications",
+          "value": "{patient.medications}"
+        },
+        {
+          "label": "Allergies",
+          "value": "{patient.allergies}"
+        }
+      ]
+    },
+    {
       "type": "lines",
-      "label": "Relevant history, medications and allergies",
-      "count": 4
+      "label": "Other relevant history",
+      "count": 2
     },
     {
       "type": "checklist",

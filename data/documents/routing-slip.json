@@ -4,7 +4,7 @@
   "category": "Office workflow",
   "about": "Travels with the patient through the visit: check-in, rooming, provider, checkout.",
   "audience": "staff",
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -36,8 +36,7 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Date",
-          "value": "{clinic.today}"
+          "label": "Visit date"
         },
         {
           "label": "Appointment time"
@@ -59,6 +58,7 @@
       "items": [
         "Identity and date of birth checked",
         "Demographics and insurance confirmed",
+        "Interpreter arranged, if needed (language: ________)",
         "Forms given: consent, privacy notice, history",
         "Copay collected"
       ]

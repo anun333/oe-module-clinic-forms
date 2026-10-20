@@ -9,7 +9,7 @@
     "code": "57017-6",
     "display": "Privacy policy Organization Document"
   },
-  "version": 2,
+  "version": 3,
   "status": "active",
   "source": {
     "kind": "rule",
@@ -150,7 +150,7 @@
     },
     {
       "type": "paragraph",
-      "text": "You may take back (revoke) your consent in writing at any time, as 42 CFR 2.31 and 2.35 allow. This does not undo what we already did because of it."
+      "text": "You may take back (revoke) your consent in writing at any time, as 42 CFR 2.31 allows. This does not undo what we already did because of it. A consent you gave so that a court, probation or parole office could follow your treatment may last until the time or event it names, as 42 CFR 2.35 allows."
     },
     {
       "type": "paragraph",
@@ -235,6 +235,10 @@
     {
       "type": "paragraph",
       "text": "If you think we did not protect your privacy, you may complain to us and to the Secretary of the U.S. Department of Health and Human Services. To complain to us, tell or write to the privacy contact named above."
+    },
+    {
+      "type": "paragraph",
+      "text": "To complain to the Secretary, contact the U.S. Department of Health and Human Services, Office for Civil Rights: 200 Independence Avenue, S.W., Washington, D.C. 20201; phone 1-800-368-1019 (TDD 1-800-537-7697); or ocrportal.hhs.gov."
     },
     {
       "type": "paragraph",

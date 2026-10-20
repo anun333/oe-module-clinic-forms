@@ -4,7 +4,7 @@
   "category": "Privacy and patient rights",
   "about": "A patient's request to limit use or sharing, including keeping care they paid for in full from their health plan. HIPAA, 45 CFR 164.522(a).",
   "audience": "patient",
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "rule",
@@ -91,7 +91,15 @@
     },
     {
       "type": "paragraph",
+      "text": "Please ask before we bill your health plan for this care."
+    },
+    {
+      "type": "paragraph",
       "text": "We do not have to agree to most requests, and we will tell you if we do not. We must agree not to share care you paid for in full with your health plan for payment or our operations, unless a law requires us to."
+    },
+    {
+      "type": "paragraph",
+      "text": "If we agree to a limit, we may still share the information if you need emergency treatment. We may end a limit we agreed to after telling you; it then stops only for information we create or receive after that. We cannot end a limit on care you paid for in full yourself."
     },
     {
       "type": "signature",

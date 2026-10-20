@@ -4,7 +4,7 @@
   "category": "Privacy and patient rights",
   "about": "A patient's request to correct or add to their record. HIPAA right to amend, 45 CFR 164.526.",
   "audience": "patient",
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "rule",
@@ -123,6 +123,7 @@
         "Corrected in part (explain below)",
         "Not corrected: we did not create this record",
         "Not corrected: not part of the record",
+        "Not corrected: not open to the patient to see or copy",
         "Not corrected: the record is correct and complete"
       ]
     },

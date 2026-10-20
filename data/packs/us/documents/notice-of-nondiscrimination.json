@@ -5,7 +5,7 @@
   "about": "The notice Section 1557 requires (45 CFR 92.10): no discrimination, free help for people with disabilities and for people who speak other languages, how to get it, and how to complain. Post it in 20-point type and give it out each year; fill in the Section 1557 Coordinator.",
   "audience": "patient",
   "poster": true,
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "rule",
@@ -48,6 +48,10 @@
         },
         {
           "label": "Coordinator email"
+        },
+        {
+          "label": "Coordinator mailing address",
+          "value": "{facility.address}"
         }
       ]
     },

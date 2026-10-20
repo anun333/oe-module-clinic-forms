@@ -4,7 +4,7 @@
   "category": "Privacy and patient rights",
   "about": "Records who the law lets act for a patient on health care and health information, and the papers that show it. HIPAA, 45 CFR 164.502(g); identity and authority checked under 164.514(h).",
   "audience": "patient",
-  "version": 2,
+  "version": 3,
   "status": "active",
   "source": {
     "kind": "rule",
@@ -35,7 +35,7 @@
     },
     {
       "type": "paragraph",
-      "text": "A personal representative is someone the law lets make health care decisions for the patient. Within that authority, we treat them as the patient for the patient's health information."
+      "text": "A personal representative is someone the law lets make health care decisions for the patient. Within that authority, we treat them as the patient for the patient's health information. Our other forms call this person a legal representative."
     },
     {
       "type": "paragraph",

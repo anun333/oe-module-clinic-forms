@@ -4,7 +4,7 @@
   "category": "Front desk",
   "about": "The clinic's policy on missed and late appointments, for the patient to keep. Edit the times to match your clinic.",
   "audience": "patient",
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "written",
@@ -59,7 +59,7 @@
     {
       "type": "signature",
       "signers": [
-        "Patient or legal representative"
+        "I received a copy (patient or legal representative)"
       ]
     }
   ]

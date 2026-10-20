@@ -1,6 +1,6 @@
 {
   "id": "release-of-information",
-  "translates": "b870423247d3437c",
+  "translates": "68cbc7e763c3d69a",
   "title": "Autorización para divulgar información de salud",
   "category": "Recepción",
   "about": "Autorización de HIPAA para divulgar información de salud, con los elementos que exige 45 CFR 164.508.",
@@ -107,7 +107,7 @@
       "items": [
         "____ Pruebas o tratamiento del VIH/SIDA",
         "____ Tratamiento de salud mental (no las notas de psicoterapia, que necesitan una autorización aparte)",
-        "____ Registros de tratamiento de trastornos por consumo de sustancias (los registros cubiertos por 42 CFR Parte 2 necesitan un consentimiento de la Parte 2)",
+        "____ Registros de tratamiento de trastornos por consumo de sustancias (los registros de un programa de tratamiento de trastornos por consumo de sustancias con asistencia federal, cubiertos por 42 CFR Parte 2, necesitan en su lugar nuestro formulario de consentimiento de la Parte 2)",
         "____ Pruebas genéticas",
         "____ Salud sexual y reproductiva"
       ]
@@ -153,7 +153,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Firmar es su decisión. Su tratamiento, pago, inscripción o elegibilidad para recibir beneficios no dependerán de que usted firme."
+      "text": "Firmar es su decisión. Su tratamiento, pago, inscripción o elegibilidad para recibir beneficios no dependerán de que usted firme. La única excepción es la atención que se da solo para obtener información para otra persona, como un examen que pidió un empleador o una aseguradora: es posible que necesitemos su firma antes de dar esa atención."
     },
     {
       "type": "paragraph",
