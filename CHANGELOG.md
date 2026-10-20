@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.31.0 (2026-10-19)
+
+**The BSTAD for adolescents, NIMH's Spanish ASQ, and long questions printed at a size people can read.**
+
+- **New: Brief Screener for Tobacco, Alcohol, and other Drugs (BSTAD).** NIDA's screen for adolescents, word for word from the questions NIDA's own BSTAD web app loads.
+  - It asks how many days in the past year the patient used tobacco, alcohol and marijuana. Anyone who used any of them goes on to other drugs and medications.
+  - The office section gives NIDA's risk levels from its app's own scoring: tobacco 1 to 5 days lower risk, 6 or more higher; any other substance 1 day lower, 2 or more higher.
+  - It's included unchanged with its citation (Kelly et al. 2014), by NIH's permission (Ask NIH, 2026-10-19: "You may include it with that attribute").
+  - LOINC has no code for it, so it's an instrument document without the LOINC check, like Healthy Days.
+- **New packet: teen screening**, the BSTAD and the ASQ.
+- **Spanish ASQ.** The questions, and the steps NIMH's Spanish translation already had, are NIMH's own Spanish. What NIMH added in its 2025 revision is translated by Clinic Forms, and the page says which is which.
+- **UDS line 39, US pack.** The Hunger Vital Sign and the six-item food security screen say in their office section that they count on UDS Table 6A line 39 (screening for upstream drivers of health) when added to OpenEMR's questionnaires and answered there. That line counts screenings by their LOINC code. Lines 40 to 42 count services given, not diagnoses, so an office box naming a Z59 code, considered earlier, wouldn't have counted anywhere.
+- **Fixed: long questions written as field labels.**
+  - Healthy Days asks questions 2 to 4 that way, since 0.28.0. In the PDF they printed about 2 points tall. On the printed page they ran into each other.
+  - A field label longer than 40 characters now takes the whole width and wraps, with its blank after it, on the page and in the PDF.
+  - Labels above checklists, ruled lines and scales wrap too, in place of staying on one line.
+- **README:**
+  - The Spanish count is corrected: 22 of the 58 patient documents.
+
 ## 0.30.0 (2026-10-19)
 
 **Fourteen documents reworded, from the review before 1.0.** Each one's version went up, so a signed copy names the wording the patient signed.
