@@ -10,7 +10,7 @@
     "display": "Children's HealthWatch Hunger Vital Sign"
   },
   "validated": true,
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "instrument",
@@ -63,6 +63,10 @@
     {
       "type": "paragraph",
       "text": "Never true to both questions 1 and 2: negative screen."
+    },
+    {
+      "type": "paragraph",
+      "text": "Counts on UDS Table 6A line 39 (screening for upstream drivers of health) when it is added to OpenEMR's questionnaires from the Clinic Forms page and answered there."
     },
     {
       "type": "checklist",

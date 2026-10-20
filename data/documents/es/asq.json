@@ -1,0 +1,121 @@
+{
+  "id": "asq",
+  "translates": "5e17ab310731c29c",
+  "title": "Herramienta para la Detección del Riesgo de Suicidio (ASQ)",
+  "category": "Detección",
+  "about": "La herramienta del NIMH para detectar el riesgo de suicidio en pacientes de 8 años o más en entornos médicos: cuatro preguntas de sí o no que hace una enfermera o un médico, y una pregunta de agudeza si alguna se contesta que Sí. No hay puntuación total; el resultado es una prueba negativa, positiva no aguda o positiva aguda.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Fecha"
+        }
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "Pregúntele al paciente:",
+      "columns": [
+        "Sí",
+        "No"
+      ],
+      "items": [
+        "En las últimas semanas, ¿ha deseado estar muerto?",
+        "En las últimas semanas, ¿ha sentido que usted o su familia estarían mejor si estuviera muerto?",
+        "En la última semana, ¿ha estado pensando en suicidarse?",
+        "¿Alguna vez ha intentado suicidarse?"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Si contestó que sí, ¿cuándo fue el intento más reciente?",
+      "items": [
+        "En los últimos 12 meses",
+        "Hace más de 1 año"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Si el paciente contesta que Sí a alguna de las preguntas de la 1 a la 4, hágale la siguiente pregunta para evaluar la agudeza:"
+    },
+    {
+      "type": "checklist",
+      "label": "5. ¿Está pensando en suicidarse en este momento?",
+      "items": [
+        "Sí",
+        "No"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Si contestó que sí, descríbalo brevemente:",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Resultado de la prueba de detección y siguientes pasos"
+    },
+    {
+      "type": "paragraph",
+      "text": "«No» a todas las preguntas de la 1 a la 4: prueba de detección negativa. No hay necesidad de intervención en este momento. La opinión clínica siempre puede anteponerse a una prueba de detección negativa."
+    },
+    {
+      "type": "paragraph",
+      "text": "«Sí» a cualquier pregunta de la 1 a la 4 es una prueba de detección positiva. Entonces la pregunta 5 decide qué se hace después."
+    },
+    {
+      "type": "paragraph",
+      "text": "«Sí» a la pregunta 5: prueba de detección positiva aguda (identificación de riesgo inminente). El paciente necesita una evaluación de salud mental completa o de seguridad URGENTE. El paciente no puede irse hasta que se evalúe por seguridad. Mantenga al paciente a la vista. Retire todos los objetos peligrosos de la habitación, si es posible. Avísele al médico responsable de la atención del paciente."
+    },
+    {
+      "type": "paragraph",
+      "text": "«No» a la pregunta 5: prueba de detección positiva no aguda (identificación de riesgo). El paciente necesita una evaluación de seguridad breve del riesgo de suicidio para determinar si es necesaria una evaluación completa de salud mental, y cuándo. La prueba positiva no aguda no requiere observación 1 a 1 mientras el paciente espera, salvo que haya otras preocupaciones de seguridad. Avísele al médico responsable de la atención del paciente."
+    },
+    {
+      "type": "paragraph",
+      "text": "Excepciones: cuando la prueba es positiva solo por un Sí a la pregunta 4 (un intento de suicidio en algún momento de la vida), puede no ser necesaria una evaluación de seguridad breve si, en adultos, el intento más reciente fue hace más de 1 año; en jóvenes y adultos jóvenes (por ejemplo, menores de 25 años), si el intento más reciente fue hace más de 1 año y se ha documentado una evaluación de seguridad breve desde ese intento."
+    },
+    {
+      "type": "paragraph",
+      "text": "Si un paciente adulto, o el padre, la madre o el tutor de un paciente joven, se niega a la evaluación de seguridad breve, documente la negativa. Se puede permitir que el paciente se vaya, salvo que haya otras preocupaciones de seguridad. Se recomienda una llamada de seguimiento."
+    },
+    {
+      "type": "paragraph",
+      "text": "Si el paciente se niega a responder las preguntas: en jóvenes, la negativa se considera una prueba de detección positiva no aguda. En adultos, la negativa no se considera una prueba positiva; no hay necesidad de intervención en este momento, salvo que haya otras preocupaciones de seguridad. Documente la negativa."
+    },
+    {
+      "type": "paragraph",
+      "text": "Ofrézcales recursos a todos los pacientes: la 988 Línea de Prevención del Suicidio y Crisis (llame o envíe un mensaje de texto al 988, o visite 988lifeline.org) y Crisis Text Line (envíe HOME o HOLA al 741741, o visite crisistextline.org)."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Resultado de la prueba de detección"
+        },
+        {
+          "label": "Preguntado por"
+        },
+        {
+          "label": "Médico avisado (si es positiva)"
+        },
+        {
+          "label": "Registrado en OpenEMR por"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Herramienta para la Detección del Riesgo de Suicidio (ASQ), Juego de Herramientas del NIMH (revisada el 29/9/25), www.nimh.nih.gov/asq. Herramienta de dominio público, gratuita. Las preguntas, y las indicaciones que ya tenía la versión anterior, son de la traducción al español del NIMH; lo que el NIMH añadió en su última revisión (la fecha del intento más reciente, las excepciones, las negativas y la línea de crisis) lo tradujo Clinic Forms."
+    }
+  ]
+}

@@ -17,6 +17,7 @@ declare(strict_types=1);
 namespace OpenHealthcare\ClinicForms\Office;
 
 use OpenHealthcare\ClinicForms\Paper\Code128;
+use OpenHealthcare\ClinicForms\Paper\Renderer;
 
 final class PdfWriter implements OfficeWriter
 {
@@ -34,6 +35,7 @@ final class PdfWriter implements OfficeWriter
         .fields td { padding: 2pt 4pt 2pt 0; vertical-align: bottom; }
         .fields .label { font-weight: bold; white-space: nowrap; }
         .fields .value { border-bottom: 0.6pt solid #000; width: 30%; }
+        .fields .long { white-space: normal; }
         .label-only { font-weight: bold; margin: 6pt 0 2pt 0; }
         h3.label-only { font-size: 10pt; }
         .item { margin: 1pt 0 1pt 0; }
@@ -111,17 +113,41 @@ final class PdfWriter implements OfficeWriter
 
     public function fields(array $fields): void
     {
-        // Two to a row, as on the printed page; an empty value is a line to write on.
+        // Two to a row, as on the printed page; an empty value is a line to write on. A long label
+        // (a question) gets a row of its own and wraps: kept on one line, it would make mPDF shrink
+        // the whole table to fit the page.
         $rows = '';
-        foreach (array_chunk($fields, 2) as $pair) {
+        $pair = [];
+        $flush = static function (array $pair) use (&$rows): void {
+            if ($pair === []) {
+                return;
+            }
             $rows .= '<tr>';
             foreach ($pair as [$label, $value]) {
-                $rows .= "<td class='label'>" . self::e($label) . "</td><td class='value'>" . ($value !== '' ? self::e($value) : '&nbsp;') . "</td>";
+                $rows .= "<td class='label'>" . self::e($label) . "</td><td class='value'>" . self::value($value) . "</td>";
             }
-            $rows .= count($pair) === 1 ? '<td></td><td></td>' : '';
-            $rows .= '</tr>';
+            $rows .= (count($pair) === 1 ? '<td></td><td></td>' : '') . '</tr>';
+        };
+        foreach ($fields as [$label, $value]) {
+            if (!Renderer::isLongLabel($label)) {
+                $pair[] = [$label, $value];
+                if (count($pair) === 2) {
+                    $flush($pair);
+                    $pair = [];
+                }
+                continue;
+            }
+            $flush($pair);
+            $pair = [];
+            $rows .= "<tr><td class='label long' colspan='3'>" . self::e($label) . "</td><td class='value'>" . self::value($value) . "</td></tr>";
         }
+        $flush($pair);
         $this->html .= "<table class='fields'>" . $rows . "</table>";
+    }
+
+    private static function value(string $value): string
+    {
+        return $value !== '' ? self::e($value) : '&nbsp;';
     }
 
     public function checklist(?string $label, array $items): void

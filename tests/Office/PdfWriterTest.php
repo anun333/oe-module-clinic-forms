@@ -75,6 +75,20 @@ final class PdfWriterTest extends TestCase
         self::assertSame(array_fill(0, count($pages), 'WL9001'), $this->codes($pdf), 'every page carries the chart number, as a scanner reads it');
     }
 
+    public function testAQuestionAsAFieldLabelPrintsAtTheBodySize(): void
+    {
+        // Healthy Days asks questions 2 to 4 as field labels. Kept on one line, they made mPDF shrink
+        // the whole table to fit the page, to a size no one could read (0.28.0 to 0.30.0).
+        $doc = DocumentLibrary::shipped()->get('healthy-days');
+        self::assertNotNull($doc);
+        $pdf = (new OfficeExport(new Context(['name' => 'Seed Clinic'])))->write([$doc], new PdfWriter('Date', '', $this->config()), 'letter');
+        $file = $this->dir . '/healthy-days.pdf';
+        file_put_contents($file, $pdf);
+        $xml = (string)shell_exec('pdftotext -bbox ' . escapeshellarg($file) . ' -');
+        self::assertSame(1, preg_match('/<word xMin="[\d.]+" yMin="([\d.]+)" xMax="[\d.]+" yMax="([\d.]+)">physical<\/word>/', $xml, $m), 'question 2 is in the PDF');
+        self::assertGreaterThan(8.0, (float)$m[2] - (float)$m[1], 'question 2 prints at the body size, not shrunk to fit one line');
+    }
+
     public function testADocumentFiledWithoutANameCarriesNoPatientInThePdf(): void
     {
         $library = DocumentLibrary::shipped();

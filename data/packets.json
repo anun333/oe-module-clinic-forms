@@ -166,6 +166,15 @@
       ]
     },
     {
+      "id": "teen-screening",
+      "title": "Teen screening (substance use and suicide risk)",
+      "about": "For an adolescent visit: the BSTAD (NIDA) for tobacco, alcohol and drugs, and the ASQ (NIMH) for suicide risk.",
+      "items": [
+        "doc:bstad",
+        "doc:asq"
+      ]
+    },
+    {
       "id": "positive-screen-handoff",
       "title": "Positive screen handoff (internal referral and staff handoff)",
       "about": "For staff, with a follow-up packet: the warm handoff to behavioral health, care management, nutrition or social work, recorded so the referral can be followed to completion.",

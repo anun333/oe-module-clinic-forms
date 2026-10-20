@@ -10,7 +10,7 @@
     "display": "U.S. Household Food Security Survey - Six-Item Short Form"
   },
   "validated": true,
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "instrument",
@@ -111,6 +111,10 @@
     {
       "type": "paragraph",
       "text": "One point for each Often true or Sometimes true, each Yes, and Almost every month or Some months on the follow-up. Published ranges (USDA): 0 to 1, high or marginal food security; 2 or more, low food security (food insecure); 5 or more, very low food security."
+    },
+    {
+      "type": "paragraph",
+      "text": "Counts on UDS Table 6A line 39 (screening for upstream drivers of health) when it is added to OpenEMR's questionnaires from the Clinic Forms page and answered there."
     },
     {
       "type": "fields",

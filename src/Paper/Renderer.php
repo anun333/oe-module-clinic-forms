@@ -19,6 +19,9 @@ final readonly class Renderer
     {
     }
 
+    /** Field labels longer than this many characters take the whole width (isLongLabel). */
+    public const LONG_LABEL = 40;
+
     private function t(string $english): string
     {
         return Words::t($english, $this->language);
@@ -180,10 +183,21 @@ final readonly class Renderer
         $html = "<div class='cf-fields'>";
         foreach ($fields as $field) {
             $value = isset($field['value']) ? $this->text($field['value'], false) : '';
-            $html .= "<div class='cf-field'><span class='cf-label'>" . $this->text($field['label']) . "</span>"
+            $class = self::isLongLabel($field['label']) ? 'cf-field cf-field-long' : 'cf-field';
+            $html .= "<div class='$class'><span class='cf-label'>" . $this->text($field['label']) . "</span>"
                 . "<span class='cf-blank'>" . $value . "</span></div>";
         }
         return $html . "</div>";
+    }
+
+    /**
+     * Whether a field's label is a question rather than a name ("2. Now thinking about your physical
+     * health… Number of days"): it takes the whole width and wraps, on the page and in the PDF, where a
+     * label kept on one line would run into the next field or shrink the page to fit.
+     */
+    public static function isLongLabel(string $label): bool
+    {
+        return mb_strlen($label) > self::LONG_LABEL;
     }
 
     /** @param list<string> $items */

@@ -54,6 +54,15 @@ final class RendererTest extends TestCase
         self::assertStringContainsString("<span class='cf-label'>Name</span><span class='cf-blank'></span>", $html);
     }
 
+    public function testAQuestionAsAFieldLabelTakesTheWholeWidth(): void
+    {
+        $html = (new Renderer(new Context(self::FACILITY)))->document($this->doc([
+            ['type' => 'fields', 'fields' => [['label' => 'Name'], ['label' => '2. Now thinking about your physical health, for how many days was it not good? Number of days (0 to 30)']]],
+        ]));
+        self::assertStringContainsString("<div class='cf-field'><span class='cf-label'>Name</span>", $html);
+        self::assertStringContainsString("<div class='cf-field cf-field-long'><span class='cf-label'>2. Now thinking", $html);
+    }
+
     public function testAKnownValueIsFilledIn(): void
     {
         $html = (new Renderer(new Context(self::FACILITY, ['name' => 'Jane Q Sample'], [], '10/15/2026')))->document($this->doc([

@@ -11,7 +11,12 @@
 .cf-packet p { margin: 0.06in 0; }
 .cf-fields { display: grid; grid-template-columns: repeat(auto-fill, minmax(2.9in, 1fr)); gap: 0.06in 0.25in; margin: 0.08in 0; }
 .cf-field, .cf-inline { display: flex; align-items: flex-end; gap: 0.08in; }
-.cf-label { font-weight: bold; font-size: 10pt; white-space: nowrap; }
+.cf-label { font-weight: bold; font-size: 10pt; }
+.cf-field .cf-label { white-space: nowrap; }
+/* A question as a field label (Renderer::isLongLabel): the whole width, wrapped, with a short blank after it. */
+.cf-field-long { grid-column: 1 / -1; }
+.cf-field-long .cf-label { white-space: normal; }
+.cf-field-long .cf-blank { flex: none; width: 1.6in; }
 .cf-blank, .cf-fill-in { flex: 1; border-bottom: 0.75pt solid #000; min-height: 0.24in; min-width: 1.2in; display: inline-block; }
 .cf-fill-in { min-width: 1.6in; }
 .cf-filled { font-family: Arial, Helvetica, sans-serif; }

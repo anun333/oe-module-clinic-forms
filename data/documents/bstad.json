@@ -1,0 +1,156 @@
+{
+  "id": "bstad",
+  "title": "Brief Screener for Tobacco, Alcohol, and other Drugs (BSTAD)",
+  "category": "Screening",
+  "about": "NIDA's substance use screen for adolescents: how many days in the past year the patient used tobacco, alcohol and marijuana, then, for anyone who used any of them, other drugs and medications not taken as prescribed. Each substance has a risk level by NIDA's cut-offs; there is no total.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "instrument",
+    "name": "Brief Screener for Tobacco, Alcohol, and other Drugs (BSTAD), National Institute on Drug Abuse",
+    "url": "https://nida.nih.gov/bstad"
+  },
+  "licence": {
+    "holder": "National Institute on Drug Abuse (NIDA), National Institutes of Health",
+    "terms": "Included unchanged, with its attribution. Cite: Kelly SM, Gryczynski J, Mitchell SG, Kirk A, O'Grady KE, Schwartz RP. Validity of brief screening instrument for adolescent tobacco, alcohol, and drug use. Pediatrics. 2014;133(5):819-826.",
+    "permission": "Ask NIH, 2026-10-19, to our question about including it unchanged with a citation in a free package: \"You may include it with that attribute.\""
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "This health survey will ask you questions about your use of substances, including tobacco, marijuana, and alcohol. This information will help your health care provider make the best recommendations for your overall care. Please consult your provider to discuss your responses."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "1. In the PAST YEAR, on how many days did you smoke cigarettes or use other tobacco products? Number of days (0 to 365)"
+        },
+        {
+          "label": "2. In the PAST YEAR, on how many days did you have more than a few sips of beer, wine, or any drink containing alcohol? Number of days (0 to 365)"
+        },
+        {
+          "label": "3. In the PAST YEAR, on how many days did you use marijuana (weed; blunts)? Number of days (0 to 365)"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "If you wrote 0 for all three questions, stop here. Otherwise, please go on."
+    },
+    {
+      "type": "checklist",
+      "label": "4. In the PAST YEAR, which of the following substances have you used? (check all that apply)",
+      "items": [
+        "Cocaine or crack",
+        "Heroin",
+        "Amphetamines or Methamphetamines (non-medication)",
+        "Hallucinogen (e.g., magic mushrooms, LSD, etc.)",
+        "Inhalants (e.g., huffing gasoline, glue, nitrous oxide, etc.)",
+        "None of the above"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "5. In the PAST YEAR, which of the following medications have you used that"
+    },
+    {
+      "type": "paragraph",
+      "text": "• Were not prescribed for you; or"
+    },
+    {
+      "type": "paragraph",
+      "text": "• Which you took more of than you were supposed to take?"
+    },
+    {
+      "type": "checklist",
+      "label": "(check all that apply)",
+      "items": [
+        "Prescription pain relievers (e.g., morphine, Percocet, vicodin, oxycontin, dilaudid, methadone, buprenorphine, etc.)",
+        "Prescription sedatives (e.g., Valium, Xanax, Klonopin, Ativan, etc.)",
+        "Prescription stimulants (e.g., Adderall, Ritalin, etc.)",
+        "Over-the-counter medications (e.g., NyQuil, Benadryl, cough medicine, sleeping pills)",
+        "None of the above"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Answer the questions below only for what you checked in questions 4 and 5."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "6. In the PAST YEAR, on how many days did you use cocaine or crack? Number of days (0 to 365)"
+        },
+        {
+          "label": "7. In the PAST YEAR, on how many days did you use heroin? Number of days (0 to 365)"
+        },
+        {
+          "label": "8. In the PAST YEAR, on how many days did you use amphetamines or methamphetamine (non-medication)? Number of days (0 to 365)"
+        },
+        {
+          "label": "9. In the PAST YEAR, on how many days did you use hallucinogens (e.g., mushrooms, LSD)? Number of days (0 to 365)"
+        },
+        {
+          "label": "10. In the PAST YEAR, on how many days did you use inhalants? Number of days (0 to 365)"
+        },
+        {
+          "label": "11. In the PAST YEAR, on how many days did you use prescription pain relievers (e.g., morphine, vicodin, oxycotin, dilaudid, methadone, buprenorphine, etc.) that were not prescribed for you or more than you were supposed to? Number of days (0 to 365)"
+        },
+        {
+          "label": "12. In the PAST YEAR, on how many days did you use prescription sedatives (e.g., Valium, Xanax, Klonopin, Ativan, etc.) that were not prescribed for you or more than you were supposed to? Number of days (0 to 365)"
+        },
+        {
+          "label": "13. In the PAST YEAR, on how many days did you use prescription stimulants (e.g., Adderall, Ritalin, etc.) that were not prescribed for you or more than you were supposed to? Number of days (0 to 365)"
+        },
+        {
+          "label": "14. In the PAST YEAR, on how many days did you use over-the-counter medications [more than you were supposed to use] (e.g., NyQuil, Benadryl, cough medicine, sleeping pills, etc.)? Number of days (0 to 365)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For office use"
+    },
+    {
+      "type": "paragraph",
+      "text": "Risk level for each substance (NIDA): 0 days is no reported use. Tobacco: 1 to 5 days is lower risk, 6 or more days higher risk. Alcohol, marijuana and every other substance: 1 day is lower risk, 2 or more days higher risk. NIDA's suggested clinician action for each risk level is at nida.nih.gov/bstad."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Highest risk level, and substance"
+        },
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Entered into OpenEMR by"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Brief Screener for Tobacco, Alcohol, and other Drugs (BSTAD), National Institute on Drug Abuse, nida.nih.gov/bstad. Kelly SM, Gryczynski J, Mitchell SG, Kirk A, O'Grady KE, Schwartz RP. Validity of brief screening instrument for adolescent tobacco, alcohol, and drug use. Pediatrics. 2014;133(5):819-826."
+    }
+  ]
+}

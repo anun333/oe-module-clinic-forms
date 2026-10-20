@@ -169,7 +169,7 @@ final class MetadataTest extends TestCase
     public function testNoTranslatedStringIsLeftInEnglish(): void
     {
         // A Spanish file whose string is the English one is usually a string the translator missed.
-        $same = ['Fax'];
+        $same = ['Fax', 'No'];
         $checked = 0;
         foreach (DocumentVersions::shipped() as $key => $english) {
             $file = dirname(__DIR__, 2) . '/data/' . dirname($key) . '/es/' . basename($key) . '.json';

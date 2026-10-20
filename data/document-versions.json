@@ -21,6 +21,9 @@
         "documents/blood-sugar-log": {
             "1": "437944186138f687"
         },
+        "documents/bstad": {
+            "1": "e70623724aab61b0"
+        },
         "documents/communication-consent": {
             "1": "d977c8ac6e2c92e6",
             "2": "4d4c0339201bbba6",
@@ -153,7 +156,8 @@
             "1": "68ebbd875d5729de"
         },
         "packs/us/documents/food-security": {
-            "1": "52c5beeefd09db92"
+            "1": "52c5beeefd09db92",
+            "2": "313f54793b3b01aa"
         },
         "packs/us/documents/good-faith-estimate": {
             "1": "7b33875c3296220e"
@@ -169,7 +173,8 @@
             "1": "db2c49717a1d48c2"
         },
         "packs/us/documents/hunger-vital-sign": {
-            "1": "733b31beab10d6f0"
+            "1": "733b31beab10d6f0",
+            "2": "d38427e1c43a36ba"
         },
         "packs/us/documents/medicare-secondary-payer-questions": {
             "1": "d4bd68993ef4d3c3"
