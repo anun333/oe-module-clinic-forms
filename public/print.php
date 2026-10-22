@@ -14,7 +14,9 @@ use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Services\LogoService;
 use OpenHealthcare\ClinicForms\Bootstrap;
 use OpenHealthcare\ClinicForms\Compat\OpenEmr;
+use OpenHealthcare\ClinicForms\Event\DocumentFillEvent;
 use OpenHealthcare\ClinicForms\Paper\Context;
+use OpenHealthcare\ClinicForms\Paper\DocumentFill;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
 use OpenHealthcare\ClinicForms\Paper\Pack;
 use OpenHealthcare\ClinicForms\Paper\Packets;
@@ -63,6 +65,8 @@ foreach ($items as $item) {
     if (str_starts_with($item, 'doc:')) {
         $doc = $library->get(substr($item, 4));
         if ($doc !== null) {
+            // Another module may fill a table the document names (Sliding Fee: the notice's discounts).
+            $doc = DocumentFill::apply([$doc], static fn(DocumentFillEvent $e) => OpenEmr::dispatch($e, DocumentFillEvent::EVENT_NAME), $patient !== [] ? $pid : null)[0];
             $pages[] = $renderer->document($doc);
             $titles[] = $doc->title;
             $versions[] = $renderer->stamp($doc);

@@ -95,6 +95,14 @@ final readonly class Document
     }
 
     /** What the foot of each printed page says: the id and version, and draft or local when it is. */
+    /** The same document with other blocks: a table another module filled (DocumentFill). */
+    public function withBlocks(array $blocks): self
+    {
+        return new self($this->id, $this->title, $this->category, $this->about, $blocks, $this->uses, $this->source, $this->audience,
+            $this->code, $this->validated, $this->language, $this->poster, $this->translates, $this->version, $this->status,
+            $this->origin, $this->licence, $this->basedOn, $this->anonymous);
+    }
+
     public function stamp(): string
     {
         return $this->id . ($this->version > 0 ? ' v' . $this->version : '');

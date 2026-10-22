@@ -97,6 +97,9 @@ $userId = (int)(OpenEmr::session('authUserID') ?? 0);
 $layouts = $site->layoutForms($pack?->layouts ?? []);
 $pid = (int)(OpenEmr::session('pid') ?? 0);
 $patient = $pid > 0 ? $site->patient($pid) : [];
+// Another module's link may tick documents and the patient fill ("?select=doc:a,doc:b&fill=1"); nothing prints until Print.
+$preselect = array_values(array_filter(explode(',', is_string($_GET['select'] ?? null) ? $_GET['select'] : ''), static fn(string $i): bool => Packets::isItem($i)));
+$prefill = ($_GET['fill'] ?? '') === '1';
 $signer = in_array($userId, $providerIds, true) ? $userId : ($pid > 0 && in_array($site->patientProvider($pid), $providerIds, true) ? $site->patientProvider($pid) : 0);
 $moduleUrl = OpenEmr::webRoot() . Bootstrap::MODULE_INSTALLATION_PATH;
 
@@ -224,7 +227,7 @@ foreach ($layouts as $form) {
         </div>
         <?php if ($patient !== []) { ?>
             <div class="form-check mb-2">
-                <input class="form-check-input" type="checkbox" name="fill_patient" value="1" id="fill_patient">
+                <input class="form-check-input" type="checkbox" name="fill_patient" value="1" id="fill_patient"<?php echo $prefill ? ' checked' : ''; ?>>
                 <label class="form-check-label" for="fill_patient">
                     <?php echo xlt('Fill in the current patient'); ?>: <?php echo text($patient['name'] . ($patient['dob'] !== '' ? ', ' . $patient['dob'] : '')); ?>
                 </label>
@@ -271,7 +274,7 @@ foreach ($layouts as $form) {
             <div class="cf-cat"><h2 class="h6"><?php echo text($category); ?></h2>
                 <?php foreach ($items as $item) { ?>
                     <div class="form-check">
-                        <input class="form-check-input cf-item" type="checkbox" name="items[]" value="<?php echo attr($item['value']); ?>" id="<?php echo attr('i-' . $item['value']); ?>">
+                        <input class="form-check-input cf-item" type="checkbox" name="items[]" value="<?php echo attr($item['value']); ?>" id="<?php echo attr('i-' . $item['value']); ?>"<?php echo in_array($item['value'], $preselect, true) ? ' checked' : ''; ?>>
                         <label class="form-check-label" for="<?php echo attr('i-' . $item['value']); ?>"><?php echo text($item['title']); ?><?php echo !empty($item['draft']) ? ' <span class="badge badge-warning">' . xlt('Draft') . '</span>' : ''; ?><?php echo !empty($item['es']) ? ' <span class="badge badge-info">ES</span>' : (!empty($item['esOutOfDate']) ? ' <span class="badge badge-light">' . xlt('ES out of date') . '</span>' : ''); ?>
                             <span class="cf-about">— <?php echo text($item['about']); ?></span></label>
                     </div>

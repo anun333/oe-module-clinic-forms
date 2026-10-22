@@ -20,11 +20,13 @@ use OpenHealthcare\ClinicForms\Office\OfficeExport;
 use OpenHealthcare\ClinicForms\Office\PdfWriter;
 use OpenHealthcare\ClinicForms\Office\TemplateFiller;
 use OpenHealthcare\ClinicForms\Compat\OpenEmr;
+use OpenHealthcare\ClinicForms\Event\DocumentFillEvent;
 use OpenHealthcare\ClinicForms\Fhir\QuestionnaireExport;
 use OpenHealthcare\ClinicForms\Fhir\QuestionnaireRegistration;
 use OpenHealthcare\ClinicForms\Office\TemplateLibrary;
 use OpenHealthcare\ClinicForms\Office\WordWriter;
 use OpenHealthcare\ClinicForms\Paper\Context;
+use OpenHealthcare\ClinicForms\Paper\DocumentFill;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
 use OpenHealthcare\ClinicForms\Paper\Pack;
 use OpenHealthcare\ClinicForms\Paper\Packets;
@@ -191,6 +193,8 @@ if ($template !== '') {
             str_starts_with($format, 'pdf') => new PdfWriter(Words::t('Date', $language), $context->value('patient.id')),
             default => new WordWriter(Words::t('Date', $language), $language),
         };
+        // Another module may fill a table a document names (Sliding Fee: the notice's discounts).
+        $documents = DocumentFill::apply($documents, static fn(DocumentFillEvent $e) => OpenEmr::dispatch($e, DocumentFillEvent::EVENT_NAME), $patient !== [] ? $pid : null);
         $out = (new OfficeExport($context, $language, $taglines))->write($documents, $writer, $paper);
         $ext = $writer->extension();
         $mime = $writer->mimeType();

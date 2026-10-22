@@ -43,6 +43,10 @@ A document is one JSON file named by its id (`consent-to-treat.json`), in `data/
 
 `heading`, `paragraph`, `fields` (label and optional value), `checklist`, `lines` (ruled lines), `signature` (one line per signer, each with a date), `scale` (a question per row and a box per answer, optionally scored), `table` (column headings over blank rows), `taglines` (the language assistance taglines). Exact shapes are in `src/Paper/Document.php`.
 
+## Tables another module fills
+
+A `table` with an `id` can be filled by another module when the document is printed or downloaded (OpenEMR event `clinic_forms.document.fill`; see `src/Event/DocumentFillEvent.php`). The listener gives the rows, and a note on where the figures come from. Unfilled, the table prints blank, as before. Write the label's instruction for filling by hand in parentheses at its end, "Our discounts (the clinic fills in its own schedule)": a filled table drops it. The sliding fee notice's `discounts` table is filled by the Sliding Fee Discount module.
+
 ## Skip logic (on screen only)
 
 A question that should only be asked after a certain answer can say so. Printing ignores this, so the paper keeps its written instruction ("If yes, …"). On screen, as a FHIR Questionnaire (`enableWhen`) in OpenEMR or any SDC form filler, the question appears only when its condition holds.

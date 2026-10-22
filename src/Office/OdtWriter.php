@@ -127,15 +127,21 @@ final class OdtWriter implements OfficeWriter
         $this->body .= $total !== null ? $this->p('Right', $this->bold($total . ': ') . '__________') : $this->p('Body', '');
     }
 
-    public function table(string $label, array $columns, int $rows): void
+    public function table(string $label, array $columns, int $rows, array $values = [], ?string $note = null): void
     {
         $this->body .= $this->p('Label', self::e($label));
         $n = max(1, count($columns));
         $cells = [array_map(fn(string $c): string => $this->p('CellHead', self::e($c)), $columns)];
-        for ($i = 0; $i < $rows; $i++) {
-            $cells[] = array_fill(0, $n, '<text:p text:style-name="Cell"/>');
+        if ($values === []) {
+            for ($i = 0; $i < $rows; $i++) {
+                $cells[] = array_fill(0, $n, '<text:p text:style-name="Cell"/>');
+            }
         }
-        $this->body .= $this->tbl(array_fill(0, $n, round(7.3 / $n, 3) . 'in'), $cells, true) . $this->p('Body', '');
+        foreach ($values as $row) {
+            $cells[] = array_map(fn(int $i): string => $this->p('Cell', self::e($row[$i] ?? '')), array_keys(array_fill(0, $n, '')));
+        }
+        $this->body .= $this->tbl(array_fill(0, $n, round(7.3 / $n, 3) . 'in'), $cells, true)
+            . ($note !== null && $note !== '' ? $this->p('Small', self::e($note)) : '') . $this->p('Body', '');
     }
 
     public function pageBreak(): void

@@ -142,15 +142,21 @@ final class WordWriter implements OfficeWriter
         }
     }
 
-    public function table(string $label, array $columns, int $rows): void
+    public function table(string $label, array $columns, int $rows, array $values = [], ?string $note = null): void
     {
         $this->body .= $this->p($this->run($label, bold: true), '<w:keepNext/>');
         $width = (int)(self::TEXT_WIDTH / max(1, count($columns)));
         $cells = [array_map(fn(string $c): string => $this->p($this->run($c, bold: true, size: 17), '<w:spacing w:after="0"/>'), $columns)];
-        for ($i = 0; $i < $rows; $i++) {
-            $cells[] = array_fill(0, count($columns), $this->p(''));
+        if ($values === []) {
+            for ($i = 0; $i < $rows; $i++) {
+                $cells[] = array_fill(0, count($columns), $this->p(''));
+            }
         }
-        $this->body .= $this->tbl(array_fill(0, count($columns), $width), $cells, 400) . $this->p('');
+        foreach ($values as $row) {
+            $cells[] = array_map(fn(int $i): string => $this->p($this->run($row[$i] ?? ''), '<w:spacing w:after="0"/>'), array_keys($columns));
+        }
+        $this->body .= $this->tbl(array_fill(0, count($columns), $width), $cells, 400)
+            . ($note !== null && $note !== '' ? $this->p($this->run($note, size: 17)) : '') . $this->p('');
     }
 
     public function pageBreak(): void

@@ -69,6 +69,20 @@ final class OpenEmr
         return $dispatcher;
     }
 
+    /**
+     * Sends a Clinic Forms event to OpenEMR's dispatcher, for other modules to answer. Without a
+     * kernel (a command-line tool, the tests) nobody is listening, so nothing happens.
+     */
+    public static function dispatch(object $event, string $name): void
+    {
+        try {
+            $dispatcher = self::eventDispatcher();
+        } catch (\RuntimeException) {
+            return;
+        }
+        $dispatcher->dispatch($event, $name);
+    }
+
     /** A value from the logged-in user's session: pid, authUser, authProvider, authUserID. */
     public static function session(string $key): mixed
     {

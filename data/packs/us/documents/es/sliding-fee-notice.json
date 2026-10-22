@@ -23,6 +23,7 @@
     },
     {
       "type": "table",
+      "id": "discounts",
       "label": "Nuestros descuentos (la clínica anota su propia tabla)",
       "columns": [
         "Tamaño del hogar",

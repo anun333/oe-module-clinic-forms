@@ -43,8 +43,11 @@ interface OfficeWriter
      */
     public function scale(string $label, array $columns, array $items, ?array $scores, ?string $total, ?array $itemScores = null, int $start = 1): void;
 
-    /** @param list<string> $columns */
-    public function table(string $label, array $columns, int $rows): void;
+    /**
+     * @param list<string>       $columns
+     * @param list<list<string>> $values rows another module filled, printed in place of the blank rows; a note under them
+     */
+    public function table(string $label, array $columns, int $rows, array $values = [], ?string $note = null): void;
 
     public function pageBreak(): void;
 

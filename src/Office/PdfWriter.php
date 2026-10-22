@@ -198,11 +198,16 @@ final class PdfWriter implements OfficeWriter
             . ($total !== null ? "<div class='total'><b>" . self::e($total) . ':</b> ____________</div>' : '');
     }
 
-    public function table(string $label, array $columns, int $rows): void
+    public function table(string $label, array $columns, int $rows, array $values = [], ?string $note = null): void
     {
         $head = '<tr>' . implode('', array_map(static fn(string $c): string => '<th>' . self::e($c) . '</th>', $columns)) . '</tr>';
         $blank = '<tr>' . str_repeat("<td class='blank'>&nbsp;</td>", max(1, count($columns))) . '</tr>';
-        $this->html .= "<div class='label-only'>" . self::e($label) . "</div><table class='grid'>" . $head . str_repeat($blank, max(1, $rows)) . '</table>';
+        $body = $values === [] ? str_repeat($blank, max(1, $rows)) : implode('', array_map(
+            static fn(array $row): string => '<tr>' . implode('', array_map(static fn(int $i): string => '<td>' . self::e($row[$i] ?? '') . '</td>', array_keys($columns))) . '</tr>',
+            $values,
+        ));
+        $this->html .= "<div class='label-only'>" . self::e($label) . "</div><table class='grid'>" . $head . $body . '</table>'
+            . ($note !== null && $note !== '' ? "<div class='line'>" . self::e($note) . '</div>' : '');
     }
 
     public function pageBreak(): void

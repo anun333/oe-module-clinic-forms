@@ -14,6 +14,7 @@ namespace OpenHealthcare\ClinicForms\Office;
 
 use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\Document;
+use OpenHealthcare\ClinicForms\Paper\DocumentFill;
 use OpenHealthcare\ClinicForms\Paper\Words;
 
 final readonly class OfficeExport
@@ -75,7 +76,9 @@ final readonly class OfficeExport
                     $block['item_scores'] ?? null,
                     $block['start'] ?? 1,
                 ),
-                'table' => $writer->table($this->text($block['label']), array_map($this->text(...), $block['columns']), $block['rows']),
+                'table' => isset($block['values'])
+                    ? $writer->table($this->text(DocumentFill::label($block['label'])), array_map($this->text(...), $block['columns']), $block['rows'], $block['values'], $block['note'] ?? null)
+                    : $writer->table($this->text($block['label']), array_map($this->text(...), $block['columns']), $block['rows']),
                 'taglines' => $this->taglines($writer),
                 default => null,
             };

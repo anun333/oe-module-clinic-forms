@@ -126,7 +126,7 @@ final readonly class Renderer
                 'lines' => $this->lines($block['label'], $block['count']),
                 'signature' => $this->signatures($block['signers']),
                 'scale' => $this->scale($block['label'], $block['columns'], $block['items'], $block['scores'] ?? null, $block['total'] ?? null, $block['item_scores'] ?? null, $block['start'] ?? 1),
-                'table' => $this->table($block['label'], $block['columns'], $block['rows']),
+                'table' => $this->table($block['label'], $block['columns'], $block['rows'], $block['values'] ?? [], $block['note'] ?? null),
                 'taglines' => $this->taglines(true),
                 default => '',
             };
@@ -246,14 +246,24 @@ final readonly class Renderer
         return $html . "</div>";
     }
 
-    /** @param list<string> $columns */
-    private function table(string $label, array $columns, int $rows): string
+    /**
+     * @param list<string>       $columns
+     * @param list<list<string>> $values  rows another module filled (DocumentFill); none prints blank rows
+     */
+    private function table(string $label, array $columns, int $rows, array $values = [], ?string $note = null): string
     {
-        $html = "<div class='cf-grid-block'><div class='cf-label'>" . $this->text($label) . "</div><table class='cf-grid'><tr>";
+        $html = "<div class='cf-grid-block'><div class='cf-label'>" . ($values === [] ? $this->text($label) : $this->text(DocumentFill::label($label))) . "</div><table class='cf-grid'><tr>";
         foreach ($columns as $column) {
             $html .= "<th>" . $this->text($column) . "</th>";
         }
-        return $html . "</tr>" . str_repeat("<tr>" . str_repeat("<td></td>", count($columns)) . "</tr>", $rows) . "</table></div>";
+        $html .= "</tr>";
+        if ($values === []) {
+            return $html . str_repeat("<tr>" . str_repeat("<td></td>", count($columns)) . "</tr>", $rows) . "</table></div>";
+        }
+        foreach ($values as $row) {
+            $html .= "<tr>" . implode('', array_map(static fn(int $i): string => "<td class='cf-filled'>" . self::e($row[$i] ?? '') . "</td>", array_keys($columns))) . "</tr>";
+        }
+        return $html . "</table>" . ($note !== null && $note !== '' ? "<div class='cf-grid-note'>" . self::e($note) . "</div>" : '') . "</div>";
     }
 
     /** @param list<string> $signers */

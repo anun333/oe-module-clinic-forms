@@ -34,6 +34,7 @@
     },
     {
       "type": "table",
+      "id": "discounts",
       "label": "Our discounts (the clinic fills in its own schedule)",
       "columns": [
         "Household size",

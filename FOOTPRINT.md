@@ -83,11 +83,11 @@ As written in the source; whether they behave correctly for a given user is not 
 
 | part | files | lines |
 |---|---|---|
-| document library (`data/`, JSON read at runtime) | 115 | 22189 |
-| PHP logic (`src/`) | 33 | 6065 |
-| tests (`tests/`, `phpunit.xml.dist`) | 24 | 3307 |
+| document library (`data/`, JSON read at runtime) | 115 | 22191 |
+| PHP logic (`src/`) | 35 | 6242 |
+| tests (`tests/`, `phpunit.xml.dist`) | 25 | 3407 |
 | tools (`tools/`) | 8 | 1579 |
-| pages (`public/`) | 5 | 884 |
+| pages (`public/`) | 5 | 896 |
 | module wiring | 3 | 72 |
 
 ## Not covered here

@@ -14,6 +14,11 @@
   - Each coded instrument total is marked for extraction (`observationExtract`), so an SDC form filler that extracts makes it an Observation with LOINC's code. OpenEMR doesn't extract yet.
 - **Accessible PDFs.** The Word and LibreOffice files carry their documents' titles and language (`docProps/core.xml`, `meta.xml`, and the default style's language). Exported from LibreOffice with PDF/UA on, the patient documents checked pass veraPDF's PDF/UA-1, the Spanish PHQ-9 declaring Spanish. The README says how. The module's own PDFs (mPDF) still aren't tagged.
 - **The picker page** declares its language and meets WCAG 2.1 AA contrast for code and the ES badges (axe-core: 28 failures down to 3, and the 3 are OpenEMR's own buttons).
+- **Other modules can fill a document's tables.** Before printing or downloading, Clinic Forms asks OpenEMR's event dispatcher (`clinic_forms.document.fill`, `Event\DocumentFillEvent`) whether another module fills a table the document names by its `id`.
+  - A filled table prints its rows in place of the blank ones, with a note on where the figures come from. Its label drops the parenthetical left for filling by hand.
+  - This works in every format but FHIR, whose Questionnaires stay blank forms. Nobody listening changes nothing.
+  - **First use:** Sliding Fee 0.3.0 fills the sliding fee notice's discounts (`"id": "discounts"`, English and Spanish) from its schedule in force.
+- **Links from other modules** can tick documents and the patient fill: `index.php?select=doc:sliding-fee-application,doc:sliding-fee-notice&fill=1`. Unknown items are ignored, and nothing prints until Print.
 - **OpenEMR 8.5** (in development) decides where each questionnaire is offered: the README says what that means for "Add to OpenEMR questionnaires", and how to offer a packet only at certain visit types in OpenEMR's Questionnaire Availability. Checked on master a10ebfa8d3.
 
 ## 0.32.0 (2026-10-20)
