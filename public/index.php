@@ -116,13 +116,18 @@ foreach ($layouts as $form) {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<?php // English, as OpenEMR's own pages say: the module's text is English unless OpenEMR holds a translation of it, and
+      // OpenEMR's language codes aren't language tags ("el" is its Latin American Spanish). ?>
+<html lang="en">
 <head>
     <title><?php echo xlt('Clinic Forms'); ?></title>
     <?php Header::setupHeader(); ?>
     <style>
         .cf-cat { margin-top: 1rem; }
         .cf-about { color: #555; font-size: 0.85rem; }
+        /* WCAG 2.1 AA contrast (4.5:1) on this page's background, where Bootstrap 4's own colours give 3.65 and 3.04 */
+        code { color: #a61e5c; }
+        .badge-info { background-color: #117a8b; }
     </style>
 </head>
 <body class="body_top">

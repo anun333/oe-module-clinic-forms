@@ -23,8 +23,14 @@ final class WordWriter implements OfficeWriter
 
     private string $body = '';
 
-    /** @param string $dateLabel the word printed under a signature line beside it */
-    public function __construct(private readonly string $dateLabel = 'Date')
+    /** @var list<string> each document's title, for the file's own title */
+    private array $titles = [];
+
+    /**
+     * @param string $dateLabel the word printed under a signature line beside it
+     * @param string $language  the documents' language ('en' or 'es'), for screen readers and spelling
+     */
+    public function __construct(private readonly string $dateLabel = 'Date', private readonly string $language = 'en')
     {
     }
 
@@ -49,6 +55,7 @@ final class WordWriter implements OfficeWriter
 
     public function title(string $text): void
     {
+        $this->titles[] = $text;
         $this->body .= $this->p($this->run($text), '<w:pStyle w:val="Title"/>');
     }
 
@@ -169,10 +176,12 @@ final class WordWriter implements OfficeWriter
                 . '<Override PartName="/word/document.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml"/>'
                 . '<Override PartName="/word/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.styles+xml"/>'
                 . '<Override PartName="/word/header1.xml" ContentType="application/vnd.openxmlformats-officedocument.wordprocessingml.header+xml"/>'
+                . '<Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/>'
                 . '</Types>',
             '_rels/.rels' => '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
                 . '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
                 . '<Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="word/document.xml"/>'
+                . '<Relationship Id="rId2" Type="http://schemas.openxmlformats.org/package/2006/relationships/metadata/core-properties" Target="docProps/core.xml"/>'
                 . '</Relationships>',
             'word/_rels/document.xml.rels' => '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
                 . '<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'
@@ -180,16 +189,21 @@ final class WordWriter implements OfficeWriter
                 . '<Relationship Id="rIdHeader1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/header" Target="header1.xml"/>'
                 . '</Relationships>',
             'word/document.xml' => $document,
-            'word/styles.xml' => self::styles(),
+            'word/styles.xml' => self::styles($this->language),
             'word/header1.xml' => $header,
+            // The title and language a PDF made from the file carries: PDF/UA asks for both (ISO 14289-1, 7.1).
+            'docProps/core.xml' => '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>'
+                . '<cp:coreProperties xmlns:cp="http://schemas.openxmlformats.org/package/2006/metadata/core-properties" xmlns:dc="http://purl.org/dc/elements/1.1/">'
+                . '<dc:title>' . self::e(implode('; ', $this->titles)) . '</dc:title><dc:language>' . self::e($this->language) . '-US</dc:language>'
+                . '</cp:coreProperties>',
         ]);
     }
 
-    private static function styles(): string
+    private static function styles(string $language): string
     {
         return '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><w:styles xmlns:w="' . self::W . '">'
             . '<w:docDefaults><w:rPrDefault><w:rPr><w:rFonts w:ascii="Times New Roman" w:hAnsi="Times New Roman" w:cs="Times New Roman" w:eastAsia="Times New Roman"/>'
-            . '<w:sz w:val="22"/><w:szCs w:val="22"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="100" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>'
+            . '<w:sz w:val="22"/><w:szCs w:val="22"/><w:lang w:val="' . self::e($language) . '-US"/></w:rPr></w:rPrDefault><w:pPrDefault><w:pPr><w:spacing w:after="100" w:line="264" w:lineRule="auto"/></w:pPr></w:pPrDefault></w:docDefaults>'
             . '<w:style w:type="paragraph" w:default="1" w:styleId="Normal"><w:name w:val="Normal"/></w:style>'
             . '<w:style w:type="paragraph" w:styleId="Title"><w:name w:val="Title"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:pPr><w:keepNext/><w:spacing w:before="60" w:after="160"/></w:pPr><w:rPr><w:b/><w:sz w:val="30"/></w:rPr></w:style>'
             . '<w:style w:type="paragraph" w:styleId="Heading2"><w:name w:val="heading 2"/><w:basedOn w:val="Normal"/><w:next w:val="Normal"/><w:pPr><w:keepNext/><w:spacing w:before="240" w:after="80"/>'

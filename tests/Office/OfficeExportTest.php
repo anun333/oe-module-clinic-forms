@@ -24,8 +24,8 @@ final class OfficeExportTest extends TestCase
     /** @return iterable<string, array{OfficeWriter, list<string>}> */
     public static function writers(): iterable
     {
-        yield 'Word' => [new WordWriter(), ['[Content_Types].xml', '_rels/.rels', 'word/_rels/document.xml.rels', 'word/document.xml', 'word/styles.xml', 'word/header1.xml']];
-        yield 'LibreOffice' => [new OdtWriter(), ['mimetype', 'META-INF/manifest.xml', 'content.xml', 'styles.xml']];
+        yield 'Word' => [new WordWriter(), ['[Content_Types].xml', '_rels/.rels', 'word/_rels/document.xml.rels', 'word/document.xml', 'word/styles.xml', 'word/header1.xml', 'docProps/core.xml']];
+        yield 'LibreOffice' => [new OdtWriter(), ['mimetype', 'META-INF/manifest.xml', 'content.xml', 'styles.xml', 'meta.xml']];
     }
 
     #[DataProvider('writers')]
@@ -79,6 +79,40 @@ final class OfficeExportTest extends TestCase
         ], []);
         $entries = Zip::read((new OfficeExport(new Context(['name' => 'C'])))->write([$doc], new WordWriter(), 'letter'));
         self::assertStringContainsString('4. Ridden in a car?', $entries['word/document.xml']);
+    }
+
+    /**
+     * The title and language a PDF made from the file carries, which PDF/UA asks for (ISO 14289-1, 7.1):
+     * without them LibreOffice's PDF/UA export fails veraPDF on the title alone, and a screen reader reads
+     * a Spanish form with English pronunciation.
+     */
+    public function testTheFileCarriesItsDocumentsTitlesAndLanguage(): void
+    {
+        $library = DocumentLibrary::shipped();
+        $docs = [$library->get('consent-to-treat') ?? throw new \LogicException(), $library->get('phq-9') ?? throw new \LogicException()];
+        $odt = Zip::read((new OfficeExport(new Context(['name' => 'C']), 'es'))->write($docs, new OdtWriter('Fecha', 'es'), 'letter'));
+        $meta = new \DOMXPath(self::dom($odt['meta.xml']));
+        $meta->registerNamespace('dc', 'http://purl.org/dc/elements/1.1/');
+        self::assertSame(2, substr_count($meta->evaluate('string(//dc:title)'), '; ') + 1, 'both documents are named in the title');
+        self::assertSame('es-US', $meta->evaluate('string(//dc:language)'));
+        self::assertStringContainsString('fo:language="es" fo:country="US"', $odt['styles.xml']);
+        self::assertStringContainsString('full-path="meta.xml"', $odt['META-INF/manifest.xml']);
+
+        $docx = Zip::read((new OfficeExport(new Context(['name' => 'C'])))->write([$docs[1]], new WordWriter(), 'letter'));
+        $core = new \DOMXPath(self::dom($docx['docProps/core.xml']));
+        $core->registerNamespace('dc', 'http://purl.org/dc/elements/1.1/');
+        self::assertSame('Patient Health Questionnaire (PHQ-9)', $core->evaluate('string(//dc:title)'));
+        self::assertSame('en-US', $core->evaluate('string(//dc:language)'));
+        self::assertStringContainsString('<w:lang w:val="en-US"/>', $docx['word/styles.xml']);
+        self::assertStringContainsString('Target="docProps/core.xml"', $docx['_rels/.rels']);
+        self::assertStringContainsString('PartName="/docProps/core.xml"', $docx['[Content_Types].xml']);
+    }
+
+    private static function dom(string $xml): \DOMDocument
+    {
+        $dom = new \DOMDocument();
+        self::assertTrue($dom->loadXML($xml));
+        return $dom;
     }
 
     public function testABlankExportLeavesLinesToWriteOn(): void

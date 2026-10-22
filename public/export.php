@@ -187,9 +187,9 @@ if ($template !== '') {
         $mime = 'application/fhir+json';
     } else {
         $writer = match (true) {
-            $format === 'odt' => new OdtWriter(Words::t('Date', $language)),
+            $format === 'odt' => new OdtWriter(Words::t('Date', $language), $language),
             str_starts_with($format, 'pdf') => new PdfWriter(Words::t('Date', $language), $context->value('patient.id')),
-            default => new WordWriter(Words::t('Date', $language)),
+            default => new WordWriter(Words::t('Date', $language), $language),
         };
         $out = (new OfficeExport($context, $language, $taglines))->write($documents, $writer, $paper);
         $ext = $writer->extension();

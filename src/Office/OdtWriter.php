@@ -24,8 +24,14 @@ final class OdtWriter implements OfficeWriter
 
     private string $body = '';
 
-    /** @param string $dateLabel the word printed under a signature line beside it */
-    public function __construct(private readonly string $dateLabel = 'Date')
+    /** @var list<string> each document's title, for the file's own title */
+    private array $titles = [];
+
+    /**
+     * @param string $dateLabel the word printed under a signature line beside it
+     * @param string $language  the documents' language ('en' or 'es'), for screen readers and spelling
+     */
+    public function __construct(private readonly string $dateLabel = 'Date', private readonly string $language = 'en')
     {
     }
     /** @var array<string, string> extra automatic styles (table columns), by name */
@@ -52,6 +58,7 @@ final class OdtWriter implements OfficeWriter
 
     public function title(string $text): void
     {
+        $this->titles[] = $text;
         $this->body .= '<text:h text:style-name="Title" text:outline-level="1">' . self::e($text) . '</text:h>';
     }
 
@@ -148,7 +155,8 @@ final class OdtWriter implements OfficeWriter
             . '</office:automatic-styles><office:body><office:text>' . $this->body . '</office:text></office:body></office:document-content>';
         $styles = '<?xml version="1.0" encoding="UTF-8"?><office:document-styles ' . self::NS . ' office:version="1.3"><office:styles>'
             . '<style:default-style style:family="paragraph"><style:paragraph-properties fo:margin-top="0in" fo:margin-bottom="0.04in"/>'
-            . '<style:text-properties fo:font-family="&apos;Times New Roman&apos;, &apos;Liberation Serif&apos;, serif" fo:font-size="11pt"/></style:default-style>'
+            . '<style:text-properties fo:font-family="&apos;Times New Roman&apos;, &apos;Liberation Serif&apos;, serif" fo:font-size="11pt"'
+            . ' fo:language="' . self::e($this->language) . '" fo:country="US"/></style:default-style>'
             . '</office:styles><office:automatic-styles>'
             . '<style:page-layout style:name="Page"><style:page-layout-properties fo:page-width="' . $width . '" fo:page-height="' . $height . '"'
             . ' fo:margin-top="0.35in" fo:margin-bottom="0.6in" fo:margin-left="0.6in" fo:margin-right="0.6in"/>'
@@ -164,9 +172,15 @@ final class OdtWriter implements OfficeWriter
                 . '<manifest:file-entry manifest:full-path="/" manifest:version="1.3" manifest:media-type="' . self::MIME . '"/>'
                 . '<manifest:file-entry manifest:full-path="content.xml" manifest:media-type="text/xml"/>'
                 . '<manifest:file-entry manifest:full-path="styles.xml" manifest:media-type="text/xml"/>'
+                . '<manifest:file-entry manifest:full-path="meta.xml" manifest:media-type="text/xml"/>'
                 . '</manifest:manifest>',
             'content.xml' => $content,
             'styles.xml' => $styles,
+            // The title and language a PDF made from the file carries: PDF/UA asks for both (ISO 14289-1, 7.1).
+            'meta.xml' => '<?xml version="1.0" encoding="UTF-8"?><office:document-meta xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"'
+                . ' xmlns:dc="http://purl.org/dc/elements/1.1/" office:version="1.3"><office:meta>'
+                . '<dc:title>' . self::e(implode('; ', $this->titles)) . '</dc:title><dc:language>' . self::e($this->language) . '-US</dc:language>'
+                . '</office:meta></office:document-meta>',
         ]);
     }
 
