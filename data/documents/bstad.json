@@ -41,13 +41,28 @@
       "type": "fields",
       "fields": [
         {
-          "label": "1. In the PAST YEAR, on how many days did you smoke cigarettes or use other tobacco products? Number of days (0 to 365)"
+          "label": "1. In the PAST YEAR, on how many days did you smoke cigarettes or use other tobacco products? Number of days (0 to 365)",
+          "id": "tobacco",
+          "number": [
+            0,
+            365
+          ]
         },
         {
-          "label": "2. In the PAST YEAR, on how many days did you have more than a few sips of beer, wine, or any drink containing alcohol? Number of days (0 to 365)"
+          "label": "2. In the PAST YEAR, on how many days did you have more than a few sips of beer, wine, or any drink containing alcohol? Number of days (0 to 365)",
+          "id": "alcohol",
+          "number": [
+            0,
+            365
+          ]
         },
         {
-          "label": "3. In the PAST YEAR, on how many days did you use marijuana (weed; blunts)? Number of days (0 to 365)"
+          "label": "3. In the PAST YEAR, on how many days did you use marijuana (weed; blunts)? Number of days (0 to 365)",
+          "id": "marijuana",
+          "number": [
+            0,
+            365
+          ]
         }
       ]
     },
@@ -57,6 +72,23 @@
     },
     {
       "type": "checklist",
+      "id": "drugs",
+      "show_if": {
+        "any": [
+          {
+            "id": "tobacco",
+            "above": 0
+          },
+          {
+            "id": "alcohol",
+            "above": 0
+          },
+          {
+            "id": "marijuana",
+            "above": 0
+          }
+        ]
+      },
       "label": "4. In the PAST YEAR, which of the following substances have you used? (check all that apply)",
       "items": [
         "Cocaine or crack",
@@ -69,18 +101,83 @@
     },
     {
       "type": "paragraph",
+      "show_if": {
+        "any": [
+          {
+            "id": "tobacco",
+            "above": 0
+          },
+          {
+            "id": "alcohol",
+            "above": 0
+          },
+          {
+            "id": "marijuana",
+            "above": 0
+          }
+        ]
+      },
       "text": "5. In the PAST YEAR, which of the following medications have you used that"
     },
     {
       "type": "paragraph",
+      "show_if": {
+        "any": [
+          {
+            "id": "tobacco",
+            "above": 0
+          },
+          {
+            "id": "alcohol",
+            "above": 0
+          },
+          {
+            "id": "marijuana",
+            "above": 0
+          }
+        ]
+      },
       "text": "• Were not prescribed for you; or"
     },
     {
       "type": "paragraph",
+      "show_if": {
+        "any": [
+          {
+            "id": "tobacco",
+            "above": 0
+          },
+          {
+            "id": "alcohol",
+            "above": 0
+          },
+          {
+            "id": "marijuana",
+            "above": 0
+          }
+        ]
+      },
       "text": "• Which you took more of than you were supposed to take?"
     },
     {
       "type": "checklist",
+      "id": "medications",
+      "show_if": {
+        "any": [
+          {
+            "id": "tobacco",
+            "above": 0
+          },
+          {
+            "id": "alcohol",
+            "above": 0
+          },
+          {
+            "id": "marijuana",
+            "above": 0
+          }
+        ]
+      },
       "label": "(check all that apply)",
       "items": [
         "Prescription pain relievers (e.g., morphine, Percocet, vicodin, oxycontin, dilaudid, methadone, buprenorphine, etc.)",
@@ -92,37 +189,125 @@
     },
     {
       "type": "paragraph",
+      "show_if": {
+        "any": [
+          {
+            "id": "tobacco",
+            "above": 0
+          },
+          {
+            "id": "alcohol",
+            "above": 0
+          },
+          {
+            "id": "marijuana",
+            "above": 0
+          }
+        ]
+      },
       "text": "Answer the questions below only for what you checked in questions 4 and 5."
     },
     {
       "type": "fields",
       "fields": [
         {
-          "label": "6. In the PAST YEAR, on how many days did you use cocaine or crack? Number of days (0 to 365)"
+          "label": "6. In the PAST YEAR, on how many days did you use cocaine or crack? Number of days (0 to 365)",
+          "show_if": {
+            "id": "drugs",
+            "answer": 1
+          },
+          "number": [
+            0,
+            365
+          ]
         },
         {
-          "label": "7. In the PAST YEAR, on how many days did you use heroin? Number of days (0 to 365)"
+          "label": "7. In the PAST YEAR, on how many days did you use heroin? Number of days (0 to 365)",
+          "show_if": {
+            "id": "drugs",
+            "answer": 2
+          },
+          "number": [
+            0,
+            365
+          ]
         },
         {
-          "label": "8. In the PAST YEAR, on how many days did you use amphetamines or methamphetamine (non-medication)? Number of days (0 to 365)"
+          "label": "8. In the PAST YEAR, on how many days did you use amphetamines or methamphetamine (non-medication)? Number of days (0 to 365)",
+          "show_if": {
+            "id": "drugs",
+            "answer": 3
+          },
+          "number": [
+            0,
+            365
+          ]
         },
         {
-          "label": "9. In the PAST YEAR, on how many days did you use hallucinogens (e.g., mushrooms, LSD)? Number of days (0 to 365)"
+          "label": "9. In the PAST YEAR, on how many days did you use hallucinogens (e.g., mushrooms, LSD)? Number of days (0 to 365)",
+          "show_if": {
+            "id": "drugs",
+            "answer": 4
+          },
+          "number": [
+            0,
+            365
+          ]
         },
         {
-          "label": "10. In the PAST YEAR, on how many days did you use inhalants? Number of days (0 to 365)"
+          "label": "10. In the PAST YEAR, on how many days did you use inhalants? Number of days (0 to 365)",
+          "show_if": {
+            "id": "drugs",
+            "answer": 5
+          },
+          "number": [
+            0,
+            365
+          ]
         },
         {
-          "label": "11. In the PAST YEAR, on how many days did you use prescription pain relievers (e.g., morphine, vicodin, oxycotin, dilaudid, methadone, buprenorphine, etc.) that were not prescribed for you or more than you were supposed to? Number of days (0 to 365)"
+          "label": "11. In the PAST YEAR, on how many days did you use prescription pain relievers (e.g., morphine, vicodin, oxycotin, dilaudid, methadone, buprenorphine, etc.) that were not prescribed for you or more than you were supposed to? Number of days (0 to 365)",
+          "show_if": {
+            "id": "medications",
+            "answer": 1
+          },
+          "number": [
+            0,
+            365
+          ]
         },
         {
-          "label": "12. In the PAST YEAR, on how many days did you use prescription sedatives (e.g., Valium, Xanax, Klonopin, Ativan, etc.) that were not prescribed for you or more than you were supposed to? Number of days (0 to 365)"
+          "label": "12. In the PAST YEAR, on how many days did you use prescription sedatives (e.g., Valium, Xanax, Klonopin, Ativan, etc.) that were not prescribed for you or more than you were supposed to? Number of days (0 to 365)",
+          "show_if": {
+            "id": "medications",
+            "answer": 2
+          },
+          "number": [
+            0,
+            365
+          ]
         },
         {
-          "label": "13. In the PAST YEAR, on how many days did you use prescription stimulants (e.g., Adderall, Ritalin, etc.) that were not prescribed for you or more than you were supposed to? Number of days (0 to 365)"
+          "label": "13. In the PAST YEAR, on how many days did you use prescription stimulants (e.g., Adderall, Ritalin, etc.) that were not prescribed for you or more than you were supposed to? Number of days (0 to 365)",
+          "show_if": {
+            "id": "medications",
+            "answer": 3
+          },
+          "number": [
+            0,
+            365
+          ]
         },
         {
-          "label": "14. In the PAST YEAR, on how many days did you use over-the-counter medications [more than you were supposed to use] (e.g., NyQuil, Benadryl, cough medicine, sleeping pills, etc.)? Number of days (0 to 365)"
+          "label": "14. In the PAST YEAR, on how many days did you use over-the-counter medications [more than you were supposed to use] (e.g., NyQuil, Benadryl, cough medicine, sleeping pills, etc.)? Number of days (0 to 365)",
+          "show_if": {
+            "id": "medications",
+            "answer": 4
+          },
+          "number": [
+            0,
+            365
+          ]
         }
       ]
     },

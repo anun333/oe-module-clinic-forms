@@ -27,7 +27,7 @@ final class Translation
      */
     public static function fingerprint(Document $english): string
     {
-        $content = ['id' => $english->id, 'title' => $english->title, 'category' => $english->category, 'about' => $english->about, 'blocks' => $english->blocks];
+        $content = ['id' => $english->id, 'title' => $english->title, 'category' => $english->category, 'about' => $english->about, 'blocks' => self::wording($english->blocks)];
         $json = json_encode($content, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_LINE_TERMINATORS | JSON_THROW_ON_ERROR);
         return substr(hash('sha256', $json), 0, 16);
     }
@@ -59,6 +59,11 @@ final class Translation
                 'label' => isset($b['label']),
                 'total' => isset($b['total']),
                 'values' => array_map(static fn(array $f): bool => isset($f['value']), $b['fields'] ?? []),
+                // The skip logic is the same in every language, so it's copied, not translated.
+                'skip logic' => [$b['id'] ?? null, $b['show_if'] ?? null, array_filter(array_map(
+                    static fn(array $f): array => [$f['id'] ?? null, $f['show_if'] ?? null, $f['number'] ?? null],
+                    $b['fields'] ?? [],
+                ), static fn(array $f): bool => $f !== [null, null, null])],
             ];
             foreach (array_diff_assoc(array_map('json_encode', $counts($e)), array_map('json_encode', $counts($t))) as $what => $unused) {
                 $out[] = "$at: its $what differ from the English";
@@ -70,6 +75,29 @@ final class Translation
             }
         }
         return $out;
+    }
+
+    /**
+     * The blocks without their skip logic (ids, show_if, number ranges): what a block does on screen
+     * isn't wording, so it changes neither a document's version nor its translations.
+     *
+     * @param list<array<string, mixed>> $blocks
+     * @return list<array<string, mixed>>
+     */
+    public static function wording(array $blocks): array
+    {
+        return array_map(static function (array $b): array {
+            unset($b['id'], $b['show_if']);
+            if (isset($b['fields']) && is_array($b['fields'])) {
+                $b['fields'] = array_map(static function (mixed $f): mixed {
+                    if (is_array($f)) {
+                        unset($f['id'], $f['show_if'], $f['number']);
+                    }
+                    return $f;
+                }, $b['fields']);
+            }
+            return $b;
+        }, $blocks);
     }
 
     /** @return list<string> the block's placeholders, sorted */

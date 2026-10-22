@@ -28,6 +28,9 @@ namespace OpenHealthcare\ClinicForms\Paper;
 
 final class DocumentLibrary
 {
+    /** A block's keys for the screen only, checked by conditions(): printing ignores them. */
+    private const BEHAVIOUR = ['id' => true, 'show_if' => true];
+
     public const LOCAL_FOLDER = 'documents/clinic-forms';
 
     /** @var array<string, Document> by id, in title order within each category */
@@ -331,6 +334,9 @@ final class DocumentLibrary
                 throw new \InvalidArgumentException("$at: type must be one of " . implode(', ', Document::BLOCK_TYPES));
             }
             $texts = [];
+            // id and show_if (skip logic on screen) are checked with the whole document, below.
+            $checked = $block;
+            $block = array_diff_key($block, self::BEHAVIOUR);
             switch ($block['type']) {
                 case 'heading':
                 case 'paragraph':
@@ -346,7 +352,13 @@ final class DocumentLibrary
                         if (!is_array($field)) {
                             throw new \InvalidArgumentException("$at fields[$j]: must be an object");
                         }
-                        self::onlyKeys($field, ['label'], ['value'], "$at fields[$j]");
+                        self::onlyKeys($field, ['label'], ['value', 'id', 'show_if', 'number'], "$at fields[$j]");
+                        if (isset($field['number'])) {
+                            $range = $field['number'];
+                            if (!is_array($range) || !array_is_list($range) || count($range) !== 2 || !is_int($range[0]) || !is_int($range[1]) || $range[0] >= $range[1]) {
+                                throw new \InvalidArgumentException("$at fields[$j] number: the smallest and largest whole number it takes, [min, max]");
+                            }
+                        }
                         $texts[] = self::text($field['label'], "$at fields[$j] label");
                         if (isset($field['value'])) {
                             $texts[] = self::text($field['value'], "$at fields[$j] value");
@@ -428,8 +440,9 @@ final class DocumentLibrary
                     $uses[explode('.', $placeholder)[0]] = true;
                 }
             }
-            $blocks[] = $block;
+            $blocks[] = $checked;
         }
+        self::conditions($blocks, $where);
         return new Document(
             $id,
             self::text($data['title'], "$where title"),
@@ -510,6 +523,87 @@ final class DocumentLibrary
      * @param list<string>  $required
      * @param list<string>  $optional
      */
+    /**
+     * The skip logic a document may carry for the screen (FHIR enableWhen), which printing ignores: a
+     * block or field named by an "id" can be the target of a later "show_if", which is one condition
+     * or {"any": [conditions]}. A condition names its target and either the answer, by its position
+     * from 1 ({"id": "acuity", "answer": 1}; a scale's row too: {"id": "screen", "row": 4, "answer": 1}),
+     * or, for a number field, a value it must be above ({"id": "tobacco", "above": 0}). Positions don't
+     * change with the language, so a translation carries the same conditions.
+     *
+     * @param list<array<string, mixed>> $blocks
+     */
+    private static function conditions(array $blocks, string $where): void
+    {
+        $targets = [];
+        $name = static function (mixed $id, string $at) use (&$targets): string {
+            if (!is_string($id) || preg_match('/^[a-z0-9]+(-[a-z0-9]+)*$/', $id) !== 1) {
+                throw new \InvalidArgumentException("$at id: lower case words joined by hyphens");
+            }
+            if (isset($targets[$id])) {
+                throw new \InvalidArgumentException("$at id: \"$id\" is already used in this document");
+            }
+            return $id;
+        };
+        $check = static function (mixed $showIf, string $at) use (&$targets): void {
+            $conditions = is_array($showIf) && array_keys($showIf) === ['any'] ? $showIf['any'] : [$showIf];
+            if (!is_array($conditions) || !array_is_list($conditions) || $conditions === [] || count($conditions) > 20) {
+                throw new \InvalidArgumentException("$at show_if: one condition, or {\"any\": [1 to 20 conditions]}");
+            }
+            foreach ($conditions as $k => $c) {
+                $where = "$at show_if" . (count($conditions) > 1 ? "[$k]" : '');
+                $target = is_array($c) && is_string($c['id'] ?? null) ? ($targets[$c['id']] ?? null) : null;
+                if ($target === null) {
+                    throw new \InvalidArgumentException("$where: \"id\" must name a block or field above this one");
+                }
+                if ($target['kind'] === 'number') {
+                    self::onlyKeys($c, ['id', 'above'], [], $where);
+                    if (!is_int($c['above']) || $c['above'] < $target['min'] - 1 || $c['above'] >= $target['max']) {
+                        throw new \InvalidArgumentException("$where above: a whole number within the field's range");
+                    }
+                } elseif ($target['kind'] === 'scale') {
+                    self::onlyKeys($c, ['id', 'row', 'answer'], [], $where);
+                    if (!is_int($c['row']) || $c['row'] < 1 || $c['row'] > $target['rows']) {
+                        throw new \InvalidArgumentException("$where row: the scale's row, from 1 to {$target['rows']}");
+                    }
+                } elseif ($target['kind'] === 'choice') {
+                    self::onlyKeys($c, ['id', 'answer'], [], $where);
+                } else {
+                    throw new \InvalidArgumentException("$where: \"{$c['id']}\" asks nothing to answer (a labelled checklist, a scale or a number field)");
+                }
+                if (isset($c['answer']) && (!is_int($c['answer']) || $c['answer'] < 1 || $c['answer'] > $target['answers'])) {
+                    throw new \InvalidArgumentException("$where answer: the answer's position, from 1 to {$target['answers']}");
+                }
+            }
+        };
+        foreach ($blocks as $i => $block) {
+            $at = "$where blocks[$i]";
+            if (isset($block['show_if'])) {
+                $check($block['show_if'], $at);
+            }
+            foreach ($block['type'] === 'fields' ? $block['fields'] : [] as $j => $field) {
+                if (isset($field['show_if'])) {
+                    if (isset($block['show_if'])) {
+                        throw new \InvalidArgumentException("$at fields[$j] show_if: the block already has one");
+                    }
+                    $check($field['show_if'], "$at fields[$j]");
+                }
+                if (isset($field['id'])) {
+                    $id = $name($field['id'], "$at fields[$j]");
+                    $targets[$id] = isset($field['number']) ? ['kind' => 'number', 'min' => $field['number'][0], 'max' => $field['number'][1]] : ['kind' => 'other'];
+                }
+            }
+            if (isset($block['id'])) {
+                $id = $name($block['id'], $at);
+                $targets[$id] = match (true) {
+                    $block['type'] === 'scale' => ['kind' => 'scale', 'rows' => count($block['items']), 'answers' => count($block['columns'])],
+                    $block['type'] === 'checklist' && isset($block['label']) => ['kind' => 'choice', 'answers' => count($block['items'])],
+                    default => ['kind' => 'other'],
+                };
+            }
+        }
+    }
+
     private static function onlyKeys(array $value, array $required, array $optional, string $where): void
     {
         foreach ($required as $key) {

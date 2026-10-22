@@ -97,6 +97,22 @@ final class DocumentLibraryTest extends TestCase
         yield 'validated not a boolean' => [static fn(array $d): array => $d + ['validated' => 'yes'], 'validated: must be true or false'];
         yield 'id not the file name' => [static fn(array $d): array => ['id' => 'other'] + $d, "must be the file's name"];
         yield 'scale start below 1' => [static fn(array $d): array => ['blocks' => [['type' => 'scale', 'label' => 'L', 'columns' => ['No', 'Yes'], 'items' => ['Q'], 'start' => 0]]] + $d, "start: the first row's number"];
+        // Skip logic: a show_if names a question above it, of the right kind, with an answer it has.
+        $yesNo = ['type' => 'checklist', 'id' => 'q1', 'label' => 'Q1', 'items' => ['Yes', 'No']];
+        $scale = ['type' => 'scale', 'id' => 'rows', 'label' => 'L', 'columns' => ['Yes', 'No'], 'items' => ['A', 'B']];
+        $days = ['type' => 'fields', 'fields' => [['label' => 'Days', 'id' => 'days', 'number' => [0, 365]]]];
+        $then = static fn(array $showIf): array => ['type' => 'lines', 'label' => 'Why?', 'count' => 1, 'show_if' => $showIf];
+        yield 'show_if naming nothing' => [static fn(array $d): array => ['blocks' => [$then(['id' => 'q9', 'answer' => 1])]] + $d, '"id" must name a block or field above this one'];
+        yield 'show_if naming a question below it' => [static fn(array $d): array => ['blocks' => [$then(['id' => 'q1', 'answer' => 1]), $yesNo]] + $d, '"id" must name a block or field above this one'];
+        yield 'show_if answer out of range' => [static fn(array $d): array => ['blocks' => [$yesNo, $then(['id' => 'q1', 'answer' => 3])]] + $d, "answer: the answer's position, from 1 to 2"];
+        yield 'show_if on a scale without its row' => [static fn(array $d): array => ['blocks' => [$scale, $then(['id' => 'rows', 'answer' => 1])]] + $d, 'needs "row"'];
+        yield 'show_if row out of range' => [static fn(array $d): array => ['blocks' => [$scale, $then(['id' => 'rows', 'row' => 3, 'answer' => 1])]] + $d, "row: the scale's row, from 1 to 2"];
+        yield 'show_if above on a choice' => [static fn(array $d): array => ['blocks' => [$yesNo, $then(['id' => 'q1', 'above' => 0])]] + $d, 'needs "answer"'];
+        yield 'show_if above outside the range' => [static fn(array $d): array => ['blocks' => [$days, $then(['id' => 'days', 'above' => 365])]] + $d, "above: a whole number within the field's range"];
+        yield 'show_if on something with nothing to answer' => [static fn(array $d): array => ['blocks' => [['type' => 'paragraph', 'id' => 'note', 'text' => 'Hi'], $then(['id' => 'note', 'answer' => 1])]] + $d, 'asks nothing to answer'];
+        yield 'an id used twice' => [static fn(array $d): array => ['blocks' => [$yesNo, ['id' => 'q1'] + $scale]] + $d, '"q1" is already used'];
+        yield 'an empty any' => [static fn(array $d): array => ['blocks' => [$yesNo, $then(['any' => []])]] + $d, 'one condition, or {"any"'];
+        yield 'a number field the wrong way round' => [static fn(array $d): array => ['blocks' => [['type' => 'fields', 'fields' => [['label' => 'Days', 'number' => [365, 0]]]]]] + $d, 'number: the smallest and largest'];
     }
 
     /** @param callable(array<string, mixed>): array<string, mixed> $break */

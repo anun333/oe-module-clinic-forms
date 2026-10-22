@@ -228,4 +228,78 @@ final class QuestionnaireExportTest extends TestCase
         }
         return $out;
     }
+
+    /**
+     * Skip logic on screen: ASQ's acuity question only after a Yes to any of 1 to 4, the attempt date
+     * only after a Yes to 4, and the description only after a Yes to 5; BSTAD's other drugs only after
+     * any days of use, and each substance's days only when it is ticked. Each condition is the target
+     * question's own answer: a LOINC coding with LOINC's text, a translation's own coding by position,
+     * or an uncoded answer's text.
+     */
+    public function testSkipLogicIsExportedAsEnableWhenOnTheTargetsOwnAnswers(): void
+    {
+        $library = DocumentLibrary::shipped();
+        $asq = (new QuestionnaireExport(new Context(['name' => 'C'])))->questionnaire($library->get('asq') ?? throw new \LogicException());
+        $items = self::flat($asq['item']);
+        $byText = static fn(string $start): array => array_values(array_filter($items, static fn(array $i): bool => str_starts_with((string)($i['text'] ?? ''), $start)))[0] ?? [];
+        $acuity = $byText('Are you having thoughts of killing yourself right now');
+        self::assertSame('any', $acuity['enableBehavior'] ?? null);
+        self::assertCount(4, $acuity['enableWhen']);
+        $rows = array_column($acuity['enableWhen'], 'question');
+        self::assertSame(array_map(static fn(array $i): string => $i['linkId'], array_slice(array_values(array_filter($items, static fn(array $i): bool => ($i['type'] ?? '') === 'choice')), 0, 4)), $rows);
+        foreach ($acuity['enableWhen'] as $when) {
+            self::assertSame(['question', 'operator', 'answerCoding'], array_keys($when));
+            self::assertSame(['system' => 'http://loinc.org', 'code' => 'LA33-6', 'display' => 'Yes'], $when['answerCoding']);
+        }
+        $attempt = $byText('If yes, when was the most recent attempt');
+        self::assertCount(1, $attempt['enableWhen']);
+        self::assertSame($rows[3], $attempt['enableWhen'][0]['question']);
+        self::assertArrayNotHasKey('enableBehavior', $attempt);
+        self::assertSame($acuity['linkId'], $byText('If yes, describe briefly')['enableWhen'][0]['question']);
+        self::assertSame([QuestionnaireExport::SDC_PROFILE], $asq['meta']['profile']);
+
+        $es = DocumentLibrary::shipped('es')->get('asq') ?? throw new \LogicException();
+        $q = (new QuestionnaireExport(new Context(['name' => 'C']), 'es'))->questionnaire($es, $library->get('asq'));
+        $conditioned = array_values(array_filter(self::flat($q['item']), static fn(array $i): bool => isset($i['enableWhen'])));
+        self::assertCount(4, $conditioned, 'the Spanish has the same skip logic');
+        $when = $conditioned[0]['enableWhen'][0]['answerCoding'] ?? [];
+        self::assertSame(['system' => QuestionnaireExport::ANSWER_SYSTEM, 'code' => '1'], array_diff_key($when, ['display' => 1]), 'a translation conditions on its own coding, by position');
+
+        $bstad = self::flat((new QuestionnaireExport(new Context(['name' => 'C'])))->questionnaire($library->get('bstad') ?? throw new \LogicException())['item']);
+        $first = array_values(array_filter($bstad, static fn(array $i): bool => ($i['type'] ?? '') === 'integer'));
+        self::assertCount(12, $first, 'the twelve day counts are whole numbers');
+        self::assertSame([0, 365], array_column($first[0]['extension'], 'valueInteger'));
+        $drugs = array_values(array_filter($bstad, static fn(array $i): bool => str_starts_with((string)($i['text'] ?? ''), 'In the PAST YEAR, which of the following substances')))[0];
+        self::assertSame(array_map(static fn(array $i): array => ['question' => $i['linkId'], 'operator' => '>', 'answerInteger' => 0], array_slice($first, 0, 3)), $drugs['enableWhen']);
+        $cocaine = array_values(array_filter($bstad, static fn(array $i): bool => str_contains((string)($i['text'] ?? ''), 'cocaine or crack? Number of days')))[0];
+        self::assertSame([['question' => $drugs['linkId'], 'operator' => '=', 'answerString' => 'Cocaine or crack']], $cocaine['enableWhen']);
+    }
+
+    public function testACodedTotalIsMarkedForExtractionAndAPartsScoreIsNot(): void
+    {
+        $library = DocumentLibrary::shipped();
+        $phq9 = self::flat((new QuestionnaireExport(new Context(['name' => 'C'])))->questionnaire($library->get('phq-9') ?? throw new \LogicException())['item']);
+        $total = array_values(array_filter($phq9, static fn(array $i): bool => ($i['code'][0]['code'] ?? '') === '44261-6'))[0];
+        self::assertContains(['url' => QuestionnaireExport::EXTRACT, 'valueBoolean' => true], $total['extension']);
+        $taps2 = self::flat((new QuestionnaireExport(new Context(['name' => 'C'])))->questionnaire($library->get('taps-2') ?? throw new \LogicException())['item']);
+        foreach ($taps2 as $item) {
+            if (!isset($item['code']) && ($item['readOnly'] ?? false)) {
+                self::assertNotContains(QuestionnaireExport::EXTRACT, array_column($item['extension'] ?? [], 'url'), "a part's score has no code to extract under: {$item['text']}");
+            }
+        }
+    }
+
+    /**
+     * @param list<array<string, mixed>> $items
+     * @return list<array<string, mixed>>
+     */
+    private static function flat(array $items): array
+    {
+        $out = [];
+        foreach ($items as $item) {
+            $out[] = $item;
+            array_push($out, ...self::flat($item['item'] ?? []));
+        }
+        return $out;
+    }
 }

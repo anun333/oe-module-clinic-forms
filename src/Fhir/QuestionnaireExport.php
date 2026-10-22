@@ -41,6 +41,10 @@ final readonly class QuestionnaireExport
     public const CANONICAL = 'https://github.com/anun333/oe-module-clinic-forms/questionnaire/';
     public const ORDINAL = 'http://hl7.org/fhir/StructureDefinition/ordinalValue';
     public const CALCULATED = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-calculatedExpression';
+    /** Marks an item whose answer becomes an Observation, coded with the item's code, when a form filler extracts. */
+    public const EXTRACT = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-observationExtract';
+    /** The SDC profile every exported Questionnaire claims, at the version the HL7 validator checks it against. */
+    public const SDC_PROFILE = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire|4.0.0';
     /** A translated instrument's answers, coded by their position in the question ("1", "2"...). */
     public const ANSWER_SYSTEM = 'https://github.com/anun333/oe-module-clinic-forms/answers';
     private const BLANK = '__________';
@@ -81,6 +85,8 @@ final readonly class QuestionnaireExport
     {
         $codes = Instrument::matched($doc, $english);
         $q = ['resourceType' => 'Questionnaire', 'id' => $doc->id . ($doc->language !== 'en' ? '-' . $doc->language : '')];
+        // As OpenEMR's own SDC questionnaires do (contrib/portal_templates/assessments/SDC FHIR).
+        $q['meta'] = ['profile' => [self::SDC_PROFILE]];
         $q['language'] = $doc->language;
         if ($doc->source !== 'clinic') {
             $q['url'] = self::CANONICAL . $doc->id;
@@ -89,6 +95,9 @@ final readonly class QuestionnaireExport
         $q['identifier'] = [QuestionnaireRegistration::identifier($q['id'])];
         if ($doc->version > 0) {
             $q['version'] = (string)$doc->version;
+            // Versions are whole numbers, raised when the wording changes; SDC asks a versioned Questionnaire to say so (sdc-2).
+            $q['extension'] = [['url' => 'http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm',
+                'valueCoding' => ['system' => 'http://hl7.org/fhir/version-algorithm', 'code' => 'integer', 'display' => 'Integer']]];
         }
         $q += [
             'name' => self::name($doc->title),
@@ -114,7 +123,7 @@ final readonly class QuestionnaireExport
         $q['item'] = $this->items($doc, $codes);
         // A short narrative, as FHIR recommends for every resource.
         $lang = htmlspecialchars($doc->language, ENT_XML1);
-        $q = array_slice($q, 0, 2) + ['text' => ['status' => 'generated', 'div' => '<div xmlns="http://www.w3.org/1999/xhtml" lang="' . $lang . '" xml:lang="' . $lang . '"><p><b>'
+        $q = array_slice($q, 0, 3) + ['text' => ['status' => 'generated', 'div' => '<div xmlns="http://www.w3.org/1999/xhtml" lang="' . $lang . '" xml:lang="' . $lang . '"><p><b>'
             . htmlspecialchars($q['title'], ENT_XML1) . '</b></p><p>' . htmlspecialchars($q['description'], ENT_XML1) . '</p></div>']] + $q;
         return $q;
     }
@@ -131,7 +140,10 @@ final readonly class QuestionnaireExport
         $asked = 0;  // the document's questions so far, as Instrument::questions() counts them
         $root = [];
         $group = null;
-        $add = static function (array $item) use (&$root, &$group): void {
+        $targets = [];  // what a later show_if can name, by id: a question's linkId and answers, or a scale's rows
+        $when = [];  // the block's skip logic, as enableWhen, on every item the block adds
+        $add = static function (array $item) use (&$root, &$group, &$when): void {
+            $item += $when;
             if ($group !== null) {
                 $group['item'][] = $item;
             } else {
@@ -147,10 +159,12 @@ final readonly class QuestionnaireExport
         };
         foreach ($doc->blocks as $b => $block) {
             $id = 'b' . ($b + 1);
+            $when = isset($block['show_if']) ? self::enableWhen($block['show_if'], $targets) : [];
             switch ($block['type']) {
                 case 'heading':
                     $close();
-                    $group = ['linkId' => $id, 'text' => $this->text($block['text']), 'type' => 'group', 'item' => []];
+                    $group = ['linkId' => $id, 'text' => $this->text($block['text']), 'type' => 'group'] + $when + ['item' => []];
+                    $when = [];
                     break;
                 case 'paragraph':
                     $add(['linkId' => $id, 'text' => $this->text($block['text']), 'type' => 'display']);
@@ -159,13 +173,20 @@ final readonly class QuestionnaireExport
                     foreach ($block['fields'] as $n => $field) {
                         $item = $this->field($field, "$id.$n", $codes, $doc->language);
                         if ($item !== null) {
-                            $add($item);
+                            $add($item + (isset($field['show_if']) ? self::enableWhen($field['show_if'], $targets) : []));
+                            if (isset($field['id'])) {
+                                $targets[$field['id']] = ['linkId' => $item['linkId']];
+                            }
                         }
                     }
                     break;
                 case 'checklist':
                     if (isset($block['label'])) {
-                        $add($this->choice("$id", (string)$block['label'], array_map(fn(string $i): array => self::scored($this->text($i)), $block['items']), $codes['map'][++$asked] ?? null, !$doc->validated, $doc->language));
+                        $item = $this->choice("$id", (string)$block['label'], array_map(fn(string $i): array => self::scored($this->text($i)), $block['items']), $codes['map'][++$asked] ?? null, !$doc->validated, $doc->language);
+                        $add($item);
+                        if (isset($block['id'])) {
+                            $targets[$block['id']] = ['linkId' => $item['linkId'], 'answers' => $item['answerOption']];
+                        }
                     } else {
                         // Statements to tick, each on its own.
                         foreach ($block['items'] as $n => $statement) {
@@ -182,6 +203,13 @@ final readonly class QuestionnaireExport
                             $answers[] = [$this->text($column), is_numeric($score) ? $score + 0 : null];
                         }
                         $children[] = $this->choice("$id.$n", (($block['start'] ?? 1) + $n) . '. ' . $question, $answers, $codes['map'][++$asked] ?? null, false, $doc->language);
+                    }
+                    if (isset($block['id'])) {
+                        $rows = [];
+                        foreach ($children as $n => $child) {
+                            $rows[$n + 1] = ['linkId' => $child['linkId'], 'answers' => $child['answerOption']];
+                        }
+                        $targets[$block['id']] = ['rows' => $rows];
                     }
                     $add(['linkId' => $id, 'text' => $this->text($block['label']), 'type' => 'group', 'item' => $children]);
                     if (isset($block['total'])) {
@@ -251,6 +279,13 @@ final readonly class QuestionnaireExport
                 return self::total($linkId, $label, true, $subscale['questions']);
             }
         }
+        if (isset($field['number'])) {
+            // A count (BSTAD's days of use): a whole number in its range, which skip logic can compare.
+            return ['linkId' => $linkId, 'text' => $label, 'type' => 'integer', 'extension' => [
+                ['url' => 'http://hl7.org/fhir/StructureDefinition/minValue', 'valueInteger' => $field['number'][0]],
+                ['url' => 'http://hl7.org/fhir/StructureDefinition/maxValue', 'valueInteger' => $field['number'][1]],
+            ]];
+        }
         $item = ['linkId' => $linkId, 'text' => $label, 'type' => preg_match('/\b(date|fecha)\b/iu', $label) === 1 ? 'date' : 'string'];
         $filled = $this->value($value);
         if ($filled !== '' && $item['type'] === 'string') {
@@ -315,8 +350,50 @@ final readonly class QuestionnaireExport
                 : array_merge(...array_map(static fn(string $code): array => array_map(
                     static fn(string $d): string => "$d.where(linkId = '/$code')$points", $depths), $questions));
             $item['extension'] = [['url' => self::CALCULATED, 'valueExpression' => ['language' => 'text/fhirpath', 'expression' => implode(' + ', $terms)]]];
+            if ($loinc !== null) {
+                // The instrument's total, coded, becomes an Observation where a form filler extracts (SDC),
+                // as OpenEMR's own SDC questionnaires mark theirs; CMS159 reads the PHQ-9's.
+                $item['extension'][] = ['url' => self::EXTRACT, 'valueBoolean' => true];
+            }
         }
         return $item;
+    }
+
+    /**
+     * A block's or field's show_if as FHIR enableWhen, from the questions above it: an answer by its
+     * position, as the question's own answer option (its coding with its display, or its text), or a
+     * count above a value.
+     * Checked when the document was read; a target the export leaves out asks nothing, so it's dropped.
+     *
+     * @param array<string, mixed> $showIf
+     * @param array<string, array<string, mixed>> $targets
+     * @return array<string, mixed> enableWhen and, for several, enableBehavior any; or nothing
+     */
+    private static function enableWhen(array $showIf, array $targets): array
+    {
+        $out = [];
+        foreach (array_keys($showIf) === ['any'] ? $showIf['any'] : [$showIf] as $c) {
+            $target = $targets[$c['id']] ?? null;
+            if (isset($c['row'])) {
+                $target = $target['rows'][$c['row']] ?? null;
+            }
+            if ($target === null) {
+                continue;
+            }
+            if (isset($c['above'])) {
+                $out[] = ['question' => $target['linkId'], 'operator' => '>', 'answerInteger' => $c['above']];
+                continue;
+            }
+            $option = $target['answers'][$c['answer'] - 1] ?? null;
+            if ($option === null) {
+                continue;
+            }
+            $out[] = ['question' => $target['linkId'], 'operator' => '='] + (isset($option['valueCoding'])
+                // With its display: a LOINC answer code goes with LOINC's text for it, as everywhere else.
+                ? ['answerCoding' => array_intersect_key($option['valueCoding'], ['system' => true, 'code' => true, 'display' => true])]
+                : ['answerString' => $option['valueString']]);
+        }
+        return $out === [] ? [] : ['enableWhen' => $out] + (count($out) > 1 ? ['enableBehavior' => 'any'] : []);
     }
 
     /**

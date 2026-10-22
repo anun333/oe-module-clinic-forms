@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.33.0 (unreleased)
+
+**Skip logic on screen, accessible PDFs through Word and LibreOffice, and OpenEMR 8.5.**
+
+- **Skip logic.** A document can say that a question is asked only after a certain answer (`id`, `show_if`, `number`; see [docs/DOCUMENT-FORMAT.md](docs/DOCUMENT-FORMAT.md)). The FHIR export carries it as `enableWhen`, and printing ignores it, so the paper keeps its written instructions.
+  - **ASQ**, English and Spanish: question 5 appears after a Yes to any of 1 to 4, the attempt date after a Yes to 4, and the description after a Yes to 5.
+  - **BSTAD**: the other drugs and medications appear after any days of tobacco, alcohol or marijuana, and each substance's days once it is ticked. The day counts are whole numbers from 0 to 365.
+  - **Checks:** run through OpenEMR's own questionnaire runtime (8.3.0, 8.4.1 and master, the same file in all three), as exported, in English and Spanish. Answers are named by position, so a translation carries the same conditions. Skip logic isn't wording, so neither document's version changed.
+  - **Not TAPS-1:** its questions 2 and 3 depend on the patient's sex, not on an answer. That needs SDC's `enableWhenExpression`, which OpenEMR's runtime doesn't run yet (openemr/openemr#14744 would add it).
+- **SDC.** Every exported Questionnaire claims SDC 4.0.0's questionnaire profile, as OpenEMR's own SDC questionnaires do (version 2.7 in theirs), and says its versions are whole numbers (`artifact-versionAlgorithm`, SDC's rule sdc-2).
+  - All 89 pass the HL7 validator against SDC 4.0.0. SDC's preference for semantic versions (sdc-3) is a warning, and Clinic Forms keeps whole numbers.
+  - Each coded instrument total is marked for extraction (`observationExtract`), so an SDC form filler that extracts makes it an Observation with LOINC's code. OpenEMR doesn't extract yet.
+- **Accessible PDFs.** The Word and LibreOffice files carry their documents' titles and language (`docProps/core.xml`, `meta.xml`, and the default style's language). Exported from LibreOffice with PDF/UA on, the patient documents checked pass veraPDF's PDF/UA-1, the Spanish PHQ-9 declaring Spanish. The README says how. The module's own PDFs (mPDF) still aren't tagged.
+- **The picker page** declares its language and meets WCAG 2.1 AA contrast for code and the ES badges (axe-core: 28 failures down to 3, and the 3 are OpenEMR's own buttons).
+- **OpenEMR 8.5** (in development) decides where each questionnaire is offered: the README says what that means for "Add to OpenEMR questionnaires". Checked on master a10ebfa8d3.
+
 ## 0.32.0 (2026-10-20)
 
 **Every LOINC code now goes with LOINC's own name for it, as the LOINC licence asks.**

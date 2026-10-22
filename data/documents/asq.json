@@ -41,6 +41,7 @@
         },
         {
             "type": "scale",
+            "id": "screen",
             "label": "Ask the patient:",
             "columns": [
                 "Yes",
@@ -55,6 +56,11 @@
         },
         {
             "type": "checklist",
+            "show_if": {
+                "id": "screen",
+                "row": 4,
+                "answer": 1
+            },
             "label": "If yes, when was the most recent attempt?",
             "items": [
                 "Within last 12 months",
@@ -63,10 +69,59 @@
         },
         {
             "type": "paragraph",
+            "show_if": {
+                "any": [
+                    {
+                        "id": "screen",
+                        "row": 1,
+                        "answer": 1
+                    },
+                    {
+                        "id": "screen",
+                        "row": 2,
+                        "answer": 1
+                    },
+                    {
+                        "id": "screen",
+                        "row": 3,
+                        "answer": 1
+                    },
+                    {
+                        "id": "screen",
+                        "row": 4,
+                        "answer": 1
+                    }
+                ]
+            },
             "text": "If the patient answers Yes to any of questions 1 to 4, ask the following acuity question:"
         },
         {
             "type": "checklist",
+            "id": "acuity",
+            "show_if": {
+                "any": [
+                    {
+                        "id": "screen",
+                        "row": 1,
+                        "answer": 1
+                    },
+                    {
+                        "id": "screen",
+                        "row": 2,
+                        "answer": 1
+                    },
+                    {
+                        "id": "screen",
+                        "row": 3,
+                        "answer": 1
+                    },
+                    {
+                        "id": "screen",
+                        "row": 4,
+                        "answer": 1
+                    }
+                ]
+            },
             "label": "5. Are you having thoughts of killing yourself right now?",
             "items": [
                 "Yes",
@@ -75,6 +130,10 @@
         },
         {
             "type": "lines",
+            "show_if": {
+                "id": "acuity",
+                "answer": 1
+            },
             "label": "If yes, describe briefly:",
             "count": 2
         },

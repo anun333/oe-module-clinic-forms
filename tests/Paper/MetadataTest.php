@@ -180,8 +180,9 @@ final class MetadataTest extends TestCase
             if ($es->translates !== Translation::fingerprint($english)) {
                 continue; // out of date: waits for the language pass
             }
-            $a = self::strings([$english->title, $english->category, $english->about, $english->blocks]);
-            $b = self::strings([$es->title, $es->category, $es->about, $es->blocks]);
+            // The wording only: skip logic (ids, conditions) is copied, not translated.
+            $a = self::strings([$english->title, $english->category, $english->about, Translation::wording($english->blocks)]);
+            $b = self::strings([$es->title, $es->category, $es->about, Translation::wording($es->blocks)]);
             foreach ($a as $i => $text) {
                 $checked++;
                 $words = trim((string)preg_replace('/\{[a-z]+\.[a-z]+\}/', '', $text));

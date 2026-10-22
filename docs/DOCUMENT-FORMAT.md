@@ -43,6 +43,18 @@ A document is one JSON file named by its id (`consent-to-treat.json`), in `data/
 
 `heading`, `paragraph`, `fields` (label and optional value), `checklist`, `lines` (ruled lines), `signature` (one line per signer, each with a date), `scale` (a question per row and a box per answer, optionally scored), `table` (column headings over blank rows), `taglines` (the language assistance taglines). Exact shapes are in `src/Paper/Document.php`.
 
+## Skip logic (on screen only)
+
+A question that should only be asked after a certain answer can say so. Printing ignores this, so the paper keeps its written instruction ("If yes, …"). On screen, as a FHIR Questionnaire (`enableWhen`) in OpenEMR or any SDC form filler, the question appears only when its condition holds.
+
+- **`id`** names a block, or a field inside a `fields` block, so a later block can point at it. Use lower-case words joined by hyphens, each used once in the document.
+- **`show_if`** goes on the block, or on a single field, that depends on an earlier answer. It holds one condition, or `{"any": [conditions]}` when any one of several will do.
+  - **An answer:** `{"id": "acuity", "answer": 1}` means the first answer of the labelled checklist `acuity`. On a scale, give the row as well: `{"id": "screen", "row": 4, "answer": 1}`.
+  - **A count above a value:** `{"id": "tobacco", "above": 0}`. The target must be a number field.
+- **`number`** on a field makes it a whole number in a range: `"number": [0, 365]`.
+
+Answers are named by position, so a translation carries exactly the same skip logic as its English document, copied rather than translated. Skip logic isn't wording: adding it doesn't change a document's version. A condition that names something below it, a missing answer, or the wrong kind of target is refused when the file is read. ASQ and BSTAD carry skip logic; see their files for examples.
+
 ## Placeholders
 
 Text can use `{group.key}`: `facility` (name, address, phone, fax, email, website, npi), `patient` (name, dob, id, address, street, city, state, zip, phone, sex, allergies, medications, problems), `recipient` (an Address Book entry), `provider` (the signing provider: name, credentials, npi, specialty), `user` (the person printing), `clinic.today`. An unknown placeholder is refused when the file is read.
