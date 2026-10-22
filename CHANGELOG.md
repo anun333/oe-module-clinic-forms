@@ -14,7 +14,7 @@
   - Each coded instrument total is marked for extraction (`observationExtract`), so an SDC form filler that extracts makes it an Observation with LOINC's code. OpenEMR doesn't extract yet.
 - **Accessible PDFs.** The Word and LibreOffice files carry their documents' titles and language (`docProps/core.xml`, `meta.xml`, and the default style's language). Exported from LibreOffice with PDF/UA on, the patient documents checked pass veraPDF's PDF/UA-1, the Spanish PHQ-9 declaring Spanish. The README says how. The module's own PDFs (mPDF) still aren't tagged.
 - **The picker page** declares its language and meets WCAG 2.1 AA contrast for code and the ES badges (axe-core: 28 failures down to 3, and the 3 are OpenEMR's own buttons).
-- **OpenEMR 8.5** (in development) decides where each questionnaire is offered: the README says what that means for "Add to OpenEMR questionnaires". Checked on master a10ebfa8d3.
+- **OpenEMR 8.5** (in development) decides where each questionnaire is offered: the README says what that means for "Add to OpenEMR questionnaires", and how to offer a packet only at certain visit types in OpenEMR's Questionnaire Availability. Checked on master a10ebfa8d3.
 
 ## 0.32.0 (2026-10-20)
 

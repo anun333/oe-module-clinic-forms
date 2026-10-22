@@ -216,6 +216,12 @@ Choose **Español** as the language at the top of the Clinic Forms page. Documen
 - The button is shown to users with OpenEMR's Admin > Forms permission (`admin / forms`), the permission OpenEMR asks for before importing forms. It adds a questionnaire for everyone at the site.
 - OpenEMR files questionnaires by title. Adding a document again updates the questionnaire it added before, in place, and OpenEMR raises its version.
 - OpenEMR 8.5 (in development) decides where each questionnaire is offered. A newly added one is offered on the patient dashboard, and **Questionnaire Availability**, on the patient's Questionnaires page, changes where it appears. Adding it again leaves those choices as they are. Questionnaires added before a site upgrades to 8.5 keep appearing where they did. Checked against OpenEMR master a10ebfa8d3 (2026-10-22).
+  - **A packet only at certain visit types**, such as the yearly adult screen at annual visits, is set up in OpenEMR itself, as its author describes it (openemr/openemr#14485):
+    1. Register each questionnaire as an encounter form. That shows it at every visit.
+    2. In Questionnaire Availability, add one rule per questionnaire and visit category. Rules add up, so one questionnaire can belong to several visit types.
+    3. Switch off the every-visit rule and keep the visit-category ones.
+
+    Clinic Forms doesn't do this for you. OpenEMR has no service for registering an encounter form, and Clinic Forms writes to the database only through OpenEMR's own services.
 - A questionnaire with the same title that Clinic Forms didn't add (one the clinic imported itself, say) is left as it is, and so is one the clinic has turned off. The page says which.
 - A document with nothing to answer, such as the notice of free language help, is left out.
 - Each one is filed under Survey, the category OpenEMR's encounter form gives its own questionnaires (OpenEMR 8.0 and later; 7.0 has no categories).
