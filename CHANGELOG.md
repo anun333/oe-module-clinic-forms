@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.33.0 (unreleased)
+## 0.33.0 (2026-10-22)
 
 **Skip logic on screen, accessible PDFs through Word and LibreOffice, and OpenEMR 8.5.**
 
