@@ -551,7 +551,7 @@ foreach ($it as $f) {
     // counting them would make every doc edit fail --check. build/ is local output
     // (git-ignored, absent from a fresh clone), so counting it made CI disagree.
     if (preg_match('#^(\.git|\.github|vendor|\.phpunit\.cache|build|LICENSES)/#', $rel) || str_ends_with($rel, '.md')
-        || in_array($rel, ['composer.lock', 'LICENSE', '.gitignore'], true)) {
+        || in_array($rel, ['composer.lock', 'LICENSE', '.gitignore', '.phpunit.result.cache'], true)) {
         continue;
     }
     $kind = match (true) {
