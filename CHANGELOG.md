@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.34.0 (unreleased)
+## 0.34.0 (2026-10-23)
 
 **Photos and recordings, chaperones, payment plans and the Title X notice.**
 
