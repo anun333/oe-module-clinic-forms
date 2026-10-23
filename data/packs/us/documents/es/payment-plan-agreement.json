@@ -1,0 +1,108 @@
+{
+  "id": "payment-plan-agreement",
+  "translates": "b858fea2803e18b3",
+  "title": "Acuerdo de plan de pagos",
+  "category": "Recepción",
+  "about": "Un acuerdo para pagar un saldo en partes, escrito según el Manual de Cumplimiento del Programa de Centros de Salud de HRSA, capítulo 16 (Facturación y cobros): planes de pago abiertos a todos los pacientes sin importar su ingreso ni su categoría de descuento de tarifa variable, la incapacidad de pagar separada de la negativa a pagar, y el monto que se debe, el plazo para pagar y los pasos si se dejan de hacer los pagos, todo por escrito. El plan no tiene intereses ni cargos y, tal como se imprime, es para cuatro pagos o menos: un plan de más de cuatro pagos, o con un cargo financiero, puede hacer de la clínica un acreedor según el Reglamento Z (12 CFR 1026.2(a)(17)), con las divulgaciones de la Ley de Veracidad en los Préstamos que debe dar. Haga revisar su política antes de ofrecer planes más largos.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Número de cuenta"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "{facility.name} y yo acordamos un plan para que yo pague en partes lo que debo. Este plan no tiene intereses ni cargos."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Monto que debo hoy"
+        },
+        {
+          "label": "Pago de hoy, si lo hay"
+        },
+        {
+          "label": "Monto de cada pago"
+        },
+        {
+          "label": "Cada cuánto (por ejemplo, cada mes)"
+        },
+        {
+          "label": "Número de pagos"
+        },
+        {
+          "label": "Fecha del primer pago"
+        },
+        {
+          "label": "Fecha del último pago"
+        },
+        {
+          "label": "Cómo pagaré (por ejemplo, en efectivo, con tarjeta, con cheque o en línea)"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Entiendo que",
+      "items": [
+        "Los planes de pago están abiertos a todos los pacientes, sin importar su ingreso ni su nivel de descuento.",
+        "Puedo solicitar el descuento de tarifa variable en cualquier momento. Si mi ingreso o el tamaño de mi familia cambia, puedo pedir que me evalúen de nuevo. Un descuento puede bajar lo que debo.",
+        "{facility.name} no me negará la atención porque yo no pueda pagar.",
+        "Si no puedo hacer un pago, llamaré al {facility.phone} antes de la fecha, y podemos cambiar el plan.",
+        "Puedo pagar más, o pagarlo todo, en cualquier momento, sin cargo adicional.",
+        "Los cargos de consultas futuras no forman parte de este plan, a menos que los agreguemos por escrito."
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si dejo de pagar y no he llamado, la clínica (la clínica escribe sus pasos, como una llamada, una carta o una reunión con un consejero financiero)"
+        },
+        {
+          "label": "Cómo se puede limitar la atención si la clínica determina que me negué a pagar, lo cual no es lo mismo que no poder pagar (la clínica escribe su política, o escribe Ninguna)"
+        }
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o persona responsable",
+        "Personal de la clínica"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si firma un representante: nombre"
+        },
+        {
+          "label": "Relación o autoridad legal"
+        }
+      ]
+    }
+  ]
+}

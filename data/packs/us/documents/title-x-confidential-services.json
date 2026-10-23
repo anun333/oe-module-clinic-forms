@@ -1,0 +1,76 @@
+{
+  "id": "title-x-confidential-services",
+  "title": "Your Family Planning Visit Is Private",
+  "category": "Privacy and patient rights",
+  "about": "What a Title X family planning project tells its clients, written to 42 CFR 59 subpart A as in force on 2026-10-21 (the 2021 rule, as amended in 2024): confidentiality and the policyholder's insurance statement (59.10(a)); no parental consent or notice for minors, with family talk encouraged (59.10(b)); voluntary services without pressure (59.5(a)(2)); nondiscrimination (59.5(a)(4)); options counseling and referral on request (59.5(a)(5)); and charges by income (59.5(a)(7) to (9)). State law can require reports of abuse. Title X rules change with administrations, so check 42 CFR 59 before each release.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "Title X family planning projects, 42 CFR 59 subpart A (86 FR 56177, October 7, 2021, as amended at 89 FR 80067, October 2, 2024)",
+    "url": "https://www.ecfr.gov/current/title-42/chapter-I/subchapter-D/part-59/subpart-A"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "{facility.name} offers family planning services. Here is what you can expect from us."
+    },
+    {
+      "type": "heading",
+      "text": "Your privacy"
+    },
+    {
+      "type": "paragraph",
+      "text": "What you tell us is kept private. We will not share it without your written permission, unless we need to for your care or the law requires it. For example, the law may require us to report abuse."
+    },
+    {
+      "type": "paragraph",
+      "text": "If you are under 18, you do not need a parent's permission to get these services, and we will not tell your parents that you came. We do encourage you to talk with your family if you can."
+    },
+    {
+      "type": "paragraph",
+      "text": "If you use someone else's health insurance, such as a parent's or a partner's, they may get a statement from the insurance company that lists your visit. If this worries you, tell us before we bill your insurance, and we will talk about your choices."
+    },
+    {
+      "type": "heading",
+      "text": "Your choices"
+    },
+    {
+      "type": "paragraph",
+      "text": "Our services are voluntary. No one may pressure you to use a family planning method, or to choose a certain one. Using our services is never a condition for getting any other help from us or from any other program."
+    },
+    {
+      "type": "paragraph",
+      "text": "If you are pregnant, you can ask for facts and counseling about each of your options: prenatal care and delivery; infant care, foster care or adoption; and ending the pregnancy. If you ask, we will refer you. You can tell us which topics you do not want to hear about."
+    },
+    {
+      "type": "paragraph",
+      "text": "We serve everyone. We do not treat anyone differently because of religion, race, color, national origin, disability, age, sex, sexual orientation, gender identity, sex characteristics, number of pregnancies, or marital status."
+    },
+    {
+      "type": "heading",
+      "text": "What you pay"
+    },
+    {
+      "type": "paragraph",
+      "text": "We ask about your family's size and income to set your charge. If your income is at or below the federal poverty level, there is no charge to you. If it is up to 2.5 times that level, you pay less, on a sliding scale. If you have insurance, we may bill it."
+    },
+    {
+      "type": "paragraph",
+      "text": "If you have insurance and your income is no more than 2.5 times the poverty level, you will not pay more than the sliding scale charge."
+    },
+    {
+      "type": "paragraph",
+      "text": "We may ask for proof of income, but we will not make it hard for you. If you cannot show proof, we use the income you tell us."
+    },
+    {
+      "type": "paragraph",
+      "text": "Questions? Call {facility.phone}."
+    }
+  ]
+}

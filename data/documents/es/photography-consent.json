@@ -1,0 +1,90 @@
+{
+  "id": "photography-consent",
+  "translates": "fcc33c46c02d545d",
+  "title": "Consentimiento para fotos y grabaciones",
+  "category": "Recepción",
+  "about": "Permiso para tomar fotos, video o grabaciones de audio de un paciente, con una opción aparte para cada uso: el expediente médico y la atención, y la enseñanza. La publicidad, los sitios web, las redes sociales y cualquier otro uso fuera de la atención y la enseñanza necesitan un permiso escrito aparte para ese uso.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "A veces una foto, un video o una grabación de audio ayuda con su atención. Por ejemplo, la foto de una herida o de un sarpullido muestra cómo cambia con el tiempo. {facility.name} solo tomará una si usted está de acuerdo."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Qué se va a fotografiar o grabar (por ejemplo, la parte del cuerpo)"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Pueden tomarme fotos o grabaciones para (marque cada uso con el que está de acuerdo)",
+      "items": [
+        "Mi expediente médico y mi atención. Esto incluye compartirlas con otros profesionales clínicos que me atienden.",
+        "La enseñanza de médicos, enfermeras y otros estudiantes y personal de salud. Mi cara y mi nombre se ocultarán cuando sea posible."
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Este consentimiento es para",
+      "items": [
+        "Solo esta consulta",
+        "Esta consulta y las siguientes, hasta que yo lo retire"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Entiendo que",
+      "items": [
+        "Puedo decir que no. Decir que no no cambiará mi atención.",
+        "Puedo pedir que se detenga una foto o grabación en cualquier momento mientras se está tomando.",
+        "Puedo retirar este consentimiento en cualquier momento avisando a la clínica por escrito. Esto detiene las fotos nuevas y los usos nuevos, pero no los usos que ya ocurrieron.",
+        "Las fotos y grabaciones para mi atención pasan a formar parte de mi expediente médico. Se mantienen privadas, como el resto de mi expediente.",
+        "La clínica no las usará para publicidad, sitios web ni redes sociales. No las compartirá fuera de mi atención y de la enseñanza, a menos que yo firme un permiso aparte para ese uso."
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o representante legal"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si firma un representante: nombre"
+        },
+        {
+          "label": "Relación o autoridad legal"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Explicado por (nombre del personal)"
+        }
+      ]
+    }
+  ]
+}

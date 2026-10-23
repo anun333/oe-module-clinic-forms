@@ -1,0 +1,103 @@
+{
+  "id": "chaperone-record",
+  "title": "Chaperone Record",
+  "category": "Office workflow",
+  "about": "Records each offer of a chaperone at an exam: what was offered, the patient's choice, and who was in the room. Scan it into the chart, or copy the same details into the visit note.",
+  "audience": "staff",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "Clinician",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Exam or procedure"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Chaperone",
+      "items": [
+        "Offered, and the patient accepted",
+        "Offered, and the patient declined",
+        "Asked for by the patient",
+        "Asked for by the clinician"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Chaperone name"
+        },
+        {
+          "label": "Chaperone role (for example, nurse or medical assistant)"
+        },
+        {
+          "label": "Patient's preference, such as the chaperone's gender, and whether it was met"
+        },
+        {
+          "label": "Others present (names and relationship to the patient)"
+        },
+        {
+          "label": "Interpreter (name or ID), if one was used"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "If the patient declined a chaperone",
+      "items": [
+        "The exam went ahead without one",
+        "The exam was put off",
+        "The patient was referred elsewhere"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Notes",
+      "count": 3
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Clinician",
+        "Chaperone"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+{
+  "id": "photography-consent",
+  "title": "Consent for Photos and Recordings",
+  "category": "Front desk",
+  "about": "Permission to take photos, video or audio recordings of a patient, with a separate choice for each use: the health record and care, and teaching. Advertising, websites, social media and any other use outside care and teaching need a separate written permission for that use.",
+  "audience": "patient",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "59284-0",
+    "display": "Consent Document"
+  },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Sometimes a photo, video or audio recording helps with your care. For example, a photo of a wound or a rash shows how it changes over time. {facility.name} will only take one if you agree."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "What will be photographed or recorded (for example, the part of the body)"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "You may take photos or recordings of me for (tick each one you agree to)",
+      "items": [
+        "My health record and my care. This includes sharing them with other clinicians who care for me.",
+        "Teaching doctors, nurses and other health students and staff. My face and name will be hidden when possible."
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "This consent is for",
+      "items": [
+        "This visit only",
+        "This visit and later visits, until I take it back"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "I understand that",
+      "items": [
+        "I can say no. Saying no will not change my care.",
+        "I can ask to stop a photo or recording at any time while it is being taken.",
+        "I can take back this consent at any time by telling the clinic in writing. This stops new photos and new uses, but not uses that already happened.",
+        "Photos and recordings for my care become part of my health record. They are kept private, like the rest of my record.",
+        "The clinic will not use them for advertising, websites or social media. It will not share them outside my care and teaching unless I sign a separate permission for that use."
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Explained by (staff name)"
+        }
+      ]
+    }
+  ]
+}

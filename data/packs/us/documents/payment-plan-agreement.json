@@ -1,0 +1,119 @@
+{
+  "id": "payment-plan-agreement",
+  "title": "Payment Plan Agreement",
+  "category": "Front desk",
+  "about": "An agreement to pay a balance in parts, written to HRSA's Health Center Program Compliance Manual, Chapter 16 (Billing and Collections): payment plans open to all patients whatever their income or sliding fee pay class, inability to pay kept apart from refusal to pay, and the amount owed, the time to pay and the steps if payments stop all written down. The plan has no interest or fees and, as printed, suits four payments or fewer: a plan payable in more than four payments, or with a finance charge, can make the clinic a creditor under Regulation Z (12 CFR 1026.2(a)(17)), with Truth in Lending disclosures to give. Have your policy reviewed before offering longer plans.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "HRSA Health Center Program Compliance Manual, Chapter 16: Billing and Collections (last reviewed December 2025)",
+    "url": "https://bphc.hrsa.gov/compliance/compliance-manual/chapter16"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Account number"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "{facility.name} and I agree on a plan for me to pay what I owe in parts. This plan has no interest and no fees."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Amount I owe today"
+        },
+        {
+          "label": "Payment now, if any"
+        },
+        {
+          "label": "Amount of each payment"
+        },
+        {
+          "label": "How often (for example, every month)"
+        },
+        {
+          "label": "Number of payments"
+        },
+        {
+          "label": "First payment due"
+        },
+        {
+          "label": "Last payment due"
+        },
+        {
+          "label": "How I will pay (for example, cash, card, check or online)"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "I understand that",
+      "items": [
+        "Payment plans are open to every patient, whatever their income or discount level.",
+        "I can apply for the sliding fee discount at any time. If my income or family size changes, I can ask to be checked again. A discount may lower what I owe.",
+        "{facility.name} will not refuse me care because I cannot pay.",
+        "If I cannot make a payment, I will call {facility.phone} before it is due, and we can change the plan.",
+        "I can pay more, or pay it all, at any time, with no extra charge.",
+        "Charges from later visits are not part of this plan unless we add them in writing."
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If payments stop and I have not called, the clinic will (the clinic fills in its steps, such as a call, a letter, or a meeting with a financial counselor)"
+        },
+        {
+          "label": "How care may be limited if the clinic finds that I refused to pay, which is not the same as being unable to pay (the clinic fills in its policy, or writes None)"
+        }
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or responsible party",
+        "Clinic staff"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
+      ]
+    }
+  ]
+}

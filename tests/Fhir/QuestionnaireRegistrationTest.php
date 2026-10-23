@@ -105,7 +105,12 @@ final class QuestionnaireRegistrationTest extends TestCase
                 $left[$doc->id] = $what;
             }
         }
-        self::assertSame(['notice-of-availability' => QuestionnaireRegistration::NOTHING_TO_ANSWER], $left);
+        ksort($left);
+        self::assertSame([
+            'chaperone-notice' => QuestionnaireRegistration::NOTHING_TO_ANSWER,
+            'notice-of-availability' => QuestionnaireRegistration::NOTHING_TO_ANSWER,
+            'title-x-confidential-services' => QuestionnaireRegistration::NOTHING_TO_ANSWER,
+        ], $left);
         self::assertGreaterThan(20, $added);
     }
 

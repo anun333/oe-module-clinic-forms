@@ -186,6 +186,67 @@ function phpFiles(string $root): array
     return $files;
 }
 
+/**
+ * The openhealthcare-common methods the module calls through its import of
+ * OpenHealthcare\Common\OpenEmr, and what those call through self::, as one source under the
+ * library's path; none when the module doesn't require the library at run time. They run as the
+ * module's code, so their SQL, checks and calls are the module's.
+ *
+ * @param array<string, string> $module each module file's path => its source
+ * @return array<string, string>
+ */
+function libraryMethods(string $root, array $composer, array $module): array
+{
+    if (!isset($composer['require']['anun333/openhealthcare-common'])) {
+        return [];
+    }
+    $rel = 'vendor/anun333/openhealthcare-common/src/OpenEmr.php';
+    $lib = is_file("$root/$rel") ? (string) file_get_contents("$root/$rel") : '';
+    if ($lib === '') {
+        fail("$rel is missing; run composer install");
+    }
+    preg_match_all('/^    (?:(?:public|private|protected) )?static function (\w+)\(.*?^    \}$/ms', $lib, $m, PREG_SET_ORDER);
+    $bodies = array_column($m, 0, 1);
+    if (count($bodies) !== substr_count($lib, 'static function ')) {
+        fail("$rel: not every method was read; the library's layout changed");
+    }
+    // Calls through each file's import of the class, under its alias or its own name.
+    $want = [];
+    foreach ($module as $php) {
+        if (preg_match('/^use OpenHealthcare\\\\Common\\\\OpenEmr(?: as (\w+))?;/m', $php, $u) === 1) {
+            preg_match_all('/\b' . ($u[1] ?? 'OpenEmr') . '::(\w+)\(/', $php, $c);
+            array_push($want, ...$c[1]);
+        }
+    }
+    $take = [];
+    while (($name = array_shift($want)) !== null) {
+        if (isset($take[$name])) {
+            continue;
+        }
+        if (!isset($bodies[$name])) {
+            fail("OpenEmr::$name() is called but $rel has no such method");
+        }
+        $take[$name] = $bodies[$name];
+        preg_match_all('/\bself::(\w+)\(/', $bodies[$name], $s);
+        array_push($want, ...$s[1]);
+    }
+    if ($take === []) {
+        return [];
+    }
+    ksort($take);
+    return [$rel => "<?php\n" . implode("\n", $take)];
+}
+
+/** @return array<string, string> each file's path from the module's root => its source, then the library methods it calls */
+function sources(string $root, array $composer): array
+{
+    $out = [];
+    foreach (phpFiles($root) as $file) {
+        $out[substr($file, strlen($root) + 1)] = (string) file_get_contents($file);
+    }
+    return $out + libraryMethods($root, $composer, $out);
+}
+
 function fail(string $why): never
 {
     fwrite(STDERR, "footprint: $why\n");
@@ -304,18 +365,19 @@ $guards = array_values(array_unique($g[1]));
 $sqlFiles = array_map('basename', glob($root . '/sql/*.sql') ?: []);
 $uninstall = array_values(array_filter($sqlFiles, fn($f) => preg_match('/uninstall|cleanup|remove/i', $f)));
 
+$sources = sources($root, $composer);
+
 // --- runtime SQL ------------------------------------------------------------
 $reads = [];
 $writes = [];
 $queries = 0;
-foreach (phpFiles($root) as $file) {
-    foreach (stringLiterals((string) file_get_contents($file)) as $s) {
+foreach ($sources as $rel => $phpSource) {
+    foreach (stringLiterals($phpSource) as $s) {
         $t = sqlTables($s);
         if ($t === null) {
             continue;
         }
         $queries++;
-        $rel = substr($file, strlen($root) + 1);
         foreach ($t['reads'] as $x) {
             $reads[$x][$rel] = true;
         }
@@ -356,9 +418,7 @@ $checks = [];
 $events = [];
 $classWrites = [];
 $settings = [];
-foreach (phpFiles($root) as $file) {
-    $src = (string) file_get_contents($file);
-    $rel = substr($file, strlen($root) + 1);
+foreach ($sources as $rel => $src) {
     $n = preg_match_all($aclPattern, $src, $m, PREG_SET_ORDER);
     if ($n === 0 && str_contains($src, 'aclCheckCore(')) {
         fail("aclCheckCore in $rel but no call parsed");
@@ -369,8 +429,8 @@ foreach (phpFiles($root) as $file) {
         $checks[$what . ' (' . $level . ')'][$rel] = true;
     }
     // Audit events are written through OpenEMR's EventAuditLogger, directly or through the
-    // module's Compat adapter (OpenEmr::audit), which passes its caller's event name on.
-    $isAdapter = str_ends_with($rel, 'Compat/OpenEmr.php');
+    // module's Compat adapter (OpenEmr::audit) or openhealthcare-common's, which pass their caller's event name on.
+    $isAdapter = str_ends_with($rel, 'Compat/OpenEmr.php') || $rel === 'vendor/anun333/openhealthcare-common/src/OpenEmr.php';
     if (preg_match_all("/(?:newEvent|OpenEmr::audit)\(\s*'([^']+)'/", $src, $m) === 0 && !$isAdapter
         && (str_contains($src, 'newEvent(') || str_contains($src, 'OpenEmr::audit('))) {
         fail("audit event in $rel but no event name parsed");
@@ -406,10 +466,9 @@ ksort($settings);
 // define is OpenEMR's (the generator runs without OpenEMR loaded).
 $defined = [];
 $called = [];
-foreach (phpFiles($root) as $file) {
-    $toks = array_values(array_filter(token_get_all((string) file_get_contents($file)),
+foreach ($sources as $rel => $phpSource) {
+    $toks = array_values(array_filter(token_get_all($phpSource),
         fn($t) => !(is_array($t) && in_array($t[0], [T_WHITESPACE, T_COMMENT, T_DOC_COMMENT], true))));
-    $rel = substr($file, strlen($root) + 1);
     // A method is not a global function: a class's private text() must not hide calls to
     // OpenEMR's text(). Track the brace depth at which each class body opens.
     $depth = 0;
@@ -462,9 +521,9 @@ if (!preg_match($netPattern, 'curl_init(') || !preg_match($netPattern, "file_get
     fail('network detector self-test failed');
 }
 $net = [];
-foreach (phpFiles($root) as $file) {
-    if (preg_match_all($netPattern, (string) file_get_contents($file), $m)) {
-        $net[substr($file, strlen($root) + 1)] = array_unique($m[0]);
+foreach ($sources as $rel => $phpSource) {
+    if (preg_match_all($netPattern, $phpSource, $m)) {
+        $net[$rel] = array_unique($m[0]);
     }
 }
 
@@ -562,7 +621,7 @@ if (!$hasInstall) {
 }
 $md[] = '## What it reads and writes at runtime';
 $md[] = '';
-$md[] = "$queries SQL statements found in the module's PHP (" . implode(', ', array_map(fn($f) => '`' . $f . '`', array_merge(array_map(fn($d) => "$d/", array_values(array_filter(['src', 'public', 'background'], fn($d) => is_dir($root . '/' . $d)))), array_values(array_filter(['ModuleManagerListener.php', 'openemr.bootstrap.php'], fn($f) => is_file($root . '/' . $f)))))) . "). Data OpenEMR's own functions read on its behalf is not in this table; see the next section.";
+$md[] = "$queries SQL statements found in the module's PHP (" . implode(', ', array_map(fn($f) => '`' . $f . '`', array_merge(array_map(fn($d) => "$d/", array_values(array_filter(['src', 'public', 'background'], fn($d) => is_dir($root . '/' . $d)))), array_values(array_filter(['ModuleManagerListener.php', 'openemr.bootstrap.php'], fn($f) => is_file($root . '/' . $f)))))) . ")" . (isset($sources['vendor/anun333/openhealthcare-common/src/OpenEmr.php']) ? ' and in the openhealthcare-common methods it calls (`vendor/anun333/openhealthcare-common/src/OpenEmr.php`)' : '') . ". Data OpenEMR's own functions read on its behalf is not in this table; see the next section.";
 $md[] = '';
 $md[] = '| table | read by | written by | owner |';
 $md[] = '|---|---|---|---|';

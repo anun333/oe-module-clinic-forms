@@ -1,0 +1,33 @@
+{
+  "id": "chaperone-notice",
+  "translates": "649e5cdfc54070bc",
+  "title": "Usted puede pedir un acompañante",
+  "category": "Privacidad y derechos del paciente",
+  "about": "Un aviso para colocar en los consultorios y en la sala de espera: cualquier paciente puede pedir un acompañante en cualquier examen, en cualquier momento, sin dar una razón. Anote cada ofrecimiento en el Registro de acompañante o en la nota de la consulta.",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "Usted puede pedir un acompañante para cualquier examen o procedimiento. Un acompañante es un miembro capacitado de nuestro personal que se queda en el cuarto durante su examen."
+    },
+    {
+      "type": "paragraph",
+      "text": "Puede pedirlo en cualquier momento, incluso después de que haya empezado el examen. No tiene que dar una razón. Solo dígaselo a cualquier miembro de nuestro personal."
+    },
+    {
+      "type": "paragraph",
+      "text": "Puede pedir un acompañante de cierto género, y haremos todo lo posible por encontrarlo. Si no hay un acompañante disponible, puede elegir esperar o volver otro día."
+    },
+    {
+      "type": "paragraph",
+      "text": "Un familiar o amigo también puede quedarse con usted, pero no reemplaza al acompañante."
+    },
+    {
+      "type": "paragraph",
+      "text": "Su profesional clínico también puede pedir que haya un acompañante en el cuarto. Si usted no quiere uno, díganoslo y hablaremos de sus opciones."
+    },
+    {
+      "type": "paragraph",
+      "text": "Si algo durante un examen le hace sentir incómodo, puede pedir que se detenga. Preguntas o inquietudes: llame al {facility.phone}."
+    }
+  ]
+}

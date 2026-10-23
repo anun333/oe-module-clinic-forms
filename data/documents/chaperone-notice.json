@@ -1,0 +1,44 @@
+{
+  "id": "chaperone-notice",
+  "title": "You Can Ask for a Chaperone",
+  "category": "Privacy and patient rights",
+  "about": "A notice to post in exam rooms and the waiting room: any patient may ask for a chaperone at any exam, at any time, without giving a reason. Record each offer on the Chaperone Record or in the visit note.",
+  "audience": "patient",
+  "poster": true,
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "You can ask for a chaperone for any exam or procedure. A chaperone is a trained member of our staff who stays in the room during your exam."
+    },
+    {
+      "type": "paragraph",
+      "text": "You can ask at any time, even after the exam has started. You do not have to give a reason. Just tell any member of our staff."
+    },
+    {
+      "type": "paragraph",
+      "text": "You can ask for a chaperone of a certain gender, and we will do our best to find one. If no chaperone is free, you can choose to wait or to come back on another day."
+    },
+    {
+      "type": "paragraph",
+      "text": "A family member or friend may stay with you too, but they do not take the place of a chaperone."
+    },
+    {
+      "type": "paragraph",
+      "text": "Your clinician may also ask for a chaperone to be in the room. If you do not want one, tell us and we will talk about your choices."
+    },
+    {
+      "type": "paragraph",
+      "text": "If anything during an exam makes you uncomfortable, you can ask to stop. Questions or concerns: call {facility.phone}."
+    }
+  ]
+}

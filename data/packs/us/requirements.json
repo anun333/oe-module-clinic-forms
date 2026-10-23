@@ -1486,6 +1486,163 @@
           ]
         }
       ]
+    },
+    "payment-plan-agreement": {
+      "source": "HRSA Health Center Program Compliance Manual, Chapter 16: Billing and Collections (last reviewed December 2025); Chapter 9: Sliding Fee Discount Program",
+      "elements": [
+        {
+          "name": "Payment plans are accessible to all patients regardless of income level or sliding fee discount pay class",
+          "cite": "Compliance Manual ch. 16",
+          "all": [
+            "open to every patient",
+            "whatever their income or discount level"
+          ]
+        },
+        {
+          "name": "No patient is denied service based on inability to pay",
+          "cite": "Compliance Manual ch. 16",
+          "all": [
+            "will not refuse me care because i cannot pay"
+          ]
+        },
+        {
+          "name": "Amounts owed and the time permitted to make such payments",
+          "cite": "Compliance Manual ch. 16",
+          "all": [
+            "amount i owe",
+            "first payment due",
+            "last payment due"
+          ]
+        },
+        {
+          "name": "Collection efforts that will be taken",
+          "cite": "Compliance Manual ch. 16",
+          "all": [
+            "if payments stop"
+          ]
+        },
+        {
+          "name": "How services will be limited for refusal to pay, distinguished from inability to pay",
+          "cite": "Compliance Manual ch. 16",
+          "all": [
+            "refused to pay",
+            "unable to pay"
+          ]
+        },
+        {
+          "name": "The sliding fee discount stays open to the patient",
+          "cite": "Compliance Manual ch. 9",
+          "all": [
+            "sliding fee discount"
+          ]
+        }
+      ]
+    },
+    "title-x-confidential-services": {
+      "source": "Title X family planning projects, 42 CFR 59 subpart A (86 FR 56177, as amended at 89 FR 80067), as in force on 2026-10-21",
+      "elements": [
+        {
+          "name": "Personal information held confidential; disclosed without documented consent only as necessary to provide services or as required by law",
+          "cite": "42 CFR 59.10(a)",
+          "all": [
+            "kept private",
+            "written permission",
+            "for your care",
+            "law requires"
+          ]
+        },
+        {
+          "name": "The client is told of any potential disclosure to a policyholder other than the client",
+          "cite": "42 CFR 59.10(a)",
+          "all": [
+            "someone else's health insurance",
+            "statement from the insurance company"
+          ]
+        },
+        {
+          "name": "No parental consent required for minors, and no notice to a parent or guardian",
+          "cite": "42 CFR 59.10(b)",
+          "all": [
+            "do not need a parent's permission",
+            "will not tell your parents"
+          ]
+        },
+        {
+          "name": "Family participation encouraged",
+          "cite": "42 CFR 59.10(b)",
+          "all": [
+            "talk with your family"
+          ]
+        },
+        {
+          "name": "Services voluntary, without coercion, and not a prerequisite for any other service or program",
+          "cite": "42 CFR 59.5(a)(2)",
+          "all": [
+            "voluntary",
+            "pressure",
+            "never a condition"
+          ]
+        },
+        {
+          "name": "No discrimination on the listed grounds",
+          "cite": "42 CFR 59.5(a)(4)",
+          "all": [
+            "religion",
+            "race",
+            "color",
+            "national origin",
+            "disability",
+            "age",
+            "sexual orientation",
+            "gender identity",
+            "sex characteristics",
+            "number of pregnancies",
+            "marital status"
+          ]
+        },
+        {
+          "name": "Pregnant clients may have information and counseling on each option, and referral on request, except options they decline",
+          "cite": "42 CFR 59.5(a)(5)",
+          "all": [
+            "prenatal care and delivery",
+            "infant care, foster care or adoption",
+            "ending the pregnancy",
+            "we will refer you",
+            "do not want to hear about"
+          ]
+        },
+        {
+          "name": "No charge to clients from low-income families, except a third party's payment",
+          "cite": "42 CFR 59.5(a)(7)",
+          "all": [
+            "at or below the federal poverty level",
+            "no charge to you"
+          ]
+        },
+        {
+          "name": "A schedule of discounts up to 250% of the poverty guidelines",
+          "cite": "42 CFR 59.5(a)(8)",
+          "all": [
+            "2.5 times",
+            "sliding scale"
+          ]
+        },
+        {
+          "name": "Insured clients at or below 250% pay no more than the schedule of discounts",
+          "cite": "42 CFR 59.5(a)(8)(ii)",
+          "all": [
+            "will not pay more than the sliding scale charge"
+          ]
+        },
+        {
+          "name": "Income verified without burdening clients; self-reported income when it can't be verified",
+          "cite": "42 CFR 59.5(a)(9)",
+          "all": [
+            "proof of income",
+            "the income you tell us"
+          ]
+        }
+      ]
     }
   }
 }

@@ -12,7 +12,7 @@ Nothing. The module ships no install SQL (there is no `sql/` directory), so inst
 
 ## What it reads and writes at runtime
 
-26 SQL statements found in the module's PHP (`src/`, `public/`, `openemr.bootstrap.php`). Data OpenEMR's own functions read on its behalf is not in this table; see the next section.
+26 SQL statements found in the module's PHP (`src/`, `public/`, `openemr.bootstrap.php`) and in the openhealthcare-common methods it calls (`vendor/anun333/openhealthcare-common/src/OpenEmr.php`). Data OpenEMR's own functions read on its behalf is not in this table; see the next section.
 
 | table | read by | written by | owner |
 |---|---|---|---|
@@ -38,7 +38,7 @@ Global functions the module calls that PHP doesn't provide and the module doesn'
 - `attr()`: `public/index.php`, `public/print.php`
 - `oeFormatShortDate()`: `public/export.php`, `public/print.php`, `src/Repository/SiteData.php`
 - `text()`: `public/index.php`, `public/print.php`
-- `xl()`: `public/export.php`, `public/index.php`, `public/print.php`, `public/upload.php`, `src/Bootstrap.php`, `src/Compat/OpenEmr.php`, `src/Paper/Words.php`, `src/Repository/SiteData.php`
+- `xl()`: `public/export.php`, `public/index.php`, `public/print.php`, `public/upload.php`, `src/Bootstrap.php`, `src/Paper/Words.php`, `src/Repository/SiteData.php`, `vendor/anun333/openhealthcare-common/src/OpenEmr.php`
 - `xl_layout_label()`: `src/Repository/SiteData.php`
 - `xl_list_label()`: `src/Repository/SiteData.php`
 - `xlt()`: `public/index.php`, `public/print.php`, `src/Bootstrap.php`
@@ -83,12 +83,12 @@ As written in the source; whether they behave correctly for a given user is not 
 
 | part | files | lines |
 |---|---|---|
-| document library (`data/`, JSON read at runtime) | 115 | 22191 |
-| PHP logic (`src/`) | 35 | 6242 |
-| tests (`tests/`, `phpunit.xml.dist`) | 25 | 3407 |
-| tools (`tools/`) | 8 | 1579 |
+| document library (`data/`, JSON read at runtime) | 124 | 23106 |
+| PHP logic (`src/`) | 35 | 6166 |
+| tests (`tests/`, `phpunit.xml.dist`) | 25 | 3390 |
+| tools (`tools/`) | 8 | 1638 |
 | pages (`public/`) | 5 | 896 |
-| module wiring | 3 | 72 |
+| module wiring | 3 | 85 |
 
 ## Not covered here
 

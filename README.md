@@ -42,12 +42,14 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Front desk | Consent to Treatment | General consent for examination and treatment | 59284-0 | any |
 | Front desk | Acknowledgment of the Notice of Privacy Practices | Receipt of the Notice, with a clinic-use section for when it wasn't obtained | 57016-8 | US |
 | Front desk | Financial Policy and Assignment of Benefits | Payment responsibilities, insurance billing and assignment of benefits | 59284-0 | any |
+| Front desk | Payment Plan Agreement | A balance paid in parts, to HRSA's Compliance Manual chapter 16: open to every pay class, no one refused care for being unable to pay, and the clinic's own steps if payments stop | — | US |
 | Front desk | Authorization to Release Health Information | A HIPAA authorization with the elements 45 CFR 164.508 requires, separate initials for sensitive records, and a 42 CFR Part 2 note | 64292-6 | US |
 | Front desk | Your Rights and Responsibilities | What patients can expect, and what the clinic asks of them | — | any |
 | Front desk | Missed Appointments | The missed and late appointment policy, with help offered (rides, child care) | — | any |
 | Front desk | Language Help and Interpreter Request | The patient's languages and the help they want, with a staff section for what was arranged | — | any |
 | Front desk | Communication Preferences | How the clinic may contact the patient: phone, voicemail, text, email, portal | 59284-0 | any |
 | Front desk | Consent for Telehealth Visits | Consent to visits by video or telephone | 59284-0 | any |
+| Front desk | Consent for Photos and Recordings | Photos, video or audio for the record and care, or for teaching, each ticked separately; publicity needs its own permission | 59284-0 | any |
 | Front desk | We Offer Discounts Based on Income | A notice to post or hand out: the sliding fee discount, who qualifies, and that no one is turned away; the clinic writes in its own schedule | — | US |
 | Front desk | Sliding Fee Discount Application | Household members and income, proof attached, and a clinic section for the poverty-guideline percentage and discount level (the facts UDS Table 4 reports) | — | US |
 | Screening | Patient Health Questionnaire-4 (PHQ-4) | Two anxiety and two depression questions; each part scored 0 to 6, and 3 or more on either is a positive screen | 69724-3 | any |
@@ -85,6 +87,7 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Office workflow | Patient Routing Slip | Travels with the patient: check-in, rooming, provider, checkout | — | any |
 | Office workflow | Staff Handoff (SBAR) | Handing a patient from one staff member, shift or site to another | — | any |
 | Office workflow | Internal Referral | To behavioral health, care management, nutrition, social work or another of the clinic's sites | 57133-1 | any |
+| Office workflow | Chaperone Record | Each chaperone offer, the patient's choice, and who was in the room | — | any |
 | Downtime | Encounter Form (Superbill) | One visit's charges on paper: CPT or HCPCS services, ICD-10-CM diagnoses A to L as on the claim form, the billing NPI, sliding fee level, payment | — | US |
 | Downtime | Downtime Visit Note | A paper visit note for when OpenEMR is down, with a box to record when it was entered | 11506-3 | any |
 | Privacy and patient rights | Notice of Privacy Practices | The notice itself (45 CFR 164.520), with the 42 CFR Part 2 statements required from February 16, 2026; fill in the effective date and privacy contact | 57017-6 | US |
@@ -100,6 +103,8 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Privacy and patient rights | Patient Concern or Grievance | A concern or grievance, including unfair treatment, with what 45 CFR 92.8(c) asks the record to hold | — | US |
 | Privacy and patient rights | Notice of Nondiscrimination | The Section 1557 notice (45 CFR 92.10), as a 20-point poster; fill in the Section 1557 Coordinator | — | US |
 | Privacy and patient rights | Free Language Help and Services for People with Disabilities | The Section 1557 notice of availability (92.11) with every tagline, as a 20-point poster | — | US |
+| Privacy and patient rights | Your Family Planning Visit Is Private | The Title X notice to 42 CFR 59: confidentiality, minors, the policyholder's statement, voluntary services, options counseling and charges by income | — | US |
+| Privacy and patient rights | You Can Ask for a Chaperone | A poster: a chaperone at any exam, at any time, without a reason | — | any |
 | After the visit | Your Test Results | A results letter: each result and what it means, what to do next, signed by the clinician | — | any |
 | After the visit | Visit Summary and Instructions | What was found, medicines on file and changed today, what to do at home, tests ordered, the next visit | 103796-9 | any |
 | After the visit | Consent for a Procedure | Informed consent for one procedure: why, benefits, risks, other choices, questions answered | 64293-4 | any |
@@ -288,7 +293,7 @@ Printing is the browser's own: no print server and nothing to install. When **Ad
 composer require anun333/oe-module-clinic-forms
 ```
 
-Run it in the OpenEMR directory. It installs into `interface/modules/custom_modules/oe-module-clinic-forms/`. Then, under **Modules › Manage Modules**, register, install and enable **Clinic Forms**. There is no install SQL.
+Run it in the OpenEMR directory. It installs into `interface/modules/custom_modules/oe-module-clinic-forms/`. Then, under **Modules › Manage Modules**, register, install and enable **Clinic Forms**. There is no install SQL. It brings [openhealthcare-common](https://github.com/anun333/openhealthcare-common), the small library of OpenEMR compatibility code the openhealthcare modules share; Composer installs it alongside.
 
 ## Access
 

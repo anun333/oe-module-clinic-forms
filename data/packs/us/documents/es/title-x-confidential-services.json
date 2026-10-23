@@ -1,0 +1,65 @@
+{
+  "id": "title-x-confidential-services",
+  "translates": "9341a981f31b3995",
+  "title": "Su consulta de planificación familiar es privada",
+  "category": "Privacidad y derechos del paciente",
+  "about": "Lo que un proyecto de planificación familiar del Título X les dice a sus clientes, escrito según 42 CFR 59, subparte A, vigente el 2026-10-21 (la regla de 2021, enmendada en 2024): la confidencialidad y el estado de cuenta del seguro que recibe el titular de la póliza (59.10(a)); sin consentimiento ni aviso a los padres para menores, animando a hablar en familia (59.10(b)); servicios voluntarios sin presión (59.5(a)(2)); no discriminación (59.5(a)(4)); consejería sobre opciones y referido a petición (59.5(a)(5)); y cargos según el ingreso (59.5(a)(7) a (9)). La ley estatal puede exigir que se reporte el abuso. Las reglas del Título X cambian con cada administración, así que revise 42 CFR 59 antes de cada versión.",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "{facility.name} ofrece servicios de planificación familiar. Esto es lo que puede esperar de nosotros."
+    },
+    {
+      "type": "heading",
+      "text": "Su privacidad"
+    },
+    {
+      "type": "paragraph",
+      "text": "Lo que usted nos dice se mantiene privado. No lo compartiremos sin su permiso por escrito, a menos que sea necesario para su atención o que la ley lo exija. Por ejemplo, la ley puede exigirnos reportar el abuso."
+    },
+    {
+      "type": "paragraph",
+      "text": "Si usted es menor de 18 años, no necesita el permiso de sus padres para recibir estos servicios, y no les diremos a sus padres que vino. Sí le animamos a hablar con su familia, si puede."
+    },
+    {
+      "type": "paragraph",
+      "text": "Si usa el seguro médico de otra persona, como el de su padre, su madre o su pareja, esa persona puede recibir un estado de cuenta de la compañía de seguros que muestre su consulta. Si esto le preocupa, díganoslo antes de que facturemos a su seguro, y hablaremos de sus opciones."
+    },
+    {
+      "type": "heading",
+      "text": "Sus opciones"
+    },
+    {
+      "type": "paragraph",
+      "text": "Nuestros servicios son voluntarios. Nadie puede presionarle para que use un método de planificación familiar, ni para que elija uno en particular. Usar nuestros servicios nunca es una condición para recibir otra ayuda de nosotros ni de ningún otro programa."
+    },
+    {
+      "type": "paragraph",
+      "text": "Si está embarazada, puede pedir información y consejería sobre cada una de sus opciones: el cuidado prenatal y el parto; el cuidado del bebé, el cuidado de crianza temporal o la adopción; y terminar el embarazo. Si lo pide, le daremos un referido. Puede decirnos de qué temas no quiere hablar."
+    },
+    {
+      "type": "paragraph",
+      "text": "Atendemos a todos. No tratamos a nadie de forma distinta por su religión, raza, color, origen nacional, discapacidad, edad, sexo, orientación sexual, identidad de género, características sexuales, número de embarazos o estado civil."
+    },
+    {
+      "type": "heading",
+      "text": "Lo que usted paga"
+    },
+    {
+      "type": "paragraph",
+      "text": "Le preguntamos el tamaño y el ingreso de su familia para fijar su cargo. Si su ingreso está en el nivel federal de pobreza o por debajo de él, usted no paga nada. Si es de hasta 2.5 veces ese nivel, paga menos, según una escala variable. Si tiene seguro, podemos facturarle al seguro."
+    },
+    {
+      "type": "paragraph",
+      "text": "Si tiene seguro y su ingreso no es mayor de 2.5 veces el nivel de pobreza, no pagará más que el cargo de la escala variable."
+    },
+    {
+      "type": "paragraph",
+      "text": "Podemos pedirle un comprobante de ingresos, pero no se lo haremos difícil. Si no puede mostrar un comprobante, usamos el ingreso que usted nos diga."
+    },
+    {
+      "type": "paragraph",
+      "text": "¿Preguntas? Llame al {facility.phone}."
+    }
+  ]
+}
