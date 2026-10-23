@@ -313,6 +313,7 @@ As written in the code, not verified for restricted users:
 
 | OpenEMR | Checked | How |
 |---|---|---|
+| 7.0.2, 7.0.3, 8.1.0, 8.3.0, 8.5.0 | 2026-10-23 | Official images, fresh install, with every module enabled and with it alone, on openhealthcare-common: installed through Module Manager; the picker, the print page (75 of 75 pages), a Word and a PDF export, added to OpenEMR questionnaires, saved to Documents, and the FHIR export, with no failing page. |
 | 8.4.1 | 2026-10-15 | Installed through Module Manager. The picker and a packet of every document, Demographics, History and Referral printed with no PHP errors, blank and filled, and printed to PDF in Chromium to check the pages. A print without the CSRF token is refused. Local documents, valid and broken, tested. |
 | 7.0.2, 7.0.3 | 2026-10-16 | Official images, fresh install: installed through Module Manager; the picker, a 32-page blank packet and a Word export, with no PHP error. On 7.0.3 also: the menu entry, a print without the CSRF token refused (403), and a Spanish packet filled from the chart with its audit event. |
 | 8.1.0, 8.2.0, 8.3.0, 8.4.0, 8.5.0 | 2026-10-15 | Official images, fresh install: installed through Module Manager; the picker loads and a blank packet of all 12 documents, Demographics, History and Referral prints all 15 pages with no PHP error. |
