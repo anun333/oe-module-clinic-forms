@@ -41,7 +41,7 @@ A document is one JSON file named by its id (`consent-to-treat.json`), in `data/
 
 ## Blocks
 
-`heading`, `paragraph`, `fields` (label and optional value), `checklist`, `lines` (ruled lines), `signature` (one line per signer, each with a date), `scale` (a question per row and a box per answer, optionally scored), `table` (column headings over blank rows), `taglines` (the language assistance taglines). Exact shapes are in `src/Paper/Document.php`.
+`heading`, `paragraph`, `fields` (label and optional value), `checklist` (optionally coded: see below), `lines` (ruled lines), `signature` (one line per signer, each with a date), `scale` (a question per row and a box per answer, optionally scored), `table` (column headings over blank rows), `taglines` (the language assistance taglines). Exact shapes are in `src/Paper/Document.php`.
 
 ## Tables another module fills
 
@@ -58,6 +58,16 @@ A question that should only be asked after a certain answer can say so. Printing
 - **`number`** on a field makes it a whole number in a range: `"number": [0, 365]`.
 
 Answers are named by position, so a translation carries exactly the same skip logic as its English document, copied rather than translated. Skip logic isn't wording: adding it doesn't change a document's version. A condition that names something below it, a missing answer, or the wrong kind of target is refused when the file is read. ASQ and BSTAD carry skip logic; see their files for examples.
+
+## Coded questions
+
+A labelled checklist can say what it asks in code, so the answer saved on screen is a code a report can read, whatever the wording. The Title X visit record asks FPAR 2.0's items this way.
+
+- **`code`**: the question's LOINC code, `{"system": "http://loinc.org", "code": "86645-9"}`, check digit verified. On screen it is also the question's linkId (`/86645-9`), so each code once in a document.
+- **`answer_codes`**: one code for each item, in the same order. LOINC answers (`LA...`) take LOINC's own text from `data/loinc-names.json`. SNOMED CT answers, and HL7's null flavors (`UNK`), give the code system's own name in `display`.
+- **`single`**: `true` when one answer is chosen. Otherwise any number can be ticked.
+
+The paper prints the document's own words. On screen each answer shows its code system's name, as coded instruments do. SNOMED CT codes go out with the US Edition named, which holds the US extension's codes. Codes aren't wording: they change no version, and a translation copies them, like skip logic. A mistake (a wrong check digit, a code for each item missing, a LOINC answer with its own display) is refused when the file is read.
 
 ## Placeholders
 

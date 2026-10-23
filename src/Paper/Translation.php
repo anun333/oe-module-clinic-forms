@@ -64,6 +64,8 @@ final class Translation
                     static fn(array $f): array => [$f['id'] ?? null, $f['show_if'] ?? null, $f['number'] ?? null],
                     $b['fields'] ?? [],
                 ), static fn(array $f): bool => $f !== [null, null, null])],
+                // So are a coded checklist's codes: the codes a report reads are the same in every language.
+                'codes' => [$b['code'] ?? null, $b['answer_codes'] ?? null, $b['single'] ?? null],
             ];
             foreach (array_diff_assoc(array_map('json_encode', $counts($e)), array_map('json_encode', $counts($t))) as $what => $unused) {
                 $out[] = "$at: its $what differ from the English";
@@ -78,8 +80,9 @@ final class Translation
     }
 
     /**
-     * The blocks without their skip logic (ids, show_if, number ranges): what a block does on screen
-     * isn't wording, so it changes neither a document's version nor its translations.
+     * The blocks without their skip logic (ids, show_if, number ranges) or a coded checklist's codes:
+     * what a block does on screen, and what it's coded as, isn't wording, so it changes neither a
+     * document's version nor its translations.
      *
      * @param list<array<string, mixed>> $blocks
      * @return list<array<string, mixed>>
@@ -87,7 +90,7 @@ final class Translation
     public static function wording(array $blocks): array
     {
         return array_map(static function (array $b): array {
-            unset($b['id'], $b['show_if']);
+            unset($b['id'], $b['show_if'], $b['code'], $b['answer_codes'], $b['single']);
             if (isset($b['fields']) && is_array($b['fields'])) {
                 $b['fields'] = array_map(static function (mixed $f): mixed {
                     if (is_array($f)) {

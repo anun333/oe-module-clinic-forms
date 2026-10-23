@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.35.0 (unreleased)
+
+**The Title X visit record, and coded questions.**
+
+- **Coded questions** ([docs/DOCUMENT-FORMAT.md](docs/DOCUMENT-FORMAT.md)): a labelled checklist can carry its question's LOINC code and a code for each answer (LOINC, SNOMED CT or HL7's null flavors), with one answer chosen. The FHIR export carries them, so OpenEMR's questionnaire saves the codes a report reads. Codes aren't wording: they change no version, and a translation copies them. Mistakes are refused when the file is read (11 tests).
+- **Title X Family Planning Visit Record** (US pack, for clinicians): the 10 family planning items of OPA's FPAR 2.0, coded as OPA's valid values file of 4/3/2026 codes them, the patient's part first and then the clinician's. The reason for no method shows on screen only when the method is "none". Title X's own items from 42 CFR 59 follow as ticks. The rest of FPAR comes from OpenEMR's own records (the mapping is in the openhealthcare workspace, docs/products/title-x/). A test holds every question to OPA's current answer codes, and fails on one changed code.
+- **Packet:** Title X family planning visit (the confidential services notice, the sliding fee application and the visit record).
+- **Checked:** OpenEMR's own questionnaire runtime (8.4.1 and master) hides and shows the reason as it should, and saves the SNOMED code. All 99 exported questionnaires pass the HL7 validator, SNOMED CT's US Edition codes included. OPA's female condom code (228479001) is inactive in SNOMED CT but still OPA's valid value, so the record sends it.
+
 ## 0.34.0 (2026-10-23)
 
 **Photos and recordings, chaperones, payment plans and the Title X notice.**

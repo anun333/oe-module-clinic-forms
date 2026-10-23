@@ -48,6 +48,8 @@ final readonly class QuestionnaireExport
     /** A translated instrument's answers, coded by their position in the question ("1", "2"...). */
     public const ANSWER_SYSTEM = 'https://github.com/anun333/oe-module-clinic-forms/answers';
     private const BLANK = '__________';
+    private const SNOMED = 'http://snomed.info/sct';
+    private const SNOMED_US_EDITION = 'http://snomed.info/sct/731000124108';
 
     private Context $context;
 
@@ -181,7 +183,13 @@ final readonly class QuestionnaireExport
                     }
                     break;
                 case 'checklist':
-                    if (isset($block['label'])) {
+                    if (isset($block['label'], $block['code'])) {
+                        $item = $this->codedChoice((string)$block['label'], $block, $doc->language);
+                        $add($item);
+                        if (isset($block['id'])) {
+                            $targets[$block['id']] = ['linkId' => $item['linkId'], 'answers' => $item['answerOption']];
+                        }
+                    } elseif (isset($block['label'])) {
                         $item = $this->choice("$id", (string)$block['label'], array_map(fn(string $i): array => self::scored($this->text($i)), $block['items']), $codes['map'][++$asked] ?? null, !$doc->validated, $doc->language);
                         $add($item);
                         if (isset($block['id'])) {
@@ -419,6 +427,37 @@ final readonly class QuestionnaireExport
             throw new \LogicException("LOINC code $code has no name in data/loinc-names.json; run tools/loinc-names.php");
         }
         return ['system' => Loinc::SYSTEM, 'code' => $code, 'display' => $name];
+    }
+
+    /**
+     * A checklist that says what it asks in code (DOCUMENT-FORMAT.md, coded questions): the question's
+     * LOINC code, as the item's code and linkId, and each answer's code, so a saved response holds the
+     * codes a report reads. Each answer shows its code system's own name for it, LOINC's from the names
+     * file, as everywhere else; the paper keeps the document's wording.
+     *
+     * @param array<string, mixed> $block
+     * @return array<string, mixed>
+     */
+    private function codedChoice(string $label, array $block, string $language): array
+    {
+        $text = $this->text($label);
+        $item = ['linkId' => '/' . $block['code']['code'], 'code' => [self::loincCoding($block['code']['code'], $language)]];
+        if (preg_match('/^\s*(\d+[.)])\s+(.*)$/su', $text, $m) === 1) {
+            $item['prefix'] = $m[1];
+            $text = $m[2];
+        }
+        $item += ['text' => $text, 'type' => 'choice', 'repeats' => ($block['single'] ?? false) !== true, 'answerOption' => []];
+        foreach ($block['answer_codes'] as $a) {
+            $item['answerOption'][] = ['valueCoding' => match ($a['system']) {
+                Loinc::SYSTEM => self::loincCoding($a['code'], $language),
+                // SNOMED CT's US Edition, which holds the US extension's codes (FPAR's 454411000124108 and
+                // the like) as well as the international ones: without it a validator reads the
+                // International Edition and doesn't know them.
+                self::SNOMED => ['system' => self::SNOMED, 'version' => self::SNOMED_US_EDITION, 'code' => $a['code'], 'display' => $a['display']],
+                default => ['system' => $a['system'], 'code' => $a['code'], 'display' => $a['display']],
+            }];
+        }
+        return $item;
     }
 
     /** @return array{0: string, 1: int|float|null} "Never (0)" as its text and points */

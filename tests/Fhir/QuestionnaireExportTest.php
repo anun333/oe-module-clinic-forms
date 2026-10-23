@@ -14,6 +14,7 @@ use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\Document;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
 use OpenHealthcare\ClinicForms\Paper\Loinc;
+use OpenHealthcare\ClinicForms\Paper\Translation;
 use OpenHealthcare\ClinicForms\Paper\Words;
 use PHPUnit\Framework\TestCase;
 
@@ -197,6 +198,59 @@ final class QuestionnaireExportTest extends TestCase
         self::assertSame(['Bundle', 'collection'], [$bundle['resourceType'], $bundle['type']]);
         self::assertSame(['phq-9', 'gad-7'], array_map(static fn(array $e): string => $e['resource']['id'], $bundle['entry']));
         self::assertSame('Questionnaire', (new QuestionnaireExport(new Context([])))->export([$this->doc('phq-9')])['resourceType']);
+    }
+
+    /**
+     * The Title X visit record asks each FPAR 2.0 family planning item with OPA's own codes (valid
+     * values file of 4/3/2026, docs/products/title-x/fpar2-elements-2026-10.md in the openhealthcare
+     * workspace): the question's LOINC code as its linkId, every current answer code and no other,
+     * one answer each. The Title X Report reads a saved response by these codes.
+     */
+    public function testTheTitleXVisitRecordCarriesFparCodes(): void
+    {
+        $sct = 'http://snomed.info/sct';
+        $methods = ['60890002', '22523008', '428987008', '449038007', '448962006', '312081001', '268464009', '268458002', '169467008', '413116005',
+            '450850003', '450851004', '442450006', '228479001', '831141000124107', '268466006', '169530003', '455501000124105', '454441000124107',
+            '169513000', '268463003', '455491000124102', '454451000124109', '169450001'];
+        $reasons = ['454731000124108', '454361000124100', '15296000', '454411000124108', '74964007'];
+        $yesNo = ['373066001', '373067005'];
+        $expected = [
+            '98076-3' => ['http://loinc.org' => ['LA33-6', 'LA32389-1', 'LA32390-9', 'LA32393-3', 'LA32391-7', 'LA32392-5']],
+            '86645-9' => [$sct => ['454411000124108', '454401000124105', '454391000124108', '454381000124105']],
+            '86649-1' => [$sct => $methods],
+            '86650-9' => [$sct => $reasons],
+            '82810-3' => [$sct => ['77386006', '60001007'], 'http://terminology.hl7.org/CodeSystem/v3-NullFlavor' => ['UNK']],
+            '86654-1' => [$sct => $yesNo],
+            '86655-8' => [$sct => $yesNo],
+            '86651-7' => [$sct => $methods],
+            '86653-3' => [$sct => $reasons],
+            '86652-5' => [$sct => ['308335008', '16076005', '281100006']],
+        ];
+        $items = self::flatten($this->export('title-x-visit-record')['item']);
+        foreach ($expected as $code => $bySystem) {
+            $item = $items["/$code"] ?? null;
+            self::assertNotNull($item, "FPAR question $code is asked");
+            self::assertSame(['system' => 'http://loinc.org', 'code' => $code], array_intersect_key($item['code'][0], ['system' => 1, 'code' => 1]));
+            self::assertNotSame('', $item['code'][0]['display'], "$code goes with LOINC's name");
+            self::assertFalse($item['repeats'], "$code takes one answer");
+            $got = [];
+            foreach ($item['answerOption'] as $option) {
+                self::assertNotSame('', $option['valueCoding']['display'] ?? '', "$code's answers each have a display");
+                $got[$option['valueCoding']['system']][] = $option['valueCoding']['code'];
+            }
+            self::assertSame($bySystem, $got, "$code's answers are OPA's current codes, in the document's order");
+        }
+        // The reason for no method appears on screen only when the method is "none", by its code.
+        self::assertSame([['question' => '/86649-1', 'operator' => '=', 'answerCoding' => ['system' => $sct, 'code' => '169450001', 'display' => 'No contraceptive precautions']]], $items['/86650-9']['enableWhen']);
+        self::assertSame('169450001', $items['/86653-3']['enableWhen'][0]['answerCoding']['code']);
+    }
+
+    public function testCodesAreNotWording(): void
+    {
+        $plain = ['type' => 'checklist', 'label' => 'Pregnancy status', 'items' => ['Pregnant', 'Not pregnant']];
+        $coded = $plain + ['code' => ['system' => 'http://loinc.org', 'code' => '82810-3'], 'single' => true,
+            'answer_codes' => [['system' => 'http://snomed.info/sct', 'code' => '77386006', 'display' => 'Pregnancy'], ['system' => 'http://snomed.info/sct', 'code' => '60001007', 'display' => 'Not pregnant']]];
+        self::assertSame(Translation::wording([$plain]), Translation::wording([$coded]), 'adding codes changes no version');
     }
 
     public function testNamesAreComputerUsable(): void

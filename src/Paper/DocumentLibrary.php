@@ -28,6 +28,13 @@ namespace OpenHealthcare\ClinicForms\Paper;
 
 final class DocumentLibrary
 {
+    /** The code systems a coded checklist's answers can be in: LOINC, SNOMED CT, and HL7's null flavors (an answer such as unknown). */
+    public const ANSWER_SYSTEMS = [
+        Loinc::SYSTEM => 'LOINC',
+        'http://snomed.info/sct' => 'SNOMED CT',
+        'http://terminology.hl7.org/CodeSystem/v3-NullFlavor' => 'HL7 null flavor',
+    ];
+
     /** A block's keys for the screen only, checked by conditions(): printing ignores them. */
     private const BEHAVIOUR = ['id' => true, 'show_if' => true];
 
@@ -366,7 +373,7 @@ final class DocumentLibrary
                     }
                     break;
                 case 'checklist':
-                    self::onlyKeys($block, ['type', 'items'], ['label'], $at);
+                    self::onlyKeys($block, ['type', 'items'], ['label', 'code', 'answer_codes', 'single'], $at);
                     if (isset($block['label'])) {
                         $texts[] = self::text($block['label'], "$at label");
                     }
@@ -376,6 +383,7 @@ final class DocumentLibrary
                     foreach ($block['items'] as $j => $item) {
                         $texts[] = self::text($item, "$at items[$j]");
                     }
+                    self::checkCodes($block, $at);
                     break;
                 case 'lines':
                     self::onlyKeys($block, ['type', 'label', 'count'], [], $at);
@@ -443,6 +451,11 @@ final class DocumentLibrary
             $blocks[] = $checked;
         }
         self::conditions($blocks, $where);
+        // A coded question's code is its linkId on screen, so each code once in a document.
+        $questionCodes = array_values(array_filter(array_map(static fn(array $b): ?string => $b['code']['code'] ?? null, $blocks)));
+        if (count($questionCodes) !== count(array_unique($questionCodes))) {
+            throw new \InvalidArgumentException("$where blocks: each coded question's code once (" . implode(', ', array_unique(array_diff_assoc($questionCodes, array_unique($questionCodes)))) . ' twice)');
+        }
         return new Document(
             $id,
             self::text($data['title'], "$where title"),
@@ -523,6 +536,63 @@ final class DocumentLibrary
      * @param list<string>  $required
      * @param list<string>  $optional
      */
+    /**
+     * A labelled checklist can say what it asks in code: "code", the question's LOINC code;
+     * "answer_codes", one code for each item, in order (LOINC answers, SNOMED CT or HL7's null
+     * flavors, each but LOINC's with the code system's own "display"); and "single": true when one
+     * answer is chosen. The FHIR export carries them, so a saved response holds the codes a report
+     * reads (FPAR 2.0's, for the Title X visit record). Codes aren't wording: they change no version,
+     * and a translation copies them.
+     *
+     * @param array<string, mixed> $block
+     */
+    private static function checkCodes(array $block, string $at): void
+    {
+        if (array_key_exists('single', $block) && $block['single'] !== true) {
+            throw new \InvalidArgumentException("$at single: true, or left out");
+        }
+        if (!isset($block['code']) && !isset($block['answer_codes'])) {
+            if (isset($block['single']) && !isset($block['label'])) {
+                throw new \InvalidArgumentException("$at single: only a labelled checklist is one question");
+            }
+            return;
+        }
+        if (!isset($block['label'], $block['code'], $block['answer_codes'])) {
+            throw new \InvalidArgumentException("$at: a coded checklist has a label, a code and answer_codes");
+        }
+        $code = $block['code'];
+        if (!is_array($code) || count($code) !== 2 || ($code['system'] ?? null) !== Loinc::SYSTEM || !is_string($code['code'] ?? null) || !Loinc::isValid($code['code'])) {
+            throw new \InvalidArgumentException("$at code: {\"system\": \"" . Loinc::SYSTEM . "\", \"code\": a LOINC question code, check digit right}");
+        }
+        $answers = $block['answer_codes'];
+        if (!is_array($answers) || !array_is_list($answers) || count($answers) !== count($block['items'])) {
+            throw new \InvalidArgumentException("$at answer_codes: one for each item, in the same order");
+        }
+        $seen = [];
+        foreach ($answers as $k => $a) {
+            $where = "$at answer_codes[$k]";
+            $system = is_array($a) ? ($a['system'] ?? null) : null;
+            if (!is_string($system) || !isset(self::ANSWER_SYSTEMS[$system]) || !is_string($a['code'] ?? null) || $a['code'] === ''
+                || array_diff(array_keys($a), ['system', 'code', 'display']) !== []) {
+                throw new \InvalidArgumentException("$where: {\"system\", \"code\"} and, but for LOINC, \"display\"; the system one of " . implode(', ', array_keys(self::ANSWER_SYSTEMS)));
+            }
+            if ($system === Loinc::SYSTEM) {
+                if (!Loinc::isAnswer($a['code']) || isset($a['display'])) {
+                    throw new \InvalidArgumentException("$where: a LOINC answer code (LA...), whose display comes from data/loinc-names.json");
+                }
+            } elseif (!is_string($a['display'] ?? null) || trim($a['display']) === '') {
+                throw new \InvalidArgumentException("$where display: the code system's own name for the code");
+            }
+            if ($system === 'http://snomed.info/sct' && preg_match('/^\d{6,18}$/', $a['code']) !== 1) {
+                throw new \InvalidArgumentException("$where code: a SNOMED CT concept id");
+            }
+            if (isset($seen["$system|{$a['code']}"])) {
+                throw new \InvalidArgumentException("$where: each answer's code once");
+            }
+            $seen["$system|{$a['code']}"] = true;
+        }
+    }
+
     /**
      * The skip logic a document may carry for the screen (FHIR enableWhen), which printing ignores: a
      * block or field named by an "id" can be the target of a later "show_if", which is one condition

@@ -1,0 +1,688 @@
+{
+  "id": "title-x-visit-record",
+  "title": "Title X Family Planning Visit Record",
+  "category": "Family planning",
+  "about": "The family planning items Title X's annual report (FPAR 2.0) asks for at each visit, each coded as OPA's valid values file of 4/3/2026 codes it, so the visit saved as an OpenEMR questionnaire holds what the Title X Report reads. The patient's part comes first, then the clinician's, then Title X's own items from 42 CFR 59. The rest of FPAR comes from OpenEMR's own records: demographics, income, insurance, vitals, smoking status and lab orders (docs/products/title-x/fpar2-mapping-2026-10.md in the openhealthcare workspace). Answers print in our words; on screen each shows its code system's name. Contains SNOMED CT codes (US Edition, used by permission of SNOMED International) and LOINC codes.",
+  "audience": "provider",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "OPA Family Planning Annual Report (FPAR) 2.0 data elements, valid values of 4/3/2026; Title X family planning projects, 42 CFR 59 subpart A",
+    "url": "https://opa.hhs.gov/grant-programs/title-x-service-grants/fpar"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed. The codes are the code systems' own: LOINC's under its licence, SNOMED CT's under SNOMED International's terms (free for use in the US through NLM)."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Visit date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "Clinician",
+          "value": "{provider.name}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Ask the patient"
+    },
+    {
+      "type": "checklist",
+      "id": "want-to-talk",
+      "label": "Do you want to talk about contraception or pregnancy prevention during your visit today?",
+      "code": {
+        "system": "http://loinc.org",
+        "code": "98076-3"
+      },
+      "items": [
+        "Yes",
+        "No: here for something else today",
+        "No: doesn't apply, or prefers not to answer",
+        "No: already using contraception",
+        "No: unsure, or doesn't want contraception",
+        "No: hoping to become pregnant soon"
+      ],
+      "answer_codes": [
+        {
+          "system": "http://loinc.org",
+          "code": "LA33-6"
+        },
+        {
+          "system": "http://loinc.org",
+          "code": "LA32389-1"
+        },
+        {
+          "system": "http://loinc.org",
+          "code": "LA32390-9"
+        },
+        {
+          "system": "http://loinc.org",
+          "code": "LA32393-3"
+        },
+        {
+          "system": "http://loinc.org",
+          "code": "LA32391-7"
+        },
+        {
+          "system": "http://loinc.org",
+          "code": "LA32392-5"
+        }
+      ],
+      "single": true
+    },
+    {
+      "type": "checklist",
+      "id": "intention",
+      "label": "Would you like to become pregnant in the next year? (May be left blank for a male patient.)",
+      "code": {
+        "system": "http://loinc.org",
+        "code": "86645-9"
+      },
+      "items": [
+        "Wants to become pregnant",
+        "Doesn't want to become pregnant",
+        "Okay either way",
+        "Not sure"
+      ],
+      "answer_codes": [
+        {
+          "system": "http://snomed.info/sct",
+          "code": "454411000124108",
+          "display": "Wants to become pregnant"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "454401000124105",
+          "display": "No desire to become pregnant"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "454391000124108",
+          "display": "Ambivalent about becoming pregnant"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "454381000124105",
+          "display": "Not sure of desire to become pregnant"
+        }
+      ],
+      "single": true
+    },
+    {
+      "type": "checklist",
+      "id": "method-intake",
+      "label": "Contraceptive method used now, at the start of the visit (tick the most effective one)",
+      "code": {
+        "system": "http://loinc.org",
+        "code": "86649-1"
+      },
+      "items": [
+        "Female sterilization",
+        "Vasectomy",
+        "Implant",
+        "Hormonal IUD",
+        "Copper IUD",
+        "IUD, type not known",
+        "Injection (depot)",
+        "Combined pill",
+        "Progestin-only pill",
+        "Patch",
+        "Vaginal ring",
+        "Diaphragm",
+        "Male condom",
+        "Female condom",
+        "Vaginal gel (non-hormonal)",
+        "Spermicide",
+        "Sponge",
+        "Fertility awareness",
+        "Lactational amenorrhea",
+        "Withdrawal",
+        "Emergency contraception",
+        "Male patient relying on a female partner's method",
+        "Declines to say",
+        "None"
+      ],
+      "answer_codes": [
+        {
+          "system": "http://snomed.info/sct",
+          "code": "60890002",
+          "display": "Female sterilization"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "22523008",
+          "display": "Vasectomy"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "428987008",
+          "display": "Subcutaneous contraceptive implant present"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "449038007",
+          "display": "Uses hormone releasing intrauterine device contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "448962006",
+          "display": "Uses copper intrauterine device contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "312081001",
+          "display": "Uses intrauterine device contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "268464009",
+          "display": "Uses depot contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "268458002",
+          "display": "Uses combined oral contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "169467008",
+          "display": "Uses progestogen only oral contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "413116005",
+          "display": "Uses transdermal contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "450850003",
+          "display": "Uses vaginal hormone releasing ring"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "450851004",
+          "display": "Uses contraceptive diaphragm"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "442450006",
+          "display": "Male condom, device"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "228479001",
+          "display": "Uses a female condom"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "831141000124107",
+          "display": "Uses non-hormonal water-based vaginal gel contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "268466006",
+          "display": "Uses spermicidal contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "169530003",
+          "display": "Uses contraceptive sponge"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "455501000124105",
+          "display": "Contraception based on fertility awareness"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "454441000124107",
+          "display": "Contraception using lactational amenorrhea method"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "169513000",
+          "display": "Uses withdrawal method of contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "268463003",
+          "display": "Uses postcoital contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "455491000124102",
+          "display": "Male relying on female contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "454451000124109",
+          "display": "Declines to state contraceptive method"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "169450001",
+          "display": "No contraceptive precautions"
+        }
+      ],
+      "single": true
+    },
+    {
+      "type": "checklist",
+      "id": "reason-intake",
+      "label": "If none: the main reason",
+      "code": {
+        "system": "http://loinc.org",
+        "code": "86650-9"
+      },
+      "items": [
+        "Not having sex",
+        "Has a same-sex partner",
+        "Can't become pregnant (infertile)",
+        "Wants to become pregnant",
+        "Other reason"
+      ],
+      "answer_codes": [
+        {
+          "system": "http://snomed.info/sct",
+          "code": "454731000124108",
+          "display": "Sexually abstinent"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "454361000124100",
+          "display": "Has same sex partner"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "15296000",
+          "display": "Sterility"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "454411000124108",
+          "display": "Wants to become pregnant"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "74964007",
+          "display": "Other"
+        }
+      ],
+      "single": true,
+      "show_if": {
+        "id": "method-intake",
+        "answer": 24
+      }
+    },
+    {
+      "type": "heading",
+      "text": "Clinician, at the end of the visit"
+    },
+    {
+      "type": "checklist",
+      "id": "pregnancy-status",
+      "label": "Pregnancy status",
+      "code": {
+        "system": "http://loinc.org",
+        "code": "82810-3"
+      },
+      "items": [
+        "Pregnant",
+        "Not pregnant",
+        "Unknown"
+      ],
+      "answer_codes": [
+        {
+          "system": "http://snomed.info/sct",
+          "code": "77386006",
+          "display": "Pregnancy"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "60001007",
+          "display": "Not pregnant"
+        },
+        {
+          "system": "http://terminology.hl7.org/CodeSystem/v3-NullFlavor",
+          "code": "UNK",
+          "display": "Unknown"
+        }
+      ],
+      "single": true
+    },
+    {
+      "type": "checklist",
+      "id": "contraceptive-counseling",
+      "label": "Contraceptive counseling given (the clinician spent time, about 5 to 10 minutes, on the patient's options)",
+      "code": {
+        "system": "http://loinc.org",
+        "code": "86654-1"
+      },
+      "items": [
+        "Yes",
+        "No"
+      ],
+      "answer_codes": [
+        {
+          "system": "http://snomed.info/sct",
+          "code": "373066001",
+          "display": "Yes"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "373067005",
+          "display": "No"
+        }
+      ],
+      "single": true
+    },
+    {
+      "type": "checklist",
+      "id": "pregnancy-counseling",
+      "label": "Counseling to achieve pregnancy given",
+      "code": {
+        "system": "http://loinc.org",
+        "code": "86655-8"
+      },
+      "items": [
+        "Yes",
+        "No"
+      ],
+      "answer_codes": [
+        {
+          "system": "http://snomed.info/sct",
+          "code": "373066001",
+          "display": "Yes"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "373067005",
+          "display": "No"
+        }
+      ],
+      "single": true
+    },
+    {
+      "type": "checklist",
+      "id": "method-exit",
+      "label": "Contraceptive method at the end of the visit, after counseling (tick the most effective one)",
+      "code": {
+        "system": "http://loinc.org",
+        "code": "86651-7"
+      },
+      "items": [
+        "Female sterilization",
+        "Vasectomy",
+        "Implant",
+        "Hormonal IUD",
+        "Copper IUD",
+        "IUD, type not known",
+        "Injection (depot)",
+        "Combined pill",
+        "Progestin-only pill",
+        "Patch",
+        "Vaginal ring",
+        "Diaphragm",
+        "Male condom",
+        "Female condom",
+        "Vaginal gel (non-hormonal)",
+        "Spermicide",
+        "Sponge",
+        "Fertility awareness",
+        "Lactational amenorrhea",
+        "Withdrawal",
+        "Emergency contraception",
+        "Male patient relying on a female partner's method",
+        "Declines to say",
+        "None"
+      ],
+      "answer_codes": [
+        {
+          "system": "http://snomed.info/sct",
+          "code": "60890002",
+          "display": "Female sterilization"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "22523008",
+          "display": "Vasectomy"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "428987008",
+          "display": "Subcutaneous contraceptive implant present"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "449038007",
+          "display": "Uses hormone releasing intrauterine device contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "448962006",
+          "display": "Uses copper intrauterine device contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "312081001",
+          "display": "Uses intrauterine device contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "268464009",
+          "display": "Uses depot contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "268458002",
+          "display": "Uses combined oral contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "169467008",
+          "display": "Uses progestogen only oral contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "413116005",
+          "display": "Uses transdermal contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "450850003",
+          "display": "Uses vaginal hormone releasing ring"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "450851004",
+          "display": "Uses contraceptive diaphragm"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "442450006",
+          "display": "Male condom, device"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "228479001",
+          "display": "Uses a female condom"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "831141000124107",
+          "display": "Uses non-hormonal water-based vaginal gel contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "268466006",
+          "display": "Uses spermicidal contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "169530003",
+          "display": "Uses contraceptive sponge"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "455501000124105",
+          "display": "Contraception based on fertility awareness"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "454441000124107",
+          "display": "Contraception using lactational amenorrhea method"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "169513000",
+          "display": "Uses withdrawal method of contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "268463003",
+          "display": "Uses postcoital contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "455491000124102",
+          "display": "Male relying on female contraception"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "454451000124109",
+          "display": "Declines to state contraceptive method"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "169450001",
+          "display": "No contraceptive precautions"
+        }
+      ],
+      "single": true
+    },
+    {
+      "type": "checklist",
+      "id": "reason-exit",
+      "label": "If none: the main reason",
+      "code": {
+        "system": "http://loinc.org",
+        "code": "86653-3"
+      },
+      "items": [
+        "Not having sex",
+        "Has a same-sex partner",
+        "Can't become pregnant (infertile)",
+        "Wants to become pregnant",
+        "Other reason"
+      ],
+      "answer_codes": [
+        {
+          "system": "http://snomed.info/sct",
+          "code": "454731000124108",
+          "display": "Sexually abstinent"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "454361000124100",
+          "display": "Has same sex partner"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "15296000",
+          "display": "Sterility"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "454411000124108",
+          "display": "Wants to become pregnant"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "74964007",
+          "display": "Other"
+        }
+      ],
+      "single": true,
+      "show_if": {
+        "id": "method-exit",
+        "answer": 24
+      }
+    },
+    {
+      "type": "checklist",
+      "id": "how-provided",
+      "label": "If a method: how it was provided",
+      "code": {
+        "system": "http://loinc.org",
+        "code": "86652-5"
+      },
+      "items": [
+        "Given on site",
+        "Prescription",
+        "Referral"
+      ],
+      "answer_codes": [
+        {
+          "system": "http://snomed.info/sct",
+          "code": "308335008",
+          "display": "Patient encounter procedure"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "16076005",
+          "display": "Prescription"
+        },
+        {
+          "system": "http://snomed.info/sct",
+          "code": "281100006",
+          "display": "Referral to health worker"
+        }
+      ],
+      "single": true
+    },
+    {
+      "type": "heading",
+      "text": "Title X (42 CFR 59)"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Services offered as voluntary, with no pressure to accept a method or any service (59.5(a)(2))",
+        "Confidentiality explained, and that a policyholder other than the patient may get an insurance statement listing the visit (59.10(a))",
+        "If pregnant: offered information and counseling on each option, with a referral if asked (59.5(a)(5))",
+        "If a minor: family participation encouraged, with no parent's consent required and no parent told (59.10(b))",
+        "Charges set by family income and size (59.5(a)(7) to (9))"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Notes",
+      "count": 3
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Clinician"
+      ]
+    }
+  ]
+}

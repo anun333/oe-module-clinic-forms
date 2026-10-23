@@ -113,6 +113,25 @@ final class DocumentLibraryTest extends TestCase
         yield 'an id used twice' => [static fn(array $d): array => ['blocks' => [$yesNo, ['id' => 'q1'] + $scale]] + $d, '"q1" is already used'];
         yield 'an empty any' => [static fn(array $d): array => ['blocks' => [$yesNo, $then(['any' => []])]] + $d, 'one condition, or {"any"'];
         yield 'a number field the wrong way round' => [static fn(array $d): array => ['blocks' => [['type' => 'fields', 'fields' => [['label' => 'Days', 'number' => [365, 0]]]]]] + $d, 'number: the smallest and largest'];
+        // A coded checklist (the Title X visit record's): the question's LOINC code, a code for each answer, one answer.
+        $sct = static fn(string $code, string $display): array => ['system' => 'http://snomed.info/sct', 'code' => $code, 'display' => $display];
+        $coded = ['type' => 'checklist', 'label' => 'Pregnancy status', 'code' => ['system' => 'http://loinc.org', 'code' => '82810-3'],
+            'items' => ['Pregnant', 'Not pregnant'], 'answer_codes' => [$sct('77386006', 'Pregnancy'), $sct('60001007', 'Not pregnant')], 'single' => true];
+        $with = static fn(array $change): \Closure => static fn(array $d): array => ['blocks' => [$change + $coded]] + $d;
+        yield 'a coded question with a wrong check digit' => [$with(['code' => ['system' => 'http://loinc.org', 'code' => '82810-4']]), 'a LOINC question code, check digit right'];
+        yield 'a coded question in SNOMED' => [$with(['code' => ['system' => 'http://snomed.info/sct', 'code' => '82810-3']]), 'a LOINC question code'];
+        yield 'answer codes not one per item' => [$with(['answer_codes' => [$sct('77386006', 'Pregnancy')]]), 'answer_codes: one for each item'];
+        yield 'a LOINC answer with its own display' => [$with(['answer_codes' => [['system' => 'http://loinc.org', 'code' => 'LA33-6', 'display' => 'Yes'], $sct('60001007', 'Not pregnant')]]), 'whose display comes from data/loinc-names.json'];
+        yield 'a SNOMED answer with no display' => [$with(['answer_codes' => [['system' => 'http://snomed.info/sct', 'code' => '77386006'], $sct('60001007', 'Not pregnant')]]), "display: the code system's own name"];
+        yield 'an answer code from an unknown system' => [$with(['answer_codes' => [['system' => 'urn:local', 'code' => 'p', 'display' => 'P'], $sct('60001007', 'Not pregnant')]]), 'the system one of'];
+        yield 'a SNOMED answer that is not a concept id' => [$with(['answer_codes' => [$sct('pregnant', 'Pregnancy'), $sct('60001007', 'Not pregnant')]]), 'a SNOMED CT concept id'];
+        yield 'one answer code twice' => [$with(['answer_codes' => [$sct('77386006', 'Pregnancy'), $sct('77386006', 'Pregnancy')]]), "each answer's code once"];
+        yield 'single not true' => [$with(['single' => false]), 'single: true, or left out'];
+        yield 'a coded checklist with no label' => [static function (array $d) use ($coded): array {
+            unset($coded['label']);
+            return ['blocks' => [$coded]] + $d;
+        }, 'a coded checklist has a label, a code and answer_codes'];
+        yield 'one question code twice in a document' => [static fn(array $d): array => ['blocks' => [$coded, ['id' => 'again'] + $coded]] + $d, "each coded question's code once (82810-3 twice)"];
     }
 
     /** @param callable(array<string, mixed>): array<string, mixed> $break */

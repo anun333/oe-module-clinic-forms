@@ -104,6 +104,7 @@ Every printed page starts with a line for the patient's name, date of birth and 
 | Privacy and patient rights | Notice of Nondiscrimination | The Section 1557 notice (45 CFR 92.10), as a 20-point poster; fill in the Section 1557 Coordinator | — | US |
 | Privacy and patient rights | Free Language Help and Services for People with Disabilities | The Section 1557 notice of availability (92.11) with every tagline, as a 20-point poster | — | US |
 | Privacy and patient rights | Your Family Planning Visit Is Private | The Title X notice to 42 CFR 59: confidentiality, minors, the policyholder's statement, voluntary services, options counseling and charges by income | — | US |
+| Family planning | Title X Family Planning Visit Record | FPAR 2.0's family planning items, each coded as OPA codes it (pregnancy intention, the methods at intake and exit and why none, how provided, counseling), plus Title X's own items from 42 CFR 59 | — | US |
 | Privacy and patient rights | You Can Ask for a Chaperone | A poster: a chaperone at any exam, at any time, without a reason | — | any |
 | After the visit | Your Test Results | A results letter: each result and what it means, what to do next, signed by the clinician | — | any |
 | After the visit | Visit Summary and Instructions | What was found, medicines on file and changed today, what to do at home, tests ordered, the next visit | 103796-9 | any |

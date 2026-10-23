@@ -9,6 +9,8 @@
  *   paragraph  {"type": "paragraph", "text": "... {facility.name} ..."}
  *   fields     {"type": "fields", "fields": [{"label": "...", "value": "{patient.name}"}]}   value optional
  *   checklist  {"type": "checklist", "label": "...", "items": ["...", "..."]}               label optional
+ *              with a label, optionally coded: "code" (the question's LOINC code), "answer_codes" (one per item:
+ *              LOINC, SNOMED CT or HL7 null flavor, with "display" but for LOINC) and "single": true (one answer)
  *   lines      {"type": "lines", "label": "...", "count": 4}
  *   signature  {"type": "signature", "signers": ["Patient or legal representative", "Witness"]}
  *   scale      {"type": "scale", "label": "...", "columns": ["Not at all", "Several days"], "items": ["...", "..."],
