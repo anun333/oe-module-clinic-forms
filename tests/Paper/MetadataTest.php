@@ -9,6 +9,7 @@ declare(strict_types=1);
 
 namespace OpenHealthcare\ClinicForms\Tests\Paper;
 
+use OpenHealthcare\ClinicForms\Paper\Conformance;
 use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\Document;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
@@ -43,7 +44,8 @@ final class MetadataTest extends TestCase
         self::assertGreaterThanOrEqual(28, count($shipped));
         foreach ($shipped as $key => $doc) {
             self::assertGreaterThanOrEqual(1, $doc->version, $key);
-            self::assertSame('active', $doc->status, $key);
+            // Active, unless held back from release with its reason (data/release-gates.json), when it's a draft.
+            self::assertSame(isset(Conformance::held()[$doc->id]) ? 'draft' : 'active', $doc->status, $key);
             self::assertNotNull($doc->origin, "$key has a source");
             self::assertNotNull($doc->licence, "$key has a licence");
             if ($doc->validated) {

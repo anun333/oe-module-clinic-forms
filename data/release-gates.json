@@ -1,0 +1,6 @@
+{
+  "about": "Documents not yet cleared for public release, each with the reason. The tests require each held document to be status draft (offered, but marked Draft in the picker and on every printed page) and in no packet, and every draft to be held here; a document leaves this list when its reason is resolved. A document whose answers carry SNOMED CT US Extension codes is held automatically: their only licence (the SNOMED CT Affiliate License, through NLM's UMLS licence) doesn't cover a public, worldwide download.",
+  "held": {
+    "title-x-visit-record": "Its 11 SNOMED CT US Extension answer codes (pregnancy intention, and some methods and reasons) have no licence for worldwide public distribution; the International Edition codes are covered by SNOMED's Global Patient Set. To be resolved by using FPAR's LOINC answers for those 11, or codes each site fetches with its own UMLS key (Seth's choice, 2026-10-23)."
+  }
+}

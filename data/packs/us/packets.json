@@ -200,11 +200,10 @@
     {
       "id": "title-x-visit",
       "title": "Title X family planning visit",
-      "about": "For a family planning visit in a Title X project: the notice of what patients can expect (privacy, minors, the statement a policyholder may get, charges by income), the income and household size Title X charges by, and the visit record whose coded answers the Title X Report reads for FPAR 2.0.",
+      "about": "For a family planning visit in a Title X project: the notice of what patients can expect (privacy, minors, the statement a policyholder may get, charges by income) and the income and household size Title X charges by. The Title X visit record joins it when it is cleared for release.",
       "items": [
         "doc:title-x-confidential-services",
-        "doc:sliding-fee-application",
-        "doc:title-x-visit-record"
+        "doc:sliding-fee-application"
       ]
     }
   ]

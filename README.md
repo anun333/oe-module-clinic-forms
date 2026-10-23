@@ -172,6 +172,14 @@ The format is in `src/Paper/Document.php`. Blocks are headings, paragraphs, fiel
 | `provider` | `{provider.name}` `{provider.credentials}` `{provider.npi}` `{provider.specialty}`: the **Signing provider** chosen at the top of the page. It defaults to the clinician printing, or else the patient's own provider. Credentials are the user's *Valedictory* (MD, NP) under Administration › Users |
 | `clinic` | `{clinic.today}` |
 
+## What each document is held to
+
+[CONFORMANCE.md](CONFORMANCE.md), generated from the documents and kept current by CI, lists each document, what it follows and how that's checked. A document written to a rule is held to that rule's elements (`data/requirements.json` and the US pack's), and a validated instrument to LOINC's reference. Any other published instrument is held to its publisher's wording, kept in `data/references`. The tests fail on any document that isn't.
+
+A document not yet cleared for public release is held back, with its reason, in `data/release-gates.json`. It ships as a draft, marked Draft in the picker and on every printed page, and no packet offers it. A document whose answers carry SNOMED CT US Extension codes is held automatically, because those codes' licence doesn't cover a public, worldwide download.
+
+Checked outside the module, in the openhealthcare workspace: every FHIR export against FHIR R4 and SDC 4.0.0 (the HL7 validator, nightly), skip logic and totals in OpenEMR's own questionnaire runtime (nightly), and every patient document against PDF/UA-1 by all three routes (veraPDF, weekly).
+
 ## Spanish and language assistance
 
 Choose **Español** as the language at the top of the Clinic Forms page. Documents marked **ES** print in Spanish; staff documents and the rest stay in English. The words Clinic Forms prints itself (Phone, Date, the patient line) follow the paper's language, not the language you use OpenEMR in. Word and LibreOffice downloads follow it too.

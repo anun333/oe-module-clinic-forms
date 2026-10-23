@@ -1643,6 +1643,154 @@
           ]
         }
       ]
+    },
+    "preventive-care-questions": {
+      "source": "U.S. Preventive Services Task Force, recommendations rated A and B: the answers the chart doesn't hold that decide whether each applies",
+      "elements": [
+        {
+          "name": "Tobacco history in pack-years and the year quit (lung cancer screening)",
+          "cite": "USPSTF A and B recommendations: lung cancer screening",
+          "all": [
+            "100 cigarettes",
+            "packs a day",
+            "for how many years",
+            "the year you quit"
+          ]
+        },
+        {
+          "name": "Ever smoked, for men 65 to 75 (abdominal aortic aneurysm screening)",
+          "cite": "USPSTF A and B recommendations: abdominal aortic aneurysm screening",
+          "all": [
+            "100 cigarettes",
+            "aortic aneurysm"
+          ]
+        },
+        {
+          "name": "Personal or family history of breast, ovarian, tubal or peritoneal cancer, or Ashkenazi ancestry (BRCA risk assessment)",
+          "cite": "USPSTF A and B recommendations: BRCA-related cancer risk assessment",
+          "all": [
+            "breast, ovarian, fallopian tube or peritoneal cancer",
+            "ashkenazi jewish"
+          ]
+        },
+        {
+          "name": "Sexual history for HIV, syphilis, chlamydia and gonorrhea screening and HIV PrEP",
+          "cite": "USPSTF A and B recommendations: HIV, syphilis, chlamydia and gonorrhea screening; PrEP for HIV",
+          "all": [
+            "in the past 6 months",
+            "a new partner",
+            "sexually transmitted infection",
+            "prep"
+          ]
+        },
+        {
+          "name": "Birth or residence where hepatitis B is common, and parents born there (hepatitis B screening)",
+          "cite": "USPSTF A and B recommendations: hepatitis B screening",
+          "all": [
+            "born outside the united states",
+            "parents born outside the united states"
+          ]
+        },
+        {
+          "name": "Drug injection (hepatitis C screening outside the routine ages)",
+          "cite": "USPSTF A and B recommendations: hepatitis C screening",
+          "all": [
+            "injected drugs"
+          ]
+        },
+        {
+          "name": "Birth or residence where TB is common, or in shelters or prisons (latent TB screening)",
+          "cite": "USPSTF A and B recommendations: latent tuberculosis infection screening",
+          "all": [
+            "lived outside the united states",
+            "homeless shelter, jail or prison"
+          ]
+        },
+        {
+          "name": "Colon polyps, colorectal cancer or inflammatory bowel disease, and family colorectal cancer (colorectal screening is for average risk)",
+          "cite": "USPSTF A and B recommendations: colorectal cancer screening",
+          "all": [
+            "colon polyps",
+            "colon or rectal cancer"
+          ]
+        },
+        {
+          "name": "Hysterectomy that removed the cervix (cervical screening no longer applies)",
+          "cite": "USPSTF A and B recommendations: cervical cancer screening",
+          "all": [
+            "hysterectomy that removed your cervix"
+          ]
+        },
+        {
+          "name": "A parent's hip fracture (osteoporosis risk assessment)",
+          "cite": "USPSTF A and B recommendations: osteoporosis screening",
+          "all": [
+            "broken hip"
+          ]
+        },
+        {
+          "name": "Could become pregnant, pregnant, or planning a pregnancy (folic acid, and screenings in pregnancy)",
+          "cite": "USPSTF A and B recommendations: folic acid to prevent neural tube defects; screenings in pregnancy",
+          "all": [
+            "i could become pregnant",
+            "i am pregnant now",
+            "planning a pregnancy"
+          ]
+        },
+        {
+          "name": "The clinician decides against the current recommendations",
+          "cite": "USPSTF A and B recommendations",
+          "all": [
+            "the clinician decides"
+          ]
+        }
+      ]
+    },
+    "title-x-visit-record": {
+      "source": "Title X family planning projects, 42 CFR 59 subpart A, as in force on 2026-10-21; FPAR 2.0's coded items are held to OPA's valid values by tests/Fhir/QuestionnaireExportTest",
+      "elements": [
+        {
+          "name": "Services offered as voluntary, without coercion",
+          "cite": "42 CFR 59.5(a)(2)",
+          "all": [
+            "voluntary",
+            "no pressure"
+          ]
+        },
+        {
+          "name": "Confidentiality explained, and the possible disclosure to a policyholder",
+          "cite": "42 CFR 59.10(a)",
+          "all": [
+            "confidentiality explained",
+            "policyholder"
+          ]
+        },
+        {
+          "name": "A pregnant patient offered information and counseling on each option, and referral on request",
+          "cite": "42 CFR 59.5(a)(5)",
+          "all": [
+            "if pregnant",
+            "each option",
+            "referral if asked"
+          ]
+        },
+        {
+          "name": "For a minor: family participation encouraged, no parental consent or notice",
+          "cite": "42 CFR 59.10(b)",
+          "all": [
+            "family participation encouraged",
+            "no parent's consent required",
+            "no parent told"
+          ]
+        },
+        {
+          "name": "Charges by family income and size",
+          "cite": "42 CFR 59.5(a)(7) to (9)",
+          "all": [
+            "family income and size"
+          ]
+        }
+      ]
     }
   }
 }

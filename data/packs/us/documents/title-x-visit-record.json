@@ -5,7 +5,7 @@
   "about": "The family planning items Title X's annual report (FPAR 2.0) asks for at each visit, each coded as OPA's valid values file of 4/3/2026 codes it, so the visit saved as an OpenEMR questionnaire holds what the Title X Report reads. The patient's part comes first, then the clinician's, then Title X's own items from 42 CFR 59. The rest of FPAR comes from OpenEMR's own records: demographics, income, insurance, vitals, smoking status and lab orders (docs/products/title-x/fpar2-mapping-2026-10.md in the openhealthcare workspace). Answers print in our words; on screen each shows its code system's name. Contains SNOMED CT codes (US Edition, used by permission of SNOMED International) and LOINC codes.",
   "audience": "provider",
   "version": 1,
-  "status": "active",
+  "status": "draft",
   "source": {
     "kind": "rule",
     "name": "OPA Family Planning Annual Report (FPAR) 2.0 data elements, valid values of 4/3/2026; Title X family planning projects, 42 CFR 59 subpart A",

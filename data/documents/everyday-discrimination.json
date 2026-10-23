@@ -9,7 +9,7 @@
     "code": "112307-4",
     "display": "The Everyday Discrimination Scale [EDS]"
   },
-  "version": 1,
+  "version": 2,
   "status": "active",
   "source": {
     "kind": "instrument",
@@ -63,18 +63,18 @@
     },
     {
       "type": "checklist",
-      "label": "If you answered A few times a year or more often to any of these: what do you think is the main reason for these experiences? (tick all that apply)",
+      "label": "If you answered A few times a year or more often to any of these: What do you think is the main reason for these experiences? (tick all that apply)",
       "items": [
-        "Your ancestry or national origins",
-        "Your gender",
-        "Your race",
-        "Your age",
-        "Your religion",
-        "Your height",
-        "Your weight",
-        "Some other aspect of your physical appearance",
-        "Your sexual orientation",
-        "Your education or income level",
+        "Your Ancestry or National Origins",
+        "Your Gender",
+        "Your Race",
+        "Your Age",
+        "Your Religion",
+        "Your Height",
+        "Your Weight",
+        "Some other Aspect of Your Physical Appearance",
+        "Your Sexual Orientation",
+        "Your Education or Income Level",
         "A physical disability",
         "Other"
       ]

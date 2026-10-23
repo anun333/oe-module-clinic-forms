@@ -33,8 +33,8 @@ A document is one JSON file named by its id (`consent-to-treat.json`), in `data/
 | `validated` | no | `true` for a validated instrument: wording and scores are the published ones |
 | `poster` | no | `true` for a notice to post: 20-point type, no patient line |
 | `version` | shipped: yes | A whole number from 1. Raise it whenever the wording changes; it prints as `id vN` at the foot of each page and goes in the audit event |
-| `status` | no | `draft` (offered, marked Draft), `active` (the default) or `retired` (no longer offered; packets drop it) |
-| `source` | shipped: yes | `kind`: `written` (ours), `rule` (written to a rule's elements; `url` to the rule) or `instrument` (published wording; `url` to the publisher). `name` says which |
+| `status` | no | `draft` (offered, marked Draft), `active` (the default) or `retired` (no longer offered; packets drop it). A shipped draft is one held back from public release, so it must be listed with its reason in `data/release-gates.json` and in no packet |
+| `source` | shipped: yes | `kind`: `written` (ours), `rule` (written to a rule's elements; `url` to the rule; its elements in `requirements.json`) or `instrument` (published wording; `url` to the publisher; validated against LOINC's reference, or its publisher's wording kept in `data/references`). `name` says which. See [CONFORMANCE.md](../CONFORMANCE.md) |
 | `licence` | shipped: yes | `holder`, `terms`, and for instruments `permission` (what the holder allows, and on what basis) |
 | `based_on` | no | On a clinic's version of a shipped document: the module's version's fingerprint it was copied from. The page shows the value to use |
 | `blocks` | yes | What prints, in order |

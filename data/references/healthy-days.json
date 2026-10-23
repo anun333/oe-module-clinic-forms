@@ -1,0 +1,18 @@
+{
+  "document": "healthy-days",
+  "from": "https://archive.cdc.gov/www_cdc_gov/hrqol/hrqol14_measure.htm",
+  "fetched": "2026-10-23",
+  "terms": "The HRQOL instrument is free for public use. The measures were developed with federal funding, are not copyrighted, are in the public domain, and do not require permission for use or licensing fees. The instrument is available for public use in both English and in Spanish.",
+  "about": "CDC's four Healthy Days questions and the first question's five answers, as CDC's HRQOL-14 measure page prints them (question 1 printed without ending punctuation). CDC's methods page, its 2000 monograph and the 2024 BRFSS questionnaire differ in punctuation and a word or two; this page is the one used. The test checks each text appears unchanged in the document.",
+  "texts": [
+    "Would you say that in general your health is",
+    "Now thinking about your physical health, which includes physical illness and injury, for how many days during the past 30 days was your physical health not good?",
+    "Now thinking about your mental health, which includes stress, depression, and problems with emotions, for how many days during the past 30 days was your mental health not good?",
+    "During the past 30 days, for about how many days did poor physical or mental health keep you from doing your usual activities, such as self-care, work, or recreation?",
+    "Excellent",
+    "Very good",
+    "Good",
+    "Fair",
+    "Poor"
+  ]
+}

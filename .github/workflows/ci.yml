@@ -34,3 +34,5 @@ jobs:
       run: vendor/bin/phpunit
     - name: FOOTPRINT.md matches the source
       run: php tools/footprint.php --check
+    - name: CONFORMANCE.md matches the documents
+      run: php tools/conformance.php --check
