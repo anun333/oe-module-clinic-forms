@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.35.0 (unreleased)
+## 0.35.0 (2026-10-24)
 
 **The Title X visit record, and coded questions.**
 
