@@ -350,13 +350,17 @@ final readonly class QuestionnaireExport
         $item = ['linkId' => $linkId] + ($loinc !== null ? ['code' => [self::loincCoding($loinc, $language)]] : [])
             + ['text' => $text, 'type' => 'decimal', 'readOnly' => true];
         if ($calculated) {
-            $points = ".answer.valueCoding.extension.where(url = '" . self::ORDINAL . "').valueDecimal.sum()";
+            // The points of all the answers given, or only those of the named questions (a part's),
+            // by their linkIds, at each depth a question can sit. Each depth's sum is guarded,
+            // since an empty sum is 0 in FHIRPath 2.0.0, OpenEMR's runtime and fhirpath.js 3
+            // (LHC-Forms 33) but empty in fhirpath.js 5, where empty plus anything is empty.
+            // Not repeat(item): OpenEMR 8.3 and 8.4's runtime (0.2.0) doesn't have it.
+            $points = ".answer.valueCoding.extension.where(url = '" . self::ORDINAL . "').valueDecimal";
+            $which = $questions === null
+                ? ''
+                : '.where(' . implode(' or ', array_map(static fn(string $code): string => "linkId = '/$code'", $questions)) . ')';
             $depths = ['%resource.item', '%resource.item.item', '%resource.item.item.item'];
-            // All the answers given, or only those of the named questions (a part's), by their linkIds.
-            $terms = $questions === null
-                ? array_map(static fn(string $d): string => $d . $points, $depths)
-                : array_merge(...array_map(static fn(string $code): array => array_map(
-                    static fn(string $d): string => "$d.where(linkId = '/$code')$points", $depths), $questions));
+            $terms = array_map(static fn(string $d): string => "iif($d$which$points.exists(), $d$which$points.sum(), 0)", $depths);
             $item['extension'] = [['url' => self::CALCULATED, 'valueExpression' => ['language' => 'text/fhirpath', 'expression' => implode(' + ', $terms)]]];
             if ($loinc !== null) {
                 // The instrument's total, coded, becomes an Observation where a form filler extracts (SDC),

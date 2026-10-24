@@ -74,6 +74,23 @@ final class QuestionnaireExportTest extends TestCase
         self::assertSame('Not at all', array_values(array_filter($items, static fn(array $i): bool => $i['type'] === 'choice'))[0]['answerOption'][0]['valueString']);
     }
 
+    public function testEachDepthsSumIsGuardedSoAnEmptyDepthCannotEmptyTheTotal(): void
+    {
+        $points = ".answer.valueCoding.extension.where(url = '" . QuestionnaireExport::ORDINAL . "').valueDecimal";
+        $guard = static fn(string $d, string $which = ''): string => "iif($d$which$points.exists(), $d$which$points.sum(), 0)";
+        $depths = ['%resource.item', '%resource.item.item', '%resource.item.item.item'];
+        $phq9 = array_values(array_filter(self::flatten($this->export('phq-9')['item']), static fn(array $i): bool => $i['type'] === 'decimal'))[0];
+        self::assertSame(implode(' + ', array_map($guard, $depths)), $phq9['extension'][0]['valueExpression']['expression'],
+            'an empty sum is empty in fhirpath.js 5, so each depth falls back to 0; no repeat(), which OpenEMR 8.3 and 8.4 lack');
+        $parts = array_values(array_filter(self::flatten($this->export('taps-2')['item']), static fn(array $i): bool => $i['type'] === 'decimal' && !isset($i['code'])));
+        self::assertNotSame([], $parts);
+        foreach ($parts as $part) {
+            $expression = $part['extension'][0]['valueExpression']['expression'];
+            self::assertSame(3, substr_count($expression, 'iif('), "a part's score is guarded at each depth too");
+            self::assertStringNotContainsString('repeat(', $expression);
+        }
+    }
+
     public function testEachInstrumentsTotalCarriesItsReferencesCodeAndAPartsScoreNone(): void
     {
         $coded = [];
