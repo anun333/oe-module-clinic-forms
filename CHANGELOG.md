@@ -21,6 +21,13 @@
 - **Packet:** Title X family planning visit (the confidential services notice, the sliding fee application and the visit record).
 - **Checked:** OpenEMR's own questionnaire runtime (8.4.1 and master) hides and shows the reason as it should, and saves the SNOMED code. All 99 exported questionnaires pass the HL7 validator, SNOMED CT's US Edition codes included. OPA's female condom code (228479001) is inactive in SNOMED CT but still OPA's valid value, so the record sends it.
 
+- **The Title X visit record is released (version 2), with SNOMED CT it may ship worldwide.**
+  - Its 28 SNOMED CT International Edition codes stay, under SNOMED International's Global Patient Set (CC BY-ND 4.0). The document's licence now keeps the codes out of its CC0 dedication and carries the Global Patient Set's notice. The FHIR export names the International Edition (`http://snomed.info/sct/900000000000207008`).
+  - Its 11 US Extension codes are gone, since their only licence (the SNOMED CT Affiliate License, through NLM's UMLS licence) doesn't cover a public, worldwide download. In their place, at all 20 answers that used them (pregnancy intention, five methods at intake and at exit, three reasons at intake and at exit), are OPA's LOINC answer codes for the same values from the FPAR valid values file of 4/3/2026: LA26438-4, LA26440-0, LA26439-2, LA14072-5, LA33038-3, LA27918-4, LA27919-2, LA27920-0, LA27922-6, LA14550-0, LA27925-9 and LA27928-3. OPA marks them as transition values, still accepted with no end date set; their names come from LOINC 2.83.
+  - `312081001` now shows its preferred term, "Uses IUD (intrauterine device) contraception", not a synonym, since the Global Patient Set carries only the preferred term and the fully specified name.
+  - It leaves the release gates: no document is held now. Two tests guard this: no shipped document carries a US Extension code, and any document with SNOMED CT codes carries the notice and keeps them out of CC0.
+  - Checked: the HL7 validator (R4, with tx.fhir.org) gives the export 0 errors. The warnings are `228479001` (inactive in SNOMED CT, still listed by OPA) and SDC's version-format note. Skip logic and the 34 totals pass on OpenEMR's runtime 0.2.0 and 0.4.0.
+
 ## 0.34.0 (2026-10-23)
 
 **Photos and recordings, chaperones, payment plans and the Title X notice.**

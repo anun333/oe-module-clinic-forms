@@ -61,7 +61,9 @@ final class ConformanceTest extends TestCase
     {
         $library = DocumentLibrary::shipped();
         $held = Conformance::held();
-        self::assertNotSame([], $held);
+        // The drafts are exactly the held documents (both may be empty, as after 0.35.0 released the visit record).
+        $drafts = array_values(array_map(static fn(Document $doc): string => $doc->id, array_filter($library->all(), static fn(Document $doc): bool => $doc->status === 'draft')));
+        self::assertSame(self::sorted($drafts), self::sorted(array_keys($held)));
         foreach ($held as $id => $why) {
             $doc = $library->get($id);
             self::assertInstanceOf(Document::class, $doc, "$id is a shipped document");
@@ -79,9 +81,42 @@ final class ConformanceTest extends TestCase
     {
         $doc = DocumentLibrary::shipped()->get('title-x-visit-record');
         self::assertInstanceOf(Document::class, $doc);
-        self::assertCount(11, Conformance::usExtensionCodes($doc));
-        $unheld = self::with($doc, ['status' => 'active', 'id' => 'title-x-visit-record-copy']);
-        self::assertContains('11 SNOMED CT US Extension codes, not held for release (data/release-gates.json)', Conformance::of($unheld, Requirements::shipped())['problems']);
+        // The visit record as it was before 0.35.0: two US Extension pregnancy-intention answers.
+        $blocks = $doc->blocks;
+        foreach ($blocks as $i => $block) {
+            if (($block['code']['code'] ?? '') === '86645-9') {
+                $blocks[$i]['answer_codes'][0] = ['system' => 'http://snomed.info/sct', 'code' => '454411000124108', 'display' => 'Wants to become pregnant'];
+                $blocks[$i]['answer_codes'][1] = ['system' => 'http://snomed.info/sct', 'code' => '454401000124105', 'display' => 'No desire to become pregnant'];
+            }
+        }
+        $unheld = self::with($doc, ['blocks' => $blocks, 'id' => 'title-x-visit-record-copy']);
+        self::assertCount(2, Conformance::usExtensionCodes($unheld));
+        self::assertContains('2 SNOMED CT US Extension codes, not held for release (data/release-gates.json)', Conformance::of($unheld, Requirements::shipped())['problems']);
+    }
+
+    public function testNoShippedDocumentCarriesASnomedUsExtensionCode(): void
+    {
+        foreach (DocumentLibrary::shipped()->all() as $doc) {
+            self::assertSame([], Conformance::usExtensionCodes($doc), "{$doc->id} carries a SNOMED CT US Extension code");
+        }
+    }
+
+    /** A document with SNOMED CT codes keeps them out of its CC0 dedication and carries the Global Patient Set's notice. */
+    public function testSnomedCodesCarryTheGlobalPatientSetNotice(): void
+    {
+        $checked = 0;
+        foreach (DocumentLibrary::shipped()->all() as $doc) {
+            if (!str_contains((string)json_encode($doc->blocks, JSON_UNESCAPED_SLASHES), 'http://snomed.info/sct')) {
+                continue;
+            }
+            $checked++;
+            $terms = (string)($doc->licence['terms'] ?? '');
+            self::assertStringContainsString('It does not cover the codes', $terms, "{$doc->id} keeps SNOMED CT out of CC0");
+            self::assertStringContainsString('SNOMED CT Global Patient Set (GPS)', $terms, $doc->id);
+            self::assertStringContainsString('CC BY-ND 4.0', $terms, $doc->id);
+            self::assertStringContainsString('registered trademarks of SNOMED International', $terms, $doc->id);
+        }
+        self::assertGreaterThan(0, $checked, 'at least one shipped document carries SNOMED CT codes (the Title X visit record)');
     }
 
     /** @param array<string, mixed> $changes */

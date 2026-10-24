@@ -2,10 +2,10 @@
   "id": "title-x-visit-record",
   "title": "Title X Family Planning Visit Record",
   "category": "Family planning",
-  "about": "The family planning items Title X's annual report (FPAR 2.0) asks for at each visit, each coded as OPA's valid values file of 4/3/2026 codes it, so the visit saved as an OpenEMR questionnaire holds what the Title X Report reads. The patient's part comes first, then the clinician's, then Title X's own items from 42 CFR 59. The rest of FPAR comes from OpenEMR's own records: demographics, income, insurance, vitals, smoking status and lab orders (docs/products/title-x/fpar2-mapping-2026-10.md in the openhealthcare workspace). Answers print in our words; on screen each shows its code system's name. Contains SNOMED CT codes (US Edition, used by permission of SNOMED International) and LOINC codes.",
+  "about": "The family planning items Title X's annual report (FPAR 2.0) asks for at each visit, each coded as OPA's valid values file of 4/3/2026 codes it, so the visit saved as an OpenEMR questionnaire holds what the Title X Report reads. The patient's part comes first, then the clinician's, then Title X's own items from 42 CFR 59. The rest of FPAR comes from OpenEMR's own records: demographics, income, insurance, vitals, smoking status and lab orders (docs/products/title-x/fpar2-mapping-2026-10.md in the openhealthcare workspace). Answers print in our words; on screen each shows its code system's name. Contains SNOMED CT codes from the Global Patient Set, and LOINC codes. The answers whose SNOMED CT values are only in the US Extension (pregnancy intention, and some methods and reasons) use OPA's LOINC answer codes instead, which OPA still accepts: the US Extension can't be shipped worldwide.",
   "audience": "provider",
-  "version": 1,
-  "status": "draft",
+  "version": 2,
+  "status": "active",
   "source": {
     "kind": "rule",
     "name": "OPA Family Planning Annual Report (FPAR) 2.0 data elements, valid values of 4/3/2026; Title X family planning projects, 42 CFR 59 subpart A",
@@ -13,7 +13,7 @@
   },
   "licence": {
     "holder": "Clinic Forms contributors",
-    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed. The codes are the code systems' own: LOINC's under its licence, SNOMED CT's under SNOMED International's terms (free for use in the US through NLM)."
+    "terms": "CC0 1.0 covers this document's own wording, layout and structure: dedicated to the public domain, use and adapt it freely, with no credit needed. It does not cover the codes, which stay under their own terms. LOINC codes and names: LOINC's licence (https://loinc.org/license). SNOMED CT identifiers and terms in this file are from the SNOMED CT Global Patient Set (GPS), © International Health Terminology Standards Development Organisation (trading as SNOMED International), licensed under CC BY-ND 4.0 (https://creativecommons.org/licenses/by-nd/4.0/), provided without warranty; see https://www.snomed.org/gps. SNOMED CT® was originally created by the College of American Pathologists. SNOMED and SNOMED CT are registered trademarks of SNOMED International."
   },
   "blocks": [
     {
@@ -105,24 +105,20 @@
       ],
       "answer_codes": [
         {
-          "system": "http://snomed.info/sct",
-          "code": "454411000124108",
-          "display": "Wants to become pregnant"
+          "system": "http://loinc.org",
+          "code": "LA26438-4"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "454401000124105",
-          "display": "No desire to become pregnant"
+          "system": "http://loinc.org",
+          "code": "LA26440-0"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "454391000124108",
-          "display": "Ambivalent about becoming pregnant"
+          "system": "http://loinc.org",
+          "code": "LA26439-2"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "454381000124105",
-          "display": "Not sure of desire to become pregnant"
+          "system": "http://loinc.org",
+          "code": "LA14072-5"
         }
       ],
       "single": true
@@ -190,7 +186,7 @@
         {
           "system": "http://snomed.info/sct",
           "code": "312081001",
-          "display": "Uses intrauterine device contraception"
+          "display": "Uses IUD (intrauterine device) contraception"
         },
         {
           "system": "http://snomed.info/sct",
@@ -233,9 +229,8 @@
           "display": "Uses a female condom"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "831141000124107",
-          "display": "Uses non-hormonal water-based vaginal gel contraception"
+          "system": "http://loinc.org",
+          "code": "LA33038-3"
         },
         {
           "system": "http://snomed.info/sct",
@@ -248,14 +243,12 @@
           "display": "Uses contraceptive sponge"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "455501000124105",
-          "display": "Contraception based on fertility awareness"
+          "system": "http://loinc.org",
+          "code": "LA27918-4"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "454441000124107",
-          "display": "Contraception using lactational amenorrhea method"
+          "system": "http://loinc.org",
+          "code": "LA27919-2"
         },
         {
           "system": "http://snomed.info/sct",
@@ -268,14 +261,12 @@
           "display": "Uses postcoital contraception"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "455491000124102",
-          "display": "Male relying on female contraception"
+          "system": "http://loinc.org",
+          "code": "LA27920-0"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "454451000124109",
-          "display": "Declines to state contraceptive method"
+          "system": "http://loinc.org",
+          "code": "LA27922-6"
         },
         {
           "system": "http://snomed.info/sct",
@@ -302,14 +293,12 @@
       ],
       "answer_codes": [
         {
-          "system": "http://snomed.info/sct",
-          "code": "454731000124108",
-          "display": "Sexually abstinent"
+          "system": "http://loinc.org",
+          "code": "LA14550-0"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "454361000124100",
-          "display": "Has same sex partner"
+          "system": "http://loinc.org",
+          "code": "LA27925-9"
         },
         {
           "system": "http://snomed.info/sct",
@@ -317,9 +306,8 @@
           "display": "Sterility"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "454411000124108",
-          "display": "Wants to become pregnant"
+          "system": "http://loinc.org",
+          "code": "LA27928-3"
         },
         {
           "system": "http://snomed.info/sct",
@@ -484,7 +472,7 @@
         {
           "system": "http://snomed.info/sct",
           "code": "312081001",
-          "display": "Uses intrauterine device contraception"
+          "display": "Uses IUD (intrauterine device) contraception"
         },
         {
           "system": "http://snomed.info/sct",
@@ -527,9 +515,8 @@
           "display": "Uses a female condom"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "831141000124107",
-          "display": "Uses non-hormonal water-based vaginal gel contraception"
+          "system": "http://loinc.org",
+          "code": "LA33038-3"
         },
         {
           "system": "http://snomed.info/sct",
@@ -542,14 +529,12 @@
           "display": "Uses contraceptive sponge"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "455501000124105",
-          "display": "Contraception based on fertility awareness"
+          "system": "http://loinc.org",
+          "code": "LA27918-4"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "454441000124107",
-          "display": "Contraception using lactational amenorrhea method"
+          "system": "http://loinc.org",
+          "code": "LA27919-2"
         },
         {
           "system": "http://snomed.info/sct",
@@ -562,14 +547,12 @@
           "display": "Uses postcoital contraception"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "455491000124102",
-          "display": "Male relying on female contraception"
+          "system": "http://loinc.org",
+          "code": "LA27920-0"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "454451000124109",
-          "display": "Declines to state contraceptive method"
+          "system": "http://loinc.org",
+          "code": "LA27922-6"
         },
         {
           "system": "http://snomed.info/sct",
@@ -596,14 +579,12 @@
       ],
       "answer_codes": [
         {
-          "system": "http://snomed.info/sct",
-          "code": "454731000124108",
-          "display": "Sexually abstinent"
+          "system": "http://loinc.org",
+          "code": "LA14550-0"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "454361000124100",
-          "display": "Has same sex partner"
+          "system": "http://loinc.org",
+          "code": "LA27925-9"
         },
         {
           "system": "http://snomed.info/sct",
@@ -611,9 +592,8 @@
           "display": "Sterility"
         },
         {
-          "system": "http://snomed.info/sct",
-          "code": "454411000124108",
-          "display": "Wants to become pregnant"
+          "system": "http://loinc.org",
+          "code": "LA27928-3"
         },
         {
           "system": "http://snomed.info/sct",

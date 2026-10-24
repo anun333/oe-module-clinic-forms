@@ -50,7 +50,7 @@ final readonly class QuestionnaireExport
     public const ANSWER_SYSTEM = 'https://github.com/anun333/oe-module-clinic-forms/answers';
     private const BLANK = '__________';
     private const SNOMED = 'http://snomed.info/sct';
-    private const SNOMED_US_EDITION = 'http://snomed.info/sct/731000124108';
+    private const SNOMED_INTERNATIONAL_EDITION = 'http://snomed.info/sct/900000000000207008';
 
     private Context $context;
 
@@ -457,10 +457,10 @@ final readonly class QuestionnaireExport
         foreach ($block['answer_codes'] as $a) {
             $item['answerOption'][] = ['valueCoding' => match ($a['system']) {
                 Loinc::SYSTEM => self::loincCoding($a['code'], $language),
-                // SNOMED CT's US Edition, which holds the US extension's codes (FPAR's 454411000124108 and
-                // the like) as well as the international ones: without it a validator reads the
-                // International Edition and doesn't know them.
-                self::SNOMED => ['system' => self::SNOMED, 'version' => self::SNOMED_US_EDITION, 'code' => $a['code'], 'display' => $a['display']],
+                // SNOMED CT's International Edition: the documents carry only its codes, under the Global
+                // Patient Set's licence (US Extension codes can't be shipped worldwide; Conformance holds
+                // any document that has one).
+                self::SNOMED => ['system' => self::SNOMED, 'version' => self::SNOMED_INTERNATIONAL_EDITION, 'code' => $a['code'], 'display' => $a['display']],
                 default => ['system' => $a['system'], 'code' => $a['code'], 'display' => $a['display']],
             }];
         }
