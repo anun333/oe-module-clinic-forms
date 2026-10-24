@@ -12,6 +12,12 @@
 - **Totals work in more form fillers.** Each total line adds the points at each depth a question can sit, and each depth's sum is now guarded (`iif(… .exists(), … .sum(), 0)`). In current fhirpath.js (5.x) an empty sum is empty, and empty plus anything is empty, so every total came out empty there. Renderers built on it, and other systems that import the FHIR export, now work out the total. It isn't written with `repeat(item)`, which OpenEMR 8.3 and 8.4's runtime (0.2.0) doesn't support.
   - Checked across all 99 exports: 34 totals, 0 failed, on OpenEMR's runtime 0.2.0 (8.3, 8.4) and 0.3.0 (#14744).
   - In fhirpath.js 3.2.0 (LHC-Forms 33, OpenEMR 7.0.2 to 8.2) and 5.2.1, all 54 total evaluations match OpenEMR's runtime; before, all 54 were empty in 5.2.1.
+- **Every answer option is a Coding.** A document's own choices, those without LOINC or another code, were plain strings in the FHIR export. Now they're Codings in the module's answer system, by position, as translations already were. Skip logic conditions on that Coding, and points ride on it. Two problems with strings, measured on all 99 exports:
+  - LHC-Forms (OpenEMR 7.0.2 to 8.2) saves a string option as a Coding with only its display, and OpenEMR's native runtime (8.3 on) doesn't match that to the option, so after an upgrade the question shows unanswered.
+  - LHC-Forms 33 drops a string answer when a response is reopened: 306 of the runtime's answers, plus the 6 conditional items that depended on them.
+  - With Codings, LHC-Forms keeps every answer; the only ones it leaves out are totals of exactly 0 it doesn't report.
+  - Checked: on OpenEMR's runtime 0.2.0 and 0.3.0, 34 totals with 0 failed, and every skip-logic check passes. All 99 exports pass the HL7 validator with no unexpected issue. Nothing is a string option any more (a new test holds every shipped document to that).
+  - A response saved earlier with a text answer still holds it, but shows that question unanswered when reopened.
 - **Packet:** Title X family planning visit (the confidential services notice, the sliding fee application and the visit record).
 - **Checked:** OpenEMR's own questionnaire runtime (8.4.1 and master) hides and shows the reason as it should, and saves the SNOMED code. All 99 exported questionnaires pass the HL7 validator, SNOMED CT's US Edition codes included. OPA's female condom code (228479001) is inactive in SNOMED CT but still OPA's valid value, so the record sends it.
 

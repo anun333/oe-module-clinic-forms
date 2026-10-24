@@ -71,7 +71,25 @@ final class QuestionnaireExportTest extends TestCase
         $items = self::flatten($q['item']);
         self::assertSame([], array_filter(array_keys($items), static fn(string $id): bool => str_starts_with($id, '/')), 'no LOINC question codes');
         self::assertSame([], array_filter($items, static fn(array $i): bool => isset($i['code'])), 'and no code on its total');
-        self::assertSame('Not at all', array_values(array_filter($items, static fn(array $i): bool => $i['type'] === 'choice'))[0]['answerOption'][0]['valueString']);
+        self::assertSame(['extension' => [['url' => QuestionnaireExport::ORDINAL, 'valueDecimal' => 0]], 'system' => QuestionnaireExport::ANSWER_SYSTEM, 'code' => '1', 'display' => 'Not at all'],
+            array_values(array_filter($items, static fn(array $i): bool => $i['type'] === 'choice'))[0]['answerOption'][0]['valueCoding'],
+            "its answers in the module's own system, by position, with their points on the Coding: never a plain string");
+    }
+
+    public function testNoShippedDocumentHasAStringAnswerOption(): void
+    {
+        $strings = [];
+        foreach (DocumentLibrary::shipped()->all() as $doc) {
+            $q = (new QuestionnaireExport(new Context(['name' => 'Seed Clinic'], [])))->questionnaire($doc);
+            foreach (self::flatten($q['item']) as $item) {
+                foreach ($item['answerOption'] ?? [] as $option) {
+                    if (!isset($option['valueCoding'])) {
+                        $strings[] = $doc->id . ' ' . $item['linkId'];
+                    }
+                }
+            }
+        }
+        self::assertSame([], $strings, "LHC-Forms saves a string option as a display-only Coding, which OpenEMR's runtime doesn't match");
     }
 
     public function testEachDepthsSumIsGuardedSoAnEmptyDepthCannotEmptyTheTotal(): void
@@ -343,7 +361,8 @@ final class QuestionnaireExportTest extends TestCase
         $drugs = array_values(array_filter($bstad, static fn(array $i): bool => str_starts_with((string)($i['text'] ?? ''), 'In the PAST YEAR, which of the following substances')))[0];
         self::assertSame(array_map(static fn(array $i): array => ['question' => $i['linkId'], 'operator' => '>', 'answerInteger' => 0], array_slice($first, 0, 3)), $drugs['enableWhen']);
         $cocaine = array_values(array_filter($bstad, static fn(array $i): bool => str_contains((string)($i['text'] ?? ''), 'cocaine or crack? Number of days')))[0];
-        self::assertSame([['question' => $drugs['linkId'], 'operator' => '=', 'answerString' => 'Cocaine or crack']], $cocaine['enableWhen']);
+        self::assertSame([['question' => $drugs['linkId'], 'operator' => '=', 'answerCoding' => ['system' => QuestionnaireExport::ANSWER_SYSTEM, 'code' => '1', 'display' => 'Cocaine or crack']]],
+            $cocaine['enableWhen'], "on the option's own Coding, as the answer carries it");
     }
 
     public function testACodedTotalIsMarkedForExtractionAndAPartsScoreIsNot(): void

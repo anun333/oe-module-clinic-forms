@@ -19,7 +19,8 @@
  * then shows (AUDIT-C's "2-4 times a month" where WHO's paper says "2 to 4 times a month"). A
  * translation's answers are in its own words, the instrument owner's, so they aren't LOINC's: they're
  * coded in the module's own system, by position, with the same points, and its questions keep LOINC's
- * codes and names.
+ * codes and names. So is every other answer with no code of its own: a document that claims no codes
+ * still answers with Codings, never plain strings.
  *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
@@ -326,12 +327,14 @@ final readonly class QuestionnaireExport
         $item['answerOption'] = [];
         foreach ($answers as $i => [$answer, $points]) {
             $ordinal = $points === null ? [] : ['extension' => [['url' => self::ORDINAL, 'valueDecimal' => $points]]];
-            // The points ride on a Coding, which a response's answer copies; a plain string answer can't carry them, so its option does.
-            $option = match (true) {
-                $coded === null => $ordinal + ['valueString' => $answer],
-                $language === 'en' => ['valueCoding' => $ordinal + self::loincCoding((string)$coded['answers'][$i]['code'], 'en')],
-                default => ['valueCoding' => $ordinal + ['system' => self::ANSWER_SYSTEM, 'code' => (string)($i + 1), 'display' => $answer]],
-            };
+            // Every answer is a Coding, whose points a response's answer copies: LOINC's for an
+            // instrument in English, else the module's own, by position. Not a string option:
+            // LHC-Forms (OpenEMR 7.0.2 to 8.2) saves one as a Coding with only its display, which
+            // OpenEMR's native runtime doesn't match to the option, and reloading a string answer
+            // into LHC-Forms 33 drops it.
+            $option = $coded !== null && $language === 'en'
+                ? ['valueCoding' => $ordinal + self::loincCoding((string)$coded['answers'][$i]['code'], 'en')]
+                : ['valueCoding' => $ordinal + ['system' => self::ANSWER_SYSTEM, 'code' => (string)($i + 1), 'display' => $answer]];
             $item['answerOption'][] = $option;
         }
         return $item;
