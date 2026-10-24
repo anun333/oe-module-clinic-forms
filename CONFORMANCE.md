@@ -12,13 +12,13 @@ A document not cleared for public release is held, with its reason (`data/releas
 
 Checked beside this, outside the module: every FHIR export against FHIR R4 and SDC 4.0.0 (the HL7 validator), skip logic and totals in OpenEMR's own questionnaire runtime, and patient PDFs against PDF/UA-1. The README says where.
 
-**72 documents:** 26 written, 27 rule, 19 instrument. Nothing out of conformance. Held for release: `title-x-visit-record`.
+**72 documents:** 26 written, 27 rule, 19 instrument. Nothing out of conformance. Held for release: none.
 
 ## Written to a rule
 
 | Document | Held to | Checked | Release |
 |---|---|---|---|
-| `title-x-visit-record` (provider) | OPA Family Planning Annual Report (FPAR) 2.0 data elements, valid values of 4/3/2026; Title X family planning projects, 42 CFR 59 subpart A | 5 elements of its rule (requirements.json); 10 coded questions | **held:** Its 11 SNOMED CT US Extension answer codes (pregnancy intention, and some methods and reasons) have no licence for worldwide public distribution; the International Edition codes are covered by SNOMED's Global Patient Set. To be resolved by using FPAR's LOINC answers for those 11, or codes each site fetches with its own UMLS key (Seth's choice, 2026-10-23). |
+| `title-x-visit-record` (provider) | OPA Family Planning Annual Report (FPAR) 2.0 data elements, valid values of 4/3/2026; Title X family planning projects, 42 CFR 59 subpart A | 5 elements of its rule (requirements.json); 10 coded questions | cleared |
 | `privacy-acknowledgment` (patient) | Notice of Privacy Practices acknowledgment, 45 CFR 164.520(c)(2)(ii) | 3 elements of its rule (requirements.json); reading level grade 5.8 | cleared |
 | `release-of-information` (patient) | HIPAA authorization, 45 CFR 164.508(c) | 11 elements of its rule (requirements.json); reading level grade 7.9 | cleared |
 | `care-management-consent` (patient) | Medicare care management consent: MLN909188 (CCM) and Medicare Benefit Policy Manual chapter 13, section 230.2 (RHC and FQHC) | 6 elements of its rule (requirements.json); reading level grade 6.8 | cleared |
