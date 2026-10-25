@@ -1,5 +1,23 @@
 # Changelog
 
+## 0.36.0 (unreleased)
+
+**Clinical notes, letters and the behavioral health treatment plan.**
+
+- **Six clinical notes** (for clinicians, each with its LOINC document code and LOINC's name for it): History and Physical Note (34117-2), Consult Note (11488-4), Procedure Note (28570-0), Plan of Care Note (18776-5), Nurse Note (34746-8) and Education Note (34895-3). The first four carry the sections of HL7's C-CDA example of the same note (HL7 C-CDA Examples, CC0), and requirements entries hold them to those sections. The education note records who was taught, how, what got in the way, and the teach-back.
+- **Behavioral Health Treatment Plan** (US pack; Mental Health Plan of Care Note, 80742-0), written to SAMHSA's CCBHC certification criteria (2023, updated August 2025). Ten requirements entries hold it to them:
+  - goals, strengths, abilities, needs and preferences in the person's own words (4.e.4);
+  - prevention, medical, mental health and substance use needs (4.e.2);
+  - services and recovery supports, with progress toward each goal at each review (4.e.5);
+  - releases of information (4.e.2) and consultation where needed (4.e.6);
+  - a crisis plan, with the 988 Lifeline (3.a.4);
+  - advance directives, or the person's choice not to share their preferences (4.e.7);
+  - who took part, and the person's endorsement, with signature lines for the person, a parent or guardian, the clinician and an approving supervisor (4.e.2);
+  - review at least every 6 months and whenever status, response to treatment or goals change (2.b.2).
+
+  States and payers set their own rules. The ones read for this release range from a review every 30 days (Medicare community mental health centers) to once a year (New York clinics), and some require other signatures. The page tells staff to follow the stricter rule.
+- **Four letters:** Return to Work or Activity (Readiness for Duty Letter, 64294-2), Letter of Medical Necessity (Payer letter, 52034-6), Jury Duty Letter, and Ending Care at Our Clinic. LOINC has no code for the last two. The return-to-work and jury duty letters don't give the reason for the visit. The letter ending care promises care and refills until the last day, says to call 911 in an emergency, and offers help finding a new clinic and a copy of the records. The clinic sets the notice period by its state's rules.
+
 ## 0.35.0 (2026-10-24)
 
 **The Title X visit record, and coded questions.**

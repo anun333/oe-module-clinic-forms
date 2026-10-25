@@ -1,0 +1,184 @@
+{
+  "id": "procedure-note",
+  "title": "Procedure Note",
+  "category": "Clinical notes",
+  "about": "A note of a procedure done in the clinic, in the sections of a C-CDA Procedure Note.",
+  "audience": "provider",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "28570-0",
+    "display": "Procedure Note"
+  },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms, with the sections of HL7's C-CDA example of this note (HL7 C-CDA Examples, CC0)",
+    "url": "https://github.com/HL7/C-CDA-Examples"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "Clinician",
+          "value": "{provider.name}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Chart number",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Procedure"
+        },
+        {
+          "label": "Performed by",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Assisted by"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Indications"
+    },
+    {
+      "type": "lines",
+      "label": "Indications",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Preprocedure diagnosis"
+    },
+    {
+      "type": "lines",
+      "label": "Preprocedure diagnosis",
+      "count": 1
+    },
+    {
+      "type": "checklist",
+      "label": "Before the procedure",
+      "items": [
+        "Consent signed",
+        "Time-out done",
+        "Allergies checked"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Anesthesia"
+    },
+    {
+      "type": "lines",
+      "label": "Anesthesia",
+      "count": 1
+    },
+    {
+      "type": "heading",
+      "text": "Procedure description"
+    },
+    {
+      "type": "lines",
+      "label": "Procedure description",
+      "count": 6
+    },
+    {
+      "type": "heading",
+      "text": "Findings"
+    },
+    {
+      "type": "lines",
+      "label": "Findings",
+      "count": 3
+    },
+    {
+      "type": "heading",
+      "text": "Specimens taken"
+    },
+    {
+      "type": "lines",
+      "label": "Specimens taken",
+      "count": 1
+    },
+    {
+      "type": "heading",
+      "text": "Estimated blood loss"
+    },
+    {
+      "type": "lines",
+      "label": "Estimated blood loss",
+      "count": 1
+    },
+    {
+      "type": "heading",
+      "text": "Implants and drains"
+    },
+    {
+      "type": "lines",
+      "label": "Implants and drains",
+      "count": 1
+    },
+    {
+      "type": "heading",
+      "text": "Complications"
+    },
+    {
+      "type": "lines",
+      "label": "Complications",
+      "count": 1
+    },
+    {
+      "type": "heading",
+      "text": "Postprocedure diagnosis"
+    },
+    {
+      "type": "lines",
+      "label": "Postprocedure diagnosis",
+      "count": 1
+    },
+    {
+      "type": "heading",
+      "text": "Disposition and instructions given"
+    },
+    {
+      "type": "lines",
+      "label": "Disposition and instructions given",
+      "count": 2
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Clinician"
+      ]
+    }
+  ]
+}

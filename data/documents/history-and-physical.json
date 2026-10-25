@@ -1,0 +1,195 @@
+{
+  "id": "history-and-physical",
+  "title": "History and Physical",
+  "category": "Clinical notes",
+  "about": "A history and physical: the patient's story, history, examination and plan, in the sections of a C-CDA History and Physical note.",
+  "audience": "provider",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "34117-2",
+    "display": "History and Physical Note"
+  },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms, with the sections of HL7's C-CDA example of this note (HL7 C-CDA Examples, CC0)",
+    "url": "https://github.com/HL7/C-CDA-Examples"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "Clinician",
+          "value": "{provider.name}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Chart number",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Reason for visit and chief complaint"
+    },
+    {
+      "type": "lines",
+      "label": "Reason for visit and chief complaint",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "History of present illness"
+    },
+    {
+      "type": "lines",
+      "label": "History of present illness",
+      "count": 5
+    },
+    {
+      "type": "heading",
+      "text": "Past medical history"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Problems",
+          "value": "{patient.problems}"
+        },
+        {
+          "label": "Medicines",
+          "value": "{patient.medications}"
+        },
+        {
+          "label": "Allergies",
+          "value": "{patient.allergies}"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Past medical history",
+      "count": 3
+    },
+    {
+      "type": "heading",
+      "text": "Family history"
+    },
+    {
+      "type": "lines",
+      "label": "Family history",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Social history"
+    },
+    {
+      "type": "lines",
+      "label": "Social history",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Immunizations"
+    },
+    {
+      "type": "lines",
+      "label": "Immunizations",
+      "count": 1
+    },
+    {
+      "type": "heading",
+      "text": "Review of systems"
+    },
+    {
+      "type": "lines",
+      "label": "Review of systems",
+      "count": 4
+    },
+    {
+      "type": "heading",
+      "text": "Vital signs"
+    },
+    {
+      "type": "lines",
+      "label": "Vital signs",
+      "count": 1
+    },
+    {
+      "type": "heading",
+      "text": "General status"
+    },
+    {
+      "type": "lines",
+      "label": "General status",
+      "count": 1
+    },
+    {
+      "type": "heading",
+      "text": "Physical examination"
+    },
+    {
+      "type": "lines",
+      "label": "Physical examination",
+      "count": 6
+    },
+    {
+      "type": "heading",
+      "text": "Results"
+    },
+    {
+      "type": "lines",
+      "label": "Results",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Assessment"
+    },
+    {
+      "type": "lines",
+      "label": "Assessment",
+      "count": 4
+    },
+    {
+      "type": "heading",
+      "text": "Plan of care"
+    },
+    {
+      "type": "lines",
+      "label": "Plan of care",
+      "count": 4
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Clinician"
+      ]
+    }
+  ]
+}

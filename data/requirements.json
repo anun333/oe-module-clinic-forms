@@ -221,6 +221,92 @@
           ]
         }
       ]
+    },
+    "history-and-physical": {
+      "source": "HL7 C-CDA Examples (CC0), the sections of the example note of this type: https://github.com/HL7/C-CDA-Examples",
+      "elements": [
+        {
+          "name": "The sections of a C-CDA note of this type",
+          "cite": "standard",
+          "all": [
+            "history of present illness",
+            "past medical history",
+            "family history",
+            "social history",
+            "review of systems",
+            "physical examination",
+            "assessment",
+            "plan of care"
+          ]
+        },
+        {
+          "name": "A signature",
+          "cite": "standard",
+          "signature": true
+        }
+      ]
+    },
+    "consult-note": {
+      "source": "HL7 C-CDA Examples (CC0), the sections of the example note of this type: https://github.com/HL7/C-CDA-Examples",
+      "elements": [
+        {
+          "name": "The sections of a C-CDA note of this type",
+          "cite": "standard",
+          "all": [
+            "reason for referral",
+            "history of present illness",
+            "physical examination",
+            "assessment",
+            "treatment plan"
+          ]
+        },
+        {
+          "name": "A signature",
+          "cite": "standard",
+          "signature": true
+        }
+      ]
+    },
+    "procedure-note": {
+      "source": "HL7 C-CDA Examples (CC0), the sections of the example note of this type: https://github.com/HL7/C-CDA-Examples",
+      "elements": [
+        {
+          "name": "The sections of a C-CDA note of this type",
+          "cite": "standard",
+          "all": [
+            "indications",
+            "procedure description",
+            "findings",
+            "complications",
+            "postprocedure diagnosis"
+          ]
+        },
+        {
+          "name": "A signature",
+          "cite": "standard",
+          "signature": true
+        }
+      ]
+    },
+    "plan-of-care": {
+      "source": "HL7 C-CDA Examples (CC0), the sections of the example note of this type: https://github.com/HL7/C-CDA-Examples",
+      "elements": [
+        {
+          "name": "The sections of a C-CDA note of this type",
+          "cite": "standard",
+          "all": [
+            "health concerns",
+            "goals",
+            "interventions",
+            "health status and outcomes"
+          ]
+        },
+        {
+          "name": "A signature",
+          "cite": "standard",
+          "signature": true
+        }
+      ]
     }
   }
 }

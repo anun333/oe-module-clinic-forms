@@ -1,0 +1,163 @@
+{
+  "id": "medical-necessity-letter",
+  "title": "Letter of Medical Necessity",
+  "category": "Letters",
+  "about": "A clinician's letter to a payer asking it to cover a service, a medicine or equipment, with the history and reasons behind the request.",
+  "audience": "provider",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "52034-6",
+    "display": "Payer letter"
+  },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "To (payer)"
+        },
+        {
+          "label": "Payer fax or portal"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Member ID"
+        },
+        {
+          "label": "Group number"
+        },
+        {
+          "label": "Prior authorization or case number"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "label": "Requested",
+      "columns": [
+        "Service, medicine or equipment",
+        "Code",
+        "Quantity or dose",
+        "Start date",
+        "How long"
+      ],
+      "rows": 3
+    },
+    {
+      "type": "table",
+      "label": "Diagnoses",
+      "columns": [
+        "Diagnosis",
+        "ICD-10-CM code"
+      ],
+      "rows": 3
+    },
+    {
+      "type": "lines",
+      "label": "History that bears on the request",
+      "count": 5
+    },
+    {
+      "type": "table",
+      "label": "What has been tried",
+      "columns": [
+        "Treatment",
+        "Dates",
+        "Result, or why it was stopped"
+      ],
+      "rows": 4
+    },
+    {
+      "type": "lines",
+      "label": "Why this is needed now",
+      "count": 4
+    },
+    {
+      "type": "lines",
+      "label": "What is likely to happen without it",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "Guidelines or studies that support it",
+      "count": 2
+    },
+    {
+      "type": "checklist",
+      "label": "Attached",
+      "items": [
+        "Visit notes",
+        "Test results",
+        "Imaging reports",
+        "Records of treatments tried",
+        "Guideline or study"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "I am the patient's treating clinician, and the information in this letter is accurate to the best of my knowledge. Please contact me at {facility.phone} or by fax at {facility.fax} with any questions or for a peer-to-peer review."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Treating clinician"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name (printed)",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Credentials",
+          "value": "{provider.credentials}"
+        },
+        {
+          "label": "NPI",
+          "value": "{provider.npi}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Practice",
+          "value": "{facility.name}"
+        },
+        {
+          "label": "Address",
+          "value": "{facility.address}"
+        }
+      ]
+    }
+  ]
+}

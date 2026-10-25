@@ -1,0 +1,133 @@
+{
+  "id": "nurse-note",
+  "title": "Nurse Note",
+  "category": "Clinical notes",
+  "about": "A nurse's note of a visit, a call or care given: what was found, what was done, how the patient responded, and what comes next.",
+  "audience": "provider",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "34746-8",
+    "display": "Nurse Note"
+  },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "Clinician",
+          "value": "{provider.name}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Chart number",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Contact",
+      "items": [
+        "Visit",
+        "Telephone",
+        "Message",
+        "Home visit"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Reason"
+    },
+    {
+      "type": "lines",
+      "label": "Reason",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Assessment"
+    },
+    {
+      "type": "lines",
+      "label": "Assessment",
+      "count": 4
+    },
+    {
+      "type": "heading",
+      "text": "Vital signs"
+    },
+    {
+      "type": "lines",
+      "label": "Vital signs",
+      "count": 1
+    },
+    {
+      "type": "heading",
+      "text": "Care given"
+    },
+    {
+      "type": "lines",
+      "label": "Care given",
+      "count": 4
+    },
+    {
+      "type": "heading",
+      "text": "Patient response"
+    },
+    {
+      "type": "lines",
+      "label": "Patient response",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Teaching given"
+    },
+    {
+      "type": "lines",
+      "label": "Teaching given",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Plan and follow-up"
+    },
+    {
+      "type": "lines",
+      "label": "Plan and follow-up",
+      "count": 2
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Nurse"
+      ]
+    }
+  ]
+}

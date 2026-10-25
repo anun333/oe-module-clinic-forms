@@ -12,12 +12,13 @@ A document not cleared for public release is held, with its reason (`data/releas
 
 Checked beside this, outside the module: every FHIR export against FHIR R4 and SDC 4.0.0 (the HL7 validator), skip logic and totals in OpenEMR's own questionnaire runtime, and patient PDFs against PDF/UA-1. The README says where.
 
-**72 documents:** 26 written, 27 rule, 19 instrument. Nothing out of conformance. Held for release: none.
+**83 documents:** 36 written, 28 rule, 19 instrument. Nothing out of conformance. Held for release: none.
 
 ## Written to a rule
 
 | Document | Held to | Checked | Release |
 |---|---|---|---|
+| `behavioral-health-treatment-plan` (provider) | SAMHSA CCBHC Certification Criteria (2023, updated August 2025): 2.b.2, 3.a.4, 4.e.2 to 4.e.7 | 10 elements of its rule (requirements.json) | cleared |
 | `title-x-visit-record` (provider) | OPA Family Planning Annual Report (FPAR) 2.0 data elements, valid values of 4/3/2026; Title X family planning projects, 42 CFR 59 subpart A | 5 elements of its rule (requirements.json); 10 coded questions | cleared |
 | `privacy-acknowledgment` (patient) | Notice of Privacy Practices acknowledgment, 45 CFR 164.520(c)(2)(ii) | 3 elements of its rule (requirements.json); reading level grade 5.8 | cleared |
 | `release-of-information` (patient) | HIPAA authorization, 45 CFR 164.508(c) | 11 elements of its rule (requirements.json); reading level grade 7.9 | cleared |
@@ -84,6 +85,12 @@ Checked beside this, outside the module: every FHIR export against FHIR R4 and S
 | `results-letter` (patient) | Written for Clinic Forms | our own wording; no outside text to hold it to; reading level grade 4.0 | cleared |
 | `referral-letter` (provider) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `records-request` (provider) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
+| `consult-note` (provider) | Written for Clinic Forms, with the sections of HL7's C-CDA example of this note (HL7 C-CDA Examples, CC0) | our own wording; no outside text to hold it to; 2 further elements (requirements.json) | cleared |
+| `history-and-physical` (provider) | Written for Clinic Forms, with the sections of HL7's C-CDA example of this note (HL7 C-CDA Examples, CC0) | our own wording; no outside text to hold it to; 2 further elements (requirements.json) | cleared |
+| `nurse-note` (provider) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
+| `patient-education` (provider) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
+| `plan-of-care` (provider) | Written for Clinic Forms, with the sections of HL7's C-CDA example of this note (HL7 C-CDA Examples, CC0) | our own wording; no outside text to hold it to; 2 further elements (requirements.json) | cleared |
+| `procedure-note` (provider) | Written for Clinic Forms, with the sections of HL7's C-CDA example of this note (HL7 C-CDA Examples, CC0) | our own wording; no outside text to hold it to; 2 further elements (requirements.json) | cleared |
 | `downtime-visit-note` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `superbill` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `communication-consent` (patient) | Written for Clinic Forms | our own wording; no outside text to hold it to; reading level grade 3.8 | cleared |
@@ -95,6 +102,10 @@ Checked beside this, outside the module: every FHIR export against FHIR R4 and S
 | `interpreter-request` (patient) | Written for Clinic Forms | our own wording; no outside text to hold it to; reading level grade 3.6 | cleared |
 | `missed-appointment-policy` (patient) | Written for Clinic Forms | our own wording; no outside text to hold it to; reading level grade 3.6 | cleared |
 | `patient-rights` (patient) | Written for Clinic Forms | our own wording; no outside text to hold it to; reading level grade 3.5 | cleared |
+| `practice-discharge-letter` (patient) | Written for Clinic Forms | our own wording; no outside text to hold it to; reading level grade 4.1 | cleared |
+| `jury-duty-letter` (patient) | Written for Clinic Forms | our own wording; no outside text to hold it to; reading level grade 4.7 | cleared |
+| `medical-necessity-letter` (provider) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
+| `readiness-for-duty-letter` (provider) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `chaperone-record` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `internal-referral` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `routing-slip` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |

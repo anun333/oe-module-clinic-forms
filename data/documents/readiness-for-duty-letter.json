@@ -1,0 +1,120 @@
+{
+  "id": "readiness-for-duty-letter",
+  "title": "Return to Work or Activity",
+  "category": "Letters",
+  "about": "Says whether a patient may return to work, sport or another activity, with any limits and until when, without saying why they were seen.",
+  "audience": "provider",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "64294-2",
+    "display": "Readiness for Duty Letter"
+  },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "To (employer, school or coach)"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date seen"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "The patient named above was seen at {facility.name}. To protect their privacy, this letter doesn't give the reason for the visit."
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "May return to full duty or activity, with no limits, on the date below",
+        "May return on the date below, with the limits listed",
+        "May not return yet. We will see them again on the date below."
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Return on"
+        },
+        {
+          "label": "Limits last until"
+        },
+        {
+          "label": "Seen again on"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "label": "Limits",
+      "columns": [
+        "Activity",
+        "Limit",
+        "Until"
+      ],
+      "rows": 5
+    },
+    {
+      "type": "lines",
+      "label": "Other notes",
+      "count": 2
+    },
+    {
+      "type": "paragraph",
+      "text": "If you have questions about the limits, please call {facility.phone}. We can talk about the patient's care only with their permission."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Clinician"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name (printed)",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Credentials",
+          "value": "{provider.credentials}"
+        },
+        {
+          "label": "NPI",
+          "value": "{provider.npi}"
+        }
+      ]
+    }
+  ]
+}

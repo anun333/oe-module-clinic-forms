@@ -1,0 +1,115 @@
+{
+  "id": "practice-discharge-letter",
+  "title": "Ending Care at Our Clinic",
+  "category": "Letters",
+  "about": "A letter telling a patient that the clinic will stop being their care provider on a set date, with care until then, help finding a new clinic and a copy of their records. Rules on how much notice to give vary by state; check yours.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "To",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Address",
+          "value": "{patient.address}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "This letter is to tell you that {facility.name} will stop being your care provider on the date below."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Last day of care"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Until that day, we will still see you for care you need, and we will refill your medicines. In an emergency, call 911 or go to the nearest emergency room, at any time."
+    },
+    {
+      "type": "paragraph",
+      "text": "Please choose a new clinic or doctor soon, so your care isn't interrupted. These may help you find one:"
+    },
+    {
+      "type": "lines",
+      "label": "Where to find a new clinic or doctor",
+      "count": 3
+    },
+    {
+      "type": "paragraph",
+      "text": "We will send a copy of your records to your new clinic or doctor, or to you. Fill in the records request we've included, or call us at {facility.phone}."
+    },
+    {
+      "type": "checklist",
+      "label": "Included with this letter",
+      "items": [
+        "Records request",
+        "List of your medicines",
+        "Your recent test results"
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Clinician"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name (printed)",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Credentials",
+          "value": "{provider.credentials}"
+        },
+        {
+          "label": "NPI",
+          "value": "{provider.npi}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For the clinic's copy"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Sent by"
+        },
+        {
+          "label": "How it was sent (mail, certified mail, portal)"
+        },
+        {
+          "label": "Date sent"
+        }
+      ]
+    }
+  ]
+}

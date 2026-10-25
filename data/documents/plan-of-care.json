@@ -1,0 +1,149 @@
+{
+  "id": "plan-of-care",
+  "title": "Plan of Care",
+  "category": "Clinical notes",
+  "about": "A plan of care in the sections of a C-CDA Care Plan: health concerns, goals, interventions, and how the patient is doing toward them, with who agreed.",
+  "audience": "provider",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "18776-5",
+    "display": "Plan of Care Note"
+  },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms, with the sections of HL7's C-CDA example of this note (HL7 C-CDA Examples, CC0)",
+    "url": "https://github.com/HL7/C-CDA-Examples"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "Clinician",
+          "value": "{provider.name}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Chart number",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Plan start date"
+        },
+        {
+          "label": "Next review"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Problems, medicines and allergies"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Problems",
+          "value": "{patient.problems}"
+        },
+        {
+          "label": "Medicines",
+          "value": "{patient.medications}"
+        },
+        {
+          "label": "Allergies",
+          "value": "{patient.allergies}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Health concerns"
+    },
+    {
+      "type": "lines",
+      "label": "Health concerns",
+      "count": 3
+    },
+    {
+      "type": "heading",
+      "text": "Goals"
+    },
+    {
+      "type": "table",
+      "label": "Goals",
+      "columns": [
+        "Goal",
+        "Measured by",
+        "Target date"
+      ],
+      "rows": 4
+    },
+    {
+      "type": "heading",
+      "text": "Interventions"
+    },
+    {
+      "type": "table",
+      "label": "Interventions",
+      "columns": [
+        "Intervention",
+        "Who",
+        "How often"
+      ],
+      "rows": 4
+    },
+    {
+      "type": "heading",
+      "text": "Health status and outcomes"
+    },
+    {
+      "type": "lines",
+      "label": "Health status and outcomes",
+      "count": 3
+    },
+    {
+      "type": "checklist",
+      "label": "Who took part",
+      "items": [
+        "The patient",
+        "Family or caregiver",
+        "Care team"
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient",
+        "Clinician"
+      ]
+    }
+  ]
+}

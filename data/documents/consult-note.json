@@ -1,0 +1,183 @@
+{
+  "id": "consult-note",
+  "title": "Consult Note",
+  "category": "Clinical notes",
+  "about": "A consultant's note back to the referring clinician, in the sections of a C-CDA Consultation Note. It answers the referral's question; OpenEMR's referral loop files the reply under this code.",
+  "audience": "provider",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "11488-4",
+    "display": "Consult Note"
+  },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms, with the sections of HL7's C-CDA example of this note (HL7 C-CDA Examples, CC0)",
+    "url": "https://github.com/HL7/C-CDA-Examples"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "Clinician",
+          "value": "{provider.name}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Chart number",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Referred by"
+        },
+        {
+          "label": "Referral date"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Reason for referral and question asked"
+    },
+    {
+      "type": "lines",
+      "label": "Reason for referral and question asked",
+      "count": 3
+    },
+    {
+      "type": "heading",
+      "text": "History of present illness"
+    },
+    {
+      "type": "lines",
+      "label": "History of present illness",
+      "count": 4
+    },
+    {
+      "type": "heading",
+      "text": "Problems, medicines and allergies"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Problems",
+          "value": "{patient.problems}"
+        },
+        {
+          "label": "Medicines",
+          "value": "{patient.medications}"
+        },
+        {
+          "label": "Allergies",
+          "value": "{patient.allergies}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Mental status"
+    },
+    {
+      "type": "lines",
+      "label": "Mental status",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Functional status"
+    },
+    {
+      "type": "lines",
+      "label": "Functional status",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Vital signs"
+    },
+    {
+      "type": "lines",
+      "label": "Vital signs",
+      "count": 1
+    },
+    {
+      "type": "heading",
+      "text": "Physical examination"
+    },
+    {
+      "type": "lines",
+      "label": "Physical examination",
+      "count": 4
+    },
+    {
+      "type": "heading",
+      "text": "Results"
+    },
+    {
+      "type": "lines",
+      "label": "Results",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Assessment"
+    },
+    {
+      "type": "lines",
+      "label": "Assessment",
+      "count": 4
+    },
+    {
+      "type": "heading",
+      "text": "Treatment plan and recommendations"
+    },
+    {
+      "type": "lines",
+      "label": "Treatment plan and recommendations",
+      "count": 4
+    },
+    {
+      "type": "checklist",
+      "label": "Follow-up",
+      "items": [
+        "Return to the referring clinician",
+        "Shared care with the referring clinician",
+        "Continued care here"
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Consultant"
+      ]
+    }
+  ]
+}

@@ -1791,6 +1791,94 @@
           ]
         }
       ]
+    },
+    "behavioral-health-treatment-plan": {
+      "source": "SAMHSA CCBHC Certification Criteria (2023, updated August 2025): https://www.samhsa.gov/sites/default/files/ccbhc-criteria-2023.pdf",
+      "elements": [
+        {
+          "name": "Needs, strengths, abilities, preferences and goals, in the person's words",
+          "cite": "CCBHC 4.e.4",
+          "all": [
+            "in the person's own words",
+            "strengths",
+            "abilities",
+            "what i need help with",
+            "preferences",
+            "goals"
+          ]
+        },
+        {
+          "name": "Prevention, medical and behavioral health needs",
+          "cite": "CCBHC 4.e.2",
+          "all": [
+            "prevention",
+            "medical",
+            "mental health",
+            "substance use"
+          ]
+        },
+        {
+          "name": "Made with the person and, as they wish, family, caregivers or guardians",
+          "cite": "CCBHC 4.e.2",
+          "all": [
+            "family",
+            "guardian",
+            "who took part"
+          ]
+        },
+        {
+          "name": "Endorsed by the person",
+          "cite": "CCBHC 4.e.2",
+          "signature": true
+        },
+        {
+          "name": "All services, recovery supports and monitoring of progress",
+          "cite": "CCBHC 4.e.5",
+          "all": [
+            "services",
+            "recovery supports",
+            "progress"
+          ]
+        },
+        {
+          "name": "Releases of information in the record",
+          "cite": "CCBHC 4.e.2",
+          "any": [
+            "releases of information"
+          ]
+        },
+        {
+          "name": "Consultation where needed",
+          "cite": "CCBHC 4.e.6",
+          "any": [
+            "consultation sought"
+          ]
+        },
+        {
+          "name": "A crisis plan, with the 988 Lifeline",
+          "cite": "CCBHC 3.a.4",
+          "all": [
+            "crisis plan",
+            "988"
+          ]
+        },
+        {
+          "name": "Advance directives, or that the person doesn't want to share their preferences",
+          "cite": "CCBHC 4.e.7",
+          "all": [
+            "advance directive",
+            "doesn't want to share"
+          ]
+        },
+        {
+          "name": "Reviewed at least every 6 months, and on a change",
+          "cite": "CCBHC 2.b.2",
+          "all": [
+            "at least every 6 months",
+            "response to treatment"
+          ]
+        }
+      ]
     }
   }
 }

@@ -1,0 +1,149 @@
+{
+  "id": "patient-education",
+  "title": "Patient Education Note",
+  "category": "Clinical notes",
+  "about": "What was taught, to whom and how, what got in the way, and whether the person could explain it back.",
+  "audience": "provider",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "34895-3",
+    "display": "Education Note"
+  },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "Educator",
+          "value": "{provider.name}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Chart number",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Taught to",
+      "items": [
+        "Patient",
+        "Parent or guardian",
+        "Caregiver or family member (name below)"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Caregiver or family member"
+        },
+        {
+          "label": "Language used"
+        },
+        {
+          "label": "Interpreter (name or ID)"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Topics taught",
+      "count": 3
+    },
+    {
+      "type": "checklist",
+      "label": "How it was taught",
+      "items": [
+        "Talked it through",
+        "Showed how, and watched them do it",
+        "Written material given",
+        "Video or website",
+        "Group class"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Materials given (title, language)",
+      "count": 1
+    },
+    {
+      "type": "checklist",
+      "label": "What got in the way of learning",
+      "items": [
+        "Nothing",
+        "Language",
+        "Hearing or vision",
+        "Reading",
+        "Memory or attention",
+        "Feeling unwell, worried or stressed",
+        "Not ready to learn today"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Teach-back",
+      "items": [
+        "Explained it back correctly",
+        "Showed it back correctly",
+        "Needs more teaching",
+        "Could not explain or show it back"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Plan and follow-up",
+      "count": 3
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Educator"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name (printed)",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Credentials",
+          "value": "{provider.credentials}"
+        },
+        {
+          "label": "NPI",
+          "value": "{provider.npi}"
+        }
+      ]
+    }
+  ]
+}

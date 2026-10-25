@@ -1,0 +1,103 @@
+{
+  "id": "jury-duty-letter",
+  "title": "Jury Duty Letter",
+  "category": "Letters",
+  "about": "A letter for the court asking that a patient's jury service be put off, or excused, for a health reason, without naming the condition.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "To",
+          "value": "Clerk of the court"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Juror number"
+        },
+        {
+          "label": "Date to report"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "The person named above is a patient at {facility.name}. They have a health condition that would make jury service hard for them right now. To protect their privacy, this letter doesn't name the condition."
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Please put off their service until the date below.",
+        "Please excuse them from service. The condition is not expected to get better.",
+        "They could serve with the changes listed below."
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Put off until"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Changes that would help them serve",
+      "count": 3
+    },
+    {
+      "type": "paragraph",
+      "text": "The court can call {facility.phone} with questions. We can talk about the patient's care only with their permission."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Clinician"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name (printed)",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Credentials",
+          "value": "{provider.credentials}"
+        },
+        {
+          "label": "NPI",
+          "value": "{provider.npi}"
+        }
+      ]
+    }
+  ]
+}

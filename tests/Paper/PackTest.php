@@ -97,7 +97,7 @@ final class PackTest extends TestCase
         self::assertContains('doc:notice-of-privacy-practices', $us['new-patient'], 'the US pack replaces the core packet');
         self::assertContains('layout:UDS', $us['annual-update-short']);
 
-        self::assertSame(['asq', 'audit-c', 'gad-7', 'phq-2', 'phq-9', 'procedure-consent', 'taps-1'], self::sorted(array_keys(Requirements::shipped(null)->documents)));
+        self::assertSame(['asq', 'audit-c', 'consult-note', 'gad-7', 'history-and-physical', 'phq-2', 'phq-9', 'plan-of-care', 'procedure-consent', 'procedure-note', 'taps-1'], self::sorted(array_keys(Requirements::shipped(null)->documents)));
         self::assertArrayHasKey('release-of-information', Requirements::shipped()->documents);
         self::assertSame([], Taglines::forSite(null, null)->taglines, 'taglines are Section 1557, so the US pack\'s');
         self::assertSame(['en', 'es'], array_keys(Taglines::forSite(null)->taglines));

@@ -38,6 +38,9 @@
         "documents/consent-to-treat": {
             "1": "b0baf03cd7871e0d"
         },
+        "documents/consult-note": {
+            "1": "41df26cced6edc1d"
+        },
         "documents/controlled-substance-agreement": {
             "1": "0e1d9d3f3e79ae0e",
             "2": "6d7faad20a66f2c3"
@@ -67,6 +70,9 @@
         "documents/healthy-days": {
             "1": "231c126bca658362"
         },
+        "documents/history-and-physical": {
+            "1": "422558e3c90026ba"
+        },
         "documents/internal-referral": {
             "1": "1f4fe34d2f9d6516"
         },
@@ -74,12 +80,24 @@
             "1": "a4ccc732820d4179",
             "2": "8e5428482877a51a"
         },
+        "documents/jury-duty-letter": {
+            "1": "97ed72d46aa34281"
+        },
+        "documents/medical-necessity-letter": {
+            "1": "f913ad592d11b7e1"
+        },
         "documents/medicine-review": {
             "1": "d08859b8f3d4a0da"
         },
         "documents/missed-appointment-policy": {
             "1": "b1f0a20bf05ca925",
             "2": "b1900910b99e8ac8"
+        },
+        "documents/nurse-note": {
+            "1": "51ed3d17a457efcb"
+        },
+        "documents/patient-education": {
+            "1": "aeee9b7e8115bd04"
         },
         "documents/patient-rights": {
             "1": "958a6ba0e78e79b9",
@@ -109,9 +127,21 @@
             "2": "5d0fc3a48952e121",
             "3": "d3e8431f6ba0315d"
         },
+        "documents/plan-of-care": {
+            "1": "bf013dceb9014491"
+        },
+        "documents/practice-discharge-letter": {
+            "1": "7a169e21c65ebba1"
+        },
         "documents/procedure-consent": {
             "1": "aee5343683974a25",
             "2": "1ef2b2ced394a175"
+        },
+        "documents/procedure-note": {
+            "1": "97f22058b17398da"
+        },
+        "documents/readiness-for-duty-letter": {
+            "1": "ab9db4e3d64f8491"
         },
         "documents/records-request": {
             "1": "356b32e60a92e714",
@@ -161,6 +191,9 @@
         },
         "packs/us/documents/authorization-revocation": {
             "1": "119f62b4df86b9df"
+        },
+        "packs/us/documents/behavioral-health-treatment-plan": {
+            "1": "f75da1465546a803"
         },
         "packs/us/documents/care-management-consent": {
             "1": "68ebbd875d5729de"

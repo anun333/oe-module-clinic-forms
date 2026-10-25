@@ -1,0 +1,272 @@
+{
+  "id": "behavioral-health-treatment-plan",
+  "title": "Behavioral Health Treatment Plan",
+  "category": "Clinical notes",
+  "about": "A person-centered and family-centered treatment plan made with the person: goals in their own words, services and recovery supports, a crisis plan, advance directives and progress at each review. Written to SAMHSA's CCBHC criteria; states and payers add their own rules.",
+  "audience": "provider",
+  "code": {
+    "system": "http://loinc.org",
+    "code": "80742-0",
+    "display": "Mental Health Plan of Care Note"
+  },
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "SAMHSA CCBHC Certification Criteria (2023, updated August 2025): 2.b.2, 3.a.4, 4.e.2 to 4.e.7",
+    "url": "https://www.samhsa.gov/sites/default/files/ccbhc-criteria-2023.pdf"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Chart number",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "This plan is",
+      "items": [
+        "The first plan, after the comprehensive evaluation",
+        "A review",
+        "An update after a change in status, response to treatment or goals"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date of plan",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "Comprehensive evaluation done on"
+        },
+        {
+          "label": "Next review due"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Review and update this plan at least every 6 months, and whenever the person's status, response to treatment or goals change. A state, payer or accreditor may require reviews more often, or other signatures; follow the stricter rule."
+    },
+    {
+      "type": "table",
+      "label": "Diagnoses",
+      "columns": [
+        "Diagnosis",
+        "ICD-10-CM code"
+      ],
+      "rows": 4
+    },
+    {
+      "type": "heading",
+      "text": "In the person's own words"
+    },
+    {
+      "type": "lines",
+      "label": "Goals: what matters most to me, and what I want from care",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "My strengths and abilities",
+      "count": 2
+    },
+    {
+      "type": "lines",
+      "label": "What I need help with",
+      "count": 2
+    },
+    {
+      "type": "lines",
+      "label": "My preferences: how, when, where and with whom I want care",
+      "count": 2
+    },
+    {
+      "type": "lines",
+      "label": "What my family or caregiver adds, if I want them involved",
+      "count": 2
+    },
+    {
+      "type": "checklist",
+      "label": "Needs this plan addresses",
+      "items": [
+        "Mental health",
+        "Substance use",
+        "Medical (physical health)",
+        "Prevention (screenings, vaccines, healthy habits)",
+        "Housing, food, transport or other social needs",
+        "School, work or daily living"
+      ]
+    },
+    {
+      "type": "table",
+      "label": "Goals and objectives",
+      "columns": [
+        "Goal, in the person's words",
+        "Objective that can be measured",
+        "Target date",
+        "How progress is measured"
+      ],
+      "rows": 4
+    },
+    {
+      "type": "table",
+      "label": "Services, including recovery supports",
+      "columns": [
+        "Service or intervention",
+        "Type of service",
+        "How often",
+        "For how long",
+        "Who provides it (our clinic or a referral)"
+      ],
+      "rows": 6
+    },
+    {
+      "type": "checklist",
+      "label": "Recovery supports",
+      "items": [
+        "Peer support",
+        "Family support",
+        "Supported employment or education",
+        "Housing support",
+        "Mutual help groups",
+        "Other (above)"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Care setting (the least restrictive that meets the need)"
+        },
+        {
+          "label": "Consultation sought (for example eating disorders, brain injury, I/DD, violence or trafficking)"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Releases of information",
+      "items": [
+        "All releases of information needed for this plan are signed and in the record",
+        "None needed"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Crisis plan"
+    },
+    {
+      "type": "lines",
+      "label": "Warning signs that a crisis may be starting",
+      "count": 2
+    },
+    {
+      "type": "lines",
+      "label": "What helps me, and what I can do",
+      "count": 2
+    },
+    {
+      "type": "lines",
+      "label": "People I can call (name and phone)",
+      "count": 2
+    },
+    {
+      "type": "paragraph",
+      "text": "In a crisis, call or text 988, the Suicide and Crisis Lifeline, at any time. In an emergency, call 911."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Local crisis line or mobile crisis team"
+        },
+        {
+          "label": "Clinic phone",
+          "value": "{facility.phone}"
+        },
+        {
+          "label": "After hours"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Advance directive",
+      "items": [
+        "Has a psychiatric advance directive (a copy is in the record)",
+        "Has another advance directive (a copy is in the record)",
+        "Was offered help to make one",
+        "Doesn't want to share their preferences (noted here)"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Progress at this review"
+    },
+    {
+      "type": "table",
+      "label": "Progress toward each goal",
+      "columns": [
+        "Goal",
+        "Met, partly met, not met, or changed",
+        "What changes in the plan"
+      ],
+      "rows": 4
+    },
+    {
+      "type": "table",
+      "label": "Who took part in making this plan",
+      "columns": [
+        "Name",
+        "Role (the person, family, guardian, team member)",
+        "How (in person, phone, video)"
+      ],
+      "rows": 5
+    },
+    {
+      "type": "paragraph",
+      "text": "I helped make this plan. It says what I want from my care, and I agree with it."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Person receiving services",
+        "Parent or guardian (when one is needed)",
+        "Clinician",
+        "Supervisor or approving licensed professional (when required)"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Clinician name (printed)",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Credentials",
+          "value": "{provider.credentials}"
+        }
+      ]
+    }
+  ]
+}
