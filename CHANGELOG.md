@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.37.0 (unreleased)
+## 0.37.0 (2026-10-25)
 
 **The downtime kit, clinic operations logs, and the federal race, ethnicity and disability questions.**
 
