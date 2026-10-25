@@ -201,6 +201,16 @@
         "doc:stay-independent",
         "doc:gds-15"
       ]
+    },
+    {
+      "id": "downtime-kit",
+      "title": "Downtime kit",
+      "about": "For when OpenEMR is down: a paper visit note, a log of each order and its result, and a medication administration record, each to be entered once the system is back.",
+      "items": [
+        "doc:downtime-visit-note",
+        "doc:downtime-order-log",
+        "doc:medication-administration-record"
+      ]
     }
   ]
 }

@@ -1,0 +1,83 @@
+{
+  "id": "sharps-injury-log",
+  "title": "Sharps Injury Log",
+  "category": "Clinic operations",
+  "about": "The log OSHA requires of employers who keep an injury and illness log under 29 CFR 1904: each needlestick or cut from a contaminated sharp, kept so the injured worker cannot be identified, for 5 years. Offices of physicians, outpatient care centers and medical labs are partly exempt from Part 1904 and from this log, but OSHA encourages them to keep it. Some state plans (California, 8 CCR 5193) ask for more; the extra columns are for them.",
+  "audience": "staff",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "OSHA Bloodborne Pathogens, 29 CFR 1910.1030(h)(5), and 29 CFR 1904.33 (eCFR, 2026-10-20)",
+    "url": "https://www.ecfr.gov/current/title-29/section-1910.1030"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Employer",
+          "value": "{facility.name}"
+        },
+        {
+          "label": "Site"
+        },
+        {
+          "label": "Calendar year"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Write each injury from a contaminated sharp here, as soon as it is reported. Do not write the injured worker's name: use the case number from their confidential exposure report, so no one can tell who was hurt from this log."
+    },
+    {
+      "type": "table",
+      "label": "Injuries",
+      "columns": [
+        "Date",
+        "Case number",
+        "Type of device",
+        "Brand of device",
+        "Department or work area",
+        "How the incident occurred"
+      ],
+      "rows": 8
+    },
+    {
+      "type": "table",
+      "label": "More detail, where a state plan asks for it",
+      "columns": [
+        "Case number",
+        "Job classification",
+        "Procedure being done",
+        "Body part",
+        "Safety feature on the device, and was it activated",
+        "Could a safety device or other control have prevented it"
+      ],
+      "rows": 7
+    },
+    {
+      "type": "paragraph",
+      "text": "Keep this log for 5 years after the end of the calendar year it covers. If the type or brand of a device cannot be found out without risking another exposure, write unknown."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Kept by"
+        },
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Date reviewed"
+        }
+      ]
+    }
+  ]
+}

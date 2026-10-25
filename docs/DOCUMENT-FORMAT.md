@@ -41,7 +41,7 @@ A document is one JSON file named by its id (`consent-to-treat.json`), in `data/
 
 ## Blocks
 
-`heading`, `paragraph`, `fields` (label and optional value), `checklist` (optionally coded: see below), `lines` (ruled lines), `signature` (one line per signer, each with a date), `scale` (a question per row and a box per answer, optionally scored), `table` (column headings over blank rows), `taglines` (the language assistance taglines). Exact shapes are in `src/Paper/Document.php`.
+`heading`, `paragraph`, `fields` (label and optional value), `checklist` (optionally coded: see below; `"names": true` when its items are names of peoples, places or languages, which the reading-level check then leaves out, since it would read their syllables as hard words), `lines` (ruled lines), `signature` (one line per signer, each with a date), `scale` (a question per row and a box per answer, optionally scored), `table` (column headings over blank rows), `taglines` (the language assistance taglines). Exact shapes are in `src/Paper/Document.php`.
 
 ## Tables another module fills
 

@@ -1,0 +1,82 @@
+{
+  "id": "quality-control-log",
+  "title": "Quality Control Log (Waived Tests)",
+  "category": "Clinic operations",
+  "about": "Each quality control run for a waived test (glucose, urine dipstick, pregnancy, strep and the like), as the test's maker instructs: control lots, expected and actual results, and what was done when a control was out of range.",
+  "audience": "staff",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Test"
+        },
+        {
+          "label": "Device or kit"
+        },
+        {
+          "label": "Site",
+          "value": "{facility.name}"
+        },
+        {
+          "label": "Month"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Kit or strip lot"
+        },
+        {
+          "label": "Expires"
+        },
+        {
+          "label": "Opened on"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "label": "Control runs",
+      "columns": [
+        "Date",
+        "Control level",
+        "Control lot",
+        "Control expires",
+        "Expected range",
+        "Result",
+        "In range",
+        "Initials"
+      ],
+      "rows": 14
+    },
+    {
+      "type": "lines",
+      "label": "Out of range: what was done (repeated, new lot, test stopped, patients affected)",
+      "count": 3
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    }
+  ]
+}

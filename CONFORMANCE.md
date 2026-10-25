@@ -12,12 +12,13 @@ A document not cleared for public release is held, with its reason (`data/releas
 
 Checked beside this, outside the module: every FHIR export against FHIR R4 and SDC 4.0.0 (the HL7 validator), skip logic and totals in OpenEMR's own questionnaire runtime, and patient PDFs against PDF/UA-1. The README says where.
 
-**87 documents:** 37 written, 31 rule, 19 instrument. Nothing out of conformance. Held for release: none.
+**96 documents:** 44 written, 33 rule, 19 instrument. Nothing out of conformance. Held for release: none.
 
 ## Written to a rule
 
 | Document | Held to | Checked | Release |
 |---|---|---|---|
+| `sharps-injury-log` (staff) | OSHA Bloodborne Pathogens, 29 CFR 1910.1030(h)(5), and 29 CFR 1904.33 (eCFR, 2026-10-20) | 5 elements of its rule (requirements.json) | cleared |
 | `behavioral-health-treatment-plan` (provider) | SAMHSA CCBHC Certification Criteria (2023, updated August 2025): 2.b.2, 3.a.4, 4.e.2 to 4.e.7 | 10 elements of its rule (requirements.json) | cleared |
 | `title-x-visit-record` (provider) | OPA Family Planning Annual Report (FPAR) 2.0 data elements, valid values of 4/3/2026; Title X family planning projects, 42 CFR 59 subpart A | 5 elements of its rule (requirements.json); 10 coded questions | cleared |
 | `privacy-acknowledgment` (patient) | Notice of Privacy Practices acknowledgment, 45 CFR 164.520(c)(2)(ii) | 3 elements of its rule (requirements.json); reading level grade 5.8 | cleared |
@@ -26,6 +27,7 @@ Checked beside this, outside the module: every FHIR export against FHIR R4 and S
 | `good-faith-estimate` (patient) | No Surprises Act: good faith estimates for uninsured or self-pay patients, 45 CFR 149.610(c) | 10 elements of its rule (requirements.json); reading level grade 5.4 | cleared |
 | `medicare-secondary-payer-questions` (patient) | Medicare Secondary Payer Manual (Pub. 100-05), chapter 3, section 20.2.1: model questions | 3 elements of its rule (requirements.json); reading level grade 4.6 | cleared |
 | `payment-plan-agreement` (patient) | HRSA Health Center Program Compliance Manual, Chapter 16: Billing and Collections (last reviewed December 2025) | 6 elements of its rule (requirements.json); reading level grade 5.8 | cleared |
+| `race-ethnicity-disability` (patient) | OMB Statistical Policy Directive No. 15 (89 FR 22182, March 29, 2024); HHS Implementation Guidance on Data Collection Standards (October 31, 2011), disability status | 5 elements of its rule (requirements.json); reading level grade 4.0 | cleared |
 | `sliding-fee-application` (patient) | HRSA Health Center Program Compliance Manual, chapter 9 (Sliding Fee Discount Program) | 5 elements of its rule (requirements.json); reading level grade 5.8 | cleared |
 | `sliding-fee-notice` (patient) | HRSA Health Center Program Compliance Manual, chapter 9 (patients are told about the sliding fee discount; no one is denied for inability to pay) | 3 elements of its rule (requirements.json); reading level grade 5.3 | cleared |
 | `good-faith-estimate-notice` (patient) | No Surprises Act: good faith estimates for uninsured or self-pay patients, 45 CFR 149.610 | 2 elements of its rule (requirements.json); reading level grade 5.2 | cleared |
@@ -88,14 +90,19 @@ Checked beside this, outside the module: every FHIR export against FHIR R4 and S
 | `results-letter` (patient) | Written for Clinic Forms | our own wording; no outside text to hold it to; reading level grade 4.0 | cleared |
 | `referral-letter` (provider) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `records-request` (provider) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
+| `emergency-cart-checklist` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
+| `incident-report` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
+| `quality-control-log` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `consult-note` (provider) | Written for Clinic Forms, with the sections of HL7's C-CDA example of this note (HL7 C-CDA Examples, CC0) | our own wording; no outside text to hold it to; 2 further elements (requirements.json) | cleared |
 | `history-and-physical` (provider) | Written for Clinic Forms, with the sections of HL7's C-CDA example of this note (HL7 C-CDA Examples, CC0) | our own wording; no outside text to hold it to; 2 further elements (requirements.json) | cleared |
 | `nurse-note` (provider) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `patient-education` (provider) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `plan-of-care` (provider) | Written for Clinic Forms, with the sections of HL7's C-CDA example of this note (HL7 C-CDA Examples, CC0) | our own wording; no outside text to hold it to; 2 further elements (requirements.json) | cleared |
 | `procedure-note` (provider) | Written for Clinic Forms, with the sections of HL7's C-CDA example of this note (HL7 C-CDA Examples, CC0) | our own wording; no outside text to hold it to; 2 further elements (requirements.json) | cleared |
+| `downtime-order-log` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `downtime-visit-note` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `superbill` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
+| `medication-administration-record` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `communication-consent` (patient) | Written for Clinic Forms | our own wording; no outside text to hold it to; reading level grade 3.8 | cleared |
 | `photography-consent` (patient) | Written for Clinic Forms | our own wording; no outside text to hold it to; reading level grade 6.6 | cleared |
 | `telehealth-consent` (patient) | Written for Clinic Forms | our own wording; no outside text to hold it to; reading level grade 6.9 | cleared |
@@ -111,7 +118,9 @@ Checked beside this, outside the module: every FHIR export against FHIR R4 and S
 | `readiness-for-duty-letter` (provider) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `chaperone-record` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `internal-referral` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
+| `order-requisition` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `routing-slip` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `staff-handoff` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `chaperone-notice` (patient) | Written for Clinic Forms | our own wording; no outside text to hold it to; reading level grade 4.7 | cleared |
 | `sbhc-consent-ca` (patient) | Written for Clinic Forms, with California Family Code 6920 to 6929 and Health and Safety Code 123115 (read 2026-10-24) | our own wording; no outside text to hold it to; 2 further elements (requirements.json); reading level grade 4.2 | cleared |
+| `vaccine-screening` (patient) | Written for Clinic Forms, from ACIP's General Best Practices Guidelines for Immunization, Contraindications and Precautions, Table 4-1 (July 25, 2024) | our own wording; no outside text to hold it to; reading level grade 4.8 | cleared |

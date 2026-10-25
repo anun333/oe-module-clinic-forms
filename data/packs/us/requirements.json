@@ -2113,6 +2113,140 @@
           ]
         }
       ]
+    },
+    "sharps-injury-log": {
+      "source": "29 CFR 1910.1030(h)(5) and 1904.33, eCFR as of 2026-10-20: https://www.ecfr.gov/current/title-29/section-1910.1030",
+      "elements": [
+        {
+          "name": "The type and brand of device involved in the incident",
+          "cite": "29 CFR 1910.1030(h)(5)(i)(A)",
+          "all": [
+            "type of device",
+            "brand of device"
+          ]
+        },
+        {
+          "name": "The department or work area where the exposure incident occurred",
+          "cite": "29 CFR 1910.1030(h)(5)(i)(B)",
+          "all": [
+            "department or work area"
+          ]
+        },
+        {
+          "name": "An explanation of how the incident occurred",
+          "cite": "29 CFR 1910.1030(h)(5)(i)(C)",
+          "all": [
+            "how the incident occurred"
+          ]
+        },
+        {
+          "name": "Kept so as to protect the confidentiality of the injured employee",
+          "cite": "29 CFR 1910.1030(h)(5)(i)",
+          "all": [
+            "do not write the injured worker's name"
+          ]
+        },
+        {
+          "name": "Kept for the period 29 CFR 1904.33 requires: 5 years following the end of the calendar year",
+          "cite": "29 CFR 1910.1030(h)(5)(iii); 1904.33(a)",
+          "all": [
+            "5 years after the end of the calendar year"
+          ]
+        }
+      ]
+    },
+    "race-ethnicity-disability": {
+      "source": "OMB SPD 15, 89 FR 22182 (March 29, 2024), §§1 to 3 and Figure 1; HHS Implementation Guidance on Data Collection Standards (October 31, 2011), §D",
+      "elements": [
+        {
+          "name": "The combined race and ethnicity question and its instruction",
+          "cite": "SPD 15 §2",
+          "all": [
+            "what is your race and/or ethnicity?",
+            "select all that apply"
+          ]
+        },
+        {
+          "name": "The seven minimum categories",
+          "cite": "SPD 15 §1",
+          "all": [
+            "american indian or alaska native",
+            "asian",
+            "black or african american",
+            "hispanic or latino",
+            "middle eastern or north african",
+            "native hawaiian or pacific islander",
+            "white"
+          ]
+        },
+        {
+          "name": "The detailed categories that must be offered",
+          "cite": "SPD 15 §2 and Figure 1",
+          "all": [
+            "chinese",
+            "asian indian",
+            "filipino",
+            "vietnamese",
+            "korean",
+            "japanese",
+            "african american",
+            "jamaican",
+            "haitian",
+            "nigerian",
+            "ethiopian",
+            "somali",
+            "mexican",
+            "puerto rican",
+            "salvadoran",
+            "cuban",
+            "dominican",
+            "guatemalan",
+            "lebanese",
+            "iranian",
+            "egyptian",
+            "syrian",
+            "iraqi",
+            "israeli",
+            "native hawaiian",
+            "samoan",
+            "chamorro",
+            "tongan",
+            "fijian",
+            "marshallese",
+            "english",
+            "german",
+            "irish",
+            "italian",
+            "polish",
+            "scottish"
+          ]
+        },
+        {
+          "name": "A write-in for another group in each category, with its examples",
+          "cite": "SPD 15 §2",
+          "all": [
+            "navajo nation",
+            "pakistani, hmong, afghan",
+            "trinidadian and tobagonian, ghanaian, congolese",
+            "colombian, honduran, spaniard",
+            "moroccan, yemeni, kurdish",
+            "chuukese, palauan, tahitian",
+            "french, swedish, norwegian"
+          ]
+        },
+        {
+          "name": "The six disability questions, unchanged",
+          "cite": "HHS 2011 data standard §D (\"the questions and answer categories cannot be changed\")",
+          "all": [
+            "are you deaf or do you have serious difficulty hearing?",
+            "are you blind or do you have serious difficulty seeing, even when wearing glasses?",
+            "because of a physical, mental, or emotional condition, do you have serious difficulty concentrating, remembering, or making decisions?",
+            "do you have serious difficulty walking or climbing stairs?",
+            "do you have difficulty dressing or bathing?",
+            "because of a physical, mental, or emotional condition, do you have difficulty doing errands alone such as visiting a doctor's office or shopping?"
+          ]
+        }
+      ]
     }
   }
 }

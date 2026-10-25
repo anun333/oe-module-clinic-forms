@@ -29,7 +29,8 @@ final class Readability
                 foreach (preg_split('/(?<=[.!?])\s+/', trim((string)$b['text'])) ?: [] as $s) {
                     $sentences[] = $s;
                 }
-            } elseif ($b['type'] === 'checklist') {
+            } elseif ($b['type'] === 'checklist' && ($b['names'] ?? false) !== true) {
+                // A list of names ("Vietnamese", "Marshallese") is not prose: its syllables say nothing of how hard it reads.
                 foreach ($b['items'] as $item) {
                     $sentences[] = (string)$item;
                 }

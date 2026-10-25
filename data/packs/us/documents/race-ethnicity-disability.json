@@ -1,0 +1,210 @@
+{
+  "id": "race-ethnicity-disability",
+  "title": "Race, Ethnicity and Disability",
+  "category": "Front desk",
+  "about": "The combined race and ethnicity question of OMB's 2024 standards (SPD 15), with its detailed categories and write-ins, and the six disability questions of HHS's 2011 data standard (the American Community Survey's). Federal agencies must use SPD 15 by September 28, 2029; UDS and Title X reporting still use the earlier categories until 2029, so map these answers before reporting there, and note that Middle Eastern or North African has no earlier category.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "OMB Statistical Policy Directive No. 15 (89 FR 22182, March 29, 2024); HHS Implementation Guidance on Data Collection Standards (October 31, 2011), disability status",
+    "url": "https://www.govinfo.gov/content/pkg/FR-2024-03-29/pdf/2024-06469.pdf"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "What is your race and/or ethnicity?"
+    },
+    {
+      "type": "paragraph",
+      "text": "Select all that apply and enter additional details in the spaces below."
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "American Indian or Alaska Native"
+      ],
+      "names": true
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Enter, for example, Navajo Nation, Blackfeet Tribe of the Blackfeet Indian Reservation of Montana, Native Village of Barrow Inupiat Traditional Government, Nome Eskimo Community, Aztec, Maya, etc."
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Asian",
+        "Chinese",
+        "Asian Indian",
+        "Filipino",
+        "Vietnamese",
+        "Korean",
+        "Japanese"
+      ],
+      "names": true
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Enter, for example, Pakistani, Hmong, Afghan, etc."
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Black or African American",
+        "African American",
+        "Jamaican",
+        "Haitian",
+        "Nigerian",
+        "Ethiopian",
+        "Somali"
+      ],
+      "names": true
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Enter, for example, Trinidadian and Tobagonian, Ghanaian, Congolese, etc."
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Hispanic or Latino",
+        "Mexican",
+        "Puerto Rican",
+        "Salvadoran",
+        "Cuban",
+        "Dominican",
+        "Guatemalan"
+      ],
+      "names": true
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Enter, for example, Colombian, Honduran, Spaniard, etc."
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Middle Eastern or North African",
+        "Lebanese",
+        "Iranian",
+        "Egyptian",
+        "Syrian",
+        "Iraqi",
+        "Israeli"
+      ],
+      "names": true
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Enter, for example, Moroccan, Yemeni, Kurdish, etc."
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Native Hawaiian or Pacific Islander",
+        "Native Hawaiian",
+        "Samoan",
+        "Chamorro",
+        "Tongan",
+        "Fijian",
+        "Marshallese"
+      ],
+      "names": true
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Enter, for example, Chuukese, Palauan, Tahitian, etc."
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "White",
+        "English",
+        "German",
+        "Irish",
+        "Italian",
+        "Polish",
+        "Scottish"
+      ],
+      "names": true
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Enter, for example, French, Swedish, Norwegian, etc."
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Disability"
+    },
+    {
+      "type": "scale",
+      "label": "Please check one answer for each.",
+      "columns": [
+        "Yes",
+        "No"
+      ],
+      "items": [
+        "Are you deaf or do you have serious difficulty hearing?",
+        "Are you blind or do you have serious difficulty seeing, even when wearing glasses?",
+        "Because of a physical, mental, or emotional condition, do you have serious difficulty concentrating, remembering, or making decisions? (5 years old or older)",
+        "Do you have serious difficulty walking or climbing stairs? (5 years old or older)",
+        "Do you have difficulty dressing or bathing? (5 years old or older)",
+        "Because of a physical, mental, or emotional condition, do you have difficulty doing errands alone such as visiting a doctor's office or shopping? (15 years old or older)"
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "You can skip any question. Your answers help us see who we serve and plan our care."
+    }
+  ]
+}

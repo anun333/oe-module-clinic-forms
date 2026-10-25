@@ -1,5 +1,25 @@
 # Changelog
 
+## 0.37.0 (unreleased)
+
+**The downtime kit, clinic operations logs, and the federal race, ethnicity and disability questions.**
+
+- **Downtime kit** (a new packet): the downtime visit note, with a new **Downtime Order and Result Log** (each order placed while OpenEMR is down, its result, who was told, and its entry once the system is back) and a **Medication Administration Record** (doses given, refused or held; vaccines with manufacturer, lot, site, who gave them and the VIS edition and date). No federal list of MAR fields exists for clinics, so the MAR is our own wording.
+- **Clinic operations:**
+  - **Sharps Injury Log** (US pack), held to OSHA's 29 CFR 1910.1030(h)(5): the type and brand of device, the department or work area, and how the incident occurred. It keeps the injured worker's name out and says to keep the log 5 years (1904.33). Its description says offices of physicians, outpatient care centers and labs are partly exempt but encouraged to keep it, and it has columns for state plans that ask for more (California, 8 CCR 5193).
+  - **Incident Report**, for the risk manager and not the chart.
+  - **Emergency Cart Check** (daily and monthly).
+  - **Quality Control Log (Waived Tests)**.
+  - **Order Requisition**, for a lab or partner with no requisition of its own.
+- **Race, Ethnicity and Disability** (US pack), held to OMB's 2024 SPD 15 and HHS's 2011 data standard:
+  - the combined question "What is your race and/or ethnicity?", its seven minimum categories, the detailed categories that must be offered, and a write-in with the standard's examples for each;
+  - the six disability questions, word for word, since HHS says they "cannot be changed".
+
+  UDS and Title X still use the earlier categories until 2029, and the description says to map the answers before reporting there.
+- **Before Your Vaccines** (US pack): yes, no or not sure questions written from ACIP's General Best Practices table of contraindications and precautions (Table 4-1, July 25, 2024) and its spacing rules, in plain words, with a part for staff to check each yes against the table.
+- **Format:** a checklist may say `"names": true` when its items are names of peoples, places or languages. The reading-level check leaves those items out: it scored the race categories at grade 12.9 on their syllables. The flag can't be `false`, and a test shows a list of names fails the check without it and passes with it.
+- **Checked:** unit tests (236); all 96 documents in conformance.
+
 ## 0.36.0 (2026-10-24)
 
 **Clinical notes, letters, the behavioral health treatment plan, and school-based health center packets for Texas and California.**

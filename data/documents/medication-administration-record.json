@@ -1,0 +1,104 @@
+{
+  "id": "medication-administration-record",
+  "title": "Medication Administration Record",
+  "category": "Downtime",
+  "about": "A paper record of each dose given, refused or held, for downtime or a setting that keeps one on paper. Vaccines and controlled substances have their own record rules; the fields for them are here.",
+  "audience": "staff",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Allergies",
+          "value": "{patient.allergies}"
+        },
+        {
+          "label": "Weight"
+        },
+        {
+          "label": "Month"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "label": "Medicines ordered",
+      "columns": [
+        "Medicine",
+        "Strength",
+        "Dose",
+        "Route",
+        "How often",
+        "Prescriber",
+        "Start",
+        "Stop"
+      ],
+      "rows": 6
+    },
+    {
+      "type": "table",
+      "label": "Doses",
+      "columns": [
+        "Date",
+        "Time",
+        "Medicine",
+        "Dose",
+        "Route and site",
+        "Given by (initials)",
+        "Refused or held, and why"
+      ],
+      "rows": 16
+    },
+    {
+      "type": "table",
+      "label": "Vaccines given",
+      "columns": [
+        "Date",
+        "Vaccine",
+        "Manufacturer",
+        "Lot number",
+        "Site",
+        "Given by (name, title)",
+        "VIS edition date and date given"
+      ],
+      "rows": 4
+    },
+    {
+      "type": "table",
+      "label": "Initials",
+      "columns": [
+        "Initials",
+        "Name",
+        "Title"
+      ],
+      "rows": 4
+    }
+  ]
+}

@@ -373,7 +373,11 @@ final class DocumentLibrary
                     }
                     break;
                 case 'checklist':
-                    self::onlyKeys($block, ['type', 'items'], ['label', 'code', 'answer_codes', 'single'], $at);
+                    self::onlyKeys($block, ['type', 'items'], ['label', 'code', 'answer_codes', 'single', 'names'], $at);
+                    // Items that are names (peoples, places, languages): reading-level formulas read them as hard words.
+                    if (isset($block['names']) && $block['names'] !== true) {
+                        throw new \InvalidArgumentException("$at names: true when the items are names, or leave it out");
+                    }
                     if (isset($block['label'])) {
                         $texts[] = self::text($block['label'], "$at label");
                     }

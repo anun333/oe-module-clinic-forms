@@ -1,0 +1,80 @@
+{
+  "id": "downtime-order-log",
+  "title": "Downtime Order and Result Log",
+  "category": "Downtime",
+  "about": "Every order placed while OpenEMR is down, and its result when it comes back, so nothing is lost and each is entered once the system returns.",
+  "audience": "staff",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Site",
+          "value": "{facility.name}"
+        },
+        {
+          "label": "Downtime started (date and time)"
+        },
+        {
+          "label": "Ended"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Write each order on its own line as it is placed. When OpenEMR is back, enter each order and result, then initial the last column."
+    },
+    {
+      "type": "table",
+      "label": "Orders",
+      "columns": [
+        "Date and time",
+        "Patient name",
+        "Date of birth",
+        "Order (test, imaging, referral, medicine)",
+        "Ordered by",
+        "Sent to",
+        "Urgent"
+      ],
+      "rows": 12
+    },
+    {
+      "type": "table",
+      "label": "Results",
+      "columns": [
+        "Date and time received",
+        "Patient name",
+        "Order",
+        "Result",
+        "Abnormal",
+        "Clinician told (name, time)",
+        "Entered in OpenEMR (initials)"
+      ],
+      "rows": 12
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Log kept by"
+        },
+        {
+          "label": "Checked complete by"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "id": "vaccine-screening",
+  "title": "Before Your Vaccines",
+  "category": "Screening",
+  "about": "Questions to ask before giving vaccines, written for this library from the contraindications and precautions in ACIP's General Best Practices Guidelines for Immunization (Table 4-1, July 25, 2024) and its timing and spacing rules. A yes does not always mean no vaccine: staff check each yes against ACIP's table for each vaccine. The table predates COVID-19, RSV and mpox vaccines, which have their own CDC guidance.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms, from ACIP's General Best Practices Guidelines for Immunization, Contraindications and Precautions, Table 4-1 (July 25, 2024)",
+    "url": "https://www.cdc.gov/vaccines/hcp/imz-best-practices/contraindications-precautions.html"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Please answer these questions for the person getting vaccines today. If you are filling this in for a child, answer for the child."
+    },
+    {
+      "type": "scale",
+      "label": "For everyone",
+      "columns": [
+        "Yes",
+        "No",
+        "Not sure"
+      ],
+      "items": [
+        "Are you sick today?",
+        "Have you ever had a severe allergic reaction (hives, a swollen face or throat, trouble breathing) after a vaccine, or to anything in a vaccine, such as yeast, latex or gelatin?",
+        "Within 7 days of a whooping cough (pertussis) vaccine, have you ever had a coma, a long seizure or a long time of confusion?",
+        "Have you ever had Guillain-Barre syndrome?",
+        "Have you ever had very large, painful swelling where a tetanus or diphtheria shot was given?",
+        "Do you have a weakened immune system from a disease like HIV or cancer, or from treatment like chemotherapy, radiation, transplant medicine or high-dose steroids?",
+        "Was a parent, brother or sister born with a problem of the immune system?",
+        "Are you pregnant, or could you become pregnant in the next month?",
+        "In the past year, have you had a blood transfusion, blood products, or a medicine called immune globulin?",
+        "Have you ever had a low platelet count (thrombocytopenia)?",
+        "Do you have a brain or nerve problem that is getting worse, or seizures that are not controlled?",
+        "In the past day, have you taken acyclovir, famciclovir or valacyclovir (medicines for herpes or shingles)?",
+        "Do you take aspirin or another salicylate every day?",
+        "Have you had any vaccine in the past 4 weeks?",
+        "Do you need a TB skin test or TB blood test soon?"
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "For babies and young children",
+      "columns": [
+        "Yes",
+        "No",
+        "Not sure"
+      ],
+      "items": [
+        "Has your child ever had intussusception, a kind of bowel blockage?",
+        "Is your child age 2 to 4 and has had asthma or wheezing in the past 12 months?"
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "Only for the nasal spray flu vaccine",
+      "columns": [
+        "Yes",
+        "No",
+        "Not sure"
+      ],
+      "items": [
+        "In the past 3 weeks, have you taken a flu medicine (oseltamivir, zanamivir, peramivir or baloxavir)?",
+        "Do you have a cochlear implant, or a leak of spinal fluid?",
+        "Do you have no spleen, or a spleen that does not work?",
+        "Do you live with or care for someone whose immune system is so weak they must stay in a protected room?"
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient, parent or guardian"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For staff"
+    },
+    {
+      "type": "lines",
+      "label": "For each yes: what was found, and the vaccine it affects (ACIP Table 4-1)",
+      "count": 3
+    },
+    {
+      "type": "table",
+      "label": "Vaccines",
+      "columns": [
+        "Vaccine",
+        "Given or deferred",
+        "Reason if deferred"
+      ],
+      "rows": 5
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    }
+  ]
+}

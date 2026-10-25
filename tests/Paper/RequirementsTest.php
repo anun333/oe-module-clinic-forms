@@ -75,6 +75,11 @@ final class RequirementsTest extends TestCase
         $dense = new Document('b', 'B', 'x', 'x', [['type' => 'paragraph', 'text' => 'Notwithstanding any contemporaneous authorization, documentation pertaining to psychotherapeutic interventions necessitates individualized consideration.']], []);
         self::assertLessThan(3.0, Readability::measure($plain)['grade']);
         self::assertGreaterThan(16.0, Readability::measure($dense)['grade']);
+        // A checklist of names reads as hard words to the formula; marked as names, it is left out.
+        $list = [['type' => 'paragraph', 'text' => 'Select all that apply.'], ['type' => 'checklist', 'items' => ['Vietnamese', 'Guatemalan', 'Marshallese', 'Middle Eastern or North African']]];
+        self::assertGreaterThan(8.0, Readability::measure(new Document('c', 'C', 'x', 'x', $list, []))['grade']);
+        $list[1]['names'] = true;
+        self::assertLessThan(8.0, Readability::measure(new Document('d', 'D', 'x', 'x', $list, []))['grade']);
     }
 
     /** @param list<array<string, mixed>> $blocks */

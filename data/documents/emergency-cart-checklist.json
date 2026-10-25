@@ -1,0 +1,80 @@
+{
+  "id": "emergency-cart-checklist",
+  "title": "Emergency Cart Check",
+  "category": "Clinic operations",
+  "about": "A dated check of the emergency cart: its seal, the defibrillator, oxygen, suction and the medicines and supplies the clinic keeps, with expiration dates. Fill in your own cart list.",
+  "audience": "staff",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Site",
+          "value": "{facility.name}"
+        },
+        {
+          "label": "Cart location"
+        },
+        {
+          "label": "Month"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "label": "Daily or each clinic day",
+      "columns": [
+        "Date",
+        "Seal intact (number)",
+        "AED self-test passed",
+        "AED pads in date",
+        "Oxygen tank full enough",
+        "Suction works",
+        "Initials"
+      ],
+      "rows": 10
+    },
+    {
+      "type": "table",
+      "label": "Monthly: medicines and supplies",
+      "columns": [
+        "Item",
+        "Amount kept",
+        "Amount there",
+        "Earliest expiration",
+        "Replaced or ordered",
+        "Initials"
+      ],
+      "rows": 12
+    },
+    {
+      "type": "lines",
+      "label": "Problems found and what was done",
+      "count": 2
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Checked by"
+        },
+        {
+          "label": "Supervisor review"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    }
+  ]
+}

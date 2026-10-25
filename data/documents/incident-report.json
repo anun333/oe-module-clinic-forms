@@ -1,0 +1,149 @@
+{
+  "id": "incident-report",
+  "title": "Incident Report",
+  "category": "Clinic operations",
+  "about": "A factual report of an event that harmed or could have harmed a patient, staff member or visitor, for the clinic's risk management and quality review. It goes to the risk manager, not into the patient's chart.",
+  "audience": "staff",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date of incident"
+        },
+        {
+          "label": "Time"
+        },
+        {
+          "label": "Site",
+          "value": "{facility.name}"
+        },
+        {
+          "label": "Where it happened"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Who was involved",
+      "items": [
+        "Patient (name below)",
+        "Staff member",
+        "Visitor",
+        "Other"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name"
+        },
+        {
+          "label": "Date of birth or staff role"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "What kind of event",
+      "items": [
+        "Fall",
+        "Medicine error",
+        "Needlestick or sharps injury",
+        "Exposure to blood or body fluids",
+        "Equipment problem",
+        "Lab or specimen error",
+        "Privacy breach",
+        "Violence or threat",
+        "Patient left before being seen",
+        "Other"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "What happened: facts only, in the order they happened",
+      "count": 5
+    },
+    {
+      "type": "checklist",
+      "label": "Injury",
+      "items": [
+        "None",
+        "Minor (first aid)",
+        "Needed treatment",
+        "Not known yet"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Care given",
+      "count": 2
+    },
+    {
+      "type": "table",
+      "label": "Told about it",
+      "columns": [
+        "Who (supervisor, clinician, family, risk manager)",
+        "Date and time",
+        "By whom"
+      ],
+      "rows": 4
+    },
+    {
+      "type": "lines",
+      "label": "Witnesses (names and how to reach them)",
+      "count": 2
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reported by"
+        },
+        {
+          "label": "Role"
+        },
+        {
+          "label": "Date and time reported"
+        }
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Person reporting"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "For the risk manager"
+    },
+    {
+      "type": "lines",
+      "label": "Review and what will change",
+      "count": 3
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Reviewed by"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    }
+  ]
+}

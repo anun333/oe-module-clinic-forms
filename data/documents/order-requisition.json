@@ -1,0 +1,143 @@
+{
+  "id": "order-requisition",
+  "title": "Order Requisition",
+  "category": "Office workflow",
+  "about": "A general order for a test, imaging or service, for a lab or partner with no requisition of its own, or during downtime.",
+  "audience": "staff",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Sex",
+          "value": "{patient.sex}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Phone",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Address",
+          "value": "{patient.address}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Insurance"
+        },
+        {
+          "label": "Member ID"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "label": "Ordered",
+      "columns": [
+        "Test or service",
+        "Code",
+        "Diagnosis (ICD-10-CM)",
+        "Priority (routine, urgent, stat)"
+      ],
+      "rows": 6
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Specimen"
+        },
+        {
+          "label": "Collected (date and time)"
+        },
+        {
+          "label": "Collected by"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Patient preparation",
+      "items": [
+        "Fasting",
+        "Not fasting",
+        "Other (notes below)"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Clinical notes for the lab or performing site",
+      "count": 2
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Send results to",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Phone",
+          "value": "{facility.phone}"
+        },
+        {
+          "label": "Fax",
+          "value": "{facility.fax}"
+        }
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Ordering clinician"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Ordering clinician (printed)",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "NPI",
+          "value": "{provider.npi}"
+        },
+        {
+          "label": "Practice",
+          "value": "{facility.name}"
+        }
+      ]
+    }
+  ]
+}
