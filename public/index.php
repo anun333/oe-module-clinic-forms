@@ -14,6 +14,8 @@ use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Core\Header;
 use OpenHealthcare\ClinicForms\Bootstrap;
 use OpenHealthcare\ClinicForms\Compat\OpenEmr;
+use OpenHealthcare\ClinicForms\Office\BlankPdfs;
+use OpenHealthcare\ClinicForms\Office\LibreOfficePdf;
 use OpenHealthcare\ClinicForms\Office\PdfWriter;
 use OpenHealthcare\ClinicForms\Office\TemplateFiller;
 use OpenHealthcare\ClinicForms\Office\TemplateLibrary;
@@ -81,10 +83,14 @@ foreach ($spanish->all() as $id => $es) {
     }
 }
 $templates = TemplateLibrary::forSite($siteDir)->all();
-$pdfAvailable = PdfWriter::available();
+$settings = Settings::forSite($siteDir);
+// PDFs tagged for PDF/UA: every one by LibreOffice when the server has it; otherwise the blank ones made at release.
+$libreOffice = $settings->pdfLibreOffice && LibreOfficePdf::find() !== null;
+$pdfAvailable = $libreOffice || PdfWriter::available();
+$blankPdfs = !$libreOffice && $packId === BlankPdfs::PACK;
 $canSaveDocuments = OpenEmr::canWriteDocuments();
 $canAddQuestionnaires = OpenEmr::canAddQuestionnaires();
-$documentsCategory = Settings::forSite($siteDir)->documentsCategory;
+$documentsCategory = $settings->documentsCategory;
 $isAdmin = AclMain::aclCheckCore('admin', 'super');
 $csrf = OpenEmr::csrfToken();
 $flash = is_string($_GET['cf_msg'] ?? null) ? $_GET['cf_msg'] : '';
@@ -300,7 +306,12 @@ foreach ($layouts as $form) {
             <?php if ($pdfAvailable) { ?>
                 <button type="submit" class="btn btn-secondary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="pdf"><?php echo xlt('PDF'); ?></button>
             <?php } ?>
-            <small class="form-text text-muted"><?php echo xlt('The ticked documents as one file to edit in Word, LibreOffice or Google Docs. Layout forms print from the browser only.'); ?></small>
+            <small class="form-text text-muted"><?php echo xlt('The ticked documents as one file to edit in Word, LibreOffice or Google Docs. Layout forms print from the browser only.'); ?>
+                <?php echo $libreOffice ? xlt('PDFs are made by LibreOffice, tagged for screen readers (PDF/UA).') : xlt('The Word and LibreOffice files can be read with a screen reader; this server has no LibreOffice, so the PDF is for printing.'); ?></small>
+            <?php if ($blankPdfs) { ?>
+                <button type="submit" class="btn btn-outline-secondary mt-2" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="pdf-blank"><?php echo xlt('Accessible PDF, blank'); ?></button>
+                <small class="form-text text-muted"><?php echo xlt('The ticked documents blank, as PDFs tagged for screen readers (PDF/UA), made when Clinic Forms was released: US Letter, with the language assistance taglines, and no letterhead. Several come in a .zip. With LibreOffice installed on the OpenEMR server, every PDF is made this way, with your letterhead and the patient details.'); ?></small>
+            <?php } ?>
             <?php if ($pdfAvailable && $patient !== [] && $canSaveDocuments) { ?>
                 <button type="submit" class="btn btn-outline-primary mt-2" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="pdf-documents"><?php echo xlt('Save a PDF copy in the patient chart'); ?></button>
                 <small class="form-text text-muted"><?php echo xlt('The ticked documents, filled for this patient, filed under Documents'); ?> (<?php echo text($documentsCategory); ?>).</small>

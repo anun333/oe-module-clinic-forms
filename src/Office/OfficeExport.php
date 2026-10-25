@@ -42,7 +42,12 @@ final readonly class OfficeExport
             }
             $this->writeOne($doc, $writer, $i);
         }
-        return $writer->file($this->running(), $paper);
+        // A Word or LibreOffice file has one page header for all its pages: with a document filed without a
+        // name among them, it carries the blank patient line, so that document's pages don't name the patient.
+        // (A PDF gives each document its own header.)
+        $anonymous = $this->context->patient !== [] && !$writer instanceof PdfWriter
+            && array_filter($documents, static fn(Document $d): bool => $d->anonymous) !== [];
+        return $writer->file($anonymous ? (new self($this->context->withoutPatient(), $this->language, $this->taglines))->running() : $this->running(), $paper);
     }
 
     private function writeOne(Document $doc, OfficeWriter $writer, int $i): void

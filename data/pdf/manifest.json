@@ -1,0 +1,498 @@
+{
+    "about": "The blank documents' accessible PDFs, each with what it was made from. Written by tools/blank-pdfs.php; do not edit.",
+    "made_with": "LibreOffice 25.8.7.3 580(Build:3)",
+    "documents": {
+        "en/accounting-request": {
+            "fingerprint": "1cafc2129569d7f4",
+            "sha256": "322a4ff2278e0045a5df85a6a82fe15efeb15d782e257f75a9c5cd187929d8b6"
+        },
+        "en/after-visit-summary": {
+            "fingerprint": "5c6c5bff25370b2f",
+            "sha256": "376f6f167c59f6a8aa742ace5f6c5958bc2ec238f8ae92add4e55d2ead793606"
+        },
+        "en/amendment-request": {
+            "fingerprint": "6f3e868961d14e63",
+            "sha256": "43698e03ba0ebeec8383afb4f1e4627d7faf519b357b5247d7ab38c8a56731c6"
+        },
+        "en/asq": {
+            "fingerprint": "3bfb08f7cf5c97ca",
+            "sha256": "df54195961ad327a6bef6b113e282f5de2092f73e28be016b827940631919d93"
+        },
+        "en/asthma-action-plan": {
+            "fingerprint": "27081907485bbff0",
+            "sha256": "38b9d834f219decfdf2b5f161e2aa21cc56c7b44f4865c1d18ccc996743206e8"
+        },
+        "en/audit-c": {
+            "fingerprint": "6b06d8d09b4db444",
+            "sha256": "34a5f5adb193068cf5e42321d14b1400e04a494aa52620c1145b524eb1da94fd"
+        },
+        "en/authorization-revocation": {
+            "fingerprint": "00fa744823f50c81",
+            "sha256": "83d61bb4a07fa6db0b39a5acf13b219bcd44c2000d29df1e7320af05573d0e01"
+        },
+        "en/behavioral-health-treatment-plan": {
+            "fingerprint": "4e1a60488916a8d4",
+            "sha256": "7717fb5bf41df1de3f36803b2cbd6f49ae09cbde8612693149843619ca0bb5d2"
+        },
+        "en/blood-pressure-log": {
+            "fingerprint": "c3ffd6ebdb6e43e2",
+            "sha256": "7aae9d73a7591a3758aeb59852832682241c0e9884ae563a01e70f9551ca5632"
+        },
+        "en/blood-sugar-log": {
+            "fingerprint": "be5ba49aa577dc82",
+            "sha256": "99207a68c3b1b9d7960856249f1cf0b3a50d6f2839ff25f6950dc5035f21cd03"
+        },
+        "en/bstad": {
+            "fingerprint": "705221d8fc1b0636",
+            "sha256": "baa54b0e8064347af5b0d79ec4ef9439bf862f88bcc59a07e31b7b29ae3df984"
+        },
+        "en/care-management-consent": {
+            "fingerprint": "7821557a057d87c7",
+            "sha256": "3c98018ee1f1395482e3b0fd5258c6fea1555e8272b779b54b7315d134b2c6cf"
+        },
+        "en/chaperone-notice": {
+            "fingerprint": "ae701bd70aa79409",
+            "sha256": "42f7f10bfaaaabcc7bc7246777476d3e814f1c3883987dce0492cd3b4572d707"
+        },
+        "en/chaperone-record": {
+            "fingerprint": "c08906e9d3ddc9bf",
+            "sha256": "b3283699d87464b0ca1f84df8a9e95ff32f45b95eb756493e0eadbba253e6802"
+        },
+        "en/communication-consent": {
+            "fingerprint": "c6d6a80fbaeac431",
+            "sha256": "163881816a788dd4cb791db9dfc4821a79e58adba26b63897143adc87ae75990"
+        },
+        "en/consent-to-treat": {
+            "fingerprint": "99bb8b4b58c31bba",
+            "sha256": "36be056f75b3212519bd1fdb7138e36242e9eb298110254add5879971fbe2292"
+        },
+        "en/consult-note": {
+            "fingerprint": "8411d4d8e6c5f33b",
+            "sha256": "9c713eff9a770e45464899a40f8f8f2d01d134b197daae0a1a3cda255d97e75f"
+        },
+        "en/controlled-substance-agreement": {
+            "fingerprint": "dbc9547e03f16fc1",
+            "sha256": "416cd6197930a5c4002a6034c8da6a2b1d78ba13e647a6e608e7f0a304b66fc1"
+        },
+        "en/downtime-order-log": {
+            "fingerprint": "3e3393ad768327ca",
+            "sha256": "491b5b9186c290a75efb74dbf9eca5bcd92f420fdf912cf71fbafce688ca9ab3"
+        },
+        "en/downtime-visit-note": {
+            "fingerprint": "d339e775272ef8fc",
+            "sha256": "089213c8bf980e2d0c12457b7dcfba1ca83752edf13e28eddaaefae753ac76a0"
+        },
+        "en/emergency-cart-checklist": {
+            "fingerprint": "253a6572fb76adcd",
+            "sha256": "178f36fddb5327f0e99f203889276c8051ef95b4fa0f904e053df73d8161f197"
+        },
+        "en/everyday-discrimination": {
+            "fingerprint": "258e86e8abcef135",
+            "sha256": "fd881aa6475ef8b830b6851471d9e3bf12b12c07b3738346a454ac4cb08c0a17"
+        },
+        "en/financial-policy": {
+            "fingerprint": "e1edc0c9d78efc8c",
+            "sha256": "161399331a0b80f94bb4d7dd49b4f74c425f08e41b4dc39a7aae3773616e8d98"
+        },
+        "en/food-security": {
+            "fingerprint": "dd0d601d33853ac4",
+            "sha256": "0302a0303ff6bc0c73d11abf8a125839c2a115d89e001553de9ff2fe2ce1fce3"
+        },
+        "en/gad-7": {
+            "fingerprint": "15965918c0e3b557",
+            "sha256": "24ced9b961cd2b4e5f82fb6273a3f3ef94895d79212bddc6253fd63cd0f556c9"
+        },
+        "en/gds-15": {
+            "fingerprint": "c461da91ea431707",
+            "sha256": "419e61370d15c2d01997731b3934b9921e35c218cf4ef8f1af9c72e6375299a6"
+        },
+        "en/good-faith-estimate": {
+            "fingerprint": "59eec6dc071bcf2f",
+            "sha256": "92632a5a1294c7580d608abf9ef3b90d26510d69ce5666f9b880070a870b4bd7"
+        },
+        "en/good-faith-estimate-notice": {
+            "fingerprint": "d003e7d2f3d6ef8c",
+            "sha256": "3bf3516db5b93b7e7172138d02251b0756441b2a21bc53eb369b3009629c07b5"
+        },
+        "en/grievance-form": {
+            "fingerprint": "345b0742904e1db3",
+            "sha256": "5c97379455808f1827c1499b951ff96675c219f20630bdfdba80d369ebc919ea"
+        },
+        "en/hark": {
+            "fingerprint": "055e0cec70b09416",
+            "sha256": "d0d4001aa4b6444287bfc95cad49cdb5b88f619bfbd3491818e33fa07d5af980"
+        },
+        "en/health-risk-assessment": {
+            "fingerprint": "019c07633c4ea538",
+            "sha256": "d6b9d8d01f71513a557e00d7b2a54be32d4c7561c7ddad5e8472ff0f8931757c"
+        },
+        "en/healthy-days": {
+            "fingerprint": "eb349b675d7710d7",
+            "sha256": "393ea9c01eeb5fafe6eba4f04031435b366a74a45c1bba4b7abd50ede39f4693"
+        },
+        "en/history-and-physical": {
+            "fingerprint": "fb2ee6eb56fef777",
+            "sha256": "ba7c30c5c84175fb7a97e3c0b069ab4d71f4cbd16daadef751e3b02110f7f517"
+        },
+        "en/hunger-vital-sign": {
+            "fingerprint": "bcac240a3ca7b90e",
+            "sha256": "a68d3c0384bfd0e61651b05c08cca85222eebf2d45ebcaf2892a75e899c044ea"
+        },
+        "en/incident-report": {
+            "fingerprint": "c0208e105829e027",
+            "sha256": "9f6ff98c7230e0dd1dbe8b1fa452ba7b1634d3210261ed16781d2bb2b4b87a42"
+        },
+        "en/internal-referral": {
+            "fingerprint": "09c7b1fa0c11206c",
+            "sha256": "e28779d1280ad7b70bd8f0650e15ca5618e00135d9f570b4490ca528e011acf8"
+        },
+        "en/interpreter-request": {
+            "fingerprint": "5e30cdd48e15dcdd",
+            "sha256": "dc72b32f3355a054203b997898a727e779517438b5090e798b742b53d2150617"
+        },
+        "en/jury-duty-letter": {
+            "fingerprint": "7b8d8d6ff591399f",
+            "sha256": "39dbe935b5b7ed631dbc9dea42e78313ec0d4bf98b6779db4583656b8f51d391"
+        },
+        "en/medical-necessity-letter": {
+            "fingerprint": "587aa42ac3106eb5",
+            "sha256": "370c69b9ccdf29e072472997a65fa5b05b53a1d59769ec8b44131fd8c93dd5f3"
+        },
+        "en/medicare-secondary-payer-questions": {
+            "fingerprint": "d4cf085c41b1f7d7",
+            "sha256": "736b532768b7c7db543081d7e655ed87e78b77a330aef14bb9e28aac8370fac0"
+        },
+        "en/medication-administration-record": {
+            "fingerprint": "620318ad60c8ba75",
+            "sha256": "160a74be06d0b80585e9e8af0398ff29d0f7f62c4fed5e0b100f779076269398"
+        },
+        "en/medicine-review": {
+            "fingerprint": "edde5a288a6b2b62",
+            "sha256": "2e4c84b570f2ad311c58723f951ff3bd49275c525722d2f788ff29c2755ab41e"
+        },
+        "en/minor-consent-ca": {
+            "fingerprint": "162b512ab33e102b",
+            "sha256": "dd98668eb7ca30f1b231260133639ff78959beaa7472714605ed005b3ba7466d"
+        },
+        "en/minor-consent-statement-tx": {
+            "fingerprint": "b95fce0a85ca17f7",
+            "sha256": "be80f97bb3474bf99bb26887a5d41300603930967df8828a00680fc51b6f0e56"
+        },
+        "en/missed-appointment-policy": {
+            "fingerprint": "57f86c02b9cd7ec7",
+            "sha256": "2e145cc49ab842996ab7ace33b91081c8382d24a37815bbba4203152632888db"
+        },
+        "en/notice-of-availability": {
+            "fingerprint": "fa1e8d658d029e72",
+            "sha256": "4dd3304dc1fdb756f10c80867dda63d8d87a1cb0702bb4f186a6e717333b74e2"
+        },
+        "en/notice-of-nondiscrimination": {
+            "fingerprint": "00461b926417a211",
+            "sha256": "c6e820677c765659bb59a9dddd0eeac1090341b112e8ffc04d94534331e69d24"
+        },
+        "en/notice-of-privacy-practices": {
+            "fingerprint": "e9e4911e736db83d",
+            "sha256": "47a1a9c446ff73993fba1f716f6890c98f3cb300ce7916742482ad9d8e622fa8"
+        },
+        "en/nurse-note": {
+            "fingerprint": "e0131d4b40a339b9",
+            "sha256": "397fffc291b1f006872c5f5c53833d17f334734026bcdfe85bf365cd232fb9bf"
+        },
+        "en/order-requisition": {
+            "fingerprint": "f14aaf3e32666643",
+            "sha256": "14a5f623683e2197c7875f120449b0469478a7f545562cd4c2eaa6d0e7ad2bb8"
+        },
+        "en/part-2-consent": {
+            "fingerprint": "657cb3bd317f694c",
+            "sha256": "2fa1740746a1ddba43a0d7208b1f429b1d71307783a749c3874f78f6cca63872"
+        },
+        "en/part-2-consent-revocation": {
+            "fingerprint": "e4d9c86d75397b68",
+            "sha256": "ea63dc27e78096717137a76c524e993c7e4fe46395102b71c55df7feb7b7df7e"
+        },
+        "en/part-2-notice": {
+            "fingerprint": "4c7a7e199c4b192d",
+            "sha256": "8094cc85c1630707b543af381cfe94e9096b7e9b5dfeec346e6aab814df9a287"
+        },
+        "en/patient-education": {
+            "fingerprint": "4c74a36cf0315842",
+            "sha256": "079ae39411034a3245678d670f6d651de06470f3f0f9f846cc1df2a9708f753f"
+        },
+        "en/patient-rights": {
+            "fingerprint": "f6f6db0df2dfa599",
+            "sha256": "6f9d83cb22eb5fc7cfb3897d0a6c44ac9bed0db12926ddb48cf8b58fec0dd979"
+        },
+        "en/payment-plan-agreement": {
+            "fingerprint": "5c30d5237be1fae9",
+            "sha256": "2915be6ea30630eb89887b7f73eb801c9ddca6fd00dd4f14aa62bddf55df98a4"
+        },
+        "en/pc-ptsd-5": {
+            "fingerprint": "c1a4e611df539e49",
+            "sha256": "26b3963dd9108cfb6c9dec2f05cee9d059d7ab2414f2a27fc5eaa1b05bb4a10e"
+        },
+        "en/pcl-5": {
+            "fingerprint": "7f3124889b6a94c6",
+            "sha256": "9de52e29ba6dbcef4abb051e8c8ec4b6a8be96ef77e8109edd955e40aa65b737"
+        },
+        "en/personal-representative": {
+            "fingerprint": "4f3b68581c1e1a89",
+            "sha256": "770c6ad232cb75b23a27f204b5a43205920ee6e4083f7db02a2242beb237f0ae"
+        },
+        "en/photography-consent": {
+            "fingerprint": "42d5e813c083c318",
+            "sha256": "a9787e5ddb46db25085b1a47391bd1219030331aba229f2cf5daf2aeb889b337"
+        },
+        "en/phq-15": {
+            "fingerprint": "c9237674b3ad45e3",
+            "sha256": "a804b7e1152d4967fb63c7272eb45669d9b84a9142c680d8ea8d84a0227fd59a"
+        },
+        "en/phq-2": {
+            "fingerprint": "5c0292d40dc16ed0",
+            "sha256": "ab15ef2c6c439cf7fe7d3e1b5ebb78c638ec61fa1182ebf0fd46e909557bdd09"
+        },
+        "en/phq-4": {
+            "fingerprint": "bbac2b40f9324021",
+            "sha256": "c258820144d1b3e0c60b71fa9503ff29464bf8a3f25531c954727e9de17e72d0"
+        },
+        "en/phq-9": {
+            "fingerprint": "459f5fc8e7c53434",
+            "sha256": "65e57843e7e14d9e5dc99ad17c47f765baa1343f4d96ac0d21cba2c7297f0a75"
+        },
+        "en/plan-of-care": {
+            "fingerprint": "8a78a335bef1b4e2",
+            "sha256": "9a3e624d1101cf1361dd258b1a7ff5107a0235b44152f5c4e6e5c9c457552d4e"
+        },
+        "en/practice-discharge-letter": {
+            "fingerprint": "e61b8de081556d40",
+            "sha256": "261c90b2838dbf71063284da18ee12851bca505e2b6a0b2ffcd4c2e7959b206d"
+        },
+        "en/preventive-care-questions": {
+            "fingerprint": "0538989e2a1a8510",
+            "sha256": "de8cb3f07f937d1823c8f8e1dcf6615b8bcbf4183081235ab2151ead2c21c7bc"
+        },
+        "en/privacy-acknowledgment": {
+            "fingerprint": "7ffeab7fa9a4c5e9",
+            "sha256": "9131687531d4e707378d76230651145a615d0f04bd14418c7d378abffddef036"
+        },
+        "en/procedure-consent": {
+            "fingerprint": "cbee60cb100a1230",
+            "sha256": "aaf682a1ff2f5bbb50fc1ba1d37a73e4f0e841792c1919ecf28f05690d23b777"
+        },
+        "en/procedure-note": {
+            "fingerprint": "51de9aa3c5a031dc",
+            "sha256": "a0bda8eab25e2be4cf5b1b9d68c76159c99685b769f9a78b888f456aeb728ea0"
+        },
+        "en/quality-control-log": {
+            "fingerprint": "1f92eea8fcb0c25d",
+            "sha256": "f96709d9d2b29ad79760ec315a67f8145a5bbc5664425b8d9a913e264d6b327e"
+        },
+        "en/race-ethnicity-disability": {
+            "fingerprint": "1aad0ee6a52d2d10",
+            "sha256": "a6376ffea4398af3dc05290323fea877d0cb5abccb24710d24b5b6b11003646a"
+        },
+        "en/readiness-for-duty-letter": {
+            "fingerprint": "739db5e2fa3dab8e",
+            "sha256": "33d40a19c2e6f5af1dbcf337fef73e6488488dfc2b2def79a6c6b2a2071b582b"
+        },
+        "en/records-access-request": {
+            "fingerprint": "675e4ad0cc654c36",
+            "sha256": "3aea81f07e5d9ba1e07aceb525f8189f731aa7dbc4fac65fcc2308bc09e1afa0"
+        },
+        "en/records-request": {
+            "fingerprint": "9dc1a4e8394cc034",
+            "sha256": "85f2342679647de705b9332fccd18cc6e26ceb958f0f3cf5c7a520f9a12a76f4"
+        },
+        "en/referral-letter": {
+            "fingerprint": "bb0e5ced29969ee4",
+            "sha256": "b91e5143edfddebafe11db9b316fc1028e791efa7ae52729554fddb0cc709f64"
+        },
+        "en/release-of-information": {
+            "fingerprint": "812fcd3c04f93f02",
+            "sha256": "c826aec47921520b2d681453432edb125529dd631589b0d03f00dd44164ae25d"
+        },
+        "en/restriction-request": {
+            "fingerprint": "730b5d79e1c9dc48",
+            "sha256": "2d8106ea2dc8d3a3d42dce1bf658f230e1b3d911c134ae082960dc17a89d05ed"
+        },
+        "en/results-letter": {
+            "fingerprint": "3dce5eb1820bfe76",
+            "sha256": "ebe6e3f14f92000a55de51a28134db0d02956c61e19e11c86b3ba4d7f81ba4ae"
+        },
+        "en/routing-slip": {
+            "fingerprint": "714bbc2866e9f6b2",
+            "sha256": "9aa8a255dc0db0d877561d8fb67d2131081036f5d47350c6ae29bdda2483c3e6"
+        },
+        "en/sbhc-consent-ca": {
+            "fingerprint": "9bec0192e2bbe754",
+            "sha256": "8a26aabdbe40005ac9490568c5297c31db6b44d0d852c610e7d18c0b3a863423"
+        },
+        "en/sbhc-consent-tx": {
+            "fingerprint": "8501b7f447445fb5",
+            "sha256": "46c657d2874674858e310179642036e84626cbbdfa6e9430eab8721e7d22c7a7"
+        },
+        "en/sharps-injury-log": {
+            "fingerprint": "6fd4fa28213426ce",
+            "sha256": "d68e58ce99f4294fb8a1e879ba54d848393842752c5c71de356a336598097d94"
+        },
+        "en/sliding-fee-application": {
+            "fingerprint": "e3798968f2c8124c",
+            "sha256": "dae68cfb9e4578ac82fbce595fda542069c179449e52f865ebe9c545a6cf635b"
+        },
+        "en/sliding-fee-notice": {
+            "fingerprint": "44765af218751418",
+            "sha256": "166dc9e011af7b493c6d12b22f53b7256e07ee82bd8eaf1065b8b047b307ba84"
+        },
+        "en/staff-handoff": {
+            "fingerprint": "430d1d3d179ec327",
+            "sha256": "d151bc926a02582f8553442829a963082f434cd3e5e80f845a2d424b43e4eaaf"
+        },
+        "en/stay-independent": {
+            "fingerprint": "8b38f9aff325bd19",
+            "sha256": "03b95d529a0a2bfe6c4dd15510f7fe9bd589ac92b2173a6cfd9a3951cc59a423"
+        },
+        "en/superbill": {
+            "fingerprint": "c8ecf6e10e97cbb0",
+            "sha256": "4d78aebeb5b30f9d9fb1bb994b05b0b143b8f1ba0d423ddaba6319b47ab4438c"
+        },
+        "en/taps-1": {
+            "fingerprint": "61903fb478a6ea74",
+            "sha256": "79b410598864a5dc49bca29515e02711f726895f50f17e0f6c8db6fb69c18571"
+        },
+        "en/taps-2": {
+            "fingerprint": "d34376b683503aa3",
+            "sha256": "8d8b55a0b51cbea7a2b650701844b82ecde2c4a85cf80e589de85a34e6460055"
+        },
+        "en/telehealth-consent": {
+            "fingerprint": "9071e208fa4b8e9e",
+            "sha256": "ea011431a52b51c366c64981cac84063a5b159f265693985623b9399aec59cb6"
+        },
+        "en/title-x-confidential-services": {
+            "fingerprint": "4cf7075ac1ec62e3",
+            "sha256": "d8b954a490cda62ba57c66db5b1a957653ecf55374451af9ea675fa4f57d39cd"
+        },
+        "en/title-x-visit-record": {
+            "fingerprint": "ed437001d1003fe3",
+            "sha256": "7aaa1a25653463cc7abf3f2f1ad4c0abb909f8a84152915d0dfd8fe4dd5b75e8"
+        },
+        "en/vaccine-record": {
+            "fingerprint": "398c426e8299bc87",
+            "sha256": "dc2196b5c73465e4a9dbdf768b082fb50d50e921510d7a4f644b6fbcc9f2692e"
+        },
+        "en/vaccine-screening": {
+            "fingerprint": "60aa41e119305c77",
+            "sha256": "1132b2902c22fb0f00b206031b07f7f6ed33b05edea43f63e345a93a002bbddd"
+        },
+        "en/work-school-note": {
+            "fingerprint": "0c9113e149785b46",
+            "sha256": "ce0e1b2d6672cfb24fe416deb24ddfd8ad42daf44ee986a023e529d778eda881"
+        },
+        "es/accounting-request": {
+            "fingerprint": "d479fe7b8067fbaf",
+            "sha256": "4cc5de1822039459fba6c801445ce0cb58d8e6d2e8ccca10880184c9fd700aa5"
+        },
+        "es/amendment-request": {
+            "fingerprint": "771137030bd8bc52",
+            "sha256": "230e47e5caec9a2c22415d388ef5dc08b9d35fb28e9169cc0d7d627965e86c9d"
+        },
+        "es/asq": {
+            "fingerprint": "88f01e8a0dee22fa",
+            "sha256": "f5ab5bb7ea38ce8c7310f19cfd73fcb063fa68a624c99976343611a55d390868"
+        },
+        "es/audit-c": {
+            "fingerprint": "ebd648eddc64940a",
+            "sha256": "b867a92a71a2701aee726ba277e752db94f5d1b1898ab911f68e1bc38fdf486b"
+        },
+        "es/authorization-revocation": {
+            "fingerprint": "e6e3ab9144af7a85",
+            "sha256": "633121ebc6f242fee53119e72aa5ebe0fc1b42601af89d167cbccd70d531e490"
+        },
+        "es/chaperone-notice": {
+            "fingerprint": "b419080563343216",
+            "sha256": "4c63318a196af5b1ba2edf9212f9a973fbb5202b0424dab6c6463cd87f44ed3c"
+        },
+        "es/communication-consent": {
+            "fingerprint": "7f159d54d9e98431",
+            "sha256": "f5538abd9a8bb50fe49686565b53136b5cf3c537021a4853454c59a6b8c149d7"
+        },
+        "es/consent-to-treat": {
+            "fingerprint": "9d76e102ec28230d",
+            "sha256": "2b47a50e8b7571d45fbd56f00fbae93896d6aa379d7c635a6f6f2175df47cc2f"
+        },
+        "es/financial-policy": {
+            "fingerprint": "7a561a840965cb4a",
+            "sha256": "6672c7a454b177e767aaf464ae08f402155f8719e3cc57fc1c2148e387368955"
+        },
+        "es/gad-7": {
+            "fingerprint": "8823cfe58492f4d5",
+            "sha256": "600e753d7a30330ac1bfdb107367f54df40ddf31a3695cdd70fadb5d2757b62b"
+        },
+        "es/notice-of-availability": {
+            "fingerprint": "4f05e7fc3226fd68",
+            "sha256": "b3b51392c1fa2384d144e1bef81700f549ea8ff6dd447722582183cd9cc28cac"
+        },
+        "es/notice-of-nondiscrimination": {
+            "fingerprint": "2a583e6926310e7c",
+            "sha256": "54fefb0d0512f9aa141ecb906888733a0fc3d1b8e7f73c7312c706101a89cd7f"
+        },
+        "es/notice-of-privacy-practices": {
+            "fingerprint": "356e9d4b4b3b3597",
+            "sha256": "38839866361ccc7a45a7d4d6c13971de602a2949122c5bf02ddf9b07482f04a0"
+        },
+        "es/part-2-consent": {
+            "fingerprint": "a850dc126bc01278",
+            "sha256": "45c58f6e1e40668163949b99b9fa348f3d2ba122eab24e719efdbde6711d09ae"
+        },
+        "es/payment-plan-agreement": {
+            "fingerprint": "f655198c27ac8448",
+            "sha256": "bbfb4e1b47285b92a1b9fa41cff7edf197d8103a151d6e98eae6da5cb99d043b"
+        },
+        "es/photography-consent": {
+            "fingerprint": "b5af20556123ba2d",
+            "sha256": "a1f780ecb3963783d6c41c14f392b8644c1e3e76240832656f755d194ac9519a"
+        },
+        "es/phq-2": {
+            "fingerprint": "55bd38c0e8816dd5",
+            "sha256": "410429c100ff6425de055bb25fa5126dc1d7f44f6e03904eea602f8b815802f2"
+        },
+        "es/phq-9": {
+            "fingerprint": "dacc32e97a9b467d",
+            "sha256": "412f0f0138075fae5c23b7b8b7aeb6c34e9fa9b18d02204f24b2fb2f40ff1e8b"
+        },
+        "es/privacy-acknowledgment": {
+            "fingerprint": "a23709bb085c9732",
+            "sha256": "828c86d15f7fbddaf1ab7d1dbe88f1bdaa05b6d8265276274d527cb4b0e7b601"
+        },
+        "es/records-access-request": {
+            "fingerprint": "a30786b80cd33668",
+            "sha256": "d564fee9bfc84b811a7875517a49103bbe45a854b9c2f6712f405f9dc198d2c6"
+        },
+        "es/release-of-information": {
+            "fingerprint": "5af0851ffa9b6f9b",
+            "sha256": "4de733e9e019f26320f0788294d725e217b695242b337141974b19fa415d77a2"
+        },
+        "es/restriction-request": {
+            "fingerprint": "801f2f6421b30b67",
+            "sha256": "66242e361c6ed2d3713239b427cc680bb06fb8aa0f25b656c4772e492afadd3c"
+        },
+        "es/sliding-fee-application": {
+            "fingerprint": "082bd6d7abc9963d",
+            "sha256": "e98189da998028eec08a777a96e29a0691069b3973b3bac203460df729b4a986"
+        },
+        "es/sliding-fee-notice": {
+            "fingerprint": "49e2198a43f39d48",
+            "sha256": "7cac850ef5ca2fcba7d4bcf710e01dd18518b183d73988d3fbd749521b46edd3"
+        },
+        "es/telehealth-consent": {
+            "fingerprint": "2d04d80049862c60",
+            "sha256": "14c71bfed2a191200d8119c61ce04102920a1c1bfad5993449fc223aba30adf4"
+        },
+        "es/title-x-confidential-services": {
+            "fingerprint": "5d1e60e50c6cf211",
+            "sha256": "0d8a1288478877357a64dfdf5b4f857d68c10e34cd874f6f6c6616e037026c21"
+        },
+        "es/work-school-note": {
+            "fingerprint": "7d468155170c1ea7",
+            "sha256": "f4b583459bd1d1ba5092380d34b2245818cc73957e3be2f5e26df8f6c133169b"
+        }
+    }
+}

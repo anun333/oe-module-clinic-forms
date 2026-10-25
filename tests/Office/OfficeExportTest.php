@@ -115,6 +115,22 @@ final class OfficeExportTest extends TestCase
         return $dom;
     }
 
+    /** The grievance form is filed without a name: in a file with one page header, that header names nobody. */
+    #[DataProvider('writers')]
+    public function testAFileWithADocumentFiledWithoutANameNamesNobodyInItsHeader(OfficeWriter $writer, array $parts): void
+    {
+        $library = DocumentLibrary::forSite(sys_get_temp_dir(), 'en', 'us');
+        $docs = [$library->get('consent-to-treat') ?? throw new \LogicException(), $library->get('grievance-form') ?? throw new \LogicException()];
+        self::assertTrue($docs[1]->anonymous);
+        $patient = new Context(['name' => 'C'], ['name' => 'Jane Q Sample', 'dob' => '01/02/1980', 'id' => 'SYN-1']);
+        $entries = Zip::read((new OfficeExport($patient))->write($docs, $writer, 'letter'));
+        $header = $entries['word/header1.xml'] ?? $entries['styles.xml'];
+        self::assertStringNotContainsString('Jane Q Sample', $header);
+        self::assertStringContainsString('Patient: ____________________', $header);
+        $entries = Zip::read((new OfficeExport($patient))->write([$docs[0]], $writer, 'letter'));
+        self::assertStringContainsString('Patient: Jane Q Sample', $entries['word/header1.xml'] ?? $entries['styles.xml'], 'without one, the header names the patient');
+    }
+
     public function testABlankExportLeavesLinesToWriteOn(): void
     {
         $entries = Zip::read((new OfficeExport(new Context(['name' => 'C'])))->write([DocumentLibrary::shipped()->get('consent-to-treat') ?? throw new \LogicException()], new WordWriter(), 'letter'));

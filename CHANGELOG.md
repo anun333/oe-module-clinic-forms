@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.38.0 (unreleased)
+
+**PDFs tagged for PDF/UA: by LibreOffice on the server, and blank ones made at release.**
+
+- **LibreOffice on the server.** When LibreOffice is installed where it installs itself (`/usr/bin/soffice` and the other places in `LibreOfficePdf::PLACES`), every PDF Clinic Forms makes is made by LibreOffice from the module's own LibreOffice file with PDF/UA on. That covers the PDF download and the copy saved to the chart. The PDF is tagged, carries its documents' title and language, embeds its fonts, has the patient line at the top of every page, and has the chart number's barcode at the foot, with its alternative text. The program run is never taken from a setting or a request: the settings file is one an administrator uploads. The conversion runs without a shell, in a folder and LibreOffice profile of its own, and is stopped after a minute; then mPDF makes the PDF as before. `"pdf_libreoffice": false` in `settings.json` turns it off. On OpenEMR's official image, `apk add libreoffice-writer` installs it.
+- **Accessible PDF, blank** (servers without LibreOffice, US pack). The blank documents' PDFs are made by LibreOffice when the module is released (`tools/blank-pdfs.php`, `data/pdf`) and checked with veraPDF. They are on US Letter, with the language assistance taglines, and have no letterhead. Several come in a .zip. One is given only while the document's wording and its taglines are the ones it was made from, so a clinic's own version of a document, its own taglines, or a document another module fills in gets none. A test fails when a shipped document has no current PDF.
+- **Fixed: a document filed without a name in a Word or LibreOffice file.** Those files have one page header for the whole file, and it named the patient on the grievance form's pages too; that was listed under Known limitations. The header's patient line is now left blank when such a document is among them, and the other documents are still filled in. A PDF with one is made by mPDF, which gives each document its own header.
+- **Checked:** unit tests (244), with LibreOffice 25.8 in OpenEMR's Alpine image: a filled consent and PHQ-9 tagged, titled, with the patient line and a readable barcode. All 123 blank PDFs (96 English, 27 Spanish) pass veraPDF 1.30.2's PDF/UA-1 check. The footprint sheet lists the one program the module runs (openhealthcare-common 1.2.0).
+
 ## 0.37.0 (2026-10-25)
 
 **The downtime kit, clinic operations logs, and the federal race, ethnicity and disability questions.**

@@ -7,6 +7,9 @@
  * details and never a patient's. The file is built in memory and sent; nothing is stored, except with
  * "pdf-documents", which files the PDF in the patient's Documents instead of sending it, and with
  * "oe-questionnaires", which adds the Questionnaires to OpenEMR's own questionnaires instead.
+ * A PDF is made by LibreOffice, tagged for PDF/UA, when it is installed on the server (LibreOfficePdf),
+ * and by OpenEMR's mPDF otherwise. "pdf-blank" sends the blank documents' accessible PDFs made when
+ * the module was released (BlankPdfs), for servers without LibreOffice: one PDF, or several in a .zip.
  *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
@@ -15,6 +18,8 @@
 require_once __DIR__ . '/../../../../globals.php';
 
 use OpenEMR\Common\Acl\AclMain;
+use OpenHealthcare\ClinicForms\Office\BlankPdfs;
+use OpenHealthcare\ClinicForms\Office\LibreOfficePdf;
 use OpenHealthcare\ClinicForms\Office\OdtWriter;
 use OpenHealthcare\ClinicForms\Office\OfficeExport;
 use OpenHealthcare\ClinicForms\Office\PdfWriter;
@@ -25,6 +30,7 @@ use OpenHealthcare\ClinicForms\Fhir\QuestionnaireExport;
 use OpenHealthcare\ClinicForms\Fhir\QuestionnaireRegistration;
 use OpenHealthcare\ClinicForms\Office\TemplateLibrary;
 use OpenHealthcare\ClinicForms\Office\WordWriter;
+use OpenHealthcare\ClinicForms\Office\Zip;
 use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\DocumentFill;
 use OpenHealthcare\ClinicForms\Paper\DocumentLibrary;
@@ -51,7 +57,9 @@ $toDocuments = $format === 'pdf-documents';
 // Added to OpenEMR's questionnaires, they are the same blank Questionnaires the FHIR file holds.
 $toQuestionnaires = $format === 'oe-questionnaires';
 $fhir = $format === 'fhir' || $toQuestionnaires;
-$patient = !$fhir && ($toDocuments || !empty($_POST['fill_patient'])) && $pid > 0 ? $site->patient($pid) : [];
+// The release's blank PDFs never carry a patient.
+$blankPdfs = $format === 'pdf-blank';
+$patient = !$fhir && !$blankPdfs && ($toDocuments || !empty($_POST['fill_patient'])) && $pid > 0 ? $site->patient($pid) : [];
 $recipientId = (int)($_POST['recipient'] ?? 0);
 $today = function_exists('oeFormatShortDate') ? (string)oeFormatShortDate(date('Y-m-d')) : date('Y-m-d');
 $context = new Context(
@@ -126,6 +134,7 @@ function clinicFormsAddQuestionnaires(QuestionnaireExport $export, array $docume
 
 $template = (string)($_POST['template'] ?? '');
 $versions = [];
+$viaLibreOffice = false;
 if ($template !== '' && $toDocuments) {
     clinicFormsRefuse(400, xl('Only Clinic Forms documents are saved to Documents as PDF; download a Word or LibreOffice document to edit it.'));
 }
@@ -151,7 +160,8 @@ if ($template !== '') {
     $titles = [TemplateLibrary::displayName($template)];
     $stem = pathinfo($template, PATHINFO_FILENAME);
 } else {
-    if (str_starts_with($format, 'pdf') && !PdfWriter::available()) {
+    $libreOffice = str_starts_with($format, 'pdf') && !$blankPdfs && Settings::forSite($siteDir)->pdfLibreOffice ? LibreOfficePdf::find() : null;
+    if (str_starts_with($format, 'pdf') && !$blankPdfs && $libreOffice === null && !PdfWriter::available()) {
         clinicFormsRefuse(422, xl('This OpenEMR has no PDF writer (mPDF), so the PDF could not be made.'));
     }
     if ($toDocuments && ($patient === [] || !OpenEmr::canWriteDocuments())) {
@@ -188,16 +198,41 @@ if ($template !== '') {
         $ext = 'json';
         $mime = 'application/fhir+json';
     } else {
-        $writer = match (true) {
-            $format === 'odt' => new OdtWriter(Words::t('Date', $language), $language),
-            str_starts_with($format, 'pdf') => new PdfWriter(Words::t('Date', $language), $context->value('patient.id')),
-            default => new WordWriter(Words::t('Date', $language), $language),
-        };
         // Another module may fill a table a document names (Sliding Fee: the notice's discounts).
-        $documents = DocumentFill::apply($documents, static fn(DocumentFillEvent $e) => OpenEmr::dispatch($e, DocumentFillEvent::EVENT_NAME), $patient !== [] ? $pid : null);
-        $out = (new OfficeExport($context, $language, $taglines))->write($documents, $writer, $paper);
-        $ext = $writer->extension();
-        $mime = $writer->mimeType();
+        $filled = DocumentFill::apply($documents, static fn(DocumentFillEvent $e) => OpenEmr::dispatch($e, DocumentFillEvent::EVENT_NAME), $patient !== [] ? $pid : null);
+        if ($blankPdfs) {
+            // Made before the clinic's own details were known, so a document another module fills has none.
+            $files = $pack?->id === BlankPdfs::PACK && array_map(static fn($d) => $d->blocks, $filled) === array_map(static fn($d) => $d->blocks, $documents)
+                ? (new BlankPdfs())->files($documents, Taglines::forSite($siteDir, BlankPdfs::PACK)->forPage($language)) : null;
+            if ($files === null) {
+                clinicFormsRefuse(422, xl('No accessible PDF was made for every ticked document as your clinic has it: a document of your own, your own taglines, one another module fills in, or one not written in this language. The LibreOffice and Word files are accessible; download one of those instead.'));
+            }
+            [$out, $ext, $mime] = count($files) === 1 ? [reset($files), 'pdf', 'application/pdf'] : [Zip::build($files), 'zip', 'application/zip'];
+        } else {
+            // LibreOffice gives the file one page header, so a document filed without a name, beside one with
+            // the patient's, goes to mPDF, which gives each document its own.
+            $mixed = $patient !== [] && array_filter($filled, static fn($d): bool => $d->anonymous) !== [];
+            $viaLibreOffice = $libreOffice !== null && !$mixed;
+            $writer = match (true) {
+                $format === 'odt' => new OdtWriter(Words::t('Date', $language), $language),
+                $viaLibreOffice => new OdtWriter(Words::t('Date', $language), $language, $context->value('patient.id'), xl('Chart number') . ' ' . $context->value('patient.id')),
+                str_starts_with($format, 'pdf') => new PdfWriter(Words::t('Date', $language), $context->value('patient.id')),
+                default => new WordWriter(Words::t('Date', $language), $language),
+            };
+            $out = (new OfficeExport($context, $language, $taglines))->write($filled, $writer, $paper);
+            $ext = $writer->extension();
+            $mime = $writer->mimeType();
+            if ($viaLibreOffice) {
+                $pdf = $libreOffice->convert($out);
+                if ($pdf === null && !PdfWriter::available()) {
+                    clinicFormsRefuse(500, xl('LibreOffice could not make the PDF, and this OpenEMR has no other PDF writer (mPDF).'));
+                }
+                // If LibreOffice fails, mPDF makes the PDF as before.
+                $out = $pdf ?? (new OfficeExport($context, $language, $taglines))->write($filled, new PdfWriter(Words::t('Date', $language), $context->value('patient.id')), $paper);
+                [$ext, $mime] = ['pdf', 'application/pdf'];
+            }
+        }
+        $documents = $filled;
     }
     $titles = array_map(static fn($d): string => $d->title, $documents);
     $versions = array_map(static fn($d): string => $d->stamp(), $documents);
@@ -215,7 +250,8 @@ if ($toDocuments) {
         header('Location: index.php?' . http_build_query(['cf_msg' => xl('The PDF was not saved to Documents') . ': ' . $error, 'cf_ok' => 0]));
         exit;
     }
-    OpenEmr::audit('patient-record-insert', 'Clinic Forms saved to Documents as ' . $filename . ' (document ' . $documentId . ', category ' . $categoryName . '): ' . implode(', ', $versions), $pid);
+    OpenEmr::audit('patient-record-insert', 'Clinic Forms saved to Documents as ' . $filename . ' (document ' . $documentId . ', category ' . $categoryName
+        . ($viaLibreOffice ? ', PDF/UA by LibreOffice' : '') . '): ' . implode(', ', $versions), $pid);
     header('Location: index.php?' . http_build_query(['cf_msg' => xl('Saved in the patient chart, under Documents') . ': ' . $filename, 'cf_ok' => 1]));
     exit;
 }

@@ -73,8 +73,13 @@ As written in the source; whether they behave correctly for a given user is not 
 
 ## Files it writes
 
+- `src/Office/LibreOfficePdf.php`: `mkdir()`, `file_put_contents()`, `unlink()`
 - `src/Office/TemplateLibrary.php`: `mkdir()`, `file_put_contents()`, `rename()`, `unlink()`
 - `src/Office/Zip.php`: `unlink()`, `file_put_contents()`, `tempnam()`
+
+## Programs it runs
+
+- `src/Office/LibreOfficePdf.php`: `proc_open()`
 
 ## Outbound network
 
@@ -84,11 +89,11 @@ As written in the source; whether they behave correctly for a given user is not 
 
 | part | files | lines |
 |---|---|---|
-| data (`data/`, read at runtime) | 153 | 28049 |
-| PHP logic (`src/`) | 36 | 6453 |
-| tests (`tests/`, `phpunit.xml.dist`) | 26 | 3644 |
-| tools (`tools/`) | 9 | 1033 |
-| pages (`public/`) | 5 | 896 |
+| data (`data/`, read at runtime) | 277 | 196074 |
+| PHP logic (`src/`) | 38 | 6749 |
+| tests (`tests/`, `phpunit.xml.dist`) | 28 | 3824 |
+| tools (`tools/`) | 10 | 1123 |
+| pages (`public/`) | 5 | 943 |
 | module wiring | 3 | 93 |
 
 ## Not covered here
