@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.38.0 (unreleased)
+## 0.38.0 (2026-10-25)
 
 **PDFs tagged for PDF/UA: by LibreOffice on the server, and blank ones made at release.**
 
