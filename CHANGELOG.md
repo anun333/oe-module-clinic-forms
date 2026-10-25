@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.36.0 (unreleased)
+## 0.36.0 (2026-10-24)
 
 **Clinical notes, letters, the behavioral health treatment plan, and school-based health center packets for Texas and California.**
 
