@@ -1,0 +1,127 @@
+{
+  "id": "sbhc-consent-ca",
+  "title": "School Health Center Consent (California)",
+  "category": "School-based health center",
+  "about": "A parent's or guardian's consent for a student to be seen at a school health center in California, with what California law lets students agree to on their own and who sees those records. California's school health center law sets no consent form, so this is our own wording. List your center's services before you use it.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "written",
+    "name": "Written for Clinic Forms, with California Family Code 6920 to 6929 and Health and Safety Code 123115 (read 2026-10-24)",
+    "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=FAM&sectionNum=6920"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Student name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "School"
+        },
+        {
+          "label": "Grade"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "{facility.name} runs the health center at your child's school. Check the care you agree to."
+    },
+    {
+      "type": "checklist",
+      "label": "Care you agree to",
+      "items": [
+        "Checkups and sick visits",
+        "Immunizations",
+        "Lab tests",
+        "Medicines we give or prescribe",
+        "Dental care",
+        "Vision and hearing care",
+        "Health education",
+        "Counseling and mental health care"
+      ]
+    },
+    {
+      "type": "table",
+      "label": "What we give",
+      "columns": [
+        "Kind of care",
+        "Services"
+      ],
+      "rows": 6
+    },
+    {
+      "type": "heading",
+      "text": "Care your child can agree to"
+    },
+    {
+      "type": "paragraph",
+      "text": "California law lets students get some care without a parent's consent. From age 12, they can agree to mental health counseling, care for a drug or alcohol problem, and tests and treatment for sexually transmitted infections. At any age, they can agree to care to prevent or treat pregnancy."
+    },
+    {
+      "type": "paragraph",
+      "text": "Your child decides about that care. You can't see the records of it unless your child agrees, and you don't pay for most of it. For mental health or drug and alcohol care, our counselors involve parents unless they decide that would not be right for your child. We encourage students to talk with their parents."
+    },
+    {
+      "type": "paragraph",
+      "text": "This consent lasts for this school year. You can change or withdraw it at any time. Tell us in writing."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Primary doctor or clinic"
+        },
+        {
+          "label": "Health plan"
+        },
+        {
+          "label": "Member ID"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Emergency contact"
+        },
+        {
+          "label": "Their phone"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Your name"
+        },
+        {
+          "label": "Your relationship to the student"
+        },
+        {
+          "label": "Phone"
+        }
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Parent or guardian"
+      ]
+    }
+  ]
+}

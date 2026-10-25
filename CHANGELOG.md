@@ -2,7 +2,7 @@
 
 ## 0.36.0 (unreleased)
 
-**Clinical notes, letters and the behavioral health treatment plan.**
+**Clinical notes, letters, the behavioral health treatment plan, and school-based health center packets for Texas and California.**
 
 - **Six clinical notes** (for clinicians, each with its LOINC document code and LOINC's name for it): History and Physical Note (34117-2), Consult Note (11488-4), Procedure Note (28570-0), Plan of Care Note (18776-5), Nurse Note (34746-8) and Education Note (34895-3). The first four carry the sections of HL7's C-CDA example of the same note (HL7 C-CDA Examples, CC0), and requirements entries hold them to those sections. The education note records who was taught, how, what got in the way, and the teach-back.
 - **Behavioral Health Treatment Plan** (US pack; Mental Health Plan of Care Note, 80742-0), written to SAMHSA's CCBHC certification criteria (2023, updated August 2025). Ten requirements entries hold it to them:
@@ -17,6 +17,18 @@
 
   States and payers set their own rules. The ones read for this release range from a review every 30 days (Medicare community mental health centers) to once a year (New York clinics), and some require other signatures. The page tells staff to follow the stricter rule.
 - **Four letters:** Return to Work or Activity (Readiness for Duty Letter, 64294-2), Letter of Medical Necessity (Payer letter, 52034-6), Jury Duty Letter, and Ending Care at Our Clinic. LOINC has no code for the last two. The return-to-work and jury duty letters don't give the reason for the visit. The letter ending care promises care and refills until the last day, says to call 911 in an emergency, and offers help finding a new clinic and a copy of the records. The clinic sets the notice period by its state's rules.
+- **School-based health centers, Texas and California** (US pack, new category). The statutes were read 2026-10-24 and are named in each document's source. Requirements entries hold each document to them.
+  - **School-Based Health Center Consent (Texas)**, to Education Code 38.053, written consent from a parent, guardian or another person having legal control of the student. It offers ongoing services or a single occasion. It lists the seven categories of service in 38.054, with a table for the services the center gives under each. Referrals need the consent 38.057(b) asks for. Questionnaires need consent, and the parent gets a copy of each first: 26.009(a)(1) counts a "survey, check-in, or screening" as a psychological examination, and 26.0083(h) applies. The form also covers the parent's access to records (38.0095) and notice to the primary care physician (38.061). Consent lasts until the end of the school year (26.009(a-3)). Its description notes that a center funded by a Texas SBHC grant may not give reproductive services, counseling or referrals (38.055).
+  - **Minor's Statement of Consent (Texas)**, the written statement Family Code 32.003(f) and 32.004(b)(3) let a clinician rely on. It covers the grounds in 32.003(a)(1) to (5) and the counseling in 32.004(a), and says the clinician may tell a parent with or without the minor's consent (32.003(d)).
+  - **Care You Can Agree To on Your Own (California)**, for the minor, under Family Code 6920 to 6930, Health and Safety Code 121020, 123115 and 124260, and Civil Code 56.11:
+    - what a minor may agree to, and from what age;
+    - what still needs a parent: medicine for mental health, sterilization, and replacement narcotic therapy;
+    - parent involvement in mental health and drug or alcohol care, unless the clinician decides it would not be right, recorded as 6924(d) and 6929(c) ask;
+    - that parents can't see those records, and only the minor can sign a release for them.
+
+    California's text was read from the Legislature's own data download, because leginfo.legislature.ca.gov refuses automated readers.
+  - **School Health Center Consent (California)**: our own wording, since California's school health center law sets no consent form. It includes the notice of what students may agree to on their own and who sees those records.
+  - **Packets:** school-based health center (Texas) and school health center (California), each with its consents and the teen screens (BSTAD, ASQ). Sports physical forms are the state's or the school's, so they aren't here.
 
 ## 0.35.0 (2026-10-24)
 

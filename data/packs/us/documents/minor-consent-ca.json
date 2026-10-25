@@ -1,0 +1,117 @@
+{
+  "id": "minor-consent-ca",
+  "title": "Care You Can Agree To on Your Own (California)",
+  "category": "School-based health center",
+  "about": "Tells a minor in California which care they can agree to without a parent or guardian, what still needs one, and who can see those records; and records the consent and the parent involvement decision the law asks clinicians to note.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "California Family Code 6920 to 6930; Health and Safety Code 121020, 123110, 123115 and 124260; Civil Code 56.11. Read 2026-10-24 from the Legislature's own data download (dated 2026-10-19)",
+    "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=FAM&sectionNum=6920"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "In California, you can get some care without a parent's or guardian's consent. You can agree to this care on your own:"
+    },
+    {
+      "type": "checklist",
+      "label": "Care you can agree to",
+      "items": [
+        "Age 12 or older: mental health counseling or treatment, outside a hospital, if your counselor thinks you are mature enough to take part",
+        "Age 12 or older: care and counseling for a drug or alcohol problem",
+        "Age 12 or older: tests and treatment for a sexually transmitted infection or another disease that must be reported, and care to prevent a sexually transmitted infection",
+        "Age 12 or older: an HIV test",
+        "Any age: care to prevent or treat pregnancy, such as birth control (but not sterilization)",
+        "Age 12 or older: care after a rape, or for an injury from a partner",
+        "Any age: care after a sexual assault",
+        "Age 15 or older, if you live apart from your parents and manage your own money: medical, vision and dental care"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "When you still need a parent or guardian"
+    },
+    {
+      "type": "paragraph",
+      "text": "A parent or guardian must agree before you get medicine for mental health, or sterilization. A parent must also agree to replacement narcotic therapy from a narcotic treatment program. Some teens 16 or older can get medicine for opioid use disorder on their own, but only if federal law allows it."
+    },
+    {
+      "type": "heading",
+      "text": "Your parents and your records"
+    },
+    {
+      "type": "paragraph",
+      "text": "For mental health care, or drug and alcohol care, your counselor will involve your parent or guardian unless they decide, after talking with you, that it would not be right. They write down what they decided and why."
+    },
+    {
+      "type": "paragraph",
+      "text": "If you were sexually assaulted, we must try to reach your parent or guardian, unless we think they did it."
+    },
+    {
+      "type": "paragraph",
+      "text": "Your parent or guardian can't see or get copies of the records of care you agreed to on your own. Only you can sign a release to share those records. Your parent or guardian does not pay for most care you agree to on your own."
+    },
+    {
+      "type": "heading",
+      "text": "For the clinician"
+    },
+    {
+      "type": "lines",
+      "label": "Care the patient agreed to today",
+      "count": 2
+    },
+    {
+      "type": "checklist",
+      "label": "Mature enough to take part (mental health, age 12 or older)",
+      "items": [
+        "Yes",
+        "Not asked: other care"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Parent or guardian involvement (mental health, drug or alcohol care)",
+      "items": [
+        "Involved",
+        "Tried to reach them (date and result below)",
+        "Not right to involve them (reason below)"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Date, result or reason",
+      "count": 2
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient",
+        "Clinician"
+      ]
+    }
+  ]
+}

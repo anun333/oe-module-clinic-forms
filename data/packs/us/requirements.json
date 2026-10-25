@@ -1879,6 +1879,240 @@
           ]
         }
       ]
+    },
+    "sbhc-consent-tx": {
+      "source": "Texas Education Code chapters 26 and 38, read 2026-10-24: https://statutes.capitol.texas.gov/Docs/ED/htm/ED.38.htm",
+      "elements": [
+        {
+          "name": "Written consent of a parent, guardian or another person having legal control of the student",
+          "cite": "Tex. Educ. Code 38.053(a)",
+          "all": [
+            "legal control"
+          ]
+        },
+        {
+          "name": "Signed by that person",
+          "cite": "Tex. Educ. Code 38.053(a), 26.009(a-2)",
+          "signature": true
+        },
+        {
+          "name": "Ongoing services, or services on a single occasion",
+          "cite": "Tex. Educ. Code 38.053(a)",
+          "all": [
+            "ongoing services",
+            "single occasion"
+          ]
+        },
+        {
+          "name": "Every service listed, with consent by category",
+          "cite": "Tex. Educ. Code 38.053(b), 38.054",
+          "all": [
+            "family and home support",
+            "physical health care, including immunizations",
+            "dental health care",
+            "health education",
+            "preventive health strategies",
+            "treatment for mental health conditions",
+            "treatment for substance abuse",
+            "what we give in each kind"
+          ]
+        },
+        {
+          "name": "Referrals: the basis told, spoken and written, and written consent for the type of service and each occasion or course",
+          "cite": "Tex. Educ. Code 38.057(b)",
+          "all": [
+            "tell you in writing",
+            "for each visit or for a course of treatment"
+          ]
+        },
+        {
+          "name": "Consent to questionnaires, with a copy first",
+          "cite": "Tex. Educ. Code 26.009(a)(1), 26.0083(h)",
+          "all": [
+            "questionnaire",
+            "copy of each questionnaire"
+          ]
+        },
+        {
+          "name": "Health information disclosed only with consent",
+          "cite": "Tex. Educ. Code 26.009(a)(3)(A)",
+          "all": [
+            "only with your written consent"
+          ]
+        },
+        {
+          "name": "The parent's access to the records",
+          "cite": "Tex. Educ. Code 38.0095",
+          "all": [
+            "health records and get a copy"
+          ]
+        },
+        {
+          "name": "Notice to the primary care physician",
+          "cite": "Tex. Educ. Code 38.061",
+          "all": [
+            "primary care physician"
+          ]
+        },
+        {
+          "name": "Routine care consent lasts until the end of the school year",
+          "cite": "Tex. Educ. Code 26.009(a-3)",
+          "all": [
+            "end of this school year"
+          ]
+        }
+      ]
+    },
+    "minor-consent-statement-tx": {
+      "source": "Texas Family Code chapter 32, read 2026-10-24: https://statutes.capitol.texas.gov/Docs/FA/htm/FA.32.htm",
+      "elements": [
+        {
+          "name": "The grounds a child may consent on",
+          "cite": "Tex. Fam. Code 32.003(a)(1) to (5)",
+          "all": [
+            "active duty",
+            "16 or older",
+            "reported to the health department",
+            "unmarried and pregnant",
+            "drug or chemical"
+          ]
+        },
+        {
+          "name": "Counseling a child may consent to",
+          "cite": "Tex. Fam. Code 32.004(a)",
+          "all": [
+            "suicide prevention",
+            "sexual, physical or emotional abuse"
+          ]
+        },
+        {
+          "name": "The child's written statement of the grounds",
+          "cite": "Tex. Fam. Code 32.003(f), 32.004(b)(3)",
+          "signature": true
+        },
+        {
+          "name": "The parent may be told, with or without the child's consent",
+          "cite": "Tex. Fam. Code 32.003(d), 32.004(b)(2)",
+          "all": [
+            "with or without your consent"
+          ]
+        }
+      ]
+    },
+    "minor-consent-ca": {
+      "source": "California codes, read 2026-10-24 from the Legislature's data download: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=FAM&sectionNum=6920",
+      "elements": [
+        {
+          "name": "Mental health counseling or treatment from age 12, if mature enough",
+          "cite": "Cal. Fam. Code 6924(b); Health & Safety Code 124260(b)",
+          "all": [
+            "age 12 or older: mental health",
+            "mature enough"
+          ]
+        },
+        {
+          "name": "Drug or alcohol care from age 12",
+          "cite": "Cal. Fam. Code 6929(b)",
+          "all": [
+            "drug or alcohol problem"
+          ]
+        },
+        {
+          "name": "Sexually transmitted and reportable diseases from age 12, and prevention",
+          "cite": "Cal. Fam. Code 6926",
+          "all": [
+            "sexually transmitted infection",
+            "must be reported"
+          ]
+        },
+        {
+          "name": "HIV test from age 12",
+          "cite": "Cal. Health & Safety Code 121020",
+          "all": [
+            "hiv test"
+          ]
+        },
+        {
+          "name": "Pregnancy prevention or treatment, not sterilization",
+          "cite": "Cal. Fam. Code 6925",
+          "all": [
+            "prevent or treat pregnancy",
+            "sterilization"
+          ]
+        },
+        {
+          "name": "Rape, intimate partner violence and sexual assault care",
+          "cite": "Cal. Fam. Code 6927, 6928, 6930",
+          "all": [
+            "rape",
+            "injury from a partner",
+            "sexual assault"
+          ]
+        },
+        {
+          "name": "Medical, vision and dental care at 15 when living apart",
+          "cite": "Cal. Fam. Code 6922",
+          "all": [
+            "age 15 or older"
+          ]
+        },
+        {
+          "name": "Limits: psychotropic medicine, sterilization, replacement narcotic therapy",
+          "cite": "Cal. Fam. Code 6924(f), 6925(b), 6929(e)",
+          "all": [
+            "medicine for mental health",
+            "replacement narcotic therapy"
+          ]
+        },
+        {
+          "name": "Parent involvement unless inappropriate, and the record of it",
+          "cite": "Cal. Fam. Code 6924(d), 6929(c)",
+          "all": [
+            "would not be right",
+            "parent or guardian involvement"
+          ]
+        },
+        {
+          "name": "Parent contact after sexual assault, unless the parent is suspected",
+          "cite": "Cal. Fam. Code 6928(c)",
+          "all": [
+            "try to reach your parent"
+          ]
+        },
+        {
+          "name": "Records of minor-consent care closed to parents; releases signed by the minor",
+          "cite": "Cal. Health & Safety Code 123115(a)(3); Civ. Code 56.11(b)(3)",
+          "all": [
+            "can't see or get copies",
+            "only you can sign a release"
+          ]
+        },
+        {
+          "name": "Signed",
+          "cite": "Cal. Fam. Code 6920",
+          "signature": true
+        }
+      ]
+    },
+    "sbhc-consent-ca": {
+      "source": "Our own wording; the notice of minors' consent follows California Family Code 6924 to 6929 and Health and Safety Code 123115",
+      "elements": [
+        {
+          "name": "What students may agree to on their own",
+          "cite": "Cal. Fam. Code 6924, 6925, 6926, 6929",
+          "all": [
+            "from age 12",
+            "prevent or treat pregnancy"
+          ]
+        },
+        {
+          "name": "Parents can't see the records of that care",
+          "cite": "Cal. Health & Safety Code 123115(a)(3)",
+          "all": [
+            "can't see the records"
+          ]
+        }
+      ]
     }
   }
 }

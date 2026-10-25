@@ -12,7 +12,7 @@ A document not cleared for public release is held, with its reason (`data/releas
 
 Checked beside this, outside the module: every FHIR export against FHIR R4 and SDC 4.0.0 (the HL7 validator), skip logic and totals in OpenEMR's own questionnaire runtime, and patient PDFs against PDF/UA-1. The README says where.
 
-**83 documents:** 36 written, 28 rule, 19 instrument. Nothing out of conformance. Held for release: none.
+**87 documents:** 37 written, 31 rule, 19 instrument. Nothing out of conformance. Held for release: none.
 
 ## Written to a rule
 
@@ -43,6 +43,9 @@ Checked beside this, outside the module: every FHIR export against FHIR R4 and S
 | `authorization-revocation` (patient) | HIPAA revocation of an authorization, 45 CFR 164.508(b)(5) | 3 elements of its rule (requirements.json); reading level grade 5.1 | cleared |
 | `part-2-consent-revocation` (patient) | 42 CFR 2.31(a)(6), revoking a Part 2 consent in writing | 3 elements of its rule (requirements.json); reading level grade 5.0 | cleared |
 | `title-x-confidential-services` (patient) | Title X family planning projects, 42 CFR 59 subpart A (86 FR 56177, October 7, 2021, as amended at 89 FR 80067, October 2, 2024) | 11 elements of its rule (requirements.json); reading level grade 6.6 | cleared |
+| `minor-consent-ca` (patient) | California Family Code 6920 to 6930; Health and Safety Code 121020, 123110, 123115 and 124260; Civil Code 56.11. Read 2026-10-24 from the Legislature's own data download (dated 2026-10-19) | 12 elements of its rule (requirements.json); reading level grade 6.6 | cleared |
+| `minor-consent-statement-tx` (patient) | Texas Family Code 32.003 and 32.004, read 2026-10-24 | 4 elements of its rule (requirements.json); reading level grade 7.3 | cleared |
+| `sbhc-consent-tx` (patient) | Texas Education Code 38.053, 38.054, 38.057, 38.0095, 38.061, 26.009 and 26.0083(h), read 2026-10-24 | 10 elements of its rule (requirements.json); reading level grade 4.7 | cleared |
 | `health-risk-assessment` (patient) | Medicare Annual Wellness Visit health risk assessment, 42 CFR 410.15 | 6 elements of its rule (requirements.json); reading level grade 5.0 | cleared |
 | `preventive-care-questions` (patient) | U.S. Preventive Services Task Force, recommendations rated A and B | 12 elements of its rule (requirements.json); reading level grade 5.6 | cleared |
 | `vaccine-record` (patient) | National Childhood Vaccine Injury Act: recording and Vaccine Information Statements, 42 U.S.C. 300aa-25 and 300aa-26 | 3 elements of its rule (requirements.json); reading level grade 6.0 | cleared |
@@ -111,3 +114,4 @@ Checked beside this, outside the module: every FHIR export against FHIR R4 and S
 | `routing-slip` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `staff-handoff` (staff) | Written for Clinic Forms | our own wording; no outside text to hold it to | cleared |
 | `chaperone-notice` (patient) | Written for Clinic Forms | our own wording; no outside text to hold it to; reading level grade 4.7 | cleared |
+| `sbhc-consent-ca` (patient) | Written for Clinic Forms, with California Family Code 6920 to 6929 and Health and Safety Code 123115 (read 2026-10-24) | our own wording; no outside text to hold it to; 2 further elements (requirements.json); reading level grade 4.2 | cleared |

@@ -205,6 +205,28 @@
         "doc:title-x-confidential-services",
         "doc:sliding-fee-application"
       ]
+    },
+    {
+      "id": "sbhc-texas",
+      "title": "School-based health center (Texas)",
+      "about": "For a Texas school-based health center: consent from a parent or guardian to the services of the center under Education Code 38.053, a statement by the minor for care Texas law lets them consent to on their own, and the teen screens. Sports physical forms come from the state or the school.",
+      "items": [
+        "doc:sbhc-consent-tx",
+        "doc:minor-consent-statement-tx",
+        "doc:bstad",
+        "doc:asq"
+      ]
+    },
+    {
+      "id": "sbhc-california",
+      "title": "School health center (California)",
+      "about": "For a California school health center: consent from a parent or guardian, the notice to students of the care they can agree to on their own, and the teen screens. Sports physical forms come from the state or the school.",
+      "items": [
+        "doc:sbhc-consent-ca",
+        "doc:minor-consent-ca",
+        "doc:bstad",
+        "doc:asq"
+      ]
     }
   ]
 }

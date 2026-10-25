@@ -1,0 +1,69 @@
+{
+  "id": "minor-consent-statement-tx",
+  "title": "Minor's Statement of Consent (Texas)",
+  "category": "School-based health center",
+  "about": "A minor's written statement of why Texas law lets them consent to their own care, which a clinician may rely on (Family Code 32.003(f), 32.004(b)(3)).",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "Texas Family Code 32.003 and 32.004, read 2026-10-24",
+    "url": "https://statutes.capitol.texas.gov/Docs/FA/htm/FA.32.htm"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "In Texas, a minor can agree to some care without a parent or guardian. Check each reason that is true for you. We can rely on what you write here."
+    },
+    {
+      "type": "checklist",
+      "label": "Why I can agree to my own care",
+      "items": [
+        "I am on active duty in the armed services of the United States.",
+        "I am 16 or older. I live apart from my parents or guardian, and I manage my own money.",
+        "I want to be checked or treated for a disease that must be reported to the health department, such as some sexually transmitted infections.",
+        "I am unmarried and pregnant, and I want care for the pregnancy, other than abortion.",
+        "I want to be checked or treated for drug or chemical addiction or dependency, or a problem from drug or chemical use.",
+        "I want counseling for suicide prevention, for chemical addiction or dependency, or for sexual, physical or emotional abuse."
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Anything else about why I can agree",
+      "count": 2
+    },
+    {
+      "type": "paragraph",
+      "text": "Texas law lets your clinician tell your parent or guardian about the care you get or need, with or without your consent. Ask us how we decide."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient",
+        "Clinician"
+      ]
+    }
+  ]
+}

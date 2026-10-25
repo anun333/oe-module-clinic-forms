@@ -222,6 +222,12 @@
         "packs/us/documents/medicare-secondary-payer-questions": {
             "1": "d4bd68993ef4d3c3"
         },
+        "packs/us/documents/minor-consent-ca": {
+            "1": "05d2598ce18d6b23"
+        },
+        "packs/us/documents/minor-consent-statement-tx": {
+            "1": "d049f46e0aed5937"
+        },
         "packs/us/documents/notice-of-availability": {
             "1": "93976f83f75d1783"
         },
@@ -268,6 +274,12 @@
         "packs/us/documents/restriction-request": {
             "1": "4605deed3c1fed0b",
             "2": "5be9f5d3c8c53bab"
+        },
+        "packs/us/documents/sbhc-consent-ca": {
+            "1": "dfaa9d8679409c7f"
+        },
+        "packs/us/documents/sbhc-consent-tx": {
+            "1": "2dc6d6d8bd65ab1a"
         },
         "packs/us/documents/sliding-fee-application": {
             "1": "158026b6b47eb470",

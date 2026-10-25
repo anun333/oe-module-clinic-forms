@@ -1,0 +1,179 @@
+{
+  "id": "sbhc-consent-tx",
+  "title": "School-Based Health Center Consent (Texas)",
+  "category": "School-based health center",
+  "about": "A parent's or guardian's written consent for a student to be seen at a school-based health center in Texas, by each kind of service the center gives, ongoing or for one visit. List your center's services under each kind before you use it. A center funded by a Texas SBHC grant may not give reproductive services, counseling or referrals (Education Code 38.055).",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "Texas Education Code 38.053, 38.054, 38.057, 38.0095, 38.061, 26.009 and 26.0083(h), read 2026-10-24",
+    "url": "https://statutes.capitol.texas.gov/Docs/ED/htm/ED.38.htm"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Student name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "School"
+        },
+        {
+          "label": "Grade"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "{facility.name} runs the health center at your child's school. Texas law says we may see your child only with the written consent of a parent, a guardian or another person having legal control of the student."
+    },
+    {
+      "type": "heading",
+      "text": "Services you agree to"
+    },
+    {
+      "type": "paragraph",
+      "text": "These are all the kinds of services our center gives. Check each kind you agree to. The list below each kind says what we give."
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Family and home support",
+        "Physical health care, including immunizations",
+        "Dental health care",
+        "Health education",
+        "Preventive health strategies",
+        "Treatment for mental health conditions",
+        "Treatment for substance abuse"
+      ]
+    },
+    {
+      "type": "table",
+      "label": "What we give in each kind",
+      "columns": [
+        "Kind of service",
+        "Services"
+      ],
+      "rows": 7
+    },
+    {
+      "type": "checklist",
+      "label": "For how long",
+      "items": [
+        "Ongoing services, until the end of this school year",
+        "Only on a single occasion, on the date below"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date of the single visit"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Questionnaires"
+    },
+    {
+      "type": "paragraph",
+      "text": "Some visits use a questionnaire about feelings, habits or health, such as one for depression. Texas law says we need your consent first. We will give you a copy of each questionnaire before we use it."
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "I agree to questionnaires",
+        "I do not agree to questionnaires"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Referrals"
+    },
+    {
+      "type": "paragraph",
+      "text": "If your child needs physical or mental health care somewhere else, we will tell you why. We will talk with you and tell you in writing. We refer your child only after you agree in writing to that type of care, for each visit or for a course of treatment."
+    },
+    {
+      "type": "heading",
+      "text": "Your child's health information"
+    },
+    {
+      "type": "paragraph",
+      "text": "We share your child's health information with anyone other than you only with your written consent, unless a law allows it. You may see your child's health records and get a copy."
+    },
+    {
+      "type": "paragraph",
+      "text": "If your child has a primary care physician, we tell them about the care we give, so their records stay complete. If your child has Medicaid, CHIP or private insurance, we contact the physician before we give care."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Primary care physician"
+        },
+        {
+          "label": "Their phone"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Health coverage",
+      "items": [
+        "Medicaid",
+        "CHIP",
+        "Private insurance",
+        "None"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Plan name"
+        },
+        {
+          "label": "Member ID"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "You can change or withdraw this consent at any time. Tell us in writing."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Your name"
+        },
+        {
+          "label": "Your relationship to the student"
+        },
+        {
+          "label": "Phone"
+        }
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Parent, guardian or other person having legal control of the student"
+      ]
+    }
+  ]
+}
