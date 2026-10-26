@@ -73,6 +73,7 @@ As written in the source; whether they behave correctly for a given user is not 
 ## Settings it reads
 
 - `OE_SITE_DIR` (`public/export.php`, `public/index.php`, `public/print.php`, `public/upload.php`, `vendor/anun333/openhealthcare-common/src/OpenEmr.php`)
+- `css_header` (`src/Contrast.php`)
 - `webroot` (`public/index.php`, `public/print.php`)
 
 ## Files it writes
@@ -94,10 +95,10 @@ As written in the source; whether they behave correctly for a given user is not 
 | part | files | lines |
 |---|---|---|
 | data (`data/`, read at runtime) | 287 | 201777 |
-| PHP logic (`src/`) | 40 | 7043 |
-| tests (`tests/`, `phpunit.xml.dist`) | 30 | 4083 |
+| PHP logic (`src/`) | 41 | 7093 |
+| tests (`tests/`, `phpunit.xml.dist`) | 31 | 4130 |
 | tools (`tools/`) | 10 | 1128 |
-| pages (`public/`) | 5 | 1014 |
+| pages (`public/`) | 5 | 1015 |
 | module wiring | 3 | 94 |
 
 ## Not covered here

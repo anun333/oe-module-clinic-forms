@@ -135,6 +135,7 @@ foreach ($layouts as $form) {
 <head>
     <title><?php echo xlt('Clinic Forms'); ?></title>
     <?php Header::setupHeader(); ?>
+    <?php echo \OpenHealthcare\ClinicForms\Contrast::style(); ?>
     <style>
         .cf-cat { margin-top: 1rem; }
         .cf-about { color: #555; font-size: 0.85rem; }
