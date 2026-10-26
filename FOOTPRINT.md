@@ -68,8 +68,7 @@ As written in the source; whether they behave correctly for a given user is not 
 ## Settings it reads
 
 - `OE_SITE_DIR` (`public/export.php`, `public/index.php`, `public/print.php`, `public/upload.php`, `vendor/anun333/openhealthcare-common/src/OpenEmr.php`)
-- `fileroot` (`vendor/anun333/openhealthcare-common/src/OpenEmr.php`)
-- `webroot` (`public/index.php`, `public/print.php`, `vendor/anun333/openhealthcare-common/src/OpenEmr.php`)
+- `webroot` (`public/index.php`, `public/print.php`)
 
 ## Files it writes
 
@@ -94,7 +93,7 @@ As written in the source; whether they behave correctly for a given user is not 
 | tests (`tests/`, `phpunit.xml.dist`) | 28 | 3824 |
 | tools (`tools/`) | 10 | 1123 |
 | pages (`public/`) | 5 | 943 |
-| module wiring | 3 | 93 |
+| module wiring | 3 | 94 |
 
 ## Not covered here
 
