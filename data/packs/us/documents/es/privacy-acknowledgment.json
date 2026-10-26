@@ -1,6 +1,7 @@
 {
   "id": "privacy-acknowledgment",
   "translates": "6e7c56eddcc0c4c9",
+  "machine_assisted": true,
   "title": "Acuse de recibo del Aviso de prácticas de privacidad",
   "category": "Recepción",
   "about": "Constancia de que el paciente recibió el Aviso de prácticas de privacidad de la clínica.",

@@ -1,6 +1,7 @@
 {
   "id": "financial-policy",
   "translates": "d2176d4cc5483257",
+  "machine_assisted": true,
   "title": "Política financiera y cesión de beneficios",
   "category": "Recepción",
   "about": "Responsabilidades de pago, facturación al seguro y cesión de beneficios.",

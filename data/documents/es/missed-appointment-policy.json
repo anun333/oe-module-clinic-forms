@@ -1,0 +1,57 @@
+{
+  "id": "missed-appointment-policy",
+  "translates": "b1900910b99e8ac8",
+  "machine_assisted": true,
+  "title": "Citas perdidas",
+  "category": "Recepción",
+  "about": "La política de la clínica sobre citas perdidas y llegadas tarde, para que el paciente la conserve. Cambie los tiempos para que coincidan con los de su clínica.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Cuando usted falta a una cita, otro paciente pudo haber usado ese tiempo. Por favor, ayúdenos a tener citas disponibles para todos."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Si no puede venir, llámenos al {facility.phone} en cuanto lo sepa. Si puede, llame por lo menos un día antes."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Si llega más de 15 minutos tarde, es posible que le pidamos esperar a que haya un horario libre o venir otro día."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Si falta a varias citas sin llamar, hablaremos con usted sobre lo que le podría ayudar. Después, es posible que solo le ofrezcamos citas para el mismo día."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Le recordaremos sus citas por los medios que usted elija. Por favor, mantenga actualizado su número de teléfono."
+    },
+    {
+      "type": "paragraph",
+      "text": "Si algo le dificulta llegar, como el transporte o el cuidado de sus hijos, por favor díganoslo. Quizás podamos ayudarle."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Recibí una copia (paciente o representante legal)"
+      ]
+    }
+  ]
+}

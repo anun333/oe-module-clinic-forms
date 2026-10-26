@@ -274,9 +274,20 @@ final class DocumentLibrary
             throw new \InvalidArgumentException("$where: must be an object");
         }
         $translates = null;
+        $machineAssisted = false;
         if ($english !== null) {
             // A translation takes its audience, code and validated flag from the English document.
-            self::onlyKeys($data, ['id', 'title', 'category', 'about', 'blocks'], ['translates'], $where);
+            self::onlyKeys($data, ['id', 'title', 'category', 'about', 'blocks'], ['translates', 'machine_assisted'], $where);
+            // Made with machine help and not yet reviewed by a qualified translator: staff see it marked.
+            if (isset($data['machine_assisted']) && !is_bool($data['machine_assisted'])) {
+                throw new \InvalidArgumentException("$where machine_assisted: must be true or false");
+            }
+            $machineAssisted = ($data['machine_assisted'] ?? false) === true;
+            unset($data['machine_assisted']);
+            // A validated instrument is printed in its publisher's own translation, never one of ours.
+            if ($machineAssisted && $english->validated && $source === 'shipped') {
+                throw new \InvalidArgumentException("$where machine_assisted: a validated instrument ships only in its publisher's translation");
+            }
             // ...and its version, status, source and licence.
             $data['status'] = $english->status;
             if ($english->version > 0) {
@@ -480,6 +491,7 @@ final class DocumentLibrary
             $licence,
             $basedOn,
             ($data['anonymous'] ?? false) === true,
+            $machineAssisted,
         );
     }
 

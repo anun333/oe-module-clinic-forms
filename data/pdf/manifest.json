@@ -390,6 +390,10 @@
             "fingerprint": "d479fe7b8067fbaf",
             "sha256": "4cc5de1822039459fba6c801445ce0cb58d8e6d2e8ccca10880184c9fd700aa5"
         },
+        "es/after-visit-summary": {
+            "fingerprint": "dce4c873c88828eb",
+            "sha256": "5035755e9c2e35fb0acf3b2302ff215388b6dcd74ec3ea75bc76615fcd774c6b"
+        },
         "es/amendment-request": {
             "fingerprint": "771137030bd8bc52",
             "sha256": "230e47e5caec9a2c22415d388ef5dc08b9d35fb28e9169cc0d7d627965e86c9d"
@@ -426,6 +430,18 @@
             "fingerprint": "8823cfe58492f4d5",
             "sha256": "600e753d7a30330ac1bfdb107367f54df40ddf31a3695cdd70fadb5d2757b62b"
         },
+        "es/interpreter-request": {
+            "fingerprint": "705fb1690b5a771d",
+            "sha256": "58723b571d334e8f65e3e14d358d97b742a43a6d669a13c6d3b613b8f1bf73d3"
+        },
+        "es/medicine-review": {
+            "fingerprint": "228ea13db7fdf64a",
+            "sha256": "b3b357f8ae5821e3c0b30b3acaf5f151b953c97e7ce4c1b23627fdac436d3d22"
+        },
+        "es/missed-appointment-policy": {
+            "fingerprint": "575f4f29249eccf8",
+            "sha256": "754208c09e96a616aa94e6293ac2aebe9fa66859a50593853f1415e8322f2b7a"
+        },
         "es/notice-of-availability": {
             "fingerprint": "4f05e7fc3226fd68",
             "sha256": "b3b51392c1fa2384d144e1bef81700f549ea8ff6dd447722582183cd9cc28cac"
@@ -441,6 +457,10 @@
         "es/part-2-consent": {
             "fingerprint": "a850dc126bc01278",
             "sha256": "45c58f6e1e40668163949b99b9fa348f3d2ba122eab24e719efdbde6711d09ae"
+        },
+        "es/patient-rights": {
+            "fingerprint": "2866a91e8ff46db7",
+            "sha256": "892f6524658431479b88d0722f60162970e75de5185fd1ff781c0983c2bae267"
         },
         "es/payment-plan-agreement": {
             "fingerprint": "f655198c27ac8448",

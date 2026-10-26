@@ -1,6 +1,7 @@
 {
   "id": "release-of-information",
   "translates": "68cbc7e763c3d69a",
+  "machine_assisted": true,
   "title": "Autorización para divulgar información de salud",
   "category": "Recepción",
   "about": "Autorización de HIPAA para divulgar información de salud, con los elementos que exige 45 CFR 164.508.",

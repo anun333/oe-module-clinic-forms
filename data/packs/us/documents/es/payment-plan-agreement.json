@@ -1,6 +1,7 @@
 {
   "id": "payment-plan-agreement",
   "translates": "b858fea2803e18b3",
+  "machine_assisted": true,
   "title": "Acuerdo de plan de pagos",
   "category": "Recepción",
   "about": "Un acuerdo para pagar un saldo en partes, escrito según el Manual de Cumplimiento del Programa de Centros de Salud de HRSA, capítulo 16 (Facturación y cobros): planes de pago abiertos a todos los pacientes sin importar su ingreso ni su categoría de descuento de tarifa variable, la incapacidad de pagar separada de la negativa a pagar, y el monto que se debe, el plazo para pagar y los pasos si se dejan de hacer los pagos, todo por escrito. El plan no tiene intereses ni cargos y, tal como se imprime, es para cuatro pagos o menos: un plan de más de cuatro pagos, o con un cargo financiero, puede hacer de la clínica un acreedor según el Reglamento Z (12 CFR 1026.2(a)(17)), con las divulgaciones de la Ley de Veracidad en los Préstamos que debe dar. Haga revisar su política antes de ofrecer planes más largos.",

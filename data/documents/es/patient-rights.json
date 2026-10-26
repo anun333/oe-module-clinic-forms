@@ -1,0 +1,100 @@
+{
+  "id": "patient-rights",
+  "translates": "73cec4033e379ab1",
+  "machine_assisted": true,
+  "title": "Sus derechos y responsabilidades",
+  "category": "Recepción",
+  "about": "Lo que los pacientes pueden esperar de la clínica y lo que la clínica les pide. Entréguelo en la primera consulta y colóquelo a la vista.",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "En {facility.name}, usted tiene derecho a:"
+    },
+    {
+      "type": "paragraph",
+      "text": "• Recibir un trato respetuoso, amable y justo."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Que su información de salud se mantenga privada."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Recibir información sobre su salud y su atención en palabras que entienda."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Contar con un intérprete o con ayuda para leer si lo necesita."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Participar en las decisiones sobre su atención."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Aceptar o rechazar cualquier prueba o tratamiento."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Saber los nombres de las personas que lo atienden."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Pedir otra opinión."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Ver su expediente médico y obtener una copia."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Conocer los costos antes de recibir atención, cuando podamos decírselos."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Presentar una queja, diciéndoselo a cualquier persona de nuestro personal o por escrito, y recibir una respuesta, sin que lo traten de manera diferente."
+    },
+    {
+      "type": "paragraph",
+      "text": "Le pedimos que:"
+    },
+    {
+      "type": "paragraph",
+      "text": "• Nos diga la verdad sobre su salud, sus medicamentos y la atención que ha recibido antes."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Nos avise cuando cambien su dirección, su teléfono o su seguro."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Siga el plan de atención que acordó con nosotros, o nos diga si no puede seguirlo."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Venga a sus consultas, o nos llame si no puede venir."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Trate con respeto al personal y a los demás pacientes."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Pague sus facturas, o hable con nosotros sobre un plan de pagos o un descuento si le resulta difícil pagar."
+    },
+    {
+      "type": "paragraph",
+      "text": "• Haga preguntas cuando no entienda algo."
+    },
+    {
+      "type": "paragraph",
+      "text": "¿Preguntas o inquietudes? Pregunte en la recepción o llame al {facility.phone}."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Recibí una copia (paciente o representante legal)"
+      ]
+    }
+  ]
+}

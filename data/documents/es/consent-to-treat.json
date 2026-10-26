@@ -1,6 +1,7 @@
 {
   "id": "consent-to-treat",
   "translates": "b0baf03cd7871e0d",
+  "machine_assisted": true,
   "title": "Consentimiento para recibir tratamiento",
   "category": "Recepción",
   "about": "Consentimiento general para exámenes y tratamiento en la clínica.",

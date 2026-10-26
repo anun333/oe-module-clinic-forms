@@ -93,6 +93,7 @@ final readonly class Document
         public ?array $licence = null,
         public ?string $basedOn = null,
         public bool $anonymous = false,
+        public bool $machineAssisted = false,
     ) {
     }
 
@@ -102,7 +103,7 @@ final readonly class Document
     {
         return new self($this->id, $this->title, $this->category, $this->about, $blocks, $this->uses, $this->source, $this->audience,
             $this->code, $this->validated, $this->language, $this->poster, $this->translates, $this->version, $this->status,
-            $this->origin, $this->licence, $this->basedOn, $this->anonymous);
+            $this->origin, $this->licence, $this->basedOn, $this->anonymous, $this->machineAssisted);
     }
 
     public function stamp(): string

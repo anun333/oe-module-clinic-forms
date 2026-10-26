@@ -1,6 +1,7 @@
 {
   "id": "telehealth-consent",
   "translates": "c5adabb87b96d2a0",
+  "machine_assisted": true,
   "title": "Consentimiento para consultas de telesalud",
   "category": "Recepción",
   "about": "Consentimiento para consultas por video o por teléfono.",

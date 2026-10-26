@@ -41,6 +41,7 @@ Global functions the module calls that PHP doesn't provide and the module doesn'
 - `xl()`: `public/export.php`, `public/index.php`, `public/print.php`, `public/upload.php`, `src/Bootstrap.php`, `src/Paper/Words.php`, `src/Repository/SiteData.php`, `vendor/anun333/openhealthcare-common/src/OpenEmr.php`
 - `xl_layout_label()`: `src/Repository/SiteData.php`
 - `xl_list_label()`: `src/Repository/SiteData.php`
+- `xla()`: `public/index.php`
 - `xlt()`: `public/index.php`, `public/print.php`, `src/Bootstrap.php`
 
 ## What it hooks
@@ -88,12 +89,13 @@ As written in the source; whether they behave correctly for a given user is not 
 
 | part | files | lines |
 |---|---|---|
-| data (`data/`, read at runtime) | 277 | 196074 |
-| PHP logic (`src/`) | 38 | 6749 |
-| tests (`tests/`, `phpunit.xml.dist`) | 28 | 3824 |
+| data (`data/`, read at runtime) | 287 | 201776 |
+| PHP logic (`src/`) | 38 | 6762 |
+| tests (`tests/`, `phpunit.xml.dist`) | 28 | 3857 |
 | tools (`tools/`) | 10 | 1123 |
-| pages (`public/`) | 5 | 943 |
+| pages (`public/`) | 5 | 950 |
 | module wiring | 3 | 94 |
+| other | 1 | 1 |
 
 ## Not covered here
 
