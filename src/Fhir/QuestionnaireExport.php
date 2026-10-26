@@ -22,6 +22,15 @@
  * codes and names. So is every other answer with no code of its own: a document that claims no codes
  * still answers with Codings, never plain strings.
  *
+ * For OpenEMR's questionnaire runtime 0.4.0 and later (rich()), it says more: a scale is one answer
+ * grid (the table item control), a table a grid of rows (gtable), the patient's signature is
+ * required and saved as an R4 signature (signatureRequired), and a row asked of one sex only
+ * (TAPS-1's questions 2 and 3, "item_sex") is skipped by an enableWhenExpression on the patient's
+ * gender. Before 0.4.0, and on LHC-Forms, it exports as 0.38.1 did: an older renderer shows the
+ * plain forms anyway, and drops a required signature entirely, leaving no signature line at all.
+ * OpenEMR's pages pass the form no patient yet (launchContext), so the expression shows the row
+ * whenever the patient's gender is unknown, as today; a host that passes one gets the skip.
+ *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
  */
@@ -35,6 +44,7 @@ use OpenHealthcare\ClinicForms\Paper\Document;
 use OpenHealthcare\ClinicForms\Paper\Instrument;
 use OpenHealthcare\ClinicForms\Paper\Loinc;
 use OpenHealthcare\ClinicForms\Paper\Words;
+use OpenHealthcare\Common\QuestionnaireRuntime;
 
 final readonly class QuestionnaireExport
 {
@@ -51,16 +61,32 @@ final readonly class QuestionnaireExport
     private const BLANK = '__________';
     private const SNOMED = 'http://snomed.info/sct';
     private const SNOMED_INTERNATIONAL_EDITION = 'http://snomed.info/sct/900000000000207008';
+    private const ITEM_CONTROL = 'http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl';
+    private const ENABLE_WHEN_EXPRESSION = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression';
+    private const LAUNCH_CONTEXT = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext';
+    private const SIGNATURE_REQUIRED = 'http://hl7.org/fhir/StructureDefinition/questionnaire-signatureRequired';
+    /** ASTM E1762's signature types, as FHIR R4's Signature.type names them. */
+    private const SIGNATURE_TYPE = 'urn:iso-astm:E1762-95:2013';
 
     private Context $context;
 
     /**
      * @param Context $context the clinic; a patient in it is dropped, since a Questionnaire is a blank form
      * @param list<string> $taglines language assistance taglines, shown at the end of patient documents
+     * @param bool $rich the richer forms of runtime 0.4.0 and later (rich()); the plain ones otherwise
      */
-    public function __construct(Context $context, private string $language = 'en', private array $taglines = [])
+    public function __construct(Context $context, private string $language = 'en', private array $taglines = [], private bool $rich = false)
     {
         $this->context = $context->withoutPatient();
+    }
+
+    /**
+     * Whether this site's questionnaire runtime takes the richer forms: OpenEMR's native runtime 0.4.0
+     * or later, read from the file it serves (8.5.0 shipped 0.2.0 and gained 0.4.0 in a backport).
+     */
+    public static function rich(?string $projectDir = null): bool
+    {
+        return QuestionnaireRuntime::atLeast(QuestionnaireRuntime::COMPLETES, $projectDir);
     }
 
     /**
@@ -124,6 +150,14 @@ final readonly class QuestionnaireExport
             $q['copyright'] = $copyright;
         }
         $q['item'] = $this->items($doc, $codes);
+        if ($this->rich && array_filter($doc->blocks, static fn(array $b): bool => array_filter($b['item_sex'] ?? []) !== []) !== []) {
+            // The patient, for the rows asked of one sex: a host that has one supplies it as %patient.
+            $q['extension'][] = ['url' => self::LAUNCH_CONTEXT, 'extension' => [
+                ['url' => 'name', 'valueCoding' => ['system' => 'http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext', 'code' => 'patient', 'display' => 'Patient']],
+                ['url' => 'type', 'valueCode' => 'Patient'],
+                ['url' => 'description', 'valueString' => 'The patient filling in the form, whose gender decides the rows asked of one sex'],
+            ]];
+        }
         // A short narrative, as FHIR recommends for every resource.
         $lang = htmlspecialchars($doc->language, ENT_XML1);
         $q = array_slice($q, 0, 3) + ['text' => ['status' => 'generated', 'div' => '<div xmlns="http://www.w3.org/1999/xhtml" lang="' . $lang . '" xml:lang="' . $lang . '"><p><b>'
@@ -211,7 +245,12 @@ final readonly class QuestionnaireExport
                             $score = $block['item_scores'][$n][$i] ?? $block['scores'][$i] ?? null;
                             $answers[] = [$this->text($column), is_numeric($score) ? $score + 0 : null];
                         }
-                        $children[] = $this->choice("$id.$n", (($block['start'] ?? 1) + $n) . '. ' . $question, $answers, $codes['map'][++$asked] ?? null, false, $doc->language);
+                        $child = $this->choice("$id.$n", (($block['start'] ?? 1) + $n) . '. ' . $question, $answers, $codes['map'][++$asked] ?? null, false, $doc->language);
+                        $sex = $block['item_sex'][$n] ?? null;
+                        if ($this->rich && is_string($sex)) {
+                            $child['extension'][] = self::askedOf($sex);
+                        }
+                        $children[] = $child;
                     }
                     if (isset($block['id'])) {
                         $rows = [];
@@ -220,7 +259,8 @@ final readonly class QuestionnaireExport
                         }
                         $targets[$block['id']] = ['rows' => $rows];
                     }
-                    $add(['linkId' => $id, 'text' => $this->text($block['label']), 'type' => 'group', 'item' => $children]);
+                    $add(['linkId' => $id, 'text' => $this->text($block['label']), 'type' => 'group']
+                        + ($this->rich ? ['extension' => [self::itemControl('table')]] : []) + ['item' => $children]);
                     if (isset($block['total'])) {
                         $add(self::total("$id.total", $this->text($block['total']), $codes !== null, null, self::totalCode($codes), $doc->language));
                     }
@@ -230,14 +270,17 @@ final readonly class QuestionnaireExport
                     break;
                 case 'signature':
                     foreach ($block['signers'] as $n => $signer) {
-                        $add(['linkId' => "$id.$n", 'text' => $this->text($signer), 'type' => 'group', 'item' => [
+                        // The patient's own signature, drawn or typed, is required on screen; staff sign as before.
+                        $signed = $this->rich && self::patientSigns($signer) ? ['extension' => [self::signatureRequired($doc)]] : [];
+                        $add(['linkId' => "$id.$n", 'text' => $this->text($signer), 'type' => 'group'] + $signed + ['item' => [
                             ['linkId' => "$id.$n.name", 'text' => Words::t('Name', $this->language), 'type' => 'string'],
                             ['linkId' => "$id.$n.date", 'text' => Words::t('Date', $this->language), 'type' => 'date'],
                         ]]);
                     }
                     break;
                 case 'table':
-                    $add(['linkId' => $id, 'text' => $this->text($block['label']), 'type' => 'group', 'repeats' => true, 'item' => array_map(
+                    $add(['linkId' => $id, 'text' => $this->text($block['label']), 'type' => 'group', 'repeats' => true]
+                        + ($this->rich ? ['extension' => [self::itemControl('gtable')]] : []) + ['item' => array_map(
                         fn(string $column, int $n): array => ['linkId' => "$id.$n", 'text' => $this->text($column), 'type' => 'string'],
                         $block['columns'],
                         array_keys($block['columns']),
@@ -465,6 +508,44 @@ final readonly class QuestionnaireExport
             }];
         }
         return $item;
+    }
+
+    /** @return array<string, mixed> FHIR's item control extension, for the code (table, gtable) */
+    private static function itemControl(string $code): array
+    {
+        return ['url' => self::ITEM_CONTROL, 'valueCodeableConcept' => ['coding' => [
+            ['system' => 'http://hl7.org/fhir/questionnaire-item-control', 'code' => $code, 'display' => $code === 'gtable' ? 'Group Table' : 'Vertical Answer Table'],
+        ]]];
+    }
+
+    /**
+     * A row asked of one sex only: shown when the patient's gender says so, and whenever it is unknown
+     * (no patient passed, or none recorded), so a form filled without a patient asks every row, as today.
+     *
+     * @return array<string, mixed>
+     */
+    private static function askedOf(string $sex): array
+    {
+        $other = $sex === 'male' ? 'female' : 'male';
+        return ['url' => self::ENABLE_WHEN_EXPRESSION, 'valueExpression' => ['language' => 'text/fhirpath',
+            'expression' => "iif(%patient.gender.exists(), %patient.gender != '$other', true)"]];
+    }
+
+    /** Whether a signer is the patient, or someone signing for them: the signature the screen asks for. */
+    private static function patientSigns(string $signer): bool
+    {
+        return preg_match('/^(Patient|Parent or guardian|I received a copy)/', $signer) === 1;
+    }
+
+    /** @return array<string, mixed> signatureRequired: a consent's signature on a consent, else the author's */
+    private static function signatureRequired(Document $doc): array
+    {
+        [$code, $display] = str_contains($doc->id, 'consent')
+            ? ['1.2.840.10065.1.12.1.7', 'Consent Signature']
+            : ['1.2.840.10065.1.12.1.1', "Author's Signature"];
+        return ['url' => self::SIGNATURE_REQUIRED, 'valueCodeableConcept' => ['coding' => [
+            ['system' => self::SIGNATURE_TYPE, 'code' => $code, 'display' => $display],
+        ]]];
     }
 
     /** @return array{0: string, 1: int|float|null} "Never (0)" as its text and points */

@@ -55,7 +55,8 @@
                 "For women: In the PAST 12 MONTHS, how often have you had 4 or more drinks containing alcohol in one day?",
                 "In the PAST 12 MONTHS, how often have you used any drugs including marijuana, cocaine or crack, heroin, methamphetamine (crystal meth), hallucinogens, ecstasy/MDMA?",
                 "In the PAST 12 MONTHS, how often have you used any prescription medications just for the feeling, more than prescribed or that were not prescribed for you?"
-            ]
+            ],
+            "item_sex": [null, "male", "female", null, null]
         },
         {
             "type": "paragraph",

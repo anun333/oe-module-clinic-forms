@@ -97,6 +97,8 @@ final class DocumentLibraryTest extends TestCase
         yield 'validated not a boolean' => [static fn(array $d): array => $d + ['validated' => 'yes'], 'validated: must be true or false'];
         yield 'id not the file name' => [static fn(array $d): array => ['id' => 'other'] + $d, "must be the file's name"];
         yield 'scale start below 1' => [static fn(array $d): array => ['blocks' => [['type' => 'scale', 'label' => 'L', 'columns' => ['No', 'Yes'], 'items' => ['Q'], 'start' => 0]]] + $d, "start: the first row's number"];
+        yield 'item_sex not one per row' => [static fn(array $d): array => ['blocks' => [['type' => 'scale', 'label' => 'L', 'columns' => ['No', 'Yes'], 'items' => ['Q', 'R'], 'item_sex' => ['male']]]] + $d, 'item_sex: one entry for each item'];
+        yield 'item_sex an unknown value' => [static fn(array $d): array => ['blocks' => [['type' => 'scale', 'label' => 'L', 'columns' => ['No', 'Yes'], 'items' => ['Q'], 'item_sex' => ['men']]]] + $d, 'item_sex: one entry for each item'];
         // Skip logic: a show_if names a question above it, of the right kind, with an answer it has.
         $yesNo = ['type' => 'checklist', 'id' => 'q1', 'label' => 'Q1', 'items' => ['Yes', 'No']];
         $scale = ['type' => 'scale', 'id' => 'rows', 'label' => 'L', 'columns' => ['Yes', 'No'], 'items' => ['A', 'B']];

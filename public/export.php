@@ -190,7 +190,8 @@ if ($template !== '') {
                 $english[$doc->id] = $en;
             }
         }
-        $export = new QuestionnaireExport($context->withoutPatient(), $language, $taglines);
+        // The richer forms (answer grids, signatures, TAPS-1's skip by sex) only where this site's runtime runs them.
+        $export = new QuestionnaireExport($context->withoutPatient(), $language, $taglines, QuestionnaireExport::rich());
         if ($toQuestionnaires) {
             clinicFormsAddQuestionnaires($export, $documents, $english);
         }

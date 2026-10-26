@@ -304,6 +304,98 @@ final class QuestionnaireExportTest extends TestCase
         return (new QuestionnaireExport(new Context(['name' => 'Seed Clinic'], self::PATIENT)))->questionnaire($this->doc($id));
     }
 
+    private const RICH_ONLY = [
+        'http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl',
+        'http://hl7.org/fhir/StructureDefinition/questionnaire-signatureRequired',
+        'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression',
+        'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext',
+    ];
+
+    /** @return list<string> the extension urls on the Questionnaire and every item */
+    private static function urls(array $q): array
+    {
+        $urls = array_column($q['extension'] ?? [], 'url');
+        foreach (self::flat($q['item']) as $item) {
+            array_push($urls, ...array_column($item['extension'] ?? [], 'url'));
+        }
+        return $urls;
+    }
+
+    public function testBelowRuntime040EveryDocumentExportsWithoutTheRicherForms(): void
+    {
+        $plain = new QuestionnaireExport(new Context(['name' => 'C']));
+        $checked = 0;
+        foreach (DocumentLibrary::shipped()->all() as $doc) {
+            self::assertSame([], array_values(array_intersect(self::urls($plain->questionnaire($doc)), self::RICH_ONLY)), $doc->id);
+            $checked++;
+        }
+        self::assertGreaterThan(60, $checked, 'every shipped document');
+    }
+
+    public function testOnRuntime040AScaleIsOneGridATableAGtableAndOnlyThePatientMustSign(): void
+    {
+        $rich = new QuestionnaireExport(new Context(['name' => 'C']), 'en', [], true);
+        $control = static fn(array $item): ?string => array_values(array_filter($item['extension'] ?? [],
+            static fn(array $e): bool => $e['url'] === self::RICH_ONLY[0]))[0]['valueCodeableConcept']['coding'][0]['code'] ?? null;
+
+        $grids = array_filter(self::flat($rich->questionnaire($this->doc('phq-9'))['item']), static fn(array $i): bool => $control($i) === 'table');
+        self::assertCount(1, $grids, "PHQ-9's scale is one answer grid");
+        self::assertCount(9, reset($grids)['item'], 'with its nine questions as rows');
+
+        $plan = $rich->questionnaire($this->doc('plan-of-care'));
+        $tables = array_filter(self::flat($plan['item']), static fn(array $i): bool => $control($i) === 'gtable');
+        self::assertNotEmpty($tables, 'a table is a gtable');
+        self::assertTrue(reset($tables)['repeats'], 'still a repeating group');
+        $signers = array_filter(self::flat($plan['item']), static fn(array $i): bool => in_array($i['text'] ?? '', ['Patient', 'Clinician'], true));
+        $signs = array_combine(array_column($signers, 'text'), array_map(static fn(array $i): bool => in_array(self::RICH_ONLY[1], array_column($i['extension'] ?? [], 'url'), true), $signers));
+        ksort($signs);
+        self::assertSame(['Clinician' => false, 'Patient' => true], $signs, 'the patient signs on screen; the clinician signs as before');
+        $patient = array_values(array_filter($signers, static fn(array $i): bool => $i['text'] === 'Patient'))[0];
+        self::assertSame(['name', 'date'], array_map(static fn(array $c): string => substr($c['linkId'], strrpos($c['linkId'], '.') + 1), $patient['item']), 'its name and date stay');
+        self::assertSame('1.2.840.10065.1.12.1.1', $patient['extension'][0]['valueCodeableConcept']['coding'][0]['code'], "the author's signature");
+
+        $consent = array_filter(self::flat($rich->questionnaire($this->doc('consent-to-treat'))['item']), static fn(array $i): bool => in_array(self::RICH_ONLY[1], array_column($i['extension'] ?? [], 'url'), true));
+        self::assertCount(1, $consent, 'the patient or representative signs; the witness signs as before');
+        self::assertSame('1.2.840.10065.1.12.1.7', reset($consent)['extension'][0]['valueCodeableConcept']['coding'][0]['code'], 'a consent signature');
+    }
+
+    public function testOnRuntime040TapsOnesAlcoholQuestionsAreAskedByThePatientsSex(): void
+    {
+        $q = (new QuestionnaireExport(new Context(['name' => 'C']), 'en', [], true))->questionnaire($this->doc('taps-1'));
+        $context = array_values(array_filter($q['extension'], static fn(array $e): bool => $e['url'] === self::RICH_ONLY[3]));
+        self::assertCount(1, $context, 'the form asks the host for the patient');
+        self::assertSame('patient', $context[0]['extension'][0]['valueCoding']['code']);
+        $when = [];
+        foreach (self::flat($q['item']) as $item) {
+            foreach ($item['extension'] ?? [] as $e) {
+                if ($e['url'] === self::RICH_ONLY[2]) {
+                    $when[$item['prefix'] ?? $item['linkId']] = $e['valueExpression']['expression'];
+                }
+            }
+        }
+        self::assertSame([
+            '2.' => "iif(%patient.gender.exists(), %patient.gender != 'female', true)",
+            '3.' => "iif(%patient.gender.exists(), %patient.gender != 'male', true)",
+        ], $when, 'question 2 for men, 3 for women, both when the gender is unknown');
+    }
+
+    public function testTheRicherFormsFollowTheRuntimeTheSiteServes(): void
+    {
+        $project = static function (?string $version): string {
+            $dir = sys_get_temp_dir() . '/cf-runtime-' . bin2hex(random_bytes(6));
+            mkdir($dir);
+            if ($version !== null) {
+                $file = $dir . '/' . \OpenHealthcare\Common\QuestionnaireRuntime::PATH;
+                mkdir(dirname($file), 0777, true);
+                file_put_contents($file, "    static info = {\n        version: '$version',\n    };\n");
+            }
+            return $dir;
+        };
+        self::assertTrue(QuestionnaireExport::rich($project('0.4.0')), 'master and 8.5.0 with the backport');
+        self::assertFalse(QuestionnaireExport::rich($project('0.2.0')), '8.3 to 8.4.x, and 8.5.0 before the backport');
+        self::assertFalse(QuestionnaireExport::rich($project(null)), 'before 8.3: LHC-Forms');
+    }
+
     private function doc(string $id): Document
     {
         $doc = DocumentLibrary::shipped()->get($id);
