@@ -397,13 +397,19 @@ final class DocumentLibrary
                     }
                     break;
                 case 'scale':
-                    self::onlyKeys($block, ['type', 'label', 'columns', 'items'], ['scores', 'item_scores', 'total', 'start'], $at);
+                    self::onlyKeys($block, ['type', 'label', 'columns', 'items'], ['scores', 'item_scores', 'total', 'start', 'item_sex'], $at);
                     // The first row's number, where the instrument numbers on from an earlier part (CRAFFT's 4 to 9).
                     if (isset($block['start']) && (!is_int($block['start']) || $block['start'] < 1 || $block['start'] > 99)) {
                         throw new \InvalidArgumentException("$at start: the first row's number, a whole number from 1 to 99");
                     }
                     $texts[] = self::text($block['label'], "$at label");
                     $texts = array_merge($texts, self::texts($block['columns'], "$at columns", 2, 8), self::texts($block['items'], "$at items", 1, 40));
+                    // Rows asked of one sex only (TAPS-1's questions 2 and 3): skip logic on screen, like show_if.
+                    if (isset($block['item_sex']) && (!is_array($block['item_sex']) || !array_is_list($block['item_sex'])
+                        || count($block['item_sex']) !== count($block['items'])
+                        || array_filter($block['item_sex'], static fn(mixed $s): bool => $s !== null && $s !== 'male' && $s !== 'female') !== [])) {
+                        throw new \InvalidArgumentException("$at item_sex: one entry for each item, each null, \"male\" or \"female\"");
+                    }
                     if (isset($block['scores'])) {
                         if (!is_array($block['scores']) || !array_is_list($block['scores']) || count($block['scores']) !== count($block['columns'])
                             || array_filter($block['scores'], static fn(mixed $s): bool => !is_int($s)) !== []) {

@@ -6,7 +6,10 @@
  * details (a placeholder for the clinic is a blank line), and the US pack's taglines on patient
  * documents. For checking with the HL7 FHIR validator, and for publishing.
  *
- *   php tools/export-questionnaires.php [folder]     (default build/questionnaires)
+ *   php tools/export-questionnaires.php [folder] [--rich]     (default build/questionnaires)
+ *
+ * --rich writes the forms OpenEMR's questionnaire runtime 0.4.0 and later gets (QuestionnaireExport::rich()):
+ * answer grids, gtables, the patient's signature, TAPS-1's skip by sex. Without it, the plain ones.
  *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
@@ -36,13 +39,15 @@ if (!function_exists('xl')) {
     }
 }
 
-$folder = $argv[1] ?? dirname(__DIR__) . '/build/questionnaires';
+$args = array_slice($argv, 1);
+$rich = in_array('--rich', $args, true);
+$folder = array_values(array_filter($args, static fn(string $a): bool => $a !== '--rich'))[0] ?? dirname(__DIR__) . '/build/questionnaires';
 @mkdir($folder, 0777, true);
 $english = DocumentLibrary::shipped();
 $written = 0;
 foreach (array_keys(Words::LANGUAGES) as $language) {
     $library = $language === 'en' ? $english : DocumentLibrary::shipped($language);
-    $export = new QuestionnaireExport(new Context([]), $language, Taglines::forSite(null)->forPage($language));
+    $export = new QuestionnaireExport(new Context([]), $language, Taglines::forSite(null)->forPage($language), $rich);
     foreach ($library->all() as $doc) {
         if ($doc->language !== $language) {
             continue;  // no translation yet: the library offers the English one
@@ -52,4 +57,4 @@ foreach (array_keys(Words::LANGUAGES) as $language) {
         $written++;
     }
 }
-echo "wrote $written questionnaires to $folder\n";
+echo "wrote $written " . ($rich ? 'rich ' : '') . "questionnaires to $folder\n";

@@ -56,6 +56,7 @@ A question that should only be asked after a certain answer can say so. Printing
   - **An answer:** `{"id": "acuity", "answer": 1}` means the first answer of the labelled checklist `acuity`. On a scale, give the row as well: `{"id": "screen", "row": 4, "answer": 1}`.
   - **A count above a value:** `{"id": "tobacco", "above": 0}`. The target must be a number field.
 - **`number`** on a field makes it a whole number in a range: `"number": [0, 365]`.
+- **`item_sex`** on a scale asks a row of one sex only: one entry per row, each `null`, `"male"` or `"female"` (TAPS-1: `[null, "male", "female", null, null]`). On screen it's an SDC `enableWhenExpression` on the patient's gender, exported only for OpenEMR's runtime 0.4.0 or later; a row is still asked when the patient's gender is unknown, which it is wherever the host passes no patient. Like `show_if`, it isn't wording and a translation copies it.
 
 Answers are named by position, so a translation carries exactly the same skip logic as its English document, copied rather than translated. Skip logic isn't wording: adding it doesn't change a document's version. A condition that names something below it, a missing answer, or the wrong kind of target is refused when the file is read. ASQ and BSTAD carry skip logic; see their files for examples.
 
