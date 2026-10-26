@@ -90,6 +90,8 @@ $pdfAvailable = $libreOffice || PdfWriter::available();
 $blankPdfs = !$libreOffice && $packId === BlankPdfs::PACK;
 $canSaveDocuments = OpenEmr::canWriteDocuments();
 $canAddQuestionnaires = OpenEmr::canAddQuestionnaires();
+// OpenEMR 8.5 and later offer a questionnaire by visit type (#14485); older ones don't, and show no choice.
+$visitTypes = $canAddQuestionnaires && OpenEmr::canOfferByVisitType() ? OpenEmr::visitTypes() : [];
 $documentsCategory = $settings->documentsCategory;
 $isAdmin = AclMain::aclCheckCore('admin', 'super');
 $csrf = OpenEmr::csrfToken();
@@ -324,6 +326,18 @@ foreach ($layouts as $form) {
                 <div class="mt-2">
                     <button type="submit" class="btn btn-outline-primary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="oe-questionnaires"><?php echo xlt('Add to OpenEMR questionnaires'); ?></button>
                     <small class="form-text text-muted"><?php echo xlt('Staff can then enter the answers from a paper form in OpenEMR: in an encounter, Questionnaires, then New Questionnaire, or (8.3 and later) the patient menu, Assessments, then Questionnaires. OpenEMR adds up the score and keeps the answers in the chart. Adding a form again updates it; a questionnaire Clinic Forms did not add is left alone.'); ?></small>
+                    <?php if ($visitTypes !== []) { ?>
+                        <fieldset class="mt-2">
+                            <legend class="h6 mb-1"><?php echo xlt('Also list them in visits of these types (optional)'); ?></legend>
+                            <?php foreach ($visitTypes as $typeId => $typeName) { ?>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="visit_type[]" id="cf-visit-type-<?php echo attr((string)$typeId); ?>" value="<?php echo attr((string)$typeId); ?>">
+                                    <label class="form-check-label" for="cf-visit-type-<?php echo attr((string)$typeId); ?>"><?php echo text($typeName); ?></label>
+                                </div>
+                            <?php } ?>
+                            <small class="form-text text-muted"><?php echo xlt('Each ticked document becomes a form of its own in the Questionnaires menu of those visits, by OpenEMR questionnaire availability. With none ticked they are offered as before, through New Questionnaire.'); ?></small>
+                        </fieldset>
+                    <?php } ?>
                 </div>
             <?php } ?>
         </div>
