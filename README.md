@@ -4,6 +4,8 @@ Printable clinic paperwork, with the clinic's own name, address, phone, fax and 
 
 **Status: 0.40.0, a pre-release.** Checked on OpenEMR 7.0.2 to 8.5.0, as an administrator, with synthetic data (see [Compatibility](#compatibility)). The consents and releases are starting points: have them reviewed for your state before you use them (see [The documents are starting points](#the-documents-are-starting-points)).
 
+Using the module day to day, task by task for each role: see [GUIDE.md](GUIDE.md).
+
 It does three things:
 
 - **Paperwork.** Consents, releases, referral letters and office slips, filled from the facility record and, optionally, the open patient and an Address Book entry.

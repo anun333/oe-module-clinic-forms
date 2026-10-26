@@ -14,6 +14,7 @@ use OpenEMR\Common\Acl\AclMain;
 use OpenEMR\Core\Header;
 use OpenHealthcare\ClinicForms\Bootstrap;
 use OpenHealthcare\ClinicForms\Compat\OpenEmr;
+use OpenHealthcare\ClinicForms\Guide;
 use OpenHealthcare\ClinicForms\Office\BlankPdfs;
 use OpenHealthcare\ClinicForms\Office\LibreOfficePdf;
 use OpenHealthcare\ClinicForms\Office\PdfWriter;
@@ -147,6 +148,7 @@ foreach ($layouts as $form) {
 <body class="body_top">
 <div class="container-fluid mt-3">
     <h1 class="h4"><?php echo xlt('Clinic Forms'); ?></h1>
+    <p class="small mb-2"><a href="<?php echo attr(Guide::url()); ?>" target="_blank" rel="noopener"><?php echo xlt('Help'); ?><span class="sr-only"> <?php echo xlt('(opens in a new window)'); ?></span></a></p>
     <p class="text-muted"><?php echo xlt('Print paperwork with the clinic details filled in, and blank paper versions of layout forms for intake by hand and entry later.'); ?>
         <?php echo xlt('Consents and releases are starting points: have them reviewed for your state before use.'); ?></p>
     <p class="cf-about" id="cf-pack">

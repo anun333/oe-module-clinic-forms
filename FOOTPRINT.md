@@ -95,10 +95,10 @@ As written in the source; whether they behave correctly for a given user is not 
 | part | files | lines |
 |---|---|---|
 | data (`data/`, read at runtime) | 297 | 213584 |
-| PHP logic (`src/`) | 41 | 7093 |
-| tests (`tests/`, `phpunit.xml.dist`) | 31 | 4130 |
+| PHP logic (`src/`) | 42 | 7124 |
+| tests (`tests/`, `phpunit.xml.dist`) | 32 | 4161 |
 | tools (`tools/`) | 10 | 1128 |
-| pages (`public/`) | 5 | 1015 |
+| pages (`public/`) | 5 | 1017 |
 | module wiring | 3 | 94 |
 
 ## Not covered here
