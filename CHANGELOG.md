@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.40.1 (unreleased)
+## 0.40.1 (2026-10-26)
 
 - **A staff guide:** [GUIDE.md](GUIDE.md) walks through each task by role, with the labels as the pages show them. **Help** on the Clinic Forms page opens it at this version's tag, in a new window.
 - **The guide's labels are checked:** each of the 27 labels GUIDE.md quotes in bold is a string the pages show, so a renamed button fails the tests.
