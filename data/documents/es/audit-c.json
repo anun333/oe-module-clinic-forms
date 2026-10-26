@@ -27,6 +27,7 @@
     },
     {
       "type": "checklist",
+      "id": "how-often",
       "label": "1. ¿Con qué frecuencia consume alguna bebida alcohólica?",
       "items": [
         "Nunca (0)",
@@ -42,6 +43,26 @@
     },
     {
       "type": "checklist",
+      "show_if": {
+        "any": [
+          {
+            "id": "how-often",
+            "answer": 2
+          },
+          {
+            "id": "how-often",
+            "answer": 3
+          },
+          {
+            "id": "how-often",
+            "answer": 4
+          },
+          {
+            "id": "how-often",
+            "answer": 5
+          }
+        ]
+      },
       "label": "2. ¿Cuántas consumiciones de bebidas alcohólicas suele realizar en un día de consumo normal?",
       "items": [
         "1 o 2 (0)",
@@ -53,6 +74,26 @@
     },
     {
       "type": "checklist",
+      "show_if": {
+        "any": [
+          {
+            "id": "how-often",
+            "answer": 2
+          },
+          {
+            "id": "how-often",
+            "answer": 3
+          },
+          {
+            "id": "how-often",
+            "answer": 4
+          },
+          {
+            "id": "how-often",
+            "answer": 5
+          }
+        ]
+      },
       "label": "3. ¿Con qué frecuencia toma 6 o más bebidas alcohólicas en un solo día?",
       "items": [
         "Nunca (0)",

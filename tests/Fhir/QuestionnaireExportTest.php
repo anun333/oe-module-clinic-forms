@@ -149,6 +149,53 @@ final class QuestionnaireExportTest extends TestCase
             $items[2]['extension'][0]['valueExpression']['expression']);
     }
 
+    public function testAStopHereAnswerNeedsNothingMoreButAQuestionItAsksStillCounts(): void
+    {
+        $expression = static fn(array $q): string => current(array_filter(
+            self::flatten($q['item']),
+            static fn(array $i): bool => $i['type'] === 'decimal' && isset($i['extension'])
+        ))['extension'][0]['valueExpression']['expression'];
+        $english = $this->doc('audit-c');
+        $spanish = DocumentLibrary::shipped('es')->get('audit-c');
+        self::assertNotNull($spanish);
+        foreach (['en' => $this->export('audit-c'), 'es' => (new QuestionnaireExport(new Context([]), 'es'))->questionnaire($spanish, $english)] as $language => $q) {
+            $items = self::flatten($q['item']);
+            // AUDIT-C: questions 2 and 3 only after an answer other than Never (the paper's "If you answered Never, stop here").
+            foreach (['/68519-8', '/68520-6'] as $linkId) {
+                self::assertSame('any', $items[$linkId]['enableBehavior'] ?? null, "$language $linkId");
+                self::assertSame(['/68518-0'], array_unique(array_column($items[$linkId]['enableWhen'], 'question')), "$language $linkId");
+                self::assertCount(4, $items[$linkId]['enableWhen'], "$language $linkId: every answer but Never");
+            }
+            $total = $expression($q);
+            self::assertStringStartsWith("iif(%resource.item.where(linkId = '/68518-0').answer.count()", $total, 'question 1 is always required');
+            self::assertSame(2, substr_count($total, ".answer.exists()), true)"), 'questions 2 and 3, each when asked');
+        }
+        // PC-PTSD-5: the five questions only after Yes to the trauma question ("If no, stop here: the screen total is 0").
+        $q = $this->export('pc-ptsd-5');
+        $groups = array_filter(self::flatten($q['item']), static fn(array $i): bool => $i['type'] === 'group' && isset($i['enableWhen']));
+        self::assertCount(1, $groups, "the scale's group carries the condition");
+        $total = $expression($q);
+        self::assertStringNotContainsString('answer.count()', $total, 'the trauma question is unscored, so nothing is always required');
+        self::assertSame(5, substr_count($total, ".answer.exists()), true)"), 'each of the five, when asked');
+
+        // The guard's test for a coded condition, and for a count above a value.
+        $guard = new \ReflectionMethod(QuestionnaireExport::class, 'guardTotals');
+        $ord = ['extension' => [['url' => QuestionnaireExport::ORDINAL, 'valueDecimal' => 1]]];
+        $items = $guard->invoke(null, [
+            ['linkId' => 'gate', 'type' => 'choice', 'answerOption' => [['valueCoding' => ['system' => 's', 'code' => 'y']]]],
+            ['linkId' => 'days', 'type' => 'integer'],
+            ['linkId' => 'b', 'type' => 'choice', 'enableWhen' => [['question' => 'gate', 'operator' => '=', 'answerCoding' => ['system' => 's', 'code' => 'y']]], 'answerOption' => [['valueCoding' => $ord + ['code' => '1']]]],
+            ['linkId' => 'c', 'type' => 'choice', 'enableWhen' => [['question' => 'days', 'operator' => '>', 'answerInteger' => 0]], 'answerOption' => [['valueCoding' => $ord + ['code' => '1']]]],
+            ['linkId' => 't', 'type' => 'decimal', 'extension' => [['url' => QuestionnaireExport::CALCULATED, 'valueExpression' => ['expression' => 'SUM']]], '_scope' => null],
+        ]);
+        $t = $items[4]['extension'][0]['valueExpression']['expression'];
+        self::assertStringContainsString("%resource.item.where(linkId = 'gate').answer.valueCoding.where(code = 'y' and system = 's').exists()", $t);
+        self::assertStringContainsString("%resource.item.where(linkId = 'days').answer.where(valueInteger > 0).exists()", $t);
+        self::assertStringContainsString("%resource.item.where(linkId = 'b').answer.exists()", $t);
+        self::assertStringNotContainsString('not()', $t, "OpenEMR 8.3 and 8.4's runtime has no not()");
+        self::assertStringEndsWith(', SUM, {})', $t);
+    }
+
     public function testEachInstrumentsTotalCarriesItsReferencesCodeAndAPartsScoreNone(): void
     {
         $coded = [];

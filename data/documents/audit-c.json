@@ -45,6 +45,7 @@
     },
     {
       "type": "checklist",
+      "id": "how-often",
       "label": "1. How often do you have a drink containing alcohol?",
       "items": [
         "Never (0)",
@@ -60,6 +61,26 @@
     },
     {
       "type": "checklist",
+      "show_if": {
+        "any": [
+          {
+            "id": "how-often",
+            "answer": 2
+          },
+          {
+            "id": "how-often",
+            "answer": 3
+          },
+          {
+            "id": "how-often",
+            "answer": 4
+          },
+          {
+            "id": "how-often",
+            "answer": 5
+          }
+        ]
+      },
       "label": "2. How many drinks containing alcohol do you have on a typical day when you are drinking?",
       "items": [
         "1 or 2 (0)",
@@ -71,6 +92,26 @@
     },
     {
       "type": "checklist",
+      "show_if": {
+        "any": [
+          {
+            "id": "how-often",
+            "answer": 2
+          },
+          {
+            "id": "how-often",
+            "answer": 3
+          },
+          {
+            "id": "how-often",
+            "answer": 4
+          },
+          {
+            "id": "how-often",
+            "answer": 5
+          }
+        ]
+      },
       "label": "3. How often do you have six or more drinks on one occasion?",
       "items": [
         "Never (0)",

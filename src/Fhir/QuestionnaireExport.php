@@ -303,53 +303,70 @@ final readonly class QuestionnaireExport
     /**
      * Each worked-out total, guarded so it shows only once every scored question it adds up has an
      * answer. A blank answer isn't 0 points: a PHQ-9 with two items left blank would otherwise show a
-     * lower total, perhaps a lower band. A question asked only of some patients (skip logic, or the
-     * sex it asks about) isn't required. A blank total is safe; the clinician sees it isn't complete.
+     * lower total, perhaps a lower band. A question every patient is asked must be answered; one under
+     * skip logic (enableWhen) must be answered when its condition holds, so AUDIT-C's "Never" needs no
+     * more answers but a drinker's blank second question still blanks the total. A question asked only
+     * of one sex (an expression) isn't required. A blank total is safe; the clinician sees it isn't
+     * complete.
      *
      * @param list<array<string, mixed>> $items
      * @return list<array<string, mixed>>
      */
     private static function guardTotals(array $items): array
     {
-        $scored = [];  // linkId => whether every patient is asked it
-        $collect = static function (array $items, bool $conditional) use (&$collect, &$scored): void {
+        // linkId => true when every patient is asked it, a FHIRPath test of when it's asked (its own
+        // and its groups' enableWhen), or false when an expression decides (not required).
+        $scored = [];
+        $collect = static function (array $items, array $tests, bool $byExpression) use (&$collect, &$scored): void {
             foreach ($items as $item) {
-                $here = $conditional || isset($item['enableWhen']) || array_filter(
+                $here = $tests;
+                if (isset($item['enableWhen'])) {
+                    $here[] = self::askedTest($item['enableWhen'], $item['enableBehavior'] ?? 'all');
+                }
+                $expression = $byExpression || array_filter(
                     $item['extension'] ?? [],
                     static fn(array $e): bool => ($e['url'] ?? '') === self::ENABLE_WHEN_EXPRESSION
-                ) !== [];
+                ) !== [] || in_array(null, $here, true);
                 $points = array_filter($item['answerOption'] ?? [], static fn(array $o): bool => array_filter(
                     $o['valueCoding']['extension'] ?? [],
                     static fn(array $e): bool => ($e['url'] ?? '') === self::ORDINAL
                 ) !== []);
                 if ($points !== []) {
-                    $scored[$item['linkId']] = !$here;
+                    $scored[$item['linkId']] = $expression ? false : ($here === [] ? true : implode(' and ', $here));
                 }
-                $collect($item['item'] ?? [], $here);
+                $collect($item['item'] ?? [], $here, $expression);
             }
         };
-        $collect($items, false);
+        $collect($items, [], false);
         $guard = static function (array $items) use (&$guard, $scored): array {
             foreach ($items as &$item) {
                 if (array_key_exists('_scope', $item)) {
                     $scope = $item['_scope'];
                     unset($item['_scope']);
-                    $required = array_keys(array_filter(
+                    $inScope = array_filter(
                         $scored,
-                        static fn(bool $always, string $linkId): bool => $always
-                            && ($scope === null || in_array($linkId, array_map(static fn(string $c): string => "/$c", $scope), true)),
-                        ARRAY_FILTER_USE_BOTH
-                    ));
-                    if ($required !== []) {
+                        static fn(string $linkId): bool => $scope === null
+                            || in_array($linkId, array_map(static fn(string $c): string => "/$c", $scope), true),
+                        ARRAY_FILTER_USE_KEY
+                    );
+                    $always = array_keys(array_filter($inScope, static fn(bool|string $s): bool => $s === true));
+                    $tests = [];
+                    if ($always !== []) {
                         // The answers among those questions, at each depth a question can sit; count()
                         // is 0 for none in every engine, so no guard is needed on it.
-                        $which = '.where(' . implode(' or ', array_map(static fn(string $id): string => "linkId = '$id'", $required)) . ')';
-                        $answered = implode(' + ', array_map(
+                        $which = '.where(' . implode(' or ', array_map(static fn(string $id): string => "linkId = '$id'", $always)) . ')';
+                        $tests[] = implode(' + ', array_map(
                             static fn(string $d): string => "$d$which.answer.count()",
-                            ['%resource.item', '%resource.item.item', '%resource.item.item.item']
-                        ));
+                            self::DEPTHS
+                        )) . ' = ' . count($always);
+                    }
+                    foreach (array_filter($inScope, 'is_string') as $linkId => $asked) {
+                        // iif, not not(): OpenEMR 8.3 and 8.4's runtime (0.2.0) has iif but no not().
+                        $tests[] = "iif($asked, " . self::anyDepth($linkId, '.answer.exists()') . ', true)';
+                    }
+                    if ($tests !== []) {
                         $expression = &$item['extension'][0]['valueExpression']['expression'];
-                        $expression = "iif($answered = " . count($required) . ", $expression, {})";
+                        $expression = 'iif(' . implode(' and ', $tests) . ", $expression, {})";
                         unset($expression);
                     }
                 }
@@ -361,6 +378,47 @@ final readonly class QuestionnaireExport
             return $items;
         };
         return $guard($items);
+    }
+
+    /** Where a question can sit: at the top, inside a group, or inside a group inside a heading's. */
+    private const DEPTHS = ['%resource.item', '%resource.item.item', '%resource.item.item.item'];
+
+    /** A test that holds when the question with this linkId, at any depth, meets the condition. */
+    private static function anyDepth(string $linkId, string $condition): string
+    {
+        $id = self::fhirPathString($linkId);
+        return '(' . implode(' or ', array_map(static fn(string $d): string => "$d.where(linkId = $id)$condition", self::DEPTHS)) . ')';
+    }
+
+    /**
+     * An item's enableWhen as a FHIRPath test of the response: the same answers the runtime checks
+     * (an answer chosen, by its coding, or a count above a value). Null for anything else, which the
+     * guard then doesn't require.
+     *
+     * @param list<array<string, mixed>> $enableWhen
+     */
+    private static function askedTest(array $enableWhen, string $behavior): ?string
+    {
+        $tests = [];
+        foreach ($enableWhen as $c) {
+            $question = (string)($c['question'] ?? '');
+            if (($c['operator'] ?? '') === '=' && isset($c['answerCoding']['code'])) {
+                $match = 'code = ' . self::fhirPathString((string)$c['answerCoding']['code'])
+                    . (isset($c['answerCoding']['system']) ? ' and system = ' . self::fhirPathString((string)$c['answerCoding']['system']) : '');
+                $tests[] = self::anyDepth($question, ".answer.valueCoding.where($match).exists()");
+            } elseif (($c['operator'] ?? '') === '>' && is_int($c['answerInteger'] ?? null)) {
+                $tests[] = self::anyDepth($question, ".answer.where(valueInteger > {$c['answerInteger']}).exists()");
+            } else {
+                return null;
+            }
+        }
+        return $tests === [] ? null : '(' . implode($behavior === 'any' ? ' or ' : ' and ', $tests) . ')';
+    }
+
+    /** A FHIRPath string literal. */
+    private static function fhirPathString(string $value): string
+    {
+        return "'" . str_replace(['\\', "'"], ['\\\\', "\\'"], $value) . "'";
     }
 
     private function taglineItems(string $id, callable $add): void

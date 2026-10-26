@@ -36,7 +36,7 @@ Tick the questionnaire (PHQ-9, GAD-7, AUDIT-C and the others) and choose **Open 
 
 An administrator first adds the questionnaire to OpenEMR (below). Then, in an encounter, open Questionnaires › New Questionnaire, or on OpenEMR 8.3 and later the patient menu › Assessments › Questionnaires, and enter the answers. OpenEMR adds up the score and keeps the answers in the chart.
 
-The score appears only once every scored question is answered. If the patient left one blank, the total stays empty rather than showing a lower number, so ask about the missing question, or note that the score is incomplete. A question asked only of some patients (one that depends on an earlier answer) doesn't hold the score back. Part scores, such as PHQ-4's two pairs, wait only for their own questions.
+The score appears only once every scored question is answered. If the patient left one blank, the total stays empty rather than showing a lower number, so ask about the missing question, or note that the score is incomplete. A question that depends on an earlier answer counts only when it's asked: AUDIT-C answered "Never", or PC-PTSD-5 answered "No" to the trauma question, scores 0 with nothing more, as the forms say, but a question the screen does ask must be answered. On TAPS-2, a substance answered No and skipped shows no part score rather than 0. Part scores, such as PHQ-4's two pairs, wait only for their own questions.
 
 ## Providers
 
