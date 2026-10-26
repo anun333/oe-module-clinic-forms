@@ -300,18 +300,31 @@ foreach ($layouts as $form) {
         <input type="hidden" name="order" id="cf-order" value="">
         <div class="mt-3">
             <button type="submit" class="btn btn-primary"><?php echo xlt('Open for printing'); ?></button>
-            <span class="ml-3 mr-1"><?php echo xlt('or edit first'); ?>:</span>
-            <button type="submit" class="btn btn-secondary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="docx"><?php echo xlt('Word'); ?> (.docx)</button>
-            <button type="submit" class="btn btn-secondary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="odt"><?php echo xlt('LibreOffice'); ?> (.odt)</button>
-            <?php if ($pdfAvailable) { ?>
-                <button type="submit" class="btn btn-secondary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="pdf"><?php echo xlt('PDF'); ?></button>
-            <?php } ?>
-            <small class="form-text text-muted"><?php echo xlt('The ticked documents as one file to edit in Word, LibreOffice or Google Docs. Layout forms print from the browser only.'); ?>
-                <?php echo $libreOffice ? xlt('PDFs are made by LibreOffice, tagged for screen readers (PDF/UA).') : xlt('The Word and LibreOffice files can be read with a screen reader; this server has no LibreOffice, so the PDF is for printing.'); ?></small>
-            <?php if ($blankPdfs) { ?>
-                <button type="submit" class="btn btn-outline-secondary mt-2" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="pdf-blank"><?php echo xlt('Accessible PDF, blank'); ?></button>
-                <small class="form-text text-muted"><?php echo xlt('The ticked documents blank, as PDFs tagged for screen readers (PDF/UA), made when Clinic Forms was released: US Letter, with the language assistance taglines, and no letterhead. Several come in a .zip. With LibreOffice installed on the OpenEMR server, every PDF is made this way, with your letterhead and the patient details.'); ?></small>
-            <?php } ?>
+            <div class="mt-2">
+                <span class="mr-1"><?php echo xlt('Download'); ?>:</span>
+                <?php
+                // The accessible copy first: what a patient who uses a screen reader can read (AccessibleCopy).
+                $accessibleKind = $libreOffice ? xl('PDF tagged for screen readers')
+                    : ($blankPdfs ? xl('a tagged PDF when printed blank, otherwise Word') : xl('Word file'));
+                ?>
+                <button type="submit" class="btn btn-primary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="accessible"><?php echo xlt('Accessible copy'); ?> (<?php echo text($accessibleKind); ?>)</button>
+                <button type="submit" class="btn btn-secondary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="docx"><?php echo xlt('Word'); ?> (.docx)</button>
+                <button type="submit" class="btn btn-secondary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="odt"><?php echo xlt('LibreOffice'); ?> (.odt)</button>
+                <?php if (!$libreOffice && PdfWriter::available()) { ?>
+                    <button type="submit" class="btn btn-secondary" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="pdf"><?php echo xlt('Print copy'); ?> (<?php echo xlt('PDF, not tagged for screen readers'); ?>)</button>
+                <?php } ?>
+            </div>
+            <small class="form-text text-muted"><?php echo xlt('Give a patient who uses a screen reader the accessible copy.'); ?>
+                <?php if ($libreOffice) {
+                    echo xlt('On this server it is a PDF made by LibreOffice and tagged for screen readers (PDF/UA), with your letterhead and the patient details; the Word file when a document printed without the patient name is ticked beside one that has it.');
+                } elseif ($blankPdfs) {
+                    echo xlt('On this server it is a PDF tagged for screen readers (PDF/UA) when the documents print blank, made when Clinic Forms was released: US Letter, with the language assistance taglines and no letterhead, several in a .zip. Filled for a patient, or with a document of your own, it is the Word file.');
+                } else {
+                    echo xlt('On this server it is the Word file, which a screen reader can read.');
+                } ?>
+                <?php echo xlt('The Word and LibreOffice files open in Word, LibreOffice or Google Docs to edit, and a screen reader can read them.'); ?>
+                <?php echo $libreOffice ? '' : xlt('The print copy is for printing: its PDF has no tags for screen readers. With LibreOffice installed on the OpenEMR server, every PDF is tagged.'); ?>
+                <?php echo xlt('Layout forms print from the browser only.'); ?></small>
             <?php if ($pdfAvailable && $patient !== [] && $canSaveDocuments) { ?>
                 <button type="submit" class="btn btn-outline-primary mt-2" formaction="<?php echo attr($moduleUrl . '/public/export.php'); ?>" formtarget="_self" name="format" value="pdf-documents"><?php echo xlt('Save a PDF copy in the patient chart'); ?></button>
                 <small class="form-text text-muted"><?php echo xlt('The ticked documents, filled for this patient, filed under Documents'); ?> (<?php echo text($documentsCategory); ?>).</small>
