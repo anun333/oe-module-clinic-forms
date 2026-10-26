@@ -10,6 +10,8 @@
  * A PDF is made by LibreOffice, tagged for PDF/UA, when it is installed on the server (LibreOfficePdf),
  * and by OpenEMR's mPDF otherwise. "pdf-blank" sends the blank documents' accessible PDFs made when
  * the module was released (BlankPdfs), for servers without LibreOffice: one PDF, or several in a .zip.
+ * "accessible" sends the accessible copy this server can make (AccessibleCopy): LibreOffice's PDF/UA,
+ * the release's PDF/UA copies for blank documents, or else the Word file; never mPDF's untagged PDF.
  *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
@@ -18,6 +20,7 @@
 require_once __DIR__ . '/../../../../globals.php';
 
 use OpenEMR\Common\Acl\AclMain;
+use OpenHealthcare\ClinicForms\Office\AccessibleCopy;
 use OpenHealthcare\ClinicForms\Office\BlankPdfs;
 use OpenHealthcare\ClinicForms\Office\LibreOfficePdf;
 use OpenHealthcare\ClinicForms\Office\OdtWriter;
@@ -60,6 +63,8 @@ $toQuestionnaires = $format === 'oe-questionnaires';
 $fhir = $format === 'fhir' || $toQuestionnaires;
 // The release's blank PDFs never carry a patient.
 $blankPdfs = $format === 'pdf-blank';
+// The accessible copy: a patient who uses a screen reader gets one they can read.
+$accessible = $format === 'accessible';
 $patient = !$fhir && !$blankPdfs && ($toDocuments || !empty($_POST['fill_patient'])) && $pid > 0 ? $site->patient($pid) : [];
 $recipientId = (int)($_POST['recipient'] ?? 0);
 $today = function_exists('oeFormatShortDate') ? (string)oeFormatShortDate(date('Y-m-d')) : date('Y-m-d');
@@ -178,7 +183,7 @@ if ($template !== '') {
     $titles = [TemplateLibrary::displayName($template)];
     $stem = pathinfo($template, PATHINFO_FILENAME);
 } else {
-    $libreOffice = str_starts_with($format, 'pdf') && !$blankPdfs && Settings::forSite($siteDir)->pdfLibreOffice ? LibreOfficePdf::find() : null;
+    $libreOffice = (str_starts_with($format, 'pdf') || $accessible) && !$blankPdfs && Settings::forSite($siteDir)->pdfLibreOffice ? LibreOfficePdf::find() : null;
     if (str_starts_with($format, 'pdf') && !$blankPdfs && $libreOffice === null && !PdfWriter::available()) {
         clinicFormsRefuse(422, xl('This OpenEMR has no PDF writer (mPDF), so the PDF could not be made.'));
     }
@@ -220,22 +225,28 @@ if ($template !== '') {
     } else {
         // Another module may fill a table a document names (Sliding Fee: the notice's discounts).
         $filled = DocumentFill::apply($documents, static fn(DocumentFillEvent $e) => OpenEmr::dispatch($e, DocumentFillEvent::EVENT_NAME), $patient !== [] ? $pid : null);
-        if ($blankPdfs) {
-            // Made before the clinic's own details were known, so a document another module fills has none.
-            $files = $pack?->id === BlankPdfs::PACK && array_map(static fn($d) => $d->blocks, $filled) === array_map(static fn($d) => $d->blocks, $documents)
-                ? (new BlankPdfs())->files($documents, Taglines::forSite($siteDir, BlankPdfs::PACK)->forPage($language)) : null;
+        // LibreOffice gives the file one page header, so a document filed without a name, beside one with
+        // the patient's, goes to mPDF, which gives each document its own (or, for the accessible copy, to Word).
+        $mixed = $patient !== [] && array_filter($filled, static fn($d): bool => $d->anonymous) !== [];
+        // The release's copies were made before the clinic's own details were known, so a document another
+        // module fills has none.
+        $releaseFiles = $blankPdfs || ($accessible && $patient === [] && $libreOffice === null)
+            ? ($pack?->id === BlankPdfs::PACK && array_map(static fn($d) => $d->blocks, $filled) === array_map(static fn($d) => $d->blocks, $documents)
+                ? (new BlankPdfs())->files($documents, Taglines::forSite($siteDir, BlankPdfs::PACK)->forPage($language)) : null)
+            : null;
+        $route = $accessible ? AccessibleCopy::route($libreOffice !== null, $mixed, $patient !== [], $releaseFiles !== null) : null;
+        if ($blankPdfs || $route === AccessibleCopy::BLANK_PDF) {
+            $files = $releaseFiles;
             if ($files === null) {
                 clinicFormsRefuse(422, xl('No accessible PDF was made for every ticked document as your clinic has it: a document of your own, your own taglines, one another module fills in, or one not written in this language. The LibreOffice and Word files are accessible; download one of those instead.'));
             }
             [$out, $ext, $mime] = count($files) === 1 ? [reset($files), 'pdf', 'application/pdf'] : [Zip::build($files), 'zip', 'application/zip'];
         } else {
-            // LibreOffice gives the file one page header, so a document filed without a name, beside one with
-            // the patient's, goes to mPDF, which gives each document its own.
-            $mixed = $patient !== [] && array_filter($filled, static fn($d): bool => $d->anonymous) !== [];
-            $viaLibreOffice = $libreOffice !== null && !$mixed;
+            $viaLibreOffice = $libreOffice !== null && !$mixed && ($route === null || $route === AccessibleCopy::LIBREOFFICE_PDF);
             $writer = match (true) {
                 $format === 'odt' => new OdtWriter(Words::t('Date', $language), $language),
                 $viaLibreOffice => new OdtWriter(Words::t('Date', $language), $language, $context->value('patient.id'), xl('Chart number') . ' ' . $context->value('patient.id')),
+                $accessible => new WordWriter(Words::t('Date', $language), $language),
                 str_starts_with($format, 'pdf') => new PdfWriter(Words::t('Date', $language), $context->value('patient.id')),
                 default => new WordWriter(Words::t('Date', $language), $language),
             };
@@ -244,12 +255,18 @@ if ($template !== '') {
             $mime = $writer->mimeType();
             if ($viaLibreOffice) {
                 $pdf = $libreOffice->convert($out);
-                if ($pdf === null && !PdfWriter::available()) {
-                    clinicFormsRefuse(500, xl('LibreOffice could not make the PDF, and this OpenEMR has no other PDF writer (mPDF).'));
+                if ($pdf === null && $accessible) {
+                    // The accessible copy is never mPDF's untagged PDF: the Word file instead.
+                    $word = new WordWriter(Words::t('Date', $language), $language);
+                    [$out, $ext, $mime] = [(new OfficeExport($context, $language, $taglines))->write($filled, $word, $paper), $word->extension(), $word->mimeType()];
+                } else {
+                    if ($pdf === null && !PdfWriter::available()) {
+                        clinicFormsRefuse(500, xl('LibreOffice could not make the PDF, and this OpenEMR has no other PDF writer (mPDF).'));
+                    }
+                    // If LibreOffice fails, mPDF makes the PDF as before.
+                    $out = $pdf ?? (new OfficeExport($context, $language, $taglines))->write($filled, new PdfWriter(Words::t('Date', $language), $context->value('patient.id')), $paper);
+                    [$ext, $mime] = ['pdf', 'application/pdf'];
                 }
-                // If LibreOffice fails, mPDF makes the PDF as before.
-                $out = $pdf ?? (new OfficeExport($context, $language, $taglines))->write($filled, new PdfWriter(Words::t('Date', $language), $context->value('patient.id')), $paper);
-                [$ext, $mime] = ['pdf', 'application/pdf'];
             }
         }
         $documents = $filled;

@@ -89,11 +89,12 @@ As written in the source; whether they behave correctly for a given user is not 
 | part | files | lines |
 |---|---|---|
 | data (`data/`, read at runtime) | 277 | 196074 |
-| PHP logic (`src/`) | 38 | 6749 |
-| tests (`tests/`, `phpunit.xml.dist`) | 28 | 3824 |
+| PHP logic (`src/`) | 39 | 6796 |
+| tests (`tests/`, `phpunit.xml.dist`) | 29 | 3879 |
 | tools (`tools/`) | 10 | 1123 |
-| pages (`public/`) | 5 | 943 |
+| pages (`public/`) | 5 | 973 |
 | module wiring | 3 | 94 |
+| other | 1 | 1 |
 
 ## Not covered here
 
