@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.40.0 (unreleased)
+## 0.40.0 (2026-10-26)
 
 - **Text and buttons are easier to read on this module's pages.** OpenEMR's blue (#007bff) is 3.97:1 on white, under the 4.5:1 that WCAG 2.1 AA asks of normal text and that HHS's Section 504 rule requires from 2027-05-11. Under OpenEMR's light and manila themes, the module's links and primary buttons now use #0056b3 (7.0:1), and muted and warning text darker shades that stay readable on tinted rows, and a link inside text is underlined; the dark, solar and colour themes keep their own colours, and OpenEMR's own pages are unchanged.
 - **Spanish for five more patient documents**, each marked **ES needs review** like the others: Preventive Care Questions, the Consent for a Procedure, the home blood pressure and blood sugar logs, and the Asthma Action Plan. Chosen as 0.39.0's were, by use: Preventive Care Questions is in two packets, and the other four complete a packet in Spanish (procedure visit, chronic care, asthma visit), so 20 of the 40 packets now print wholly in Spanish, up from 16. BSTAD stays in English as NIDA's instrument, and the controlled-substance agreement waits until TAPS-1, in the same packet, has its publisher's Spanish. Their blank accessible PDFs are made too, and pass PDF/UA-1 (veraPDF, 106 rules, 0 failed). A qualified translator should review them before patients get them (45 CFR 92.201(c)(3)).
