@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.40.2 (unreleased)
+## 0.40.2 (2026-10-26)
 
 - **A score waits for every scored question.** A questionnaire's worked-out total (and each part's score, such as PHQ-4's two pairs or TAPS-2's per substance) used to add up only the answers given, so a PHQ-9 with two items left blank showed, and extracted, a lower total, perhaps a lower band. Now the total stays empty until every scored question that every patient is asked has an answer; a question asked only of some patients (skip logic, or the sex it asks about) doesn't hold it back. A blank total is safe; a low one isn't. Checked in OpenEMR's questionnaire runtime 0.4.0 (master) and 0.2.0 (8.4.1) and in fhirpath.js 5.2.1: with one question blank, all 17 scored instruments' totals are empty (0.40.1's showed a lower number), and fully answered ones still add up as before. The publisher's instructions for PHQ-9 and GAD-7 (phqscreeners.com) give no rule for missing items; the APA's adapted PHQ-9 prorates one or two missing items. Clinic Forms doesn't prorate.
 - **The README's Spanish counts:** 36 of the 70 patient documents print in Spanish (it said every one, and later 31), and none is out of date.
