@@ -297,7 +297,70 @@ final readonly class QuestionnaireExport
             $this->taglineItems('taglines', $add);
             $close();
         }
-        return $root;
+        return self::guardTotals($root);
+    }
+
+    /**
+     * Each worked-out total, guarded so it shows only once every scored question it adds up has an
+     * answer. A blank answer isn't 0 points: a PHQ-9 with two items left blank would otherwise show a
+     * lower total, perhaps a lower band. A question asked only of some patients (skip logic, or the
+     * sex it asks about) isn't required. A blank total is safe; the clinician sees it isn't complete.
+     *
+     * @param list<array<string, mixed>> $items
+     * @return list<array<string, mixed>>
+     */
+    private static function guardTotals(array $items): array
+    {
+        $scored = [];  // linkId => whether every patient is asked it
+        $collect = static function (array $items, bool $conditional) use (&$collect, &$scored): void {
+            foreach ($items as $item) {
+                $here = $conditional || isset($item['enableWhen']) || array_filter(
+                    $item['extension'] ?? [],
+                    static fn(array $e): bool => ($e['url'] ?? '') === self::ENABLE_WHEN_EXPRESSION
+                ) !== [];
+                $points = array_filter($item['answerOption'] ?? [], static fn(array $o): bool => array_filter(
+                    $o['valueCoding']['extension'] ?? [],
+                    static fn(array $e): bool => ($e['url'] ?? '') === self::ORDINAL
+                ) !== []);
+                if ($points !== []) {
+                    $scored[$item['linkId']] = !$here;
+                }
+                $collect($item['item'] ?? [], $here);
+            }
+        };
+        $collect($items, false);
+        $guard = static function (array $items) use (&$guard, $scored): array {
+            foreach ($items as &$item) {
+                if (array_key_exists('_scope', $item)) {
+                    $scope = $item['_scope'];
+                    unset($item['_scope']);
+                    $required = array_keys(array_filter(
+                        $scored,
+                        static fn(bool $always, string $linkId): bool => $always
+                            && ($scope === null || in_array($linkId, array_map(static fn(string $c): string => "/$c", $scope), true)),
+                        ARRAY_FILTER_USE_BOTH
+                    ));
+                    if ($required !== []) {
+                        // The answers among those questions, at each depth a question can sit; count()
+                        // is 0 for none in every engine, so no guard is needed on it.
+                        $which = '.where(' . implode(' or ', array_map(static fn(string $id): string => "linkId = '$id'", $required)) . ')';
+                        $answered = implode(' + ', array_map(
+                            static fn(string $d): string => "$d$which.answer.count()",
+                            ['%resource.item', '%resource.item.item', '%resource.item.item.item']
+                        ));
+                        $expression = &$item['extension'][0]['valueExpression']['expression'];
+                        $expression = "iif($answered = " . count($required) . ", $expression, {})";
+                        unset($expression);
+                    }
+                }
+                if (isset($item['item'])) {
+                    $item['item'] = $guard($item['item']);
+                }
+            }
+            unset($item);
+            return $items;
+        };
+        return $guard($items);
     }
 
     private function taglineItems(string $id, callable $add): void
@@ -408,6 +471,8 @@ final readonly class QuestionnaireExport
             $depths = ['%resource.item', '%resource.item.item', '%resource.item.item.item'];
             $terms = array_map(static fn(string $d): string => "iif($d$which$points.exists(), $d$which$points.sum(), 0)", $depths);
             $item['extension'] = [['url' => self::CALCULATED, 'valueExpression' => ['language' => 'text/fhirpath', 'expression' => implode(' + ', $terms)]]];
+            // Which questions it adds up, for guardTotals() once every item is built: all, or a part's.
+            $item['_scope'] = $questions;
             if ($loinc !== null) {
                 // The instrument's total, coded, becomes an Observation where a form filler extracts (SDC),
                 // as OpenEMR's own SDC questionnaires mark theirs; CMS159 reads the PHQ-9's.

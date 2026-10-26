@@ -98,15 +98,55 @@ final class QuestionnaireExportTest extends TestCase
         $guard = static fn(string $d, string $which = ''): string => "iif($d$which$points.exists(), $d$which$points.sum(), 0)";
         $depths = ['%resource.item', '%resource.item.item', '%resource.item.item.item'];
         $phq9 = array_values(array_filter(self::flatten($this->export('phq-9')['item']), static fn(array $i): bool => $i['type'] === 'decimal'))[0];
-        self::assertSame(implode(' + ', array_map($guard, $depths)), $phq9['extension'][0]['valueExpression']['expression'],
-            'an empty sum is empty in fhirpath.js 5, so each depth falls back to 0; no repeat(), which OpenEMR 8.3 and 8.4 lack');
+        $nine = '.where(' . implode(' or ', array_map(static fn(string $c): string => "linkId = '/$c'",
+            ['44250-9', '44255-8', '44259-0', '44254-1', '44251-7', '44258-2', '44252-5', '44253-3', '44260-8'])) . ')';
+        $answered = implode(' + ', array_map(static fn(string $d): string => "$d$nine.answer.count()", $depths));
+        self::assertSame('iif(' . $answered . ' = 9, ' . implode(' + ', array_map($guard, $depths)) . ', {})', $phq9['extension'][0]['valueExpression']['expression'],
+            'an empty sum is empty in fhirpath.js 5, so each depth falls back to 0; no repeat(), which OpenEMR 8.3 and 8.4 lack; '
+            . 'and the total is empty until all nine questions are answered');
         $parts = array_values(array_filter(self::flatten($this->export('taps-2')['item']), static fn(array $i): bool => $i['type'] === 'decimal' && !isset($i['code'])));
         self::assertNotSame([], $parts);
         foreach ($parts as $part) {
             $expression = $part['extension'][0]['valueExpression']['expression'];
-            self::assertSame(3, substr_count($expression, 'iif('), "a part's score is guarded at each depth too");
+            self::assertSame(4, substr_count($expression, 'iif('), "a part's score is guarded at each depth too, and waits for its questions");
             self::assertStringNotContainsString('repeat(', $expression);
         }
+    }
+
+    public function testATotalWaitsForEveryScoredQuestionThatEveryoneIsAsked(): void
+    {
+        $required = static function (array $q): array {
+            $out = [];
+            foreach (self::flatten($q['item']) as $item) {
+                if ($item['type'] === 'decimal' && preg_match('/^iif\((.*) = (\d+), /', $item['extension'][0]['valueExpression']['expression'] ?? '', $m) === 1) {
+                    $out[$item['linkId']] = (int)$m[2];
+                }
+            }
+            return array_values($out);
+        };
+        self::assertSame([9], $required($this->export('phq-9')), 'a blank answer is not 0 points: no PHQ-9 total until all nine are answered');
+        self::assertSame([7], $required($this->export('gad-7')));
+        self::assertSame([2], $required($this->export('phq-2')));
+        self::assertSame([2, 2, 4], $required($this->export('phq-4')), "PHQ-4's two parts wait for their own questions, its total for all four");
+        foreach (DocumentLibrary::shipped()->all() as $doc) {
+            $q = (new QuestionnaireExport(new Context(['name' => 'Seed Clinic'], [])))->questionnaire($doc);
+            foreach (self::flatten($q['item']) as $item) {
+                self::assertArrayNotHasKey('_scope', $item, "the export's own bookkeeping never reaches a Questionnaire");
+                if ($item['type'] === 'decimal' && isset($item['extension'])) {
+                    self::assertStringStartsWith('iif(', $item['extension'][0]['valueExpression']['expression'], $doc->id . ' ' . $item['linkId']);
+                }
+            }
+        }
+        // A scored question asked only of some patients doesn't hold the total back.
+        $guard = new \ReflectionMethod(QuestionnaireExport::class, 'guardTotals');
+        $ord = ['extension' => [['url' => QuestionnaireExport::ORDINAL, 'valueDecimal' => 1]]];
+        $items = $guard->invoke(null, [
+            ['linkId' => 'a', 'type' => 'choice', 'answerOption' => [['valueCoding' => $ord + ['code' => '1']]]],
+            ['linkId' => 'b', 'type' => 'choice', 'enableWhen' => [['question' => 'a', 'operator' => 'exists', 'answerBoolean' => true]], 'answerOption' => [['valueCoding' => $ord + ['code' => '1']]]],
+            ['linkId' => 't', 'type' => 'decimal', 'extension' => [['url' => QuestionnaireExport::CALCULATED, 'valueExpression' => ['expression' => 'SUM']]], '_scope' => null],
+        ]);
+        self::assertSame("iif(%resource.item.where(linkId = 'a').answer.count() + %resource.item.item.where(linkId = 'a').answer.count() + %resource.item.item.item.where(linkId = 'a').answer.count() = 1, SUM, {})",
+            $items[2]['extension'][0]['valueExpression']['expression']);
     }
 
     public function testEachInstrumentsTotalCarriesItsReferencesCodeAndAPartsScoreNone(): void
