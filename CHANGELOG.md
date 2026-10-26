@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.40.4 (unreleased)
+
+- **The picker declares the user's language.** The page's `lang` and `dir` follow the signed-in user's OpenEMR language (openhealthcare-common 1.4.0), so a screen reader reads a Spanish OpenEMR's picker in Spanish; it was always marked English. Where an older copy of the library was loaded first (modules copied in by hand at different versions), it falls back to English rather than stopping the page. The print page keeps each document's own language.
+- **The "ES" badge reads as "Spanish"** to a screen reader, which read the two letters before.
+- Requires openhealthcare-common 1.4.0. The README notes that hand-copied modules need their libraries at one version.
+
 ## 0.40.3 (2026-10-26)
 
 - **Fixed: AUDIT-C and PC-PTSD-5 gave no score when the patient stopped early, as the forms tell them to.** 0.40.2's wait for every scored question counted AUDIT-C's questions 2 and 3, and PC-PTSD-5's five questions, as asked of everyone, because the paper's "If you answered Never, stop here" and "If no, stop here: the screen total is 0" weren't skip logic on screen. So "Never" to AUDIT-C's first question, or "No" to PC-PTSD-5's trauma question, the most common answers, left the total empty where 0.40.1 showed the published 0. Both are skip logic now: AUDIT-C asks questions 2 and 3 after any answer but Never, and PC-PTSD-5 its five questions after Yes, so those answers total 0 again (AUDIT-C scores Never as 0 and stops; the National Center for PTSD: "If no, screen total = 0"). The Spanish AUDIT-C carries the same skip logic. Printing is unchanged.

@@ -312,7 +312,7 @@ Printing is the browser's own: no print server and nothing to install. When **Ad
 composer require anun333/oe-module-clinic-forms
 ```
 
-Run it in the OpenEMR directory. It installs into `interface/modules/custom_modules/oe-module-clinic-forms/`. Then, under **Modules › Manage Modules**, register, install and enable **Clinic Forms**. There is no install SQL. It brings [openhealthcare-common](https://github.com/anun333/openhealthcare-common), the small library of OpenEMR compatibility code the openhealthcare modules share; Composer installs it alongside.
+Run it in the OpenEMR directory. It installs into `interface/modules/custom_modules/oe-module-clinic-forms/`. Then, under **Modules › Manage Modules**, register, install and enable **Clinic Forms**. There is no install SQL. It brings [openhealthcare-common](https://github.com/anun333/openhealthcare-common), the small library of OpenEMR compatibility code the openhealthcare modules share; Composer installs it alongside. If you copy several of our modules in by hand instead, keep their `vendor/openhealthcare-common` at the same version: OpenEMR loads the first copy it finds for all of them.
 
 ## Access
 

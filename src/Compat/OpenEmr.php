@@ -46,6 +46,22 @@ final class OpenEmr
         return Common::projectDir();
     }
 
+    /**
+     * The page's language for `<html lang>`, from the signed-in user's OpenEMR language
+     * (openhealthcare-common 1.4.0). On a site where modules were copied in by hand, an older copy of
+     * the library can be the one loaded first, so this falls back to English rather than stop the page.
+     */
+    public static function pageLang(): string
+    {
+        return method_exists(Common::class, 'pageLang') ? Common::pageLang() : 'en';
+    }
+
+    /** The page's direction for `<html dir>`, with the same fallback. */
+    public static function pageDir(): string
+    {
+        return method_exists(Common::class, 'pageDir') ? Common::pageDir() : 'ltr';
+    }
+
     /** The event dispatcher, for subscribing to OpenEMR's events. */
     public static function eventDispatcher(): EventDispatcherInterface
     {

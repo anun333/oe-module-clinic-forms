@@ -132,7 +132,7 @@ foreach ($layouts as $form) {
 <!DOCTYPE html>
 <?php // English, as OpenEMR's own pages say: the module's text is English unless OpenEMR holds a translation of it, and
       // OpenEMR's language codes aren't language tags ("el" is its Latin American Spanish). ?>
-<html lang="en">
+<html lang="<?php echo attr(OpenEmr::pageLang()); ?>" dir="<?php echo attr(OpenEmr::pageDir()); ?>">
 <head>
     <title><?php echo xlt('Clinic Forms'); ?></title>
     <?php Header::setupHeader(); ?>
@@ -293,7 +293,7 @@ foreach ($layouts as $form) {
                 <?php foreach ($items as $item) { ?>
                     <div class="form-check">
                         <input class="form-check-input cf-item" type="checkbox" name="items[]" value="<?php echo attr($item['value']); ?>" id="<?php echo attr('i-' . $item['value']); ?>"<?php echo in_array($item['value'], $preselect, true) ? ' checked' : ''; ?>>
-                        <label class="form-check-label" for="<?php echo attr('i-' . $item['value']); ?>"><?php echo text($item['title']); ?><?php echo !empty($item['draft']) ? ' <span class="badge badge-warning">' . xlt('Draft') . '</span>' : ''; ?><?php echo !empty($item['es']) ? ' <span class="badge badge-info">ES</span>' . (!empty($item['esReview']) ? ' <span class="badge badge-warning" title="' . xla('Spanish made with machine help: have a qualified translator review it before giving it to patients') . '">' . xlt('ES needs review') . '</span>' : '') : (!empty($item['esOutOfDate']) ? ' <span class="badge badge-light">' . xlt('ES out of date') . '</span>' : ''); ?>
+                        <label class="form-check-label" for="<?php echo attr('i-' . $item['value']); ?>"><?php echo text($item['title']); ?><?php echo !empty($item['draft']) ? ' <span class="badge badge-warning">' . xlt('Draft') . '</span>' : ''; ?><?php echo !empty($item['es']) ? ' <span class="badge badge-info"><span aria-hidden="true">ES</span><span class="sr-only">' . xlt('Spanish') . '</span></span>' . (!empty($item['esReview']) ? ' <span class="badge badge-warning" title="' . xla('Spanish made with machine help: have a qualified translator review it before giving it to patients') . '">' . xlt('ES needs review') . '</span>' : '') : (!empty($item['esOutOfDate']) ? ' <span class="badge badge-light">' . xlt('ES out of date') . '</span>' : ''); ?>
                             <span class="cf-about">— <?php echo text($item['about']); ?></span></label>
                     </div>
                 <?php } ?>
