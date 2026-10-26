@@ -1,0 +1,99 @@
+{
+  "id": "after-visit-summary",
+  "translates": "3415442c9c5d43bb",
+  "machine_assisted": true,
+  "title": "Resumen de la consulta e instrucciones",
+  "category": "Después de la consulta",
+  "about": "Lo que se encontró y qué hacer después, para que el paciente se lo lleve a casa: motivos, hallazgos, cambios de medicamentos, instrucciones, pruebas y la próxima consulta.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Fecha de la consulta"
+        },
+        {
+          "label": "Profesional clínico",
+          "value": "{provider.name}"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Por qué vino hoy",
+      "count": 2
+    },
+    {
+      "type": "lines",
+      "label": "Lo que encontramos",
+      "count": 3
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Medicamentos registrados cuando se imprimió esto (vea abajo los cambios de hoy)",
+          "value": "{patient.medications}"
+        },
+        {
+          "label": "Alergias",
+          "value": "{patient.allergies}"
+        }
+      ]
+    },
+    {
+      "type": "table",
+      "label": "Medicamentos que se empezaron, cambiaron o suspendieron hoy",
+      "columns": [
+        "Medicamento",
+        "Cómo tomarlo",
+        "Empezado, cambiado o suspendido"
+      ],
+      "rows": 5
+    },
+    {
+      "type": "lines",
+      "label": "Qué hacer en casa",
+      "count": 4
+    },
+    {
+      "type": "lines",
+      "label": "Pruebas o referidos que se pidieron",
+      "count": 2
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Próxima consulta"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Llámenos o busque atención de inmediato si",
+      "count": 2
+    },
+    {
+      "type": "paragraph",
+      "text": "Si tiene preguntas, llame al {facility.phone}. En una emergencia, llame al número de emergencias de su localidad."
+    }
+  ]
+}

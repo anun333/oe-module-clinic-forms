@@ -1,6 +1,7 @@
 {
   "id": "photography-consent",
   "translates": "fcc33c46c02d545d",
+  "machine_assisted": true,
   "title": "Consentimiento para fotos y grabaciones",
   "category": "Recepción",
   "about": "Permiso para tomar fotos, video o grabaciones de audio de un paciente, con una opción aparte para cada uso: el expediente médico y la atención, y la enseñanza. La publicidad, los sitios web, las redes sociales y cualquier otro uso fuera de la atención y la enseñanza necesitan un permiso escrito aparte para ese uso.",

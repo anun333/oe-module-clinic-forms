@@ -1,0 +1,114 @@
+{
+  "id": "interpreter-request",
+  "translates": "8e5428482877a51a",
+  "machine_assisted": true,
+  "title": "Ayuda con el idioma y solicitud de intérprete",
+  "category": "Recepción",
+  "about": "Registra los idiomas del paciente y la ayuda que desea (un intérprete, lenguaje de señas, traducción escrita, letra grande), con una sección para el personal sobre lo que se programó.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Idioma en el que prefiero hablar"
+        },
+        {
+          "label": "Idioma en el que prefiero leer"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Me gustaría (marque todo lo que corresponda)",
+      "items": [
+        "Un intérprete para mis consultas",
+        "Un intérprete de lenguaje de señas",
+        "Información escrita en mi idioma",
+        "Letra grande o braille",
+        "Alguien que lea los formularios conmigo"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Para",
+      "items": [
+        "Todas mis consultas",
+        "Solo la consulta de la fecha de abajo"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Fecha de la consulta"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "No necesita traer a alguien que interprete por usted. Por favor, no le pida a un niño que interprete. Nosotros lo programaremos, sin costo para usted."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o representante legal"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si firma un representante: nombre"
+        },
+        {
+          "label": "Relación o autoridad legal"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Para uso de la clínica"
+    },
+    {
+      "type": "checklist",
+      "label": "Intérprete programado",
+      "items": [
+        "En persona",
+        "Por teléfono",
+        "Por video",
+        "Miembro del personal bilingüe calificado"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre o número de identificación del intérprete"
+        },
+        {
+          "label": "Fecha"
+        },
+        {
+          "label": "Programado por"
+        }
+      ]
+    }
+  ]
+}

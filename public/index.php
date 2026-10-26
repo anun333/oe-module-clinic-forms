@@ -119,6 +119,8 @@ foreach ($library->all() as $doc) {
         'about' => $doc->about,
         'es' => $spanish->isTranslated($doc->id),
         'esOutOfDate' => isset($spanish->outOfDate()[$doc->id]),
+        // Ours, made with machine help: 45 CFR 92.201(c)(3) wants a qualified human translator's review first.
+        'esReview' => $spanish->isTranslated($doc->id) && ($spanish->get($doc->id)?->machineAssisted ?? false),
         'draft' => $doc->status === 'draft',
     ];
 }
@@ -176,6 +178,11 @@ foreach ($layouts as $form) {
         <div class="alert alert-warning">
             <?php echo xlt('Some local documents or packets need attention'); ?>:
             <ul class="mb-0"><?php foreach ($problems as $problem) { ?><li><?php echo text($problem); ?></li><?php } ?></ul>
+        </div>
+    <?php } ?>
+    <?php if (array_filter($byCategory, static fn(array $items): bool => array_filter($items, static fn(array $item): bool => !empty($item['esReview'])) !== []) !== []) { ?>
+        <div class="alert alert-light border">
+            <?php echo xlt('Spanish versions marked ES needs review were translated with machine help. Federal rules for these documents (45 CFR 92.201) ask that a qualified human translator review them before they go to patients. A reviewed copy can be saved as a local version'); ?>.
         </div>
     <?php } ?>
     <?php if ($spanish->outOfDate() !== []) { ?>
@@ -283,7 +290,7 @@ foreach ($layouts as $form) {
                 <?php foreach ($items as $item) { ?>
                     <div class="form-check">
                         <input class="form-check-input cf-item" type="checkbox" name="items[]" value="<?php echo attr($item['value']); ?>" id="<?php echo attr('i-' . $item['value']); ?>"<?php echo in_array($item['value'], $preselect, true) ? ' checked' : ''; ?>>
-                        <label class="form-check-label" for="<?php echo attr('i-' . $item['value']); ?>"><?php echo text($item['title']); ?><?php echo !empty($item['draft']) ? ' <span class="badge badge-warning">' . xlt('Draft') . '</span>' : ''; ?><?php echo !empty($item['es']) ? ' <span class="badge badge-info">ES</span>' : (!empty($item['esOutOfDate']) ? ' <span class="badge badge-light">' . xlt('ES out of date') . '</span>' : ''); ?>
+                        <label class="form-check-label" for="<?php echo attr('i-' . $item['value']); ?>"><?php echo text($item['title']); ?><?php echo !empty($item['draft']) ? ' <span class="badge badge-warning">' . xlt('Draft') . '</span>' : ''; ?><?php echo !empty($item['es']) ? ' <span class="badge badge-info">ES</span>' . (!empty($item['esReview']) ? ' <span class="badge badge-warning" title="' . xla('Spanish made with machine help: have a qualified translator review it before giving it to patients') . '">' . xlt('ES needs review') . '</span>' : '') : (!empty($item['esOutOfDate']) ? ' <span class="badge badge-light">' . xlt('ES out of date') . '</span>' : ''); ?>
                             <span class="cf-about">— <?php echo text($item['about']); ?></span></label>
                     </div>
                 <?php } ?>

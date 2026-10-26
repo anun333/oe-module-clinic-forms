@@ -1,6 +1,7 @@
 {
   "id": "communication-consent",
   "translates": "8f44bc63ca87e13a",
+  "machine_assisted": true,
   "title": "Preferencias de comunicación",
   "category": "Recepción",
   "about": "Cómo puede comunicarse la clínica con el paciente: teléfono, buzón de voz, mensajes de texto, correo electrónico y portal del paciente.",

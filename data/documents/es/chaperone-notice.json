@@ -1,6 +1,7 @@
 {
   "id": "chaperone-notice",
   "translates": "649e5cdfc54070bc",
+  "machine_assisted": true,
   "title": "Usted puede pedir un acompañante",
   "category": "Privacidad y derechos del paciente",
   "about": "Un aviso para colocar en los consultorios y en la sala de espera: cualquier paciente puede pedir un acompañante en cualquier examen, en cualquier momento, sin dar una razón. Anote cada ofrecimiento en el Registro de acompañante o en la nota de la consulta.",

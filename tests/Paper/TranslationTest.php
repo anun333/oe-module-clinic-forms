@@ -79,6 +79,39 @@ final class TranslationTest extends TestCase
         }
     }
 
+    public function testEveryOneOfOurTranslationsIsMarkedForAQualifiedTranslatorsReview(): void
+    {
+        // 45 CFR 92.201(c)(3): machine translation of what is critical to a patient's rights or access must be
+        // reviewed by a qualified human translator. Ours are made with machine help, so each is marked for staff;
+        // a validated instrument ships only in its publisher's own translation, so it is not.
+        $english = DocumentLibrary::shipped();
+        $files = array_merge(glob(dirname(__DIR__, 2) . '/data/documents/es/*.json') ?: [], glob(dirname(__DIR__, 2) . '/data/packs/*/documents/es/*.json') ?: []);
+        $marked = 0;
+        foreach ($files as $file) {
+            $id = basename($file, '.json');
+            $doc = $english->get($id) ?? throw new \LogicException($id);
+            $es = DocumentLibrary::read($file, 'data/documents/es', 'shipped', $doc, 'es');
+            self::assertSame(!$doc->validated, $es->machineAssisted, $id . ($doc->validated ? ": a validated instrument, in its publisher's translation" : ': ours, so marked for review'));
+            $marked += $es->machineAssisted ? 1 : 0;
+        }
+        self::assertGreaterThanOrEqual(25, $marked, 'the check read the shipped translations');
+    }
+
+    public function testAValidatedInstrumentCannotShipInATranslationOfOurs(): void
+    {
+        $dir = self::copyOf('phq-9');
+        $es = json_decode((string)file_get_contents("$dir/es/phq-9.json"), true, 64, JSON_THROW_ON_ERROR);
+        $es['machine_assisted'] = true;
+        file_put_contents("$dir/es/phq-9.json", json_encode($es, JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR));
+        try {
+            $this->expectException(\InvalidArgumentException::class);
+            $this->expectExceptionMessage("ships only in its publisher's translation");
+            DocumentLibrary::read("$dir/es/phq-9.json", 'data/documents/es', 'shipped', DocumentLibrary::read("$dir/phq-9.json"), 'es');
+        } finally {
+            self::remove($dir);
+        }
+    }
+
     public function testAChangedEnglishDocumentPrintsInEnglishUntilItsTranslationIsUpdated(): void
     {
         $dir = self::copyOf('consent-to-treat');

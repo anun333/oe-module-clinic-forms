@@ -12,11 +12,12 @@ Nothing. The module ships no install SQL (there is no `sql/` directory), so inst
 
 ## What it reads and writes at runtime
 
-26 SQL statements found in the module's PHP (`src/`, `public/`, `openemr.bootstrap.php`) and in the openhealthcare-common methods it calls (`vendor/anun333/openhealthcare-common/src/OpenEmr.php`). Data OpenEMR's own functions read on its behalf is not in this table; see the next section.
+30 SQL statements found in the module's PHP (`src/`, `public/`, `openemr.bootstrap.php`) and in the openhealthcare-common methods it calls (`vendor/anun333/openhealthcare-common/src/OpenEmr.php`). Data OpenEMR's own functions read on its behalf is not in this table; see the next section.
 
 | table | read by | written by | owner |
 |---|---|---|---|
 | `categories` | `src/Repository/SiteData.php` | — | OpenEMR core |
+| `content_assignments` | `src/Compat/OpenEmr.php` | — | OpenEMR core |
 | `facility` | `src/Repository/SiteData.php` | — | OpenEMR core |
 | `forms` | `src/Repository/SiteData.php` | — | OpenEMR core |
 | `history_data` | `src/Repository/SiteData.php` | — | OpenEMR core |
@@ -25,11 +26,13 @@ Nothing. The module ships no install SQL (there is no `sql/` directory), so inst
 | `lbf_data` | `src/Repository/SiteData.php` | — | OpenEMR core |
 | `list_options` | `src/Repository/SiteData.php` | — | OpenEMR core |
 | `lists` | `src/Repository/SiteData.php` | — | OpenEMR core |
+| `openemr_postcalendar_categories` | `src/Compat/OpenEmr.php` | — | OpenEMR core |
 | `patient_data` | `src/Repository/SiteData.php` | — | OpenEMR core |
 | `pharmacies` | `src/Repository/SiteData.php` | — | OpenEMR core |
+| `registry` | `src/Compat/OpenEmr.php` | `src/Compat/OpenEmr.php` | OpenEMR core |
 | `users` | `src/Repository/SiteData.php` | — | OpenEMR core |
 
-**It writes nothing in its own SQL: every statement above reads.** Through OpenEMR's own classes it writes `documents` and `categories_to_documents`, and the file in the site's documents folder, through `Document::createDocument()` (in `src/Compat/OpenEmr.php`); `questionnaire_repository`, and a `uuid_registry` row for a new questionnaire, through `QuestionnaireService::saveQuestionnaireResource()` (in `src/Compat/OpenEmr.php`).
+**In its own SQL it writes to OpenEMR core tables:** `registry`. Through OpenEMR's own classes it writes `documents` and `categories_to_documents`, and the file in the site's documents folder, through `Document::createDocument()` (in `src/Compat/OpenEmr.php`); `questionnaire_repository`, and a `uuid_registry` row for a new questionnaire, through `QuestionnaireService::saveQuestionnaireResource()` (in `src/Compat/OpenEmr.php`).
 
 ## OpenEMR functions it calls
 
@@ -39,8 +42,10 @@ Global functions the module calls that PHP doesn't provide and the module doesn'
 - `oeFormatShortDate()`: `public/export.php`, `public/print.php`, `src/Repository/SiteData.php`
 - `text()`: `public/index.php`, `public/print.php`
 - `xl()`: `public/export.php`, `public/index.php`, `public/print.php`, `public/upload.php`, `src/Bootstrap.php`, `src/Paper/Words.php`, `src/Repository/SiteData.php`, `vendor/anun333/openhealthcare-common/src/OpenEmr.php`
+- `xl_appt_category()`: `src/Compat/OpenEmr.php`
 - `xl_layout_label()`: `src/Repository/SiteData.php`
 - `xl_list_label()`: `src/Repository/SiteData.php`
+- `xla()`: `public/index.php`
 - `xlt()`: `public/index.php`, `public/print.php`, `src/Bootstrap.php`
 
 ## What it hooks
@@ -88,13 +93,12 @@ As written in the source; whether they behave correctly for a given user is not 
 
 | part | files | lines |
 |---|---|---|
-| data (`data/`, read at runtime) | 277 | 196074 |
-| PHP logic (`src/`) | 39 | 6796 |
-| tests (`tests/`, `phpunit.xml.dist`) | 29 | 3879 |
-| tools (`tools/`) | 10 | 1123 |
-| pages (`public/`) | 5 | 973 |
+| data (`data/`, read at runtime) | 287 | 201777 |
+| PHP logic (`src/`) | 40 | 7043 |
+| tests (`tests/`, `phpunit.xml.dist`) | 30 | 4083 |
+| tools (`tools/`) | 10 | 1128 |
+| pages (`public/`) | 5 | 1014 |
 | module wiring | 3 | 94 |
-| other | 1 | 1 |
 
 ## Not covered here
 

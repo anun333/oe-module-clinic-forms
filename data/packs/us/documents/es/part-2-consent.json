@@ -1,6 +1,7 @@
 {
   "id": "part-2-consent",
   "translates": "34ad2cd4745a6240",
+  "machine_assisted": true,
   "title": "Consentimiento para compartir registros de tratamiento de trastornos por consumo de sustancias",
   "category": "Privacidad y derechos del paciente",
   "about": "Consentimiento para usar o compartir registros protegidos por 42 CFR Parte 2, incluido el consentimiento único para tratamiento, pago y operaciones de atención médica, con todos los elementos de 42 CFR 2.31.",

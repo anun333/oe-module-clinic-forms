@@ -1,0 +1,98 @@
+{
+  "id": "medicine-review",
+  "translates": "d08859b8f3d4a0da",
+  "machine_assisted": true,
+  "title": "Mis medicamentos: revisión",
+  "category": "Después de la consulta",
+  "about": "Una revisión de todo lo que toma el paciente, como cuando trae todos sus medicamentos a la consulta: los medicamentos registrados, que se imprimen al elegir un paciente, para revisarlos y corregirlos, y luego todo lo demás que toma, incluidos los medicamentos sin receta, las vitaminas y los suplementos, y cómo los toma. Para consultas de atención crónica y de bienestar.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Alergias registradas",
+          "value": "{patient.allergies}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Por favor, traiga todos sus medicamentos a la consulta, en sus frascos. Incluya los que compra sin receta, las vitaminas, los suplementos, las hierbas, los inhaladores, las cremas y las gotas para los ojos."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Medicamentos registrados",
+          "value": "{patient.medications}"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Tache los que ya no toma. Agregue abajo cualquier otro que tome."
+    },
+    {
+      "type": "table",
+      "label": "Otros medicamentos, vitaminas y suplementos que tomo",
+      "columns": [
+        "Nombre",
+        "Cuánto",
+        "Con qué frecuencia",
+        "Para qué es",
+        "Quién lo recetó"
+      ],
+      "rows": 8
+    },
+    {
+      "type": "scale",
+      "label": "Por favor, marque una respuesta para cada una.",
+      "columns": [
+        "Sí",
+        "No"
+      ],
+      "items": [
+        "¿A veces se le olvida tomar sus medicamentos?",
+        "¿Alguna vez se salta dosis o toma menos por el costo?",
+        "¿Alguno de sus medicamentos le causa problemas o efectos secundarios?",
+        "¿Toma medicamentos recetados por más de un profesional clínico?",
+        "¿Usa más de una farmacia?"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Preguntas que tengo sobre mis medicamentos",
+      "count": 3
+    },
+    {
+      "type": "heading",
+      "text": "Para uso de la oficina"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Lista de medicamentos actualizada en el expediente",
+        "Cambios explicados, y el paciente repitió cómo tomarlos"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Revisado por"
+        },
+        {
+          "label": "Fecha"
+        }
+      ]
+    }
+  ]
+}
