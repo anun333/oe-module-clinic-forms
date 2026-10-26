@@ -1,0 +1,223 @@
+{
+  "id": "preventive-care-questions",
+  "translates": "873bc2e2332680d3",
+  "machine_assisted": true,
+  "title": "Preguntas de atención preventiva",
+  "category": "Detección",
+  "about": "Las respuestas que el expediente no tiene y que deciden qué pruebas de detección y medicamentos preventivos de grado A y B del USPSTF le corresponden al paciente: antecedentes de tabaquismo en paquetes-año, cánceres y enfermedades intestinales previas, cánceres y otras enfermedades en familiares cercanos, salud sexual en los últimos 6 meses, dónde nació y ha vivido, y embarazo. Pregunte una vez, y de nuevo cuando algo cambie. La sección para uso de la oficina, redactada a partir de las recomendaciones (sin reproducir el texto del USPSTF), indica a qué puede apuntar cada respuesta; el profesional clínico decide.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Fecha"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Estas preguntas nos ayudan a saber qué pruebas y qué atención pueden ayudarle a mantener su salud. Puede saltarse cualquier pregunta que prefiera no contestar."
+    },
+    {
+      "type": "heading",
+      "text": "Tabaco"
+    },
+    {
+      "type": "scale",
+      "label": "Por favor, marque una respuesta para cada una.",
+      "columns": [
+        "Sí",
+        "No"
+      ],
+      "items": [
+        "¿Ha fumado al menos 100 cigarrillos en toda su vida?",
+        "¿Fuma cigarrillos actualmente?"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si alguna vez ha fumado: paquetes al día, en promedio"
+        },
+        {
+          "label": "Durante cuántos años"
+        },
+        {
+          "label": "Si dejó de fumar, el año en que lo dejó"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Sus antecedentes de salud"
+    },
+    {
+      "type": "scale",
+      "label": "Por favor, marque una respuesta para cada una.",
+      "columns": [
+        "Sí",
+        "No",
+        "No sé"
+      ],
+      "items": [
+        "¿Ha tenido cáncer de mama, de ovario, de trompas de Falopio o de peritoneo?",
+        "¿Ha tenido pólipos en el colon, cáncer de colon, enfermedad de Crohn o colitis ulcerosa?",
+        "¿Le han hecho una histerectomía en la que le quitaron el cuello del útero?"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Su familia"
+    },
+    {
+      "type": "scale",
+      "label": "¿Su madre, padre, hermana, hermano, hija o hijo ha tenido alguna de estas enfermedades?",
+      "columns": [
+        "Sí",
+        "No",
+        "No sé"
+      ],
+      "items": [
+        "Cáncer de mama",
+        "Cáncer de ovario, de trompas de Falopio o de peritoneo",
+        "Cáncer de colon o de recto",
+        "Un aneurisma aórtico (un abultamiento en el vaso sanguíneo principal)",
+        "Una fractura de cadera (su padre o su madre)",
+        "¿Su familia es de origen judío asquenazí?"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Por cada sí: quién, y su edad cuando se encontró",
+      "count": 3
+    },
+    {
+      "type": "heading",
+      "text": "Salud sexual"
+    },
+    {
+      "type": "checklist",
+      "label": "En el último año, he tenido relaciones sexuales con (marque una opción)",
+      "items": [
+        "Hombres",
+        "Mujeres",
+        "Hombres y mujeres",
+        "No he tenido relaciones sexuales"
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "En los últimos 6 meses:",
+      "columns": [
+        "Sí",
+        "No"
+      ],
+      "items": [
+        "¿Ha tenido relaciones sexuales con una pareja nueva o con más de una pareja?",
+        "¿Alguna de sus parejas ha tenido VIH, una ITS u otras parejas al mismo tiempo?",
+        "¿Ha tenido una infección de transmisión sexual (ITS), como sífilis, gonorrea o clamidia?",
+        "¿Ha tenido relaciones sexuales sin condón con alguien cuyo estado de VIH no conocía?",
+        "¿Ha tenido relaciones sexuales a cambio de dinero, drogas o un lugar donde quedarse?"
+      ]
+    },
+    {
+      "type": "scale",
+      "label": "Por favor, marque una respuesta para cada una.",
+      "columns": [
+        "Sí",
+        "No"
+      ],
+      "items": [
+        "¿Le gustaría hacerse una prueba de VIH o de otras ITS?",
+        "¿Le gustaría hablar sobre el medicamento que previene el VIH (PrEP)?"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Dónde ha vivido"
+    },
+    {
+      "type": "scale",
+      "label": "Por favor, marque una respuesta para cada una.",
+      "columns": [
+        "Sí",
+        "No"
+      ],
+      "items": [
+        "¿Nació fuera de los Estados Unidos?",
+        "¿Alguno de sus padres nació fuera de los Estados Unidos?",
+        "¿Ha vivido fuera de los Estados Unidos durante un año o más?",
+        "¿Alguna vez ha vivido en un albergue para personas sin hogar, una cárcel o una prisión?",
+        "¿Alguna vez se ha inyectado drogas, aunque sea una vez?",
+        "¿Alguna persona con quien vive o con quien tiene relaciones sexuales ha tenido hepatitis B?"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Países donde nació o ha vivido"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Embarazo"
+    },
+    {
+      "type": "checklist",
+      "label": "¿Cuál es su caso? (marque una opción)",
+      "items": [
+        "Podría quedar embarazada",
+        "Estoy embarazada ahora",
+        "Estoy planeando un embarazo en el próximo año",
+        "Esto no se aplica a mi caso"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Para uso de la oficina: a qué pueden apuntar las respuestas"
+    },
+    {
+      "type": "paragraph",
+      "text": "Compare cada una con las recomendaciones actuales del USPSTF y con la edad y los antecedentes del paciente. El profesional clínico decide."
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Tomografía para cáncer de pulmón: de 50 a 80 años, 20 o más paquetes-año, fuma actualmente o lo dejó en los últimos 15 años (Medicare: de 50 a 77)",
+        "Ecografía para aneurisma aórtico, una vez: hombre de 65 a 75 años que alguna vez ha fumado; Medicare también la cubre por antecedentes familiares",
+        "Herramienta de riesgo BRCA: mujer con cáncer de mama, de ovario, de trompas o de peritoneo, propio o en su familia, o de ascendencia judía asquenazí",
+        "PrEP contra el VIH: pareja con VIH, ITS reciente, relaciones sexuales sin condón, agujas compartidas, o la pide",
+        "Pruebas de VIH, sífilis, clamidia y gonorrea: riesgo más alto, o pide una prueba",
+        "Prueba de hepatitis B: nació donde es común, padres de allí, agujas, hombres que tienen relaciones sexuales con hombres, o contacto con alguien que la tiene",
+        "Prueba de hepatitis C fuera de las edades de 18 a 79: alguna vez se inyectó drogas",
+        "Prueba de tuberculosis: nació o vivió donde la tuberculosis es común, o vivió en un albergue, una cárcel o una prisión",
+        "Riesgo para densidad ósea antes de los 65, después de la menopausia: padre o madre con fractura de cadera, tabaquismo, consumo excesivo de alcohol o peso bajo",
+        "La detección de cáncer de colon a partir de los 45 es para riesgo promedio; pólipos o cáncer previos, enfermedad de Crohn o colitis necesitan otro plan",
+        "La detección de cáncer de cuello uterino se suspende después de una histerectomía que quitó el cuello del útero, sin cambios de alto grado previos",
+        "Ácido fólico de 0.4 a 0.8 mg al día: podría quedar embarazada o planea estarlo"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Revisado por"
+        },
+        {
+          "label": "Fecha"
+        }
+      ]
+    }
+  ]
+}

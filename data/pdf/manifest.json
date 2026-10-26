@@ -402,6 +402,10 @@
             "fingerprint": "88f01e8a0dee22fa",
             "sha256": "f5ab5bb7ea38ce8c7310f19cfd73fcb063fa68a624c99976343611a55d390868"
         },
+        "es/asthma-action-plan": {
+            "fingerprint": "6a8cd90394897c6f",
+            "sha256": "682013838355a9cce16fc219c5a5333dfa37c4196f8273686ad91af26324f3b6"
+        },
         "es/audit-c": {
             "fingerprint": "ebd648eddc64940a",
             "sha256": "b867a92a71a2701aee726ba277e752db94f5d1b1898ab911f68e1bc38fdf486b"
@@ -409,6 +413,14 @@
         "es/authorization-revocation": {
             "fingerprint": "e6e3ab9144af7a85",
             "sha256": "633121ebc6f242fee53119e72aa5ebe0fc1b42601af89d167cbccd70d531e490"
+        },
+        "es/blood-pressure-log": {
+            "fingerprint": "9493d23dc66b5ff1",
+            "sha256": "be47a72fc10d4c4204866fde5068d965e8a8bededc32fda94852f66b9d353dbc"
+        },
+        "es/blood-sugar-log": {
+            "fingerprint": "aeb974b7a04dffad",
+            "sha256": "072cf315a0ab580018091aee9b4a915832959ac42c1d72b52a8748a9a358a277"
         },
         "es/chaperone-notice": {
             "fingerprint": "b419080563343216",
@@ -478,9 +490,17 @@
             "fingerprint": "dacc32e97a9b467d",
             "sha256": "412f0f0138075fae5c23b7b8b7aeb6c34e9fa9b18d02204f24b2fb2f40ff1e8b"
         },
+        "es/preventive-care-questions": {
+            "fingerprint": "cd6a6b0439ef0ce4",
+            "sha256": "149780eb11c2f4f29760a6be851fbf90d532461e8e8336e9ab1a7bcffc31d9dc"
+        },
         "es/privacy-acknowledgment": {
             "fingerprint": "a23709bb085c9732",
             "sha256": "828c86d15f7fbddaf1ab7d1dbe88f1bdaa05b6d8265276274d527cb4b0e7b601"
+        },
+        "es/procedure-consent": {
+            "fingerprint": "9ffba265bdaff760",
+            "sha256": "f7d29671924f7e58ff92d7f01bfa39cfd8b5b4b416cb215df068b07e20e67b0d"
         },
         "es/records-access-request": {
             "fingerprint": "a30786b80cd33668",

@@ -1,0 +1,55 @@
+{
+  "id": "blood-pressure-log",
+  "translates": "331335473b53b8a3",
+  "machine_assisted": true,
+  "title": "Registro de presión arterial en casa",
+  "category": "Después de la consulta",
+  "about": "Un registro para anotar la presión arterial que se toma en casa, con los pasos habituales para una medición precisa. Tráigalo a su próxima consulta.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Mi meta de presión arterial"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Para una buena medición",
+      "items": [
+        "No fume, no haga ejercicio ni tome cafeína durante los 30 minutos anteriores.",
+        "Primero vacíe la vejiga.",
+        "Siéntese con la espalda apoyada y los pies planos en el suelo. Descanse 5 minutos.",
+        "Apoye el brazo sobre una mesa, con el brazalete sobre la piel descubierta, a la altura del corazón.",
+        "No hable mientras tenga puesto el brazalete.",
+        "Tómese la presión 2 veces, con 1 minuto de diferencia, y anote las dos mediciones."
+      ]
+    },
+    {
+      "type": "table",
+      "label": "Mis mediciones",
+      "columns": [
+        "Fecha",
+        "Hora",
+        "Número de arriba (sistólica)",
+        "Número de abajo (diastólica)",
+        "Pulso",
+        "Notas"
+      ],
+      "rows": 21
+    },
+    {
+      "type": "paragraph",
+      "text": "Llámenos si su número de arriba suele estar por encima de su meta. Si es de 180 o más, o si el número de abajo es de 120 o más, espere 5 minutos y vuelva a medirla. Si sigue igual de alta y tiene dolor de pecho, falta de aire, dolor de espalda, entumecimiento, debilidad, problemas para ver o problemas para hablar, llame al 911."
+    }
+  ]
+}

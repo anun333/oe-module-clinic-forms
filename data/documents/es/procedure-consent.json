@@ -1,0 +1,99 @@
+{
+  "id": "procedure-consent",
+  "translates": "1ef2b2ced394a175",
+  "machine_assisted": true,
+  "title": "Consentimiento para un procedimiento",
+  "category": "Recepción",
+  "about": "Consentimiento informado para un procedimiento: qué es, por qué se hace, sus beneficios y riesgos, y las otras opciones, explicados y firmados antes de empezar.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Procedimiento (en palabras sencillas)"
+        },
+        {
+          "label": "Parte del cuerpo y lado"
+        },
+        {
+          "label": "Profesional clínico que lo realiza"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Por qué se hace",
+      "count": 2
+    },
+    {
+      "type": "lines",
+      "label": "Cómo puede ayudar (beneficios)",
+      "count": 2
+    },
+    {
+      "type": "lines",
+      "label": "Riesgos y posibles problemas",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "Otras opciones, incluso no hacérselo",
+      "count": 2
+    },
+    {
+      "type": "checklist",
+      "label": "Entiendo que",
+      "items": [
+        "Mi profesional clínico me explicó el procedimiento, cómo puede ayudar, sus riesgos y mis otras opciones.",
+        "Pude hacer preguntas, y me las respondieron.",
+        "Puedo cambiar de opinión en cualquier momento antes de que empiece.",
+        "Nadie puede prometer cuál será el resultado.",
+        "El tejido o líquido que se extraiga puede analizarse y luego desecharse."
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Intérprete, si hubo (nombre o número de identificación)"
+        }
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o representante legal",
+        "Profesional clínico",
+        "Testigo"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si firma un representante: nombre"
+        },
+        {
+          "label": "Relación o autoridad legal"
+        }
+      ]
+    }
+  ]
+}

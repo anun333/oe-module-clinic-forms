@@ -1,0 +1,148 @@
+{
+  "id": "asthma-action-plan",
+  "translates": "e72cd6d180b3b38f",
+  "machine_assisted": true,
+  "title": "Plan de acción para el asma",
+  "category": "Después de la consulta",
+  "about": "Un plan que el profesional clínico llena con el paciente: los medicamentos diarios y qué hacer cuando el asma empeora o es una emergencia, por zonas verde, amarilla y roja y por flujo máximo. Sigue las zonas del Plan de Acción para el Asma del NHLBI (NIH Pub. 20-HL-5251, 2021).",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Profesional clínico",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Teléfono de la clínica",
+          "value": "{facility.phone}"
+        },
+        {
+          "label": "Teléfono del departamento de emergencias"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Mi mejor flujo máximo"
+        },
+        {
+          "label": "Lo que me desencadena el asma"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Zona verde: me siento bien"
+    },
+    {
+      "type": "paragraph",
+      "text": "Sin tos, silbido en el pecho, opresión en el pecho ni falta de aire, de día ni de noche. Puedo hacer mis actividades de siempre. El flujo máximo es el 80 por ciento o más de mi mejor flujo."
+    },
+    {
+      "type": "table",
+      "label": "Tome estos todos los días",
+      "columns": [
+        "Medicamento",
+        "Cuánto",
+        "Cuándo"
+      ],
+      "rows": 3
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Antes de hacer ejercicio, tome"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Zona amarilla: el asma está empeorando"
+    },
+    {
+      "type": "paragraph",
+      "text": "Tos, silbido en el pecho, opresión en el pecho o falta de aire. O me despierto de noche por el asma. O puedo hacer algunas de mis actividades de siempre, pero no todas. El flujo máximo es del 50 al 79 por ciento de mi mejor flujo."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Tome este medicamento de alivio rápido y siga tomando sus medicamentos de la zona verde"
+        },
+        {
+          "label": "Cuánto y con qué frecuencia"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Si 1 hora después vuelvo a la zona verde, sigo vigilando para asegurarme de seguir en ella. Si no, tomo el medicamento de abajo y llamo a mi profesional clínico."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Después tome"
+        },
+        {
+          "label": "Durante cuántos días"
+        },
+        {
+          "label": "Llamar a mi profesional clínico dentro de (horas)"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Zona roja: alerta médica"
+    },
+    {
+      "type": "paragraph",
+      "text": "Me falta mucho el aire. O mi medicamento de alivio rápido no me ha ayudado. O no puedo hacer mis actividades de siempre. O llevo 24 horas en la zona amarilla y no mejoro. El flujo máximo es menos del 50 por ciento de mi mejor flujo."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Tome este medicamento ahora"
+        },
+        {
+          "label": "Cuánto"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Después llame ahora mismo a su profesional clínico. Vaya al hospital o llame al 911 si después de 15 minutos sigue en la zona roja y no ha podido hablar con su profesional clínico."
+    },
+    {
+      "type": "heading",
+      "text": "Señales de peligro: llame al 911 ahora"
+    },
+    {
+      "type": "checklist",
+      "items": [
+        "Me cuesta caminar o hablar porque me falta el aire",
+        "Los labios o las uñas están azules o grises"
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Profesional clínico"
+      ]
+    }
+  ]
+}

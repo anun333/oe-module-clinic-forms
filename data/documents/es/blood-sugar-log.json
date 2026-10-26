@@ -1,0 +1,67 @@
+{
+  "id": "blood-sugar-log",
+  "translates": "437944186138f687",
+  "machine_assisted": true,
+  "title": "Registro de azúcar en la sangre",
+  "category": "Después de la consulta",
+  "about": "Un registro de dos semanas para anotar el azúcar en la sangre (glucosa) que se mide en casa, a las horas que indique el profesional clínico, y las dosis de insulina si la usa. Tráigalo a su próxima consulta.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Mi meta antes de las comidas"
+        },
+        {
+          "label": "Mi meta 2 horas después de las comidas"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Medir mi azúcar en la sangre (a las horas que marcó mi profesional clínico)",
+      "items": [
+        "Al despertar, antes de comer",
+        "Antes de las comidas",
+        "2 horas después de las comidas",
+        "Al acostarme",
+        "Cuando sienta temblores, sudor o confusión"
+      ]
+    },
+    {
+      "type": "table",
+      "label": "Mis mediciones",
+      "columns": [
+        "Fecha",
+        "Al despertar",
+        "Antes del almuerzo",
+        "Antes de la cena",
+        "Al acostarse",
+        "2 horas después de una comida (cuál)",
+        "Insulina",
+        "Notas"
+      ],
+      "rows": 14
+    },
+    {
+      "type": "paragraph",
+      "text": "Si su azúcar en la sangre está por debajo de 70, coma o beba algo con azúcar, como 4 onzas de jugo, y vuelva a medirla en 15 minutos. Llámenos si suele estar por debajo de 70 o por encima del número que le dio su profesional clínico."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Llámenos si está por encima de"
+        }
+      ]
+    }
+  ]
+}
