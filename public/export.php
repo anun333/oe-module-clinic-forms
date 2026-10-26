@@ -28,6 +28,7 @@ use OpenHealthcare\ClinicForms\Compat\OpenEmr;
 use OpenHealthcare\ClinicForms\Event\DocumentFillEvent;
 use OpenHealthcare\ClinicForms\Fhir\QuestionnaireExport;
 use OpenHealthcare\ClinicForms\Fhir\QuestionnaireRegistration;
+use OpenHealthcare\ClinicForms\Fhir\VisitOffering;
 use OpenHealthcare\ClinicForms\Office\TemplateLibrary;
 use OpenHealthcare\ClinicForms\Office\WordWriter;
 use OpenHealthcare\ClinicForms\Office\Zip;
@@ -88,24 +89,39 @@ function clinicFormsRefuse(int $status, string $message): never
  * Adds each document's Questionnaire to OpenEMR's questionnaires, or updates the one it added
  * before, and goes back to the page saying what was done with each.
  *
+ * With visit types picked (OpenEMR 8.5 and later), each one added or updated also becomes an
+ * encounter form of its own, listed in those visits' Questionnaires menu.
+ *
  * @param list<\OpenHealthcare\ClinicForms\Paper\Document> $documents
  * @param array<string, \OpenHealthcare\ClinicForms\Paper\Document> $english
+ * @param list<int> $visitTypes calendar category ids, as VisitOffering::chosen() returns them
  */
-function clinicFormsAddQuestionnaires(QuestionnaireExport $export, array $documents, array $english): never
+function clinicFormsAddQuestionnaires(QuestionnaireExport $export, array $documents, array $english, array $visitTypes = []): never
 {
     $registration = new QuestionnaireRegistration(OpenEmr::questionnaire(...), OpenEmr::saveQuestionnaire(...));
+    $offering = new VisitOffering(OpenEmr::registerEncounterForm(...), OpenEmr::offerInVisitType(...), OpenEmr::offeredInEveryVisit(...));
     $titles = [];
     $rows = [];
     foreach ($documents as $doc) {
         try {
-            [$what, $rowId] = $registration->register($export->questionnaire($doc, $english[$doc->id] ?? null));
+            $q = $export->questionnaire($doc, $english[$doc->id] ?? null);
+            [$what, $rowId] = $registration->register($q);
+            $offered = ['offered' => false, 'everywhere' => false];
+            if (($what === QuestionnaireRegistration::ADDED || $what === QuestionnaireRegistration::UPDATED) && $rowId !== null) {
+                $offered = $offering->offer($rowId, trim(is_string($q['title'] ?? null) ? $q['title'] : $doc->title), $visitTypes);
+            }
         } catch (\Throwable $e) {
             error_log('Clinic Forms: ' . $doc->id . ' was not added to OpenEMR questionnaires: ' . $e->getMessage());
             [$what, $rowId] = ['failed', null];
+            $offered = ['offered' => false, 'everywhere' => false];
         }
         $titles[$what][] = $doc->title;
+        if ($offered['offered']) {
+            $titles[$offered['everywhere'] ? 'offered everywhere' : 'offered'][] = $doc->title;
+        }
         if ($what === QuestionnaireRegistration::ADDED || $what === QuestionnaireRegistration::UPDATED) {
-            $rows[] = $what . ' ' . $doc->stamp() . ' as questionnaire ' . $rowId;
+            $rows[] = $what . ' ' . $doc->stamp() . ' as questionnaire ' . $rowId
+                . ($offered['offered'] ? ', offered in visit types ' . implode(' ', $visitTypes) : '');
         }
     }
     if ($rows !== []) {
@@ -118,6 +134,8 @@ function clinicFormsAddQuestionnaires(QuestionnaireExport $export, array $docume
         QuestionnaireRegistration::NOT_OURS => xl('Left as they are: OpenEMR already has a questionnaire with the same title that Clinic Forms did not add'),
         QuestionnaireRegistration::TURNED_OFF => xl('Left as they are: turned off in OpenEMR'),
         'failed' => xl('Could not be added (the PHP error log says why)'),
+        'offered' => xl('Listed in the Questionnaires menu of the visit types ticked'),
+        'offered everywhere' => xl('Already offered in every visit, so the visit types ticked add nothing; to narrow it, use Availability on the Questionnaires page of the patient menu (administrators)'),
     ];
     $lines = [];
     foreach ($said as $what => $words) {
@@ -193,7 +211,8 @@ if ($template !== '') {
         // The richer forms (answer grids, signatures, TAPS-1's skip by sex) only where this site's runtime runs them.
         $export = new QuestionnaireExport($context->withoutPatient(), $language, $taglines, QuestionnaireExport::rich());
         if ($toQuestionnaires) {
-            clinicFormsAddQuestionnaires($export, $documents, $english);
+            $visitTypes = OpenEmr::canOfferByVisitType() ? VisitOffering::chosen($_POST['visit_type'] ?? [], OpenEmr::visitTypes()) : [];
+            clinicFormsAddQuestionnaires($export, $documents, $english, $visitTypes);
         }
         $out = json_encode($export->export($documents, $english), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR) . "\n";
         $ext = 'json';

@@ -15,6 +15,10 @@ declare(strict_types=1);
 namespace OpenHealthcare\ClinicForms\Compat;
 
 use OpenEMR\Common\Acl\AclMain;
+use OpenEMR\Common\Database\QueryUtils;
+use OpenEMR\Services\Questionnaire\AssignmentRecord;
+use OpenEMR\Services\Questionnaire\QuestionnaireAvailabilityService;
+use OpenEMR\Services\Questionnaire\QuestionnaireSurface;
 use OpenEMR\Services\QuestionnaireService;
 use OpenHealthcare\Common\OpenEmr as Common;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -144,6 +148,78 @@ final class OpenEmr
         $json = json_encode($q, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR);
         $id = (new QuestionnaireService())->saveQuestionnaireResource($json, $title, null, null, null, 'Questionnaire', 'survey');
         return is_numeric($id) ? (int)$id : 0;
+    }
+
+    /**
+     * Whether OpenEMR offers questionnaires by visit type: its questionnaire availability (8.5 and
+     * later, #14485). The calls below run only when it does.
+     */
+    public static function canOfferByVisitType(): bool
+    {
+        return class_exists(QuestionnaireAvailabilityService::class) && class_exists(AssignmentRecord::class)
+            && enum_exists(QuestionnaireSurface::class);
+    }
+
+    /**
+     * The site's visit types (its active calendar categories), as OpenEMR's Availability tab lists
+     * them.
+     *
+     * @return array<int, string> category id => name
+     */
+    public static function visitTypes(): array
+    {
+        $types = [];
+        $rows = QueryUtils::fetchRecords('SELECT `pc_catid`, `pc_catname` FROM `openemr_postcalendar_categories` WHERE `pc_active` = 1 ORDER BY `pc_seq`, `pc_catname`');
+        foreach ($rows as $row) {
+            if (is_numeric($row['pc_catid'] ?? null) && is_string($row['pc_catname'] ?? null)) {
+                $types[(int)$row['pc_catid']] = function_exists('xl_appt_category') ? (string)xl_appt_category($row['pc_catname']) : $row['pc_catname'];
+            }
+        }
+        return $types;
+    }
+
+    /**
+     * Makes the questionnaire an encounter form of its own, with the registry row OpenEMR's
+     * Questionnaire Assessments form writes when it registers one, unless it is one already. That
+     * form also adds a rule offering it in every visit; this doesn't, since the rules come from
+     * the visit types picked.
+     */
+    public static function registerEncounterForm(int $questionnaireId, string $title): void
+    {
+        $registered = QueryUtils::fetchRecords(
+            "SELECT `id` FROM `registry` WHERE `directory` = 'questionnaire_assessments' AND `form_foreign_id` = ? LIMIT 1",
+            [$questionnaireId]
+        );
+        if ($registered !== []) {
+            return;
+        }
+        QueryUtils::sqlInsert(
+            "INSERT INTO `registry` SET `name` = ?, `state` = 1, `directory` = 'questionnaire_assessments', `sql_run` = 1, "
+                . "`unpackaged` = 1, `category` = 'Questionnaires', `date` = NOW(), `form_foreign_id` = ?",
+            [$title, $questionnaireId]
+        );
+    }
+
+    /**
+     * A rule offering the questionnaire in visits of this type, through OpenEMR's own service, which
+     * updates a matching rule rather than adding a second.
+     */
+    public static function offerInVisitType(int $questionnaireId, int $visitType): void
+    {
+        (new QuestionnaireAvailabilityService())->assign(
+            new AssignmentRecord(0, QuestionnaireSurface::Encounter, resourceId: $questionnaireId, visitCategoryId: $visitType)
+        );
+    }
+
+    /** Whether an active rule already offers the questionnaire in every visit (no visit type, facility or provider). */
+    public static function offeredInEveryVisit(int $questionnaireId): bool
+    {
+        return QueryUtils::fetchRecords(
+            "SELECT `id` FROM `content_assignments` WHERE `resource_type` = 'questionnaire' AND `surface` = 'encounter' AND `resource_id` = ? "
+                . "AND `active` = 1 AND `facility` IS NULL AND `provider` IS NULL AND `visit_category_id` IS NULL "
+                . "AND (`client_id` IS NULL OR `client_id` = '') LIMIT 1",
+            [$questionnaireId]
+        ) !== [];
     }
 
     /** Writes an event to OpenEMR's audit log as the logged-in user. */
