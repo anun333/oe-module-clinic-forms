@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.40.3 (unreleased)
+## 0.40.3 (2026-10-26)
 
 - **Fixed: AUDIT-C and PC-PTSD-5 gave no score when the patient stopped early, as the forms tell them to.** 0.40.2's wait for every scored question counted AUDIT-C's questions 2 and 3, and PC-PTSD-5's five questions, as asked of everyone, because the paper's "If you answered Never, stop here" and "If no, stop here: the screen total is 0" weren't skip logic on screen. So "Never" to AUDIT-C's first question, or "No" to PC-PTSD-5's trauma question, the most common answers, left the total empty where 0.40.1 showed the published 0. Both are skip logic now: AUDIT-C asks questions 2 and 3 after any answer but Never, and PC-PTSD-5 its five questions after Yes, so those answers total 0 again (AUDIT-C scores Never as 0 and stops; the National Center for PTSD: "If no, screen total = 0"). The Spanish AUDIT-C carries the same skip logic. Printing is unchanged.
 - **A question the skip logic asks still has to be answered.** The wait for every scored question now covers questions under skip logic whenever their condition is met: a drinker who leaves AUDIT-C's second question blank, or a "Yes" with one of PC-PTSD-5's questions blank, gets no total rather than a lower one. A question asked only of one sex (TAPS-1's) still doesn't hold the score back. The condition is checked with what OpenEMR 8.3 and 8.4's runtime (0.2.0) supports, so it works there too.
