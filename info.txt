@@ -1,1 +1,1 @@
-Clinic Forms v0.38.1
+Clinic Forms v0.39.0

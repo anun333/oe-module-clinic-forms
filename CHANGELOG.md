@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.39.0 (unreleased)
+## 0.39.0 (2026-10-26)
 
 - **The accessible copy is the default download.** Click **Accessible copy** for a patient who uses a screen reader. On a server with LibreOffice it is a PDF tagged for PDF/UA. Without LibreOffice it is the PDF/UA copy made at release for documents printed blank, and otherwise the Word file. It is never OpenEMR's untagged PDF, which is now offered as **Print copy (PDF, not tagged for screen readers)**. The HHS Section 504 rule asks for accessible documents from 2027-05-11. The **Accessible PDF, blank** button is folded into it, and `format=pdf` and `format=pdf-blank` work as before.
 - **On OpenEMR's questionnaire runtime 0.4.0 or later, forms on screen say more.** A scale is one answer grid and a table a grid of rows. The patient's own signature is drawn or typed and saved with the response, while clinicians, witnesses and chaperones sign as before (requiring theirs would keep a patient from saving a consent at the front desk). TAPS-1 asks question 2 of men and question 3 of women once OpenEMR passes the form the patient; until then, and on older runtimes or LHC-Forms, every question is asked as before. The export reads which runtime the site serves (openhealthcare-common's `QuestionnaireRuntime`); below 0.4.0 it is byte for byte 0.38.1's. A new document key, `item_sex`, marks rows asked of one sex.
