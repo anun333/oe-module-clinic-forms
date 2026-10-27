@@ -62,8 +62,8 @@ $settings = Settings::forSite($siteDir);
 [$chart, $chartCodes] = $patient !== [] ? $site->chart($pid) : [[], []];
 // Answers kept on file from earlier forms (the representative, pack-years, the school), read back from the patient's saved responses, to check.
 $kept = $patient !== [] ? KeptAnswers::forLibraries(
-    [DocumentLibrary::forSite($siteDir, 'en', $pack?->id, $region), DocumentLibrary::forSite($siteDir, 'es', $pack?->id, $region)],
-    DocumentLibrary::forSite($siteDir, $language, $pack?->id, $region),
+    array_map(static fn(string $l): DocumentLibrary => $l === $language ? $library : DocumentLibrary::forSite($siteDir, $l, $pack?->id, $region), ['en', 'es']),
+    $library,
 )->forPatient($pid, new DateTimeImmutable('today'), static fn(string $date): string => function_exists('oeFormatShortDate') ? (string)oeFormatShortDate($date) : $date) : [];
 $renderer = new Renderer(new Context($facility, $patient, $recipient, $today, $logo !== '' ? $logo : null, [], $provider, $chart, $settings->site(), $chartCodes, $kept), $language, $taglines, $settings->labelBox);
 
