@@ -39,7 +39,8 @@
           "label": "Dónde suelo estar durante las consultas (ciudad, y estado o región)"
         },
         {
-          "label": "Alguien a quien llamar en una emergencia (nombre y teléfono)"
+          "label": "Alguien a quien llamar en una emergencia (nombre y teléfono)",
+          "fill": "chart.emergency"
         }
       ]
     },

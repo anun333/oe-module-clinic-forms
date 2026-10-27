@@ -361,6 +361,7 @@ final class DocumentLibrary
         }
         $uses = [];
         $blocks = [];
+        $fills = [];
         foreach ($data['blocks'] as $i => $block) {
             $at = "$where blocks[$i]";
             if (!is_array($block) || !isset($block['type']) || !in_array($block['type'], Document::BLOCK_TYPES, true)) {
@@ -385,7 +386,11 @@ final class DocumentLibrary
                         if (!is_array($field)) {
                             throw new \InvalidArgumentException("$at fields[$j]: must be an object");
                         }
-                        self::onlyKeys($field, ['label'], ['value', 'id', 'show_if', 'number'], "$at fields[$j]");
+                        self::onlyKeys($field, ['label'], ['value', 'id', 'show_if', 'number', 'fill'], "$at fields[$j]");
+                        if (isset($field['fill'])) {
+                            self::checkFill($field, "$at fields[$j]", false);
+                            $fills[] = [$field['fill'], "$at fields[$j]"];
+                        }
                         if (isset($field['number'])) {
                             $range = $field['number'];
                             if (!is_array($range) || !array_is_list($range) || count($range) !== 2 || !is_int($range[0]) || !is_int($range[1]) || $range[0] >= $range[1]) {
@@ -399,7 +404,11 @@ final class DocumentLibrary
                     }
                     break;
                 case 'checklist':
-                    self::onlyKeys($block, ['type', 'items'], ['label', 'code', 'answer_codes', 'single', 'names'], $at);
+                    self::onlyKeys($block, ['type', 'items'], ['label', 'code', 'answer_codes', 'single', 'names', 'fill', 'fill_options'], $at);
+                    if (isset($block['fill']) || isset($block['fill_options'])) {
+                        self::checkFill($block, $at, true);
+                        $fills[] = [$block['fill'], $at];
+                    }
                     // Items that are names (peoples, places, languages): reading-level formulas read them as hard words.
                     if (isset($block['names']) && $block['names'] !== true) {
                         throw new \InvalidArgumentException("$at names: true when the items are names, or leave it out");
@@ -487,6 +496,17 @@ final class DocumentLibrary
             $blocks[] = $checked;
         }
         self::conditions($blocks, $where);
+        foreach ($fills as [$fill, $at]) {
+            // An older answer reported as current would invalidate a validated instrument's score.
+            if (($data['validated'] ?? false) === true || ($origin['kind'] ?? '') === 'instrument') {
+                throw new \InvalidArgumentException("$at fill: a validated instrument's questions are asked fresh each time, never filled");
+            }
+            if (in_array($data['id'], Fill::CONFIDENTIAL, true) && in_array($fill, Fill::NOT_IN_CONFIDENTIAL, true)) {
+                throw new \InvalidArgumentException("$at fill: {$fill} would carry a family's details into a document signed for confidential care");
+            }
+            // A chart fact is the patient's: the document is one to fill for a patient.
+            $uses[str_starts_with($fill, 'chart.') ? 'patient' : explode('.', $fill)[0]] = true;
+        }
         // A coded question's code is its linkId on screen, so each code once in a document.
         $questionCodes = array_values(array_filter(array_map(static fn(array $b): ?string => $b['code']['code'] ?? null, $blocks)));
         if (count($questionCodes) !== count(array_unique($questionCodes))) {
@@ -709,6 +729,32 @@ final class DocumentLibrary
                     default => ['kind' => 'other'],
                 };
             }
+        }
+    }
+
+    /**
+     * A question's "fill" (Fill): a chart or clinic placeholder, never beside a value of its own; on a
+     * checklist, one answer only, a chart fact a list stores (Fill::CODED), and one option id per item.
+     */
+    private static function checkFill(array $q, string $at, bool $checklist): void
+    {
+        $fill = $q['fill'] ?? null;
+        if (!is_string($fill) || !Context::isKnown($fill) || !in_array(explode('.', $fill)[0], ['chart', 'clinic'], true) || $fill === 'clinic.today') {
+            throw new \InvalidArgumentException("$at fill: a chart fact or the clinic's own contact, such as \"chart.email\" or \"clinic.coordinator\" (see Context::KEYS)");
+        }
+        if (!$checklist) {
+            if (isset($q['value'])) {
+                throw new \InvalidArgumentException("$at fill: a field has a value or a fill, not both");
+            }
+            return;
+        }
+        if (($q['single'] ?? false) !== true || !isset(Fill::CODED[substr($fill, strlen('chart.'))]) || !Fill::isChart($fill)) {
+            throw new \InvalidArgumentException("$at fill: a checklist takes a fill only with \"single\": true, from a chart fact a list stores (" . implode(', ', array_map(static fn(string $k): string => "chart.$k", array_keys(Fill::CODED))) . ')');
+        }
+        $options = $q['fill_options'] ?? null;
+        if (!is_array($options) || !array_is_list($options) || count($options) !== count($q['items'] ?? [])
+            || array_filter($options, static fn(mixed $o): bool => !is_string($o) || preg_match('/^[a-z0-9_]*$/', $o) !== 1) !== []) {
+            throw new \InvalidArgumentException("$at fill_options: one option id for each item, in order (\"\" for an item no option matches)");
         }
     }
 

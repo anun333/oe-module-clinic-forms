@@ -47,6 +47,21 @@ final class VisitOffering
         return ['offered' => true, 'everywhere' => ($this->offeredEverywhere)($questionnaireId)];
     }
 
+    /** The other surfaces a clinic can offer added questionnaires on (OpenEmr::offerOnSurface()), in the page's order. */
+    public const SURFACES = ['smart', 'portal'];
+
+    /**
+     * The surfaces ticked on the page, each once, in SURFACES order; anything else is ignored.
+     *
+     * @param mixed $posted the form's surface[] values
+     * @return list<string>
+     */
+    public static function surfaces(mixed $posted): array
+    {
+        $picked = array_filter(is_array($posted) ? $posted : [], 'is_string');
+        return array_values(array_filter(self::SURFACES, static fn(string $s): bool => in_array($s, $picked, true)));
+    }
+
     /**
      * The visit types picked on the page, kept only where the site has them, each once, in the
      * site's order.

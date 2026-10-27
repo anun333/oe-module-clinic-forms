@@ -15,6 +15,8 @@ namespace OpenHealthcare\ClinicForms\Office;
 use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\Document;
 use OpenHealthcare\ClinicForms\Paper\DocumentFill;
+use OpenHealthcare\ClinicForms\Paper\Fill;
+use OpenHealthcare\ClinicForms\Paper\Renderer;
 use OpenHealthcare\ClinicForms\Paper\Words;
 
 final readonly class OfficeExport
@@ -61,15 +63,19 @@ final readonly class OfficeExport
         }
         $writer->letterhead($this->context->value('facility.name'), $this->letterheadLines());
         $writer->title($this->text($doc->title));
+        // Answers carried from the chart are there to be checked, never silently reused.
+        if (Fill::carries($doc, $this->context)) {
+            $writer->paragraph($this->t(Renderer::CARRIED));
+        }
         foreach ($doc->blocks as $block) {
             match ($block['type']) {
                 'heading' => $writer->heading($this->text($block['text'])),
                 'paragraph' => $writer->paragraph($this->text($block['text'])),
                 'fields' => $writer->fields(array_map(
-                    fn(array $f): array => [$this->text($f['label']), isset($f['value']) ? $this->value($f['value']) : ''],
+                    fn(array $f): array => [$this->text($f['label']), ($v = Fill::fieldValue($f)) !== null ? $this->value($v) : ''],
                     $block['fields'],
                 )),
-                'checklist' => $writer->checklist(isset($block['label']) ? $this->text($block['label']) : null, array_map($this->text(...), $block['items'])),
+                'checklist' => $writer->checklist(isset($block['label']) ? $this->text($block['label']) : null, array_map($this->text(...), $block['items']), Fill::tickedItem($block, $this->context)),
                 'lines' => $writer->lines($this->text($block['label']), $block['count']),
                 'signature' => $writer->signatures(array_map($this->text(...), $block['signers'])),
                 'scale' => $writer->scale(

@@ -56,7 +56,10 @@ $paper = ($_POST['paper'] ?? '') === 'a4' ? 'A4' : 'letter';
 $logo = (new LogoService())->getLogo('core/menu/primary');
 $today = function_exists('oeFormatShortDate') ? (string)oeFormatShortDate(date('Y-m-d')) : date('Y-m-d');
 $provider = $site->provider((int)($_POST['provider'] ?? 0));
-$renderer = new Renderer(new Context($facility, $patient, $recipient, $today, $logo !== '' ? $logo : null, [], $provider), $language, $taglines, Settings::forSite($siteDir)->labelBox);
+$settings = Settings::forSite($siteDir);
+// What the chart already holds, carried into the questions that ask it, for the patient to check (Fill).
+[$chart, $chartCodes] = $patient !== [] ? $site->chart($pid) : [[], []];
+$renderer = new Renderer(new Context($facility, $patient, $recipient, $today, $logo !== '' ? $logo : null, [], $provider, $chart, $settings->site(), $chartCodes), $language, $taglines, $settings->labelBox);
 
 $pages = [];
 $titles = [];

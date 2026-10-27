@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace OpenHealthcare\ClinicForms\Repository;
 
 use OpenEMR\Common\Database\QueryUtils;
+use OpenHealthcare\ClinicForms\Paper\Fill;
 use OpenHealthcare\ClinicForms\Paper\LayoutForm;
 use OpenHealthcare\ClinicForms\Paper\LayoutPaper;
 use OpenHealthcare\ClinicForms\Paper\OnFile;
@@ -174,6 +175,70 @@ final class SiteData
             'medications' => implode('; ', array_filter($issues['medication'])),
             'problems' => implode('; ', array_filter($issues['medical_problem'])),
         ];
+    }
+
+    /**
+     * What the patient's chart holds for the facts a document can carry (Fill), as the site's own
+     * Demographics layout shows them (its list titles), and the stored option ids of the ones a
+     * checklist ticks. A fact whose field the site's layout doesn't use, or that is empty, is left
+     * out, and its question prints blank as before. Insurance is the primary plan in force today.
+     *
+     * @return array{0: array<string, string>, 1: array<string, string>} [Context chart values, Context chart codes]
+     */
+    public function chart(int $pid): array
+    {
+        $form = $this->layoutForm('DEM');
+        $values = $form === null ? [] : $this->onFile($form, $pid);
+        $text = [];
+        $shown = array_column($form?->fields ?? [], 'field_id');
+        foreach (Fill::CHART_FIELDS as $key => $fieldIds) {
+            if ($key === 'pcp') {
+                // The care team is a list of the clinic's providers (data type 45, ids joined by "|"), which OnFile prints raw.
+                $ids = in_array('care_team_provider', $shown, true) && in_array('care_team_provider', $this->columns('patient_data'), true)
+                    ? preg_split('/[|,]/', self::s(QueryUtils::fetchRecords("SELECT care_team_provider FROM patient_data WHERE pid = ?", [$pid])[0]['care_team_provider'] ?? '')) ?: []
+                    : [];
+                $names = array_filter(array_map(fn(string $id): ?string => $this->recordName(10, trim($id)), $ids));
+                if ($names !== []) {
+                    $text['pcp'] = implode(', ', $names);
+                }
+                continue;
+            }
+            foreach ($fieldIds as $fieldId) {
+                $v = $values[$fieldId] ?? null;
+                $t = $v === null ? '' : trim($v['text'] ?? implode(', ', $v['ticked'] ?? []));
+                if ($t !== '') {
+                    $text[$key] = $t;
+                    break;
+                }
+            }
+        }
+        $codes = [];
+        $columns = array_values(array_intersect(Fill::CODED, $this->columns('patient_data')));
+        if ($columns !== []) {
+            $row = QueryUtils::fetchRecords("SELECT `" . implode('`, `', $columns) . "` FROM patient_data WHERE pid = ?", [$pid])[0] ?? [];
+            foreach (Fill::CODED as $key => $column) {
+                // Only where the site's Demographics shows the field: a hidden one isn't the clinic's to print.
+                if (in_array($column, $shown, true) && self::s($row[$column] ?? '') !== '') {
+                    $codes[$key] = self::s($row[$column]);
+                }
+            }
+        }
+        $plan = QueryUtils::fetchRecords(
+            "SELECT ic.name AS company, i.plan_name, i.policy_number FROM insurance_data AS i LEFT JOIN insurance_companies AS ic ON ic.id = i.provider
+              WHERE i.pid = ? AND i.type = 'primary' AND (i.date IS NULL OR i.date <= CURDATE()) AND (i.date_end IS NULL OR i.date_end >= CURDATE())
+              ORDER BY i.date DESC, i.id DESC LIMIT 1",
+            [$pid],
+        )[0] ?? null;
+        if ($plan !== null) {
+            $name = trim(implode(' ', array_unique(array_filter([self::s($plan['company'] ?? ''), self::s($plan['plan_name'] ?? '')]))));
+            if ($name !== '') {
+                $text['insurance'] = $name;
+            }
+            if (self::s($plan['policy_number'] ?? '') !== '') {
+                $text['memberid'] = self::s($plan['policy_number']);
+            }
+        }
+        return [$text, $codes];
     }
 
     /** @return array<string, string> the Context user values for the person printing */

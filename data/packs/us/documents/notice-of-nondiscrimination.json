@@ -41,13 +41,16 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Section 1557 Coordinator"
+          "label": "Section 1557 Coordinator",
+          "fill": "clinic.coordinator"
         },
         {
-          "label": "Coordinator phone"
+          "label": "Coordinator phone",
+          "fill": "clinic.coordinatorphone"
         },
         {
-          "label": "Coordinator email"
+          "label": "Coordinator email",
+          "fill": "clinic.coordinatoremail"
         },
         {
           "label": "Coordinator mailing address",

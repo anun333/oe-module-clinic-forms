@@ -23,6 +23,9 @@
 .cf-check { display: inline-flex; align-items: center; gap: 0.06in; margin: 0.02in 0.22in 0.02in 0; }
 .cf-checklist .cf-check { display: flex; }
 .cf-box { width: 0.14in; height: 0.14in; border: 0.75pt solid #000; display: inline-block; flex: none; }
+.cf-box-ticked { font-size: 0.13in; line-height: 0.14in; text-align: center; }
+/* An answer carried from the chart, to check: a dotted line under it, so a correction beside it reads as one. */
+.cf-carried { text-decoration: underline dotted; }
 .cf-on { font: bold 9pt/0.14in Arial, Helvetica, sans-serif; text-align: center; }
 .cf-taglines { margin-top: 0.18in; border-top: 0.5pt solid #999; padding-top: 0.04in; font-family: Arial, Helvetica, sans-serif; font-size: 7.5pt; break-inside: avoid; page-break-inside: avoid; }
 .cf-taglines p { margin: 0.02in 0; }

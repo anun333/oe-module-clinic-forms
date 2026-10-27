@@ -134,6 +134,10 @@
             "fingerprint": "fb2ee6eb56fef777",
             "sha256": "ba7c30c5c84175fb7a97e3c0b069ab4d71f4cbd16daadef751e3b02110f7f517"
         },
+        "en/housing-farm-work-service": {
+            "fingerprint": "b729a38dedd53831",
+            "sha256": "c0bb5638c23827b3a5f31d030e48747122966b5c6f53efc53c769d7a05fe6cf6"
+        },
         "en/hunger-vital-sign": {
             "fingerprint": "bcac240a3ca7b90e",
             "sha256": "a68d3c0384bfd0e61651b05c08cca85222eebf2d45ebcaf2892a75e899c044ea"
@@ -441,6 +445,10 @@
         "es/gad-7": {
             "fingerprint": "8823cfe58492f4d5",
             "sha256": "600e753d7a30330ac1bfdb107367f54df40ddf31a3695cdd70fadb5d2757b62b"
+        },
+        "es/housing-farm-work-service": {
+            "fingerprint": "c01ee155f59c8b79",
+            "sha256": "ba194bbf837ad3a52201c2bf9dbf4e947a6a323cfb3f0df3ea48fb894a36c055"
         },
         "es/interpreter-request": {
             "fingerprint": "705fb1690b5a771d",

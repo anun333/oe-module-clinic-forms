@@ -68,6 +68,8 @@ $accessible = $format === 'accessible';
 $patient = !$fhir && !$blankPdfs && ($toDocuments || !empty($_POST['fill_patient'])) && $pid > 0 ? $site->patient($pid) : [];
 $recipientId = (int)($_POST['recipient'] ?? 0);
 $today = function_exists('oeFormatShortDate') ? (string)oeFormatShortDate(date('Y-m-d')) : date('Y-m-d');
+// What the chart already holds, carried into the questions that ask it, for the patient to check (Fill).
+[$chart, $chartCodes] = $patient !== [] ? $site->chart($pid) : [[], []];
 $context = new Context(
     $site->facility((int)($_POST['facility'] ?? 0)),
     $patient,
@@ -76,6 +78,9 @@ $context = new Context(
     null,
     $site->user((int)(OpenEmr::session('authUserID') ?? 0)),
     $site->provider((int)($_POST['provider'] ?? 0)),
+    $chart,
+    Settings::forSite($siteDir)->site(),
+    $chartCodes,
 );
 $paper = ($_POST['paper'] ?? '') === 'a4' ? 'A4' : 'letter';
 $language = Words::language($_POST['language'] ?? 'en');
@@ -100,8 +105,9 @@ function clinicFormsRefuse(int $status, string $message): never
  * @param list<\OpenHealthcare\ClinicForms\Paper\Document> $documents
  * @param array<string, \OpenHealthcare\ClinicForms\Paper\Document> $english
  * @param list<int> $visitTypes calendar category ids, as VisitOffering::chosen() returns them
+ * @param list<string> $surfaces other surfaces to offer them on, as VisitOffering::surfaces() returns them
  */
-function clinicFormsAddQuestionnaires(QuestionnaireExport $export, array $documents, array $english, array $visitTypes = []): never
+function clinicFormsAddQuestionnaires(QuestionnaireExport $export, array $documents, array $english, array $visitTypes = [], array $surfaces = []): never
 {
     $registration = new QuestionnaireRegistration(OpenEmr::questionnaire(...), OpenEmr::saveQuestionnaire(...));
     $offering = new VisitOffering(OpenEmr::registerEncounterForm(...), OpenEmr::offerInVisitType(...), OpenEmr::offeredInEveryVisit(...));
@@ -114,6 +120,10 @@ function clinicFormsAddQuestionnaires(QuestionnaireExport $export, array $docume
             $offered = ['offered' => false, 'everywhere' => false];
             if (($what === QuestionnaireRegistration::ADDED || $what === QuestionnaireRegistration::UPDATED) && $rowId !== null) {
                 $offered = $offering->offer($rowId, trim(is_string($q['title'] ?? null) ? $q['title'] : $doc->title), $visitTypes);
+                foreach ($surfaces as $surface) {
+                    OpenEmr::offerOnSurface($rowId, $surface);
+                    $titles['on ' . $surface][] = $doc->title;
+                }
             }
         } catch (\Throwable $e) {
             error_log('Clinic Forms: ' . $doc->id . ' was not added to OpenEMR questionnaires: ' . $e->getMessage());
@@ -126,7 +136,8 @@ function clinicFormsAddQuestionnaires(QuestionnaireExport $export, array $docume
         }
         if ($what === QuestionnaireRegistration::ADDED || $what === QuestionnaireRegistration::UPDATED) {
             $rows[] = $what . ' ' . $doc->stamp() . ' as questionnaire ' . $rowId
-                . ($offered['offered'] ? ', offered in visit types ' . implode(' ', $visitTypes) : '');
+                . ($offered['offered'] ? ', offered in visit types ' . implode(' ', $visitTypes) : '')
+                . ($surfaces !== [] ? ', offered on ' . implode(' ', $surfaces) : '');
         }
     }
     if ($rows !== []) {
@@ -141,6 +152,8 @@ function clinicFormsAddQuestionnaires(QuestionnaireExport $export, array $docume
         'failed' => xl('Could not be added (the PHP error log says why)'),
         'offered' => xl('Listed in the Questionnaires menu of the visit types ticked'),
         'offered everywhere' => xl('Already offered in every visit, so the visit types ticked add nothing; to narrow it, use Availability on the Questionnaires page of the patient menu (administrators)'),
+        'on smart' => xl('Offered to SMART apps launched from the patient menu, Assessments, FHIR Assessments'),
+        'on portal' => xl('Kept for the patient portal, for when the OpenEMR portal reads these settings (the portal in OpenEMR 8.5 does not yet)'),
     ];
     $lines = [];
     foreach ($said as $what => $words) {
@@ -217,7 +230,8 @@ if ($template !== '') {
         $export = new QuestionnaireExport($context->withoutPatient(), $language, $taglines, QuestionnaireExport::rich());
         if ($toQuestionnaires) {
             $visitTypes = OpenEmr::canOfferByVisitType() ? VisitOffering::chosen($_POST['visit_type'] ?? [], OpenEmr::visitTypes()) : [];
-            clinicFormsAddQuestionnaires($export, $documents, $english, $visitTypes);
+            $surfaces = OpenEmr::canOfferByVisitType() ? VisitOffering::surfaces($_POST['surface'] ?? []) : [];
+            clinicFormsAddQuestionnaires($export, $documents, $english, $visitTypes, $surfaces);
         }
         $out = json_encode($export->export($documents, $english), JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR) . "\n";
         $ext = 'json';

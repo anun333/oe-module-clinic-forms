@@ -14,7 +14,8 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Idioma en el que prefiero hablar"
+          "label": "Idioma en el que prefiero hablar",
+          "fill": "chart.language"
         },
         {
           "label": "Idioma en el que prefiero leer"

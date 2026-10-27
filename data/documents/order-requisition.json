@@ -53,10 +53,12 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Insurance"
+          "label": "Insurance",
+          "fill": "chart.insurance"
         },
         {
-          "label": "Member ID"
+          "label": "Member ID",
+          "fill": "chart.memberid"
         }
       ]
     },

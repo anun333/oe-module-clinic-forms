@@ -123,7 +123,8 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Primary care physician"
+          "label": "Primary care physician",
+          "fill": "chart.pcp"
         },
         {
           "label": "Their phone"
@@ -144,10 +145,12 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Plan name"
+          "label": "Plan name",
+          "fill": "chart.insurance"
         },
         {
-          "label": "Member ID"
+          "label": "Member ID",
+          "fill": "chart.memberid"
         }
       ]
     },
@@ -159,13 +162,16 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Your name"
+          "label": "Your name",
+          "fill": "chart.guardian"
         },
         {
-          "label": "Your relationship to the student"
+          "label": "Your relationship to the student",
+          "fill": "chart.guardianrelationship"
         },
         {
-          "label": "Phone"
+          "label": "Phone",
+          "fill": "chart.guardianphone"
         }
       ]
     },

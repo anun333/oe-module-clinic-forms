@@ -30,13 +30,16 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Coordinador de la Sección 1557"
+          "label": "Coordinador de la Sección 1557",
+          "fill": "clinic.coordinator"
         },
         {
-          "label": "Teléfono del coordinador"
+          "label": "Teléfono del coordinador",
+          "fill": "clinic.coordinatorphone"
         },
         {
-          "label": "Correo electrónico del coordinador"
+          "label": "Correo electrónico del coordinador",
+          "fill": "clinic.coordinatoremail"
         },
         {
           "label": "Dirección postal del coordinador",

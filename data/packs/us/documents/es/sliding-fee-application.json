@@ -38,10 +38,12 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Número de personas en el hogar"
+          "label": "Número de personas en el hogar",
+          "fill": "chart.householdsize"
         },
         {
-          "label": "Ingreso mensual total del hogar"
+          "label": "Ingreso mensual total del hogar",
+          "fill": "chart.monthlyincome"
         },
         {
           "label": "Ingreso anual total del hogar"

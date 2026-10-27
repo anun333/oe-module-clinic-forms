@@ -1,0 +1,110 @@
+{
+  "id": "housing-farm-work-service",
+  "title": "Housing, Farm Work and Military Service",
+  "category": "Front desk",
+  "about": "Three registration questions UDS reporting counts (Table 4: housing status, agricultural workers, veterans), in plain words, with answers in the categories of the UDS Report module's Demographics lists. Printed for a patient, it ticks what Demographics already has, for the patient to check. Housing counts as homeless for 12 months after it was last recorded, and farm work counts if it was the main work in the past 24 months.",
+  "audience": "patient",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "name": "HRSA Uniform Data System Manual, 2026, Table 4 (housing status; agricultural workers; veterans)",
+    "url": "https://bphc.hrsa.gov/sites/default/files/bphc/compliance/2026-uds-manual.pdf"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "include",
+      "block": "patient-identification"
+    },
+    {
+      "type": "paragraph",
+      "text": "These questions help us find programs and services that may help you. You can skip any question."
+    },
+    {
+      "type": "heading",
+      "text": "Where you live"
+    },
+    {
+      "type": "checklist",
+      "label": "Where are you living now? (tick one)",
+      "single": true,
+      "items": [
+        "In my own home, or a place I rent or share",
+        "In a homeless shelter",
+        "In transitional housing",
+        "With family or friends, because I have nowhere else to go",
+        "On the street, in a car, or in another place not meant for living",
+        "In permanent supportive housing",
+        "Somewhere else, without a home of my own",
+        "I would rather not say"
+      ],
+      "fill": "chart.housing",
+      "fill_options": [
+        "housed",
+        "shelter",
+        "transitional",
+        "doubling_up",
+        "street",
+        "permanent_supportive",
+        "other_homeless",
+        "declined"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Farm work"
+    },
+    {
+      "type": "checklist",
+      "label": "In the past two years, was farm work the main job for you or someone in your family? Farm work means planting, picking or packing crops, or caring for farm animals. (tick one)",
+      "single": true,
+      "items": [
+        "No",
+        "Yes, and we moved away from home for the work and lived in a temporary home",
+        "Yes, and we lived at home while doing the work",
+        "I did farm work that meant moving for it, and now I cannot work because of my age or a disability",
+        "I would rather not say"
+      ],
+      "fill": "chart.agricultural",
+      "fill_options": [
+        "not_agricultural",
+        "migratory",
+        "seasonal",
+        "former_migratory",
+        "declined"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Military service"
+    },
+    {
+      "type": "checklist",
+      "label": "Have you ever served in the U.S. military or uniformed services? (tick one)",
+      "single": true,
+      "items": [
+        "Yes, in the past. I am not on active duty now.",
+        "Yes, I am on active duty now",
+        "No, I have never served",
+        "I would rather not say"
+      ],
+      "fill": "chart.veteran",
+      "fill_options": [
+        "veteran",
+        "active_duty",
+        "not_veteran",
+        "declined"
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative"
+      ]
+    }
+  ]
+}

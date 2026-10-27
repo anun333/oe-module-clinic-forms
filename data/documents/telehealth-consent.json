@@ -53,7 +53,8 @@
           "label": "Where I usually am during visits (city, and state or region)"
         },
         {
-          "label": "Someone to call in an emergency (name and phone)"
+          "label": "Someone to call in an emergency (name and phone)",
+          "fill": "chart.emergency"
         }
       ]
     },

@@ -41,10 +41,12 @@
           "label": "Place of service"
         },
         {
-          "label": "Primary insurance"
+          "label": "Primary insurance",
+          "fill": "chart.insurance"
         },
         {
-          "label": "Member ID"
+          "label": "Member ID",
+          "fill": "chart.memberid"
         },
         {
           "label": "Sliding fee level"

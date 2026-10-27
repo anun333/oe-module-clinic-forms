@@ -14,10 +14,12 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Fecha de entrada en vigor"
+          "label": "Fecha de entrada en vigor",
+          "fill": "clinic.noticedate"
         },
         {
-          "label": "Preguntas: contacto de privacidad"
+          "label": "Preguntas: contacto de privacidad",
+          "fill": "clinic.privacy"
         },
         {
           "label": "Teléfono",

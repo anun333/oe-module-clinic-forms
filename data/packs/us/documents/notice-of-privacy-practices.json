@@ -29,10 +29,12 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Effective date"
+          "label": "Effective date",
+          "fill": "clinic.noticedate"
         },
         {
-          "label": "Questions: privacy contact"
+          "label": "Questions: privacy contact",
+          "fill": "clinic.privacy"
         },
         {
           "label": "Phone",

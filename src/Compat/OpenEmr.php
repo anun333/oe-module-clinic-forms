@@ -227,6 +227,22 @@ final class OpenEmr
         );
     }
 
+    /**
+     * A rule offering the questionnaire on another surface: "smart" (the SMART apps launched from a
+     * patient's FHIR Assessments, at every facility and for every app) or "portal" (stored for when
+     * OpenEMR's portal reads these rules; 8.5's doesn't yet). Through OpenEMR's own service, which
+     * updates a matching rule rather than adding a second.
+     */
+    public static function offerOnSurface(int $questionnaireId, string $surface): void
+    {
+        $on = match ($surface) {
+            'smart' => QuestionnaireSurface::Smart,
+            'portal' => QuestionnaireSurface::Portal,
+            default => throw new \InvalidArgumentException("not a surface Clinic Forms offers on: $surface"),
+        };
+        (new QuestionnaireAvailabilityService())->assign(new AssignmentRecord(0, $on, resourceId: $questionnaireId));
+    }
+
     /** Whether an active rule already offers the questionnaire in every visit (no visit type, facility or provider). */
     public static function offeredInEveryVisit(int $questionnaireId): bool
     {

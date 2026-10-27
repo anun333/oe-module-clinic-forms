@@ -1,8 +1,10 @@
 <?php
 
 /**
- * What a printed document is filled with: the clinic (one facility), and optionally a patient and
- * a recipient (an Address Book entry, for referral letters). Every value is plain text; anything
+ * What a printed document is filled with: the clinic (one facility, and its own contacts from
+ * settings.json), and optionally a patient, the facts the patient's chart already holds (carried
+ * into a document's questions, printed for the patient to check and correct: see Fill), and a
+ * recipient (an Address Book entry, for referral letters). Every value is plain text; anything
  * missing prints as a blank line to fill in by hand.
  *
  * @package   OpenHealthcare\ClinicForms
@@ -22,7 +24,12 @@ final readonly class Context
         'recipient' => ['name', 'organization', 'specialty', 'address', 'phone', 'fax', 'email'],
         'user' => ['name'],
         'provider' => ['name', 'credentials', 'npi', 'specialty'],
-        'clinic' => ['today'],
+        'clinic' => ['today', 'privacy', 'privacyphone', 'privacyemail', 'noticedate', 'coordinator', 'coordinatorphone', 'coordinatoremail'],
+        'chart' => [
+            'email', 'mobile', 'language', 'interpreter', 'race', 'ethnicity', 'emergency', 'emergencyphone', 'pharmacy',
+            'guardian', 'guardianrelationship', 'guardianphone', 'pcp', 'householdsize', 'monthlyincome',
+            'housing', 'veteran', 'agricultural', 'insurance', 'memberid',
+        ],
     ];
 
     /**
@@ -33,6 +40,9 @@ final readonly class Context
      * @param ?string               $logoUrl   the clinic's logo, or null for none
      * @param array<string, string> $user      keys from KEYS['user']: the person printing
      * @param array<string, string> $provider  keys from KEYS['provider']: the clinician who signs letters; empty when none is chosen
+     * @param array<string, string> $chart     keys from KEYS['chart']: what the patient's chart holds, shown as text; empty for a blank form
+     * @param array<string, string> $site      the clinic's own contacts (KEYS['clinic'] except today), from settings.json
+     * @param array<string, string> $chartCodes for the chart facts a checklist ticks (housing, veteran, agricultural): the stored option id
      */
     public function __construct(
         public array $facility,
@@ -42,13 +52,23 @@ final readonly class Context
         public ?string $logoUrl = null,
         public array $user = [],
         public array $provider = [],
+        public array $chart = [],
+        public array $site = [],
+        public array $chartCodes = [],
     ) {
     }
 
     /** The same clinic, recipient, date and provider, with no patient: for a document filed without a name. */
     public function withoutPatient(): self
     {
-        return new self($this->facility, [], $this->recipient, $this->today, $this->logoUrl, $this->user, $this->provider);
+        return new self($this->facility, [], $this->recipient, $this->today, $this->logoUrl, $this->user, $this->provider, [], $this->site);
+    }
+
+    /** The stored option id behind a chart fact ("chart.housing" => "doubling_up"), or '' when none is on file. */
+    public function code(string $placeholder): string
+    {
+        [$group, $key] = array_pad(explode('.', $placeholder, 2), 2, '');
+        return $group === 'chart' ? trim($this->chartCodes[$key] ?? '') : '';
     }
 
     /** The value of "group.key", or '' when it isn't known. */
@@ -61,7 +81,8 @@ final readonly class Context
             'recipient' => $this->recipient[$key] ?? '',
             'user' => $this->user[$key] ?? '',
             'provider' => $this->provider[$key] ?? '',
-            'clinic' => $key === 'today' ? $this->today : '',
+            'clinic' => $key === 'today' ? $this->today : ($this->site[$key] ?? ''),
+            'chart' => $this->chart[$key] ?? '',
             default => '',
         };
         return trim($value);

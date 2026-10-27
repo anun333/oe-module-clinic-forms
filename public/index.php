@@ -93,6 +93,8 @@ $canSaveDocuments = OpenEmr::canWriteDocuments();
 $canAddQuestionnaires = OpenEmr::canAddQuestionnaires();
 // OpenEMR 8.5 and later offer a questionnaire by visit type (#14485); older ones don't, and show no choice.
 $visitTypes = $canAddQuestionnaires && OpenEmr::canOfferByVisitType() ? OpenEmr::visitTypes() : [];
+// OpenEMR's questionnaire availability (8.5 and later) also offers forms to SMART apps and keeps a portal setting.
+$canOfferOnSurfaces = $canAddQuestionnaires && OpenEmr::canOfferByVisitType();
 $documentsCategory = $settings->documentsCategory;
 $isAdmin = AclMain::aclCheckCore('admin', 'super');
 $csrf = OpenEmr::csrfToken();
@@ -359,6 +361,20 @@ foreach ($layouts as $form) {
                                 </div>
                             <?php } ?>
                             <small class="form-text text-muted"><?php echo xlt('Each ticked document becomes a form of its own in the Questionnaires menu of those visits, by OpenEMR questionnaire availability. With none ticked they are offered as before, through New Questionnaire.'); ?></small>
+                        </fieldset>
+                    <?php } ?>
+                    <?php if ($canOfferOnSurfaces) { ?>
+                        <fieldset class="mt-2">
+                            <legend class="h6 mb-1"><?php echo xlt('Also offer them to patients outside the visit (optional)'); ?></legend>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="surface[]" id="cf-surface-smart" value="smart">
+                                <label class="form-check-label" for="cf-surface-smart"><?php echo xlt('SMART apps, such as a form a patient fills in at home'); ?></label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="surface[]" id="cf-surface-portal" value="portal">
+                                <label class="form-check-label" for="cf-surface-portal"><?php echo xlt('Patient portal'); ?></label>
+                            </div>
+                            <small class="form-text text-muted"><?php echo xlt('SMART apps are launched from the patient menu, Assessments, FHIR Assessments, and a SMART app a patient opens themselves lists the same forms. The patient portal setting is kept for when the OpenEMR portal reads it: the portal in OpenEMR 8.5 does not yet. Administrators can narrow either one under Availability on the Questionnaires page.'); ?></small>
                         </fieldset>
                     <?php } ?>
                 </div>

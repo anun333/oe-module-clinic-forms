@@ -54,6 +54,7 @@ namespace OpenHealthcare\ClinicForms\Fhir;
 
 use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\Document;
+use OpenHealthcare\ClinicForms\Paper\Fill;
 use OpenHealthcare\ClinicForms\Paper\Instrument;
 use OpenHealthcare\ClinicForms\Paper\Loinc;
 use OpenHealthcare\ClinicForms\Paper\Words;
@@ -84,6 +85,7 @@ final readonly class QuestionnaireExport
     private const ITEM_CONTROL = 'http://hl7.org/fhir/StructureDefinition/questionnaire-itemControl';
     private const ENABLE_WHEN_EXPRESSION = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression';
     private const LAUNCH_CONTEXT = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext';
+    private const INITIAL_EXPRESSION = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-initialExpression';
     private const SIGNATURE_REQUIRED = 'http://hl7.org/fhir/StructureDefinition/questionnaire-signatureRequired';
     /** A version that is a whole number (artifact-versionAlgorithm integer). */
     private const VERSION_ALGORITHM = ['url' => 'http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm',
@@ -181,6 +183,8 @@ final readonly class QuestionnaireExport
         }
         $copyright = implode('. ', array_filter([rtrim(trim((string)($doc->licence['holder'] ?? '')), '.'), trim((string)($doc->licence['terms'] ?? ''))]));
         if ($codes !== null) {
+            // Terms that end in a full stop take no second one before the code system's notice.
+            $copyright = rtrim($copyright, '.');
             $copyright .= ($copyright !== '' ? '. ' : '') . (string)($codes['reference']['notice'] ?? '');
         }
         if ($copyright !== '') {
@@ -188,12 +192,18 @@ final readonly class QuestionnaireExport
         }
         $modules = [];
         $q['item'] = $this->items($doc, $codes, $modules);
-        if ($this->rich && array_filter($doc->blocks, static fn(array $b): bool => array_filter($b['item_sex'] ?? []) !== []) !== []) {
-            // The patient, for the rows asked of one sex: a host that has one supplies it as %patient.
+        $bySex = $this->rich && array_filter($doc->blocks, static fn(array $b): bool => array_filter($b['item_sex'] ?? []) !== []) !== [];
+        $prefilled = self::prefills($q['item']);
+        if ($bySex || $prefilled) {
+            // The patient: a host that has one (a SMART app; OpenEMR's own forms pass none) supplies it as %patient.
             $q['extension'][] = ['url' => self::LAUNCH_CONTEXT, 'extension' => [
                 ['url' => 'name', 'valueCoding' => ['system' => 'http://hl7.org/fhir/uv/sdc/CodeSystem/launchContext', 'code' => 'patient', 'display' => 'Patient']],
                 ['url' => 'type', 'valueCode' => 'Patient'],
-                ['url' => 'description', 'valueString' => 'The patient filling in the form, whose gender decides the rows asked of one sex'],
+                ['url' => 'description', 'valueString' => match (true) {
+                    $bySex && $prefilled => 'The patient filling in the form, whose gender decides the rows asked of one sex and whose record fills in the answers it holds, to check',
+                    $bySex => 'The patient filling in the form, whose gender decides the rows asked of one sex',
+                    default => 'The patient filling in the form, whose record fills in the answers it holds, to check',
+                }],
             ]];
         }
         $q = self::withNarrative($q, $doc->language);
@@ -585,7 +595,7 @@ final readonly class QuestionnaireExport
      */
     private function field(array $field, string $linkId, ?array $codes, string $language = 'en'): ?array
     {
-        $value = $field['value'] ?? '';
+        $value = Fill::fieldValue($field) ?? '';
         preg_match_all('/\{([a-z]+)\.[a-z]+\}/', $value, $m);
         if ($m[1] !== [] && array_unique($m[1]) === ['patient']) {
             return null;
@@ -612,7 +622,30 @@ final readonly class QuestionnaireExport
         if ($filled !== '' && $item['type'] === 'string') {
             $item['initial'] = [['valueString' => $filled]];
         }
+        // A chart fact a FHIR Patient carries: filled from the patient a host passes, for the patient to check.
+        // Only in the richer forms: runtimes before 0.4.0 don't run initialExpression.
+        $fill = Fill::of($field);
+        $expression = $this->rich && $fill !== null && Fill::isChart($fill) ? (Fill::FHIRPATH[substr($fill, strlen('chart.'))] ?? null) : null;
+        if ($expression !== null && $item['type'] === 'string' && !isset($item['initial'])) {
+            $item['extension'][] = ['url' => self::INITIAL_EXPRESSION, 'valueExpression' => ['language' => 'text/fhirpath', 'expression' => $expression]];
+        }
         return $item;
+    }
+
+    /** Whether any item is prefilled from the patient (an initialExpression). @param list<array<string, mixed>> $items */
+    private static function prefills(array $items): bool
+    {
+        foreach ($items as $item) {
+            foreach ($item['extension'] ?? [] as $e) {
+                if (($e['url'] ?? null) === self::INITIAL_EXPRESSION) {
+                    return true;
+                }
+            }
+            if (self::prefills($item['item'] ?? [])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

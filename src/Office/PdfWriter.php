@@ -22,6 +22,8 @@ use OpenHealthcare\ClinicForms\Paper\Renderer;
 final class PdfWriter implements OfficeWriter
 {
     private const BOX = "\u{2610}";
+    /** A box the chart's answer ticks (Fill), for the patient to check. */
+    private const TICKED = "\u{2611}";
     private const CSS = <<<'CSS'
         body { font-family: dejavusans; font-size: 10pt; line-height: 1.3; }
         h1 { font-size: 15pt; margin: 6pt 0 6pt 0; }
@@ -150,13 +152,13 @@ final class PdfWriter implements OfficeWriter
         return $value !== '' ? self::e($value) : '&nbsp;';
     }
 
-    public function checklist(?string $label, array $items): void
+    public function checklist(?string $label, array $items, ?int $ticked = null): void
     {
         if ($label !== null) {
             $this->html .= "<div class='label-only'>" . self::e($label) . "</div>";
         }
-        foreach ($items as $item) {
-            $this->html .= "<div class='item'>" . self::BOX . ' ' . self::e($item) . "</div>";
+        foreach ($items as $i => $item) {
+            $this->html .= "<div class='item'>" . ($i === $ticked ? self::TICKED : self::BOX) . ' ' . self::e($item) . "</div>";
         }
     }
 

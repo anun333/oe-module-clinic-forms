@@ -1,0 +1,100 @@
+{
+  "id": "housing-farm-work-service",
+  "translates": "f7ef8be6ef322d39",
+  "machine_assisted": true,
+  "title": "Vivienda, trabajo agrícola y servicio militar",
+  "category": "Recepción",
+  "about": "Tres preguntas de registro que cuenta el informe UDS (Tabla 4: situación de vivienda, trabajadores agrícolas, veteranos), en palabras sencillas, con respuestas en las categorías de las listas de Datos demográficos del módulo UDS Report. Impreso para un paciente, marca lo que ya tienen los Datos demográficos, para que el paciente lo revise. La vivienda cuenta como sin hogar durante 12 meses después de su último registro, y el trabajo agrícola cuenta si fue el trabajo principal en los últimos 24 meses.",
+  "blocks": [
+    {
+      "type": "include",
+      "block": "patient-identification"
+    },
+    {
+      "type": "paragraph",
+      "text": "Estas preguntas nos ayudan a encontrar programas y servicios que pueden ayudarle. Puede saltarse cualquier pregunta."
+    },
+    {
+      "type": "heading",
+      "text": "Dónde vive"
+    },
+    {
+      "type": "checklist",
+      "label": "¿Dónde vive ahora? (marque una)",
+      "single": true,
+      "items": [
+        "En mi propia casa, o en un lugar que alquilo o comparto",
+        "En un albergue para personas sin hogar",
+        "En una vivienda de transición",
+        "Con familiares o amigos, porque no tengo otro lugar adonde ir",
+        "En la calle, en un carro o en otro lugar que no es para vivir",
+        "En una vivienda permanente con servicios de apoyo",
+        "En otro lugar, sin una casa propia",
+        "Prefiero no decirlo"
+      ],
+      "fill": "chart.housing",
+      "fill_options": [
+        "housed",
+        "shelter",
+        "transitional",
+        "doubling_up",
+        "street",
+        "permanent_supportive",
+        "other_homeless",
+        "declined"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Trabajo agrícola"
+    },
+    {
+      "type": "checklist",
+      "label": "En los últimos dos años, ¿fue el trabajo agrícola el trabajo principal suyo o de alguien de su familia? Trabajo agrícola quiere decir sembrar, cosechar o empacar cultivos, o cuidar animales de granja. (marque una)",
+      "single": true,
+      "items": [
+        "No",
+        "Sí, y nos mudamos lejos de casa por el trabajo y vivimos en una vivienda temporal",
+        "Sí, y vivimos en casa mientras hacíamos el trabajo",
+        "Hice trabajo agrícola que requería mudarme, y ahora no puedo trabajar por mi edad o por una discapacidad",
+        "Prefiero no decirlo"
+      ],
+      "fill": "chart.agricultural",
+      "fill_options": [
+        "not_agricultural",
+        "migratory",
+        "seasonal",
+        "former_migratory",
+        "declined"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Servicio militar"
+    },
+    {
+      "type": "checklist",
+      "label": "¿Ha servido alguna vez en las fuerzas armadas o los servicios uniformados de los EE. UU.? (marque una)",
+      "single": true,
+      "items": [
+        "Sí, en el pasado. Ahora no estoy en servicio activo.",
+        "Sí, ahora estoy en servicio activo",
+        "No, nunca he servido",
+        "Prefiero no decirlo"
+      ],
+      "fill": "chart.veteran",
+      "fill_options": [
+        "veteran",
+        "active_duty",
+        "not_veteran",
+        "declined"
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o representante legal"
+      ]
+    }
+  ]
+}

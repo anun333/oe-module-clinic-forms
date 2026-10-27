@@ -35,7 +35,8 @@
           "value": "{provider.name}"
         },
         {
-          "label": "Pharmacy (name and phone)"
+          "label": "Pharmacy (name and phone)",
+          "fill": "chart.pharmacy"
         }
       ]
     },

@@ -23,7 +23,8 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Language I prefer to speak"
+          "label": "Language I prefer to speak",
+          "fill": "chart.language"
         },
         {
           "label": "Language I prefer to read"

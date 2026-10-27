@@ -18,6 +18,19 @@ Everything starts on one page: the Miscellaneous menu › **Clinic Forms**. Tick
 
 Leave **Add the language assistance taglines to patient pages** ticked: Section 1557 asks for the notices on intake, consent and privacy forms.
 
+### Check the answers already on file
+
+With **Fill in the current patient** ticked, a form that asks something the chart already holds comes with the answer filled in: email, mobile phone, language, race and ethnicity, emergency contact, pharmacy, a student's parent or guardian, care team, household size and monthly income, and insurance and member ID. The housing, farm work and military service form ticks the answers Demographics has (with the UDS Report module's fields). Each such form says at the top that some answers are filled in from what's on file.
+
+1. Ask the patient to read the filled-in answers, cross out anything wrong and write the correction beside it.
+2. Correct the chart yourself in Demographics: Clinic Forms never changes it.
+
+A screening questionnaire is never filled from an earlier answer: its questions are asked fresh each time. Confidential forms (Title X, 42 CFR Part 2, a minor's own consent) never carry a parent's, guardian's or insurance details.
+
+### Ask the questions UDS counts
+
+The housing, farm work and military service form asks, in plain words, the three registration questions UDS reporting counts. Its answers match the UDS Report module's Demographics choices, so staff can copy them across. Print it on its own or alongside the intake packet.
+
 ### Give a patient who uses a screen reader their forms
 
 Tick the documents and choose **Accessible copy**. On a server with LibreOffice it is a PDF tagged for screen readers; otherwise it is the Word file, which a screen reader can read. The page says which applies on your server.
@@ -53,9 +66,14 @@ The score appears only once every scored question is answered. If the patient le
 
 1. Tick the questionnaires.
 2. Optionally, under **Also list them in visits of these types (optional)**, tick visit types, so each appears in those visits' Questionnaires menu (OpenEMR 8.5 and later).
-3. Choose **Add to OpenEMR questionnaires**. Adding a form again updates it; a questionnaire Clinic Forms didn't add is left alone.
+3. Optionally, under **Also offer them to patients outside the visit (optional)**, tick **SMART apps, such as a form a patient fills in at home**: they are then listed for SMART apps, both those launched from the patient menu › Assessments › FHIR Assessments and one a patient opens themselves. A SMART app that passes the patient fills in what their record holds (email, mobile phone, language, race and ethnicity) for them to check. **Patient portal** keeps a setting for when OpenEMR's portal reads it; 8.5's doesn't yet.
+4. Choose **Add to OpenEMR questionnaires**. Adding a form again updates it; a questionnaire Clinic Forms didn't add is left alone.
 
 To use the forms in another system, **FHIR Questionnaire** downloads them as blank forms, never with patient details. Each is the complete form, ready to fill, including those built from shared parts, such as the PHQ-9 with the PHQ-2's questions.
+
+### Set your clinic's privacy contact and Section 1557 coordinator
+
+The notice of privacy practices, the Part 2 notice, the notice of nondiscrimination and the grievance form name your privacy contact, the date your notice took effect and your Section 1557 coordinator. Put them once in `settings.json` in your site's Clinic Forms folder and every copy prints them; the README shows the lines to add. Until then those lines print blank, to fill in by hand.
 
 ### Add your clinic's own Word or LibreOffice documents
 

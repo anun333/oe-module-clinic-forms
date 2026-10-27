@@ -74,4 +74,12 @@ final class VisitOfferingTest extends TestCase
         self::assertSame([], VisitOffering::chosen('5', $known), 'not a list');
         self::assertSame([], VisitOffering::chosen(null, $known));
     }
+
+    public function testOnlyTheSurfacesOfferedAreKeptEachOnceInOrder(): void
+    {
+        self::assertSame(['smart', 'portal'], VisitOffering::surfaces(['portal', 'smart', 'portal']));
+        self::assertSame(['smart'], VisitOffering::surfaces(['smart', 'encounter', 'dashboard', 3, null]));
+        self::assertSame([], VisitOffering::surfaces('smart'));
+        self::assertSame([], VisitOffering::surfaces(null));
+    }
 }

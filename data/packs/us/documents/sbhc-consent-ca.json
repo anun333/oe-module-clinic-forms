@@ -82,13 +82,16 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Primary doctor or clinic"
+          "label": "Primary doctor or clinic",
+          "fill": "chart.pcp"
         },
         {
-          "label": "Health plan"
+          "label": "Health plan",
+          "fill": "chart.insurance"
         },
         {
-          "label": "Member ID"
+          "label": "Member ID",
+          "fill": "chart.memberid"
         }
       ]
     },
@@ -96,10 +99,12 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Emergency contact"
+          "label": "Emergency contact",
+          "fill": "chart.emergency"
         },
         {
-          "label": "Their phone"
+          "label": "Their phone",
+          "fill": "chart.emergencyphone"
         }
       ]
     },
@@ -107,13 +112,16 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Your name"
+          "label": "Your name",
+          "fill": "chart.guardian"
         },
         {
-          "label": "Your relationship to the student"
+          "label": "Your relationship to the student",
+          "fill": "chart.guardianrelationship"
         },
         {
-          "label": "Phone"
+          "label": "Phone",
+          "fill": "chart.guardianphone"
         }
       ]
     },

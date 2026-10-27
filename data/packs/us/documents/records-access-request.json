@@ -59,7 +59,8 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Email address"
+          "label": "Email address",
+          "fill": "chart.email"
         }
       ]
     },

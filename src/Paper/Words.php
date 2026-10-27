@@ -36,6 +36,9 @@ final class Words
         'please check and correct' => 'revise y corrija, por favor',
         'This is what we have on file. Cross out anything that is wrong and write the correction beside it, and fill in anything missing.'
             => 'Esta es la información que tenemos. Tache lo que esté mal, escriba la corrección al lado y complete lo que falte.',
+        'Some answers are filled in from what we have on file. Cross out anything that is wrong and write the correction beside it.'
+            => 'Algunas respuestas ya están llenas con la información que tenemos. Tache lo que esté mal y escriba la corrección al lado.',
+        'ticked' => 'marcada',
         'For office use' => 'Para uso de la oficina',
         'N/A' => 'No aplica',
         'Notes' => 'Notas',

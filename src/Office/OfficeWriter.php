@@ -27,7 +27,8 @@ interface OfficeWriter
     public function fields(array $fields): void;
 
     /** @param list<string> $items */
-    public function checklist(?string $label, array $items): void;
+    /** @param ?int $ticked the item an answer carried from the chart ticks (Fill) */
+    public function checklist(?string $label, array $items, ?int $ticked = null): void;
 
     public function lines(string $label, int $count): void;
 

@@ -48,10 +48,12 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Number of people in household"
+          "label": "Number of people in household",
+          "fill": "chart.householdsize"
         },
         {
-          "label": "Total monthly household income"
+          "label": "Total monthly household income",
+          "fill": "chart.monthlyincome"
         },
         {
           "label": "Total yearly household income"

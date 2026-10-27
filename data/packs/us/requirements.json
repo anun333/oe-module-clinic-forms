@@ -2247,6 +2247,50 @@
           ]
         }
       ]
+    },
+    "housing-farm-work-service": {
+      "source": "HRSA Uniform Data System Manual, 2026, Table 4: Lines 14 to 16 (agricultural workers), Lines 17 to 23 (homeless status), Line 25 (veterans)",
+      "elements": [
+        {
+          "name": "Housing in UDS's homeless categories, and housed",
+          "cite": "UDS Manual 2026, Table 4, Lines 17 to 23",
+          "all": [
+            "homeless shelter",
+            "transitional housing",
+            "with family or friends, because i have nowhere else to go",
+            "on the street",
+            "permanent supportive housing",
+            "in my own home"
+          ]
+        },
+        {
+          "name": "Agricultural work as the main job in the past 24 months, for the patient or their family, migratory or seasonal",
+          "cite": "UDS Manual 2026, Table 4, Lines 14 to 16",
+          "all": [
+            "in the past two years",
+            "someone in your family",
+            "lived in a temporary home",
+            "lived at home while doing the work",
+            "age or a disability"
+          ]
+        },
+        {
+          "name": "Veterans: past service in the uniformed services, apart from active duty now",
+          "cite": "UDS Manual 2026, Table 4, Line 25",
+          "all": [
+            "military or uniformed services",
+            "active duty"
+          ]
+        },
+        {
+          "name": "A choice not to answer",
+          "cite": "UDS Manual 2026 (patients who chose not to report are counted apart)",
+          "all": [
+            "i would rather not say",
+            "you can skip any question"
+          ]
+        }
+      ]
     }
   }
 }

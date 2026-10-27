@@ -105,9 +105,18 @@ A labelled checklist can say what it asks in code, so the answer saved on screen
 
 The paper prints the document's own words. On screen each answer shows its code system's name, as coded instruments do. A question whose LOINC code LOINC's own questionnaires ask also names that item as its `definition` (`data/loinc-definitions.json`). SNOMED CT codes go out with the US Edition named, which holds the US extension's codes. Codes aren't wording: they change no version, and a translation copies them, like skip logic. A mistake (a wrong check digit, a code for each item missing, a LOINC answer with its own display) is refused when the file is read.
 
+## Answers already on file
+
+A question can carry what the clinic already has, printed when the document is filled for a patient:
+
+- **A field:** `{"label": "Email", "fill": "chart.email"}`. A chart fact (`chart.email`, `mobile`, `language`, `interpreter`, `race`, `ethnicity`, `emergency`, `emergencyphone`, `pharmacy`, `guardian`, `guardianrelationship`, `guardianphone`, `pcp`, `householdsize`, `monthlyincome`, `housing`, `veteran`, `agricultural`, `insurance`, `memberid`) or the clinic's own contact from `settings.json` (`clinic.privacy`, `privacyphone`, `privacyemail`, `noticedate`, `coordinator`, `coordinatorphone`, `coordinatoremail`). Not beside a `value`.
+- **A one-answer checklist:** `"single": true, "fill": "chart.housing", "fill_options": ["housed", "shelter", ...]`, one stored option id per item in order (`""` for an item no option matches). Only the facts the UDS Report module stores as lists: `chart.housing`, `chart.veteran`, `chart.agricultural`. The item whose option is on file prints ticked.
+
+A carried chart answer prints for the patient to check: the document says so at the top, and nothing goes back into the chart. A validated instrument's question never takes a fill, and the documents signed for confidential care (Title X, Part 2, a minor's own consent) never take a guardian's, an emergency contact's or insurance details: both are refused when the file is read. Like skip logic and codes, a fill isn't wording: it changes no version, and a translation copies it (the generator does). On screen, the chart facts a FHIR Patient holds become an SDC `initialExpression` on `%patient` in the richer forms.
+
 ## Placeholders
 
-Text can use `{group.key}`: `facility` (name, address, phone, fax, email, website, npi), `patient` (name, dob, id, address, street, city, state, zip, phone, sex, allergies, medications, problems), `recipient` (an Address Book entry), `provider` (the signing provider: name, credentials, npi, specialty), `user` (the person printing), `clinic.today`. An unknown placeholder is refused when the file is read.
+Text can use `{group.key}`: `facility` (name, address, phone, fax, email, website, npi), `patient` (name, dob, id, address, street, city, state, zip, phone, sex, allergies, medications, problems), `recipient` (an Address Book entry), `provider` (the signing provider: name, credentials, npi, specialty), `user` (the person printing), `clinic.today` and the clinic's contacts above, and the chart facts above (`{chart.email}`). An unknown placeholder is refused when the file is read.
 
 ## Translations
 

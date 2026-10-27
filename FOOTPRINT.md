@@ -12,7 +12,7 @@ Nothing. The module ships no install SQL (there is no `sql/` directory), so inst
 
 ## What it reads and writes at runtime
 
-30 SQL statements found in the module's PHP (`src/`, `public/`, `openemr.bootstrap.php`) and in the openhealthcare-common methods it calls (`vendor/anun333/openhealthcare-common/src/OpenEmr.php`). Data OpenEMR's own functions read on its behalf is not in this table; see the next section.
+33 SQL statements found in the module's PHP (`src/`, `public/`, `openemr.bootstrap.php`) and in the openhealthcare-common methods it calls (`vendor/anun333/openhealthcare-common/src/OpenEmr.php`). Data OpenEMR's own functions read on its behalf is not in this table; see the next section.
 
 | table | read by | written by | owner |
 |---|---|---|---|
@@ -21,6 +21,8 @@ Nothing. The module ships no install SQL (there is no `sql/` directory), so inst
 | `facility` | `src/Repository/SiteData.php` | — | OpenEMR core |
 | `forms` | `src/Repository/SiteData.php` | — | OpenEMR core |
 | `history_data` | `src/Repository/SiteData.php` | — | OpenEMR core |
+| `insurance_companies` | `src/Repository/SiteData.php` | — | OpenEMR core |
+| `insurance_data` | `src/Repository/SiteData.php` | — | OpenEMR core |
 | `layout_group_properties` | `src/Repository/SiteData.php` | — | OpenEMR core |
 | `layout_options` | `src/Repository/SiteData.php` | — | OpenEMR core |
 | `lbf_data` | `src/Repository/SiteData.php` | — | OpenEMR core |
@@ -94,11 +96,11 @@ As written in the source; whether they behave correctly for a given user is not 
 
 | part | files | lines |
 |---|---|---|
-| data (`data/`, read at runtime) | 320 | 212493 |
-| PHP logic (`src/`) | 44 | 7854 |
-| tests (`tests/`, `phpunit.xml.dist`) | 35 | 4678 |
+| data (`data/`, read at runtime) | 324 | 214592 |
+| PHP logic (`src/`) | 45 | 8265 |
+| tests (`tests/`, `phpunit.xml.dist`) | 36 | 4907 |
 | tools (`tools/`) | 11 | 1250 |
-| pages (`public/`) | 5 | 1017 |
+| pages (`public/`) | 5 | 1053 |
 | module wiring | 3 | 94 |
 
 ## Not covered here

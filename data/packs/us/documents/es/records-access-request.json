@@ -49,7 +49,8 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Correo electrónico"
+          "label": "Correo electrónico",
+          "fill": "chart.email"
         }
       ]
     },

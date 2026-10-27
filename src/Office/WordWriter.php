@@ -19,6 +19,8 @@ final class WordWriter implements OfficeWriter
     /** The text width in twentieths of a point: 8.5in less two 0.6in margins (A4 is narrower; Word scales the grid). */
     private const TEXT_WIDTH = 10512;
     private const BOX = "\u{2610}";
+    /** A box the chart's answer ticks (Fill), for the patient to check. */
+    private const TICKED = "\u{2611}";
     private const BLANK = '______________________________';
 
     private string $body = '';
@@ -81,13 +83,13 @@ final class WordWriter implements OfficeWriter
         }
     }
 
-    public function checklist(?string $label, array $items): void
+    public function checklist(?string $label, array $items, ?int $ticked = null): void
     {
         if ($label !== null) {
             $this->body .= $this->p($this->run($label, bold: true), '<w:keepNext/><w:spacing w:after="40"/>');
         }
-        foreach ($items as $item) {
-            $this->body .= $this->p($this->run(self::BOX . ' ' . $item), '<w:spacing w:after="20"/>');
+        foreach ($items as $i => $item) {
+            $this->body .= $this->p($this->run(($i === $ticked ? self::TICKED : self::BOX) . ' ' . $item), '<w:spacing w:after="20"/>');
         }
     }
 

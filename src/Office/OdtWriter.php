@@ -26,6 +26,8 @@ final class OdtWriter implements OfficeWriter
     private const MIME = 'application/vnd.oasis.opendocument.text';
     private const BARCODE = 'Pictures/barcode.svg';
     private const BOX = "\u{2610}";
+    /** A box the chart's answer ticks (Fill), for the patient to check. */
+    private const TICKED = "\u{2611}";
     private const BLANK = '______________________________';
 
     private string $body = '';
@@ -96,13 +98,13 @@ final class OdtWriter implements OfficeWriter
         }
     }
 
-    public function checklist(?string $label, array $items): void
+    public function checklist(?string $label, array $items, ?int $ticked = null): void
     {
         if ($label !== null) {
             $this->body .= $this->p('Label', self::e($label));
         }
-        foreach ($items as $item) {
-            $this->body .= $this->p('Item', self::e(self::BOX . ' ' . $item));
+        foreach ($items as $i => $item) {
+            $this->body .= $this->p('Item', self::e(($i === $ticked ? self::TICKED : self::BOX) . ' ' . $item));
         }
     }
 

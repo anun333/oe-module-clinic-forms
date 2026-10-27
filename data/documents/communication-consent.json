@@ -36,10 +36,12 @@
           "value": "{patient.phone}"
         },
         {
-          "label": "Mobile phone for text messages"
+          "label": "Mobile phone for text messages",
+          "fill": "chart.mobile"
         },
         {
-          "label": "Email"
+          "label": "Email",
+          "fill": "chart.email"
         },
         {
           "label": "Other address for mail, if any"

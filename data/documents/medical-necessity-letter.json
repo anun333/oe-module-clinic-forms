@@ -47,7 +47,8 @@
           "value": "{patient.dob}"
         },
         {
-          "label": "Member ID"
+          "label": "Member ID",
+          "fill": "chart.memberid"
         },
         {
           "label": "Group number"

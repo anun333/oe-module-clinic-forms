@@ -22,6 +22,9 @@ final readonly class Renderer
     /** Field labels longer than this many characters take the whole width (isLongLabel). */
     public const LONG_LABEL = 40;
 
+    /** What a document says at the top when it carries answers from the chart. */
+    public const CARRIED = 'Some answers are filled in from what we have on file. Cross out anything that is wrong and write the correction beside it.';
+
     private function t(string $english): string
     {
         return Words::t($english, $this->language);
@@ -117,12 +120,16 @@ final readonly class Renderer
             return (new self($this->context->withoutPatient(), $this->language, $this->taglines, $this->labelBox))->document($doc);
         }
         $html = $this->open($doc->title, $doc->poster, $this->stamp($doc)) . $this->labelBox($doc->poster) . $this->letterhead() . "<h1>" . $this->text($doc->title) . "</h1>";
+        // Answers carried from the chart are there to be checked, never silently reused.
+        if (Fill::carries($doc, $this->context)) {
+            $html .= "<p class='cf-intro cf-carried-intro'>" . self::e($this->t(self::CARRIED)) . "</p>";
+        }
         foreach ($doc->blocks as $block) {
             $html .= match ($block['type']) {
                 'heading' => "<h2>" . $this->text($block['text']) . "</h2>",
                 'paragraph' => "<p>" . $this->text($block['text']) . "</p>",
                 'fields' => $this->fields($block['fields']),
-                'checklist' => $this->checklist($block['label'] ?? null, $block['items']),
+                'checklist' => $this->checklist($block['label'] ?? null, $block['items'], Fill::tickedItem($block, $this->context)),
                 'lines' => $this->lines($block['label'], $block['count']),
                 'signature' => $this->signatures($block['signers']),
                 'scale' => $this->scale($block['label'], $block['columns'], $block['items'], $block['scores'] ?? null, $block['total'] ?? null, $block['item_scores'] ?? null, $block['start'] ?? 1),
@@ -182,10 +189,13 @@ final readonly class Renderer
     {
         $html = "<div class='cf-fields'>";
         foreach ($fields as $field) {
-            $value = isset($field['value']) ? $this->text($field['value'], false) : '';
+            $raw = Fill::fieldValue($field);
+            $value = $raw !== null ? $this->text($raw, false) : '';
             $class = self::isLongLabel($field['label']) ? 'cf-field cf-field-long' : 'cf-field';
+            $fill = Fill::of($field);
+            $carried = $fill !== null && Fill::isChart($fill) && $value !== '' ? ' cf-carried' : '';
             $html .= "<div class='$class'><span class='cf-label'>" . $this->text($field['label']) . "</span>"
-                . "<span class='cf-blank'>" . $value . "</span></div>";
+                . "<span class='cf-blank$carried'>" . $value . "</span></div>";
         }
         return $html . "</div>";
     }
@@ -200,12 +210,17 @@ final readonly class Renderer
         return mb_strlen($label) > self::LONG_LABEL;
     }
 
-    /** @param list<string> $items */
-    private function checklist(?string $label, array $items): string
+    /**
+     * @param list<string> $items
+     * @param ?int $ticked the item the chart's answer ticks (Fill), printed ticked for the patient to check
+     */
+    private function checklist(?string $label, array $items, ?int $ticked = null): string
     {
         $html = "<div class='cf-checklist'>" . ($label !== null ? "<div class='cf-label'>" . $this->text($label) . "</div>" : '');
-        foreach ($items as $item) {
-            $html .= "<div class='cf-check'><span class='cf-box'></span>" . $this->text($item) . "</div>";
+        foreach ($items as $i => $item) {
+            $html .= $i === $ticked
+                ? "<div class='cf-check cf-carried'><span class='cf-box cf-box-ticked' role='img' aria-label='" . self::e($this->t('ticked')) . "'>✓</span>" . $this->text($item) . "</div>"
+                : "<div class='cf-check'><span class='cf-box'></span>" . $this->text($item) . "</div>";
         }
         return $html . "</div>";
     }

@@ -22,10 +22,12 @@
           "value": "{patient.phone}"
         },
         {
-          "label": "Teléfono celular para mensajes de texto"
+          "label": "Teléfono celular para mensajes de texto",
+          "fill": "chart.mobile"
         },
         {
-          "label": "Correo electrónico"
+          "label": "Correo electrónico",
+          "fill": "chart.email"
         },
         {
           "label": "Otra dirección para el correo, si la hay"
