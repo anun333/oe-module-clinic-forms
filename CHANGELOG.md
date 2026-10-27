@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.44.1 (unreleased)
+## 0.44.1 (2026-10-27)
 
 **Faster answers kept on file.**
 
