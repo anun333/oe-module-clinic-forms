@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.44.1 (unreleased)
+
+**Faster answers kept on file.**
+
+- **Two indexes on core tables,** the module's first install SQL: `questionnaire_response.patient_id`, and `form_questionnaire_assessments.response_id`, the same index under the same name the UDS, Title X, CCBHC and Worklist modules add, so whichever runs first creates it and the others skip it. Each is skipped when it's already there. No table is created.
+- **Why:** a filled print looked up the patient's earlier answers by reading both tables whole. On a copy with 20,000 patients and 36,209 saved responses that took 24 to 61 ms a print, growing with every response a clinic saves; with the indexes, 0.7 to 2.2 ms, with the same answers.
+- **Upgrading:** after the files are in place, click **Install SQL** next to Clinic Forms under **Modules › Manage Modules** once. A new install runs it as part of installing.
+- **FOOTPRINT.md** lists the two indexes, through openhealthcare-common 1.5.1's footprint tool, which now reads an index as an index.
+
 ## 0.44.0 (2026-10-27)
 
 **Answers kept on file: what a patient told us on an earlier form comes back to check.**
