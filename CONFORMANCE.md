@@ -12,7 +12,7 @@ A document not cleared for public release is held, with its reason (`data/releas
 
 Checked beside this, outside the module: every FHIR export against FHIR R4 and SDC 4.0.0 (the HL7 validator), skip logic and totals in OpenEMR's own questionnaire runtime, and patient PDFs against PDF/UA-1. The README says where.
 
-**96 documents:** 44 written, 33 rule, 19 instrument. Nothing out of conformance. Held for release: none.
+**97 documents:** 44 written, 34 rule, 19 instrument. Nothing out of conformance. Held for release: none.
 
 ## Written to a rule
 
@@ -25,6 +25,7 @@ Checked beside this, outside the module: every FHIR export against FHIR R4 and S
 | `release-of-information` (patient) | HIPAA authorization, 45 CFR 164.508(c) | 11 elements of its rule (requirements.json); reading level grade 7.9 | cleared |
 | `care-management-consent` (patient) | Medicare care management consent: MLN909188 (CCM) and Medicare Benefit Policy Manual chapter 13, section 230.2 (RHC and FQHC) | 6 elements of its rule (requirements.json); reading level grade 6.8 | cleared |
 | `good-faith-estimate` (patient) | No Surprises Act: good faith estimates for uninsured or self-pay patients, 45 CFR 149.610(c) | 10 elements of its rule (requirements.json); reading level grade 5.4 | cleared |
+| `housing-farm-work-service` (patient) | HRSA Uniform Data System Manual, 2026, Table 4 (housing status; agricultural workers; veterans) | 4 elements of its rule (requirements.json); reading level grade 2.9 | cleared |
 | `medicare-secondary-payer-questions` (patient) | Medicare Secondary Payer Manual (Pub. 100-05), chapter 3, section 20.2.1: model questions | 3 elements of its rule (requirements.json); reading level grade 4.6 | cleared |
 | `payment-plan-agreement` (patient) | HRSA Health Center Program Compliance Manual, Chapter 16: Billing and Collections (last reviewed December 2025) | 6 elements of its rule (requirements.json); reading level grade 5.8 | cleared |
 | `race-ethnicity-disability` (patient) | OMB Statistical Policy Directive No. 15 (89 FR 22182, March 29, 2024); HHS Implementation Guidance on Data Collection Standards (October 31, 2011), disability status | 5 elements of its rule (requirements.json); reading level grade 4.0 | cleared |
