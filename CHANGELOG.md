@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.44.0 (unreleased)
+## 0.44.0 (2026-10-27)
 
 **Answers kept on file: what a patient told us on an earlier form comes back to check.**
 
