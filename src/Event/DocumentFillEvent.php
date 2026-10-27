@@ -9,7 +9,10 @@
  *
  *   $dispatcher->addListener(DocumentFillEvent::EVENT_NAME, function (object $event): void { ... });
  *
- * A listener in another module can use the name 'clinic_forms.document.fill' without this class.
+ * A listener in another module can use the name 'clinic_forms.document.fill' without this class, and
+ * openhealthcare-common's Contract\Forms\DocumentFill (1.5.0) reads the event for it. That contract states what a
+ * listener may rely on here (the four properties and fillTable()), so keep them as they are
+ * (tests/Paper/DocumentFillContractTest.php).
  *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
