@@ -7,10 +7,12 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Si firma un representante: nombre"
+          "label": "Si firma un representante: nombre",
+          "fill": "kept.repname"
         },
         {
-          "label": "Relación o autoridad legal"
+          "label": "Relación o autoridad legal",
+          "fill": "kept.reprole"
         }
       ]
     }

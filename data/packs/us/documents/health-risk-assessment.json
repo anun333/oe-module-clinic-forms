@@ -47,7 +47,9 @@
           "fill": "chart.ethnicity"
         },
         {
-          "label": "Who you live with"
+          "label": "Who you live with",
+          "defines": "livewith",
+          "fill": "kept.livewith"
         }
       ]
     },
@@ -217,12 +219,16 @@
     {
       "type": "lines",
       "label": "Other doctors, therapists, home health agencies or medical equipment suppliers you use",
-      "count": 3
+      "count": 3,
+      "defines": "othercare",
+      "fill": "kept.othercare"
     },
     {
       "type": "lines",
       "label": "Medicines you take, including vitamins, calcium and other supplements",
-      "count": 4
+      "count": 4,
+      "defines": "medicines",
+      "fill": "kept.medicines"
     },
     {
       "type": "heading",

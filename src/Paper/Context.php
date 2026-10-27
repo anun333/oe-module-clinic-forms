@@ -30,6 +30,12 @@ final readonly class Context
             'guardian', 'guardianrelationship', 'guardianphone', 'pcp', 'householdsize', 'monthlyincome',
             'housing', 'veteran', 'agricultural', 'insurance', 'memberid',
         ],
+        // Answers kept on file from an earlier form (Kept::keys()).
+        'kept' => [
+            'repname', 'reprelationship', 'repauthority', 'repphone', 'repaddress', 'repemail', 'repother', 'repstarts', 'repends',
+            'packsperday', 'yearssmoked', 'yearquit', 'familycancers', 'countries', 'school', 'grade', 'livewith', 'othercare',
+            'medicines', 'readlanguage', 'reprole',
+        ],
     ];
 
     /**
@@ -43,6 +49,7 @@ final readonly class Context
      * @param array<string, string> $chart     keys from KEYS['chart']: what the patient's chart holds, shown as text; empty for a blank form
      * @param array<string, string> $site      the clinic's own contacts (KEYS['clinic'] except today), from settings.json
      * @param array<string, string> $chartCodes for the chart facts a checklist ticks (housing, veteran, agricultural): the stored option id
+     * @param array<string, array{value: string, from: string, date: string}> $kept answers kept on file from an earlier form (Kept), with the form and the date they came from
      */
     public function __construct(
         public array $facility,
@@ -55,6 +62,7 @@ final readonly class Context
         public array $chart = [],
         public array $site = [],
         public array $chartCodes = [],
+        public array $kept = [],
     ) {
     }
 
@@ -83,9 +91,22 @@ final readonly class Context
             'provider' => $this->provider[$key] ?? '',
             'clinic' => $key === 'today' ? $this->today : ($this->site[$key] ?? ''),
             'chart' => $this->chart[$key] ?? '',
+            'kept' => $this->kept[$key]['value'] ?? '',
             default => '',
         };
         return trim($value);
+    }
+
+    /**
+     * Where a kept answer came from ("kept.repname"): the form and the date it was given, or null.
+     *
+     * @return ?array{from: string, date: string}
+     */
+    public function keptFrom(string $placeholder): ?array
+    {
+        [$group, $key] = array_pad(explode('.', $placeholder, 2), 2, '');
+        $kept = $group === 'kept' ? ($this->kept[$key] ?? null) : null;
+        return $kept !== null && trim($kept['value']) !== '' ? ['from' => $kept['from'], 'date' => $kept['date']] : null;
     }
 
     public static function isKnown(string $placeholder): bool

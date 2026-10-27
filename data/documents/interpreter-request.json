@@ -27,7 +27,9 @@
           "fill": "chart.language"
         },
         {
-          "label": "Language I prefer to read"
+          "label": "Language I prefer to read",
+          "defines": "readlanguage",
+          "fill": "kept.readlanguage"
         }
       ]
     },

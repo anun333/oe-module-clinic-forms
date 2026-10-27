@@ -26,6 +26,7 @@
 .cf-box-ticked { font-size: 0.13in; line-height: 0.14in; text-align: center; }
 /* An answer carried from the chart, to check: a dotted line under it, so a correction beside it reads as one. */
 .cf-carried { text-decoration: underline dotted; }
+.cf-kept-from { font-size: 0.85em; text-decoration: none; }
 .cf-on { font: bold 9pt/0.14in Arial, Helvetica, sans-serif; text-align: center; }
 .cf-taglines { margin-top: 0.18in; border-top: 0.5pt solid #999; padding-top: 0.04in; font-family: Arial, Helvetica, sans-serif; font-size: 7.5pt; break-inside: avoid; page-break-inside: avoid; }
 .cf-taglines p { margin: 0.02in 0; }

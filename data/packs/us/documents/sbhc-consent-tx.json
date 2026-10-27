@@ -28,10 +28,14 @@
           "value": "{patient.dob}"
         },
         {
-          "label": "School"
+          "label": "School",
+          "defines": "school",
+          "fill": "kept.school"
         },
         {
-          "label": "Grade"
+          "label": "Grade",
+          "defines": "grade",
+          "fill": "kept.grade"
         }
       ]
     },

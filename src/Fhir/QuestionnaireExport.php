@@ -56,6 +56,7 @@ use OpenHealthcare\ClinicForms\Paper\Context;
 use OpenHealthcare\ClinicForms\Paper\Document;
 use OpenHealthcare\ClinicForms\Paper\Fill;
 use OpenHealthcare\ClinicForms\Paper\Instrument;
+use OpenHealthcare\ClinicForms\Paper\Kept;
 use OpenHealthcare\ClinicForms\Paper\Loinc;
 use OpenHealthcare\ClinicForms\Paper\Words;
 use OpenHealthcare\Common\QuestionnaireRuntime;
@@ -370,6 +371,7 @@ final readonly class QuestionnaireExport
                         }
                     } elseif (isset($block['label'])) {
                         $item = $this->choice("$id", (string)$block['label'], array_map(fn(string $i): array => self::scored($this->text($i)), $block['items']), $codes['map'][++$asked] ?? null, !$doc->validated, $doc->language);
+                        $item = isset($block['defines']) && !isset($item['definition']) ? ['linkId' => $item['linkId']] + self::kept($block) + $item : $item;
                         $add($item);
                         if (isset($block['id'])) {
                             $targets[$block['id']] = ['linkId' => $item['linkId'], 'answers' => $item['answerOption']];
@@ -424,7 +426,7 @@ final readonly class QuestionnaireExport
                     }
                     break;
                 case 'lines':
-                    $add(['linkId' => $id, 'text' => $this->text($block['label']), 'type' => 'text']);
+                    $add(['linkId' => $id] + self::kept($block) + ['text' => $this->text($block['label']), 'type' => 'text']);
                     break;
                 case 'signature':
                     foreach ($block['signers'] as $n => $signer) {
@@ -617,7 +619,7 @@ final readonly class QuestionnaireExport
                 ['url' => 'http://hl7.org/fhir/StructureDefinition/maxValue', 'valueInteger' => $field['number'][1]],
             ]];
         }
-        $item = ['linkId' => $linkId, 'text' => $label, 'type' => preg_match('/\b(date|fecha)\b/iu', $label) === 1 ? 'date' : 'string'];
+        $item = ['linkId' => $linkId] + self::kept($field) + ['text' => $label, 'type' => preg_match('/\b(date|fecha)\b/iu', $label) === 1 ? 'date' : 'string'];
         $filled = $this->value($value);
         if ($filled !== '' && $item['type'] === 'string') {
             $item['initial'] = [['valueString' => $filled]];
@@ -757,6 +759,17 @@ final readonly class QuestionnaireExport
                 : ['answerString' => $option['valueString']]);
         }
         return $out === [] ? [] : ['enableWhen' => $out] + (count($out) > 1 ? ['enableBehavior' => 'any'] : []);
+    }
+
+    /**
+     * The definition of a question that asks an answer kept on file (Kept): found again in a saved
+     * response whatever the form's later wording or layout.
+     *
+     * @return array{definition?: string}
+     */
+    private static function kept(array $question): array
+    {
+        return isset($question['defines']) && is_string($question['defines']) ? ['definition' => Kept::DEFINITION . $question['defines']] : [];
     }
 
     /** @return array{definition?: string} where LOINC's own questionnaire defines the question, when it does */

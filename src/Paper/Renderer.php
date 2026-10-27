@@ -25,6 +25,9 @@ final readonly class Renderer
     /** What a document says at the top when it carries answers from the chart. */
     public const CARRIED = 'Some answers are filled in from what we have on file. Cross out anything that is wrong and write the correction beside it.';
 
+    /** Beside an answer kept from an earlier form: the form's title and the date it was given. */
+    public const KEPT_FROM = 'from %1$s on %2$s: still right?';
+
     private function t(string $english): string
     {
         return Words::t($english, $this->language);
@@ -130,7 +133,7 @@ final readonly class Renderer
                 'paragraph' => "<p>" . $this->text($block['text']) . "</p>",
                 'fields' => $this->fields($block['fields']),
                 'checklist' => $this->checklist($block['label'] ?? null, $block['items'], Fill::tickedItem($block, $this->context)),
-                'lines' => $this->lines($block['label'], $block['count']),
+                'lines' => $this->lines($block['label'], $block['count'], Fill::of($block)),
                 'signature' => $this->signatures($block['signers']),
                 'scale' => $this->scale($block['label'], $block['columns'], $block['items'], $block['scores'] ?? null, $block['total'] ?? null, $block['item_scores'] ?? null, $block['start'] ?? 1),
                 'table' => $this->table($block['label'], $block['columns'], $block['rows'], $block['values'] ?? [], $block['note'] ?? null),
@@ -193,9 +196,9 @@ final readonly class Renderer
             $value = $raw !== null ? $this->text($raw, false) : '';
             $class = self::isLongLabel($field['label']) ? 'cf-field cf-field-long' : 'cf-field';
             $fill = Fill::of($field);
-            $carried = $fill !== null && Fill::isChart($fill) && $value !== '' ? ' cf-carried' : '';
+            $carried = $fill !== null && Fill::isCarried($fill) && $value !== '' ? ' cf-carried' : '';
             $html .= "<div class='$class'><span class='cf-label'>" . $this->text($field['label']) . "</span>"
-                . "<span class='cf-blank$carried'>" . $value . "</span></div>";
+                . "<span class='cf-blank$carried'>" . $value . $this->keptFrom($fill) . "</span></div>";
         }
         return $html . "</div>";
     }
@@ -225,10 +228,19 @@ final readonly class Renderer
         return $html . "</div>";
     }
 
-    private function lines(string $label, int $count): string
+    private function lines(string $label, int $count, ?string $fill = null): string
     {
+        $value = $fill !== null ? $this->context->value($fill) : '';
+        $first = $value !== '' ? "<div class='cf-line cf-carried'>" . self::e($value) . $this->keptFrom($fill) . "</div>" : '';
         return "<div class='cf-lines'><div class='cf-label'>" . $this->text($label) . "</div>"
-            . str_repeat("<div class='cf-line'></div>", $count) . "</div>";
+            . $first . str_repeat("<div class='cf-line'></div>", $value !== '' ? max(0, $count - 1) : $count) . "</div>";
+    }
+
+    /** Where an answer kept on file came from, for the patient to check: "(from Personal Representative on 3/2/2026: still right?)". */
+    private function keptFrom(?string $fill): string
+    {
+        $from = $fill !== null ? $this->context->keptFrom($fill) : null;
+        return $from === null ? '' : " <span class='cf-kept-from'>(" . self::e(sprintf($this->t(self::KEPT_FROM), $from['from'], $from['date'])) . ")</span>";
     }
 
     /**

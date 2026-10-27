@@ -27,6 +27,15 @@ With **Fill in the current patient** ticked, a form that asks something the char
 
 A screening questionnaire is never filled from an earlier answer: its questions are asked fresh each time. Confidential forms (Title X, 42 CFR Part 2, a minor's own consent) never carry a parent's, guardian's or insurance details.
 
+### Check the answers kept from an earlier form
+
+Some answers the chart has no place for come back from the forms the patient filled in on screen before: the personal representative (on every consent a representative may sign), pack-years, family cancers and countries lived in (Preventive Care Questions), school and grade (the school-based health center consents), who the patient lives with, other care and medicines (the health risk assessment), and the language the patient reads (Interpreter Request). Each says which form and date it came from and asks "still right?".
+
+1. Ask the patient to check each one and correct it beside it.
+2. A representative is carried only from the latest Personal Representative form, and not after the end date it gives. If the authority has changed, fill in a new Personal Representative form.
+
+Forms signed for confidential care (Title X, 42 CFR Part 2, a minor's own consent) never carry a representative, and nothing said in them is carried into another form.
+
 ### Ask the questions UDS counts
 
 The housing, farm work and military service form asks, in plain words, the three registration questions UDS reporting counts. Its answers match the UDS Report module's Demographics choices, so staff can copy them across. Print it on its own or alongside the intake packet.

@@ -129,8 +129,8 @@ final class FillTest extends TestCase
     {
         $base = ['id' => 'my-form', 'title' => 'My form', 'category' => 'Front desk', 'about' => 'A test', 'audience' => 'patient'];
         $cases = [
-            'an unknown fact' => [[['type' => 'fields', 'fields' => [['label' => 'Email', 'fill' => 'chart.ssn']]]], 'fill: a chart fact or the clinic'],
-            'the patient group' => [[['type' => 'fields', 'fields' => [['label' => 'Name', 'fill' => 'patient.name']]]], 'fill: a chart fact or the clinic'],
+            'an unknown fact' => [[['type' => 'fields', 'fields' => [['label' => 'Email', 'fill' => 'chart.ssn']]]], 'fill: a chart fact, an answer kept on file or the clinic'],
+            'the patient group' => [[['type' => 'fields', 'fields' => [['label' => 'Name', 'fill' => 'patient.name']]]], 'fill: a chart fact, an answer kept on file or the clinic'],
             'a value as well' => [[['type' => 'fields', 'fields' => [['label' => 'Email', 'value' => '{patient.name}', 'fill' => 'chart.email']]]], 'a value or a fill, not both'],
             'a checklist of several answers' => [[['type' => 'checklist', 'items' => ['Yes', 'No'], 'fill' => 'chart.veteran', 'fill_options' => ['veteran', 'not_veteran']]], 'only with "single": true'],
             'a checklist of a fact no list stores' => [[['type' => 'checklist', 'single' => true, 'items' => ['Yes', 'No'], 'fill' => 'chart.email', 'fill_options' => ['a', 'b']]], 'from a chart fact a list stores'],

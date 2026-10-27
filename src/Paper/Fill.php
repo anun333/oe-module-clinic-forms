@@ -20,6 +20,9 @@
  * signs for confidential care (Title X, Part 2, a minor's own consent), the facts that would carry
  * a family's details into them (guardian, insurance).
  *
+ * An answer kept on file from an earlier form ("kept.repname", see Kept) is carried the same way, with
+ * the form and date it came from, and asked to be checked.
+ *
  * On screen, the chart facts a FHIR Patient resource carries become SDC initialExpressions on the
  * patient (%patient), for a host that passes one, such as a SMART app; OpenEMR's own forms pass
  * none, so the question is asked as before.
@@ -99,6 +102,15 @@ final class Fill
     }
 
     /**
+     * Whether the fill is the patient's own, from the chart or an answer kept from an earlier form
+     * (Kept): printed for the patient to check and correct.
+     */
+    public static function isCarried(string $fill): bool
+    {
+        return self::isChart($fill) || Kept::isKept($fill);
+    }
+
+    /**
      * A field's value as text to fill: its own "value", or its fill as a placeholder, or null.
      *
      * @param array{label?: string, value?: string, fill?: string} $field
@@ -135,9 +147,12 @@ final class Fill
             if ($fill !== null && self::isChart($fill) && self::tickedItem($block, $context) !== null) {
                 return true;
             }
+            if ($block['type'] === 'lines' && $fill !== null && self::isCarried($fill) && $context->value($fill) !== '') {
+                return true;
+            }
             foreach ($block['type'] === 'fields' ? $block['fields'] : [] as $field) {
                 $f = is_array($field) ? self::of($field) : null;
-                if ($f !== null && self::isChart($f) && $context->value($f) !== '') {
+                if ($f !== null && self::isCarried($f) && $context->value($f) !== '') {
                     return true;
                 }
             }

@@ -12,14 +12,15 @@ Nothing. The module ships no install SQL (there is no `sql/` directory), so inst
 
 ## What it reads and writes at runtime
 
-33 SQL statements found in the module's PHP (`src/`, `public/`, `openemr.bootstrap.php`) and in the openhealthcare-common methods it calls (`vendor/anun333/openhealthcare-common/src/OpenEmr.php`). Data OpenEMR's own functions read on its behalf is not in this table; see the next section.
+34 SQL statements found in the module's PHP (`src/`, `public/`, `openemr.bootstrap.php`) and in the openhealthcare-common methods it calls (`vendor/anun333/openhealthcare-common/src/OpenEmr.php`). Data OpenEMR's own functions read on its behalf is not in this table; see the next section.
 
 | table | read by | written by | owner |
 |---|---|---|---|
 | `categories` | `src/Repository/SiteData.php` | — | OpenEMR core |
 | `content_assignments` | `src/Compat/OpenEmr.php` | — | OpenEMR core |
 | `facility` | `src/Repository/SiteData.php` | — | OpenEMR core |
-| `forms` | `src/Repository/SiteData.php` | — | OpenEMR core |
+| `form_questionnaire_assessments` | `src/Repository/KeptAnswers.php` | — | OpenEMR core |
+| `forms` | `src/Repository/KeptAnswers.php`<br>`src/Repository/SiteData.php` | — | OpenEMR core |
 | `history_data` | `src/Repository/SiteData.php` | — | OpenEMR core |
 | `insurance_companies` | `src/Repository/SiteData.php` | — | OpenEMR core |
 | `insurance_data` | `src/Repository/SiteData.php` | — | OpenEMR core |
@@ -31,6 +32,8 @@ Nothing. The module ships no install SQL (there is no `sql/` directory), so inst
 | `openemr_postcalendar_categories` | `src/Compat/OpenEmr.php` | — | OpenEMR core |
 | `patient_data` | `src/Repository/SiteData.php` | — | OpenEMR core |
 | `pharmacies` | `src/Repository/SiteData.php` | — | OpenEMR core |
+| `questionnaire_repository` | `src/Repository/KeptAnswers.php` | — | OpenEMR core |
+| `questionnaire_response` | `src/Repository/KeptAnswers.php` | — | OpenEMR core |
 | `registry` | `src/Compat/OpenEmr.php` | `src/Compat/OpenEmr.php` | OpenEMR core |
 | `users` | `src/Repository/SiteData.php` | — | OpenEMR core |
 
@@ -96,11 +99,11 @@ As written in the source; whether they behave correctly for a given user is not 
 
 | part | files | lines |
 |---|---|---|
-| data (`data/`, read at runtime) | 328 | 219897 |
-| PHP logic (`src/`) | 45 | 8265 |
-| tests (`tests/`, `phpunit.xml.dist`) | 36 | 4907 |
+| data (`data/`, read at runtime) | 328 | 219956 |
+| PHP logic (`src/`) | 47 | 8868 |
+| tests (`tests/`, `phpunit.xml.dist`) | 37 | 5208 |
 | tools (`tools/`) | 11 | 1250 |
-| pages (`public/`) | 5 | 1053 |
+| pages (`public/`) | 5 | 1068 |
 | module wiring | 3 | 94 |
 
 ## Not covered here

@@ -8,10 +8,12 @@
       "type": "fields",
       "fields": [
         {
-          "label": "If signed by a representative: name"
+          "label": "If signed by a representative: name",
+          "fill": "kept.repname"
         },
         {
-          "label": "Relationship or legal authority"
+          "label": "Relationship or legal authority",
+          "fill": "kept.reprole"
         }
       ]
     }

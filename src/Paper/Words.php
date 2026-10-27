@@ -38,6 +38,7 @@ final class Words
             => 'Esta es la información que tenemos. Tache lo que esté mal, escriba la corrección al lado y complete lo que falte.',
         'Some answers are filled in from what we have on file. Cross out anything that is wrong and write the correction beside it.'
             => 'Algunas respuestas ya están llenas con la información que tenemos. Tache lo que esté mal y escriba la corrección al lado.',
+        'from %1$s on %2$s: still right?' => 'de %1$s del %2$s: ¿sigue siendo correcto?',
         'ticked' => 'marcada',
         'For office use' => 'Para uso de la oficina',
         'N/A' => 'No aplica',

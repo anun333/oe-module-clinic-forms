@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.44.0 (unreleased)
+
+**Answers kept on file: what a patient told us on an earlier form comes back to check.**
+
+- **The representative on file fills the consents.** With **Fill in the current patient** ticked, the representative lines of the 19 consents and requests a representative may sign carry the name, and the relationship with the authority ticked, from the latest Personal Representative form filled in on screen, with "from Personal Representative on <date>: still right?". Not after the end date that form gives, and never into a form signed for confidential care (Title X, 42 CFR Part 2, a minor's own consent).
+- **More answers come back the same way,** each for as long as it holds: pack-years (a year), family cancers and countries lived in (until changed) on Preventive Care Questions; school and grade (this school year) on the school-based health center consents; who the patient lives with, other care and medicines (a year) on the health risk assessment; the language the patient reads on Interpreter Request.
+- **Nothing new is stored.** The answers are read from OpenEMR's own saved questionnaire responses, counted as the report modules count them: never one entered in error or stopped, never one whose encounter form was deleted. A screening questionnaire's questions are never filled, and nothing said on a confidential form is carried out of it.
+- **On screen,** each question that asks such a fact carries its definition (`https://github.com/anun333/oe-module-clinic-forms/definition/…`), so its answer is found again whatever the form's later wording; a response saved before 0.44.0 is matched by its wording.
+- **For document authors:** `"defines"` on the question that asks a fact, `"fill": "kept.…"` where it's carried; see [docs/DOCUMENT-FORMAT.md](docs/DOCUMENT-FORMAT.md#answers-kept-on-file-from-an-earlier-form).
+
 ## 0.43.0 (2026-10-26)
 
 **The two CCBHC evaluations.**

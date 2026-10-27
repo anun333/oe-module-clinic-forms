@@ -44,13 +44,19 @@
       "type": "fields",
       "fields": [
         {
-          "label": "If you have ever smoked: packs a day, on average"
+          "label": "If you have ever smoked: packs a day, on average",
+          "defines": "packsperday",
+          "fill": "kept.packsperday"
         },
         {
-          "label": "For how many years"
+          "label": "For how many years",
+          "defines": "yearssmoked",
+          "fill": "kept.yearssmoked"
         },
         {
-          "label": "If you quit, the year you quit"
+          "label": "If you quit, the year you quit",
+          "defines": "yearquit",
+          "fill": "kept.yearquit"
         }
       ]
     },
@@ -96,7 +102,9 @@
     {
       "type": "lines",
       "label": "For each yes: who, and their age when it was found",
-      "count": 3
+      "count": 3,
+      "defines": "familycancers",
+      "fill": "kept.familycancers"
     },
     {
       "type": "heading",
@@ -163,7 +171,9 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Countries you were born in or lived in"
+          "label": "Countries you were born in or lived in",
+          "defines": "countries",
+          "fill": "kept.countries"
         }
       ]
     },

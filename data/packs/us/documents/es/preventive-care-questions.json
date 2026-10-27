@@ -34,13 +34,19 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Si alguna vez ha fumado: paquetes al día, en promedio"
+          "label": "Si alguna vez ha fumado: paquetes al día, en promedio",
+          "defines": "packsperday",
+          "fill": "kept.packsperday"
         },
         {
-          "label": "Durante cuántos años"
+          "label": "Durante cuántos años",
+          "defines": "yearssmoked",
+          "fill": "kept.yearssmoked"
         },
         {
-          "label": "Si dejó de fumar, el año en que lo dejó"
+          "label": "Si dejó de fumar, el año en que lo dejó",
+          "defines": "yearquit",
+          "fill": "kept.yearquit"
         }
       ]
     },
@@ -86,7 +92,9 @@
     {
       "type": "lines",
       "label": "Por cada sí: quién, y su edad cuando se encontró",
-      "count": 3
+      "count": 3,
+      "defines": "familycancers",
+      "fill": "kept.familycancers"
     },
     {
       "type": "heading",
@@ -153,7 +161,9 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Países donde nació o ha vivido"
+          "label": "Países donde nació o ha vivido",
+          "defines": "countries",
+          "fill": "kept.countries"
         }
       ]
     },

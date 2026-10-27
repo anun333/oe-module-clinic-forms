@@ -18,7 +18,9 @@
           "fill": "chart.language"
         },
         {
-          "label": "Idioma en el que prefiero leer"
+          "label": "Idioma en el que prefiero leer",
+          "defines": "readlanguage",
+          "fill": "kept.readlanguage"
         }
       ]
     },

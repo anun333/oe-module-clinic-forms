@@ -68,6 +68,8 @@ final class Translation
                 'codes' => [$b['code'] ?? null, $b['answer_codes'] ?? null, $b['single'] ?? null],
                 // And what a question carries from the chart or the clinic (Fill).
                 'fills' => [$b['fill'] ?? null, $b['fill_options'] ?? null, array_filter(array_map(static fn(array $f): ?string => $f['fill'] ?? null, $b['fields'] ?? []))],
+                // And the answers kept on file it asks (Kept): found again whichever language it was answered in.
+                'defines' => [$b['defines'] ?? null, array_filter(array_map(static fn(array $f): ?string => $f['defines'] ?? null, $b['fields'] ?? []))],
             ];
             foreach (array_diff_assoc(array_map('json_encode', $counts($e)), array_map('json_encode', $counts($t))) as $what => $unused) {
                 $out[] = "$at: its $what differ from the English";
@@ -82,7 +84,7 @@ final class Translation
     }
 
     /**
-     * The blocks without their skip logic (ids, show_if, number ranges), a coded checklist's codes or what a question carries (fill):
+     * The blocks without their skip logic (ids, show_if, number ranges), a coded checklist's codes or what a question carries (fill, defines):
      * what a block does on screen, and what it's coded as, isn't wording, so it changes neither a
      * document's version nor its translations.
      *
@@ -92,11 +94,11 @@ final class Translation
     public static function wording(array $blocks): array
     {
         return array_map(static function (array $b): array {
-            unset($b['id'], $b['show_if'], $b['item_sex'], $b['code'], $b['answer_codes'], $b['single'], $b['fill'], $b['fill_options']);
+            unset($b['id'], $b['show_if'], $b['item_sex'], $b['code'], $b['answer_codes'], $b['single'], $b['fill'], $b['fill_options'], $b['defines']);
             if (isset($b['fields']) && is_array($b['fields'])) {
                 $b['fields'] = array_map(static function (mixed $f): mixed {
                     if (is_array($f)) {
-                        unset($f['id'], $f['show_if'], $f['number'], $f['fill']);
+                        unset($f['id'], $f['show_if'], $f['number'], $f['fill'], $f['defines']);
                     }
                     return $f;
                 }, $b['fields']);

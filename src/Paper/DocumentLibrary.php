@@ -386,8 +386,12 @@ final class DocumentLibrary
                         if (!is_array($field)) {
                             throw new \InvalidArgumentException("$at fields[$j]: must be an object");
                         }
-                        self::onlyKeys($field, ['label'], ['value', 'id', 'show_if', 'number', 'fill'], "$at fields[$j]");
-                        if (isset($field['fill'])) {
+                        self::onlyKeys($field, ['label'], ['value', 'id', 'show_if', 'number', 'fill', 'defines'], "$at fields[$j]");
+                        self::checkDefines($field, $data, $origin, "$at fields[$j]");
+                        if (isset($field['fill']) && self::dropsKept($field['fill'], $data)) {
+                            // A shared block's kept answer (a representative) isn't carried into a document signed for confidential care.
+                            unset($checked['fields'][$j]['fill']);
+                        } elseif (isset($field['fill'])) {
                             self::checkFill($field, "$at fields[$j]", false);
                             $fills[] = [$field['fill'], "$at fields[$j]"];
                         }
@@ -404,7 +408,11 @@ final class DocumentLibrary
                     }
                     break;
                 case 'checklist':
-                    self::onlyKeys($block, ['type', 'items'], ['label', 'code', 'answer_codes', 'single', 'names', 'fill', 'fill_options'], $at);
+                    self::onlyKeys($block, ['type', 'items'], ['label', 'code', 'answer_codes', 'single', 'names', 'fill', 'fill_options', 'defines'], $at);
+                    self::checkDefines($block, $data, $origin, $at);
+                    if (isset($block['defines']) && (!isset($block['label']) || isset($block['code']))) {
+                        throw new \InvalidArgumentException("$at defines: a kept fact is asked by a checklist with a label and no code");
+                    }
                     if (isset($block['fill']) || isset($block['fill_options'])) {
                         self::checkFill($block, $at, true);
                         $fills[] = [$block['fill'], $at];
@@ -425,7 +433,17 @@ final class DocumentLibrary
                     self::checkCodes($block, $at);
                     break;
                 case 'lines':
-                    self::onlyKeys($block, ['type', 'label', 'count'], [], $at);
+                    self::onlyKeys($block, ['type', 'label', 'count'], ['fill', 'defines'], $at);
+                    self::checkDefines($block, $data, $origin, $at);
+                    if (isset($block['fill']) && self::dropsKept($block['fill'], $data)) {
+                        unset($checked['fill']);
+                    } elseif (isset($block['fill'])) {
+                        if (!Kept::isKept($block['fill'])) {
+                            throw new \InvalidArgumentException("$at fill: lines take only an answer kept on file, such as \"kept.familycancers\"");
+                        }
+                        self::checkFill($block, $at, false);
+                        $fills[] = [$block['fill'], $at];
+                    }
                     $texts[] = self::text($block['label'], "$at label");
                     if (!is_int($block['count']) || $block['count'] < 1 || $block['count'] > 30) {
                         throw new \InvalidArgumentException("$at count: must be a whole number from 1 to 30");
@@ -739,8 +757,8 @@ final class DocumentLibrary
     private static function checkFill(array $q, string $at, bool $checklist): void
     {
         $fill = $q['fill'] ?? null;
-        if (!is_string($fill) || !Context::isKnown($fill) || !in_array(explode('.', $fill)[0], ['chart', 'clinic'], true) || $fill === 'clinic.today') {
-            throw new \InvalidArgumentException("$at fill: a chart fact or the clinic's own contact, such as \"chart.email\" or \"clinic.coordinator\" (see Context::KEYS)");
+        if (!is_string($fill) || !Context::isKnown($fill) || !in_array(explode('.', $fill)[0], $checklist ? ['chart', 'clinic'] : ['chart', 'clinic', 'kept'], true) || $fill === 'clinic.today') {
+            throw new \InvalidArgumentException("$at fill: a chart fact, an answer kept on file or the clinic's own contact, such as \"chart.email\", \"kept.repname\" or \"clinic.coordinator\" (see Context::KEYS); a checklist takes only a chart fact");
         }
         if (!$checklist) {
             if (isset($q['value'])) {
@@ -756,6 +774,37 @@ final class DocumentLibrary
             || array_filter($options, static fn(mixed $o): bool => !is_string($o) || preg_match('/^[a-z0-9_]*$/', $o) !== 1) !== []) {
             throw new \InvalidArgumentException("$at fill_options: one option id for each item, in order (\"\" for an item no option matches)");
         }
+    }
+
+    /**
+     * A question that asks a kept fact ("defines": "repname"): a fact Kept knows, in one of the
+     * module's documents that isn't signed for confidential care, so nothing said there is carried out
+     * of it, and never a validated instrument's question.
+     *
+     * @param array<string, mixed> $q
+     * @param array<string, mixed> $data the document
+     * @param ?array<string, mixed> $origin
+     */
+    private static function checkDefines(array $q, array $data, ?array $origin, string $at): void
+    {
+        if (!isset($q['defines'])) {
+            return;
+        }
+        if (!is_string($q['defines']) || !isset(Kept::KEEPS[$q['defines']])) {
+            throw new \InvalidArgumentException("$at defines: one of " . implode(', ', array_keys(Kept::KEEPS)) . ' (see Kept::KEEPS)');
+        }
+        if (in_array($data['id'] ?? '', Fill::CONFIDENTIAL, true)) {
+            throw new \InvalidArgumentException("$at defines: an answer given for confidential care is never carried out of it");
+        }
+        if (($data['validated'] ?? false) === true || ($origin['kind'] ?? '') === 'instrument') {
+            throw new \InvalidArgumentException("$at defines: a validated instrument's questions are asked fresh each time");
+        }
+    }
+
+    /** Whether a fill is a kept answer the document leaves out: one signed for confidential care. */
+    private static function dropsKept(mixed $fill, array $data): bool
+    {
+        return is_string($fill) && Kept::isKept($fill) && in_array($data['id'] ?? '', Fill::CONFIDENTIAL, true);
     }
 
     private static function onlyKeys(array $value, array $required, array $optional, string $where): void

@@ -24,6 +24,7 @@ use OpenHealthcare\ClinicForms\Paper\Renderer;
 use OpenHealthcare\ClinicForms\Paper\Settings;
 use OpenHealthcare\ClinicForms\Paper\Taglines;
 use OpenHealthcare\ClinicForms\Paper\Words;
+use OpenHealthcare\ClinicForms\Repository\KeptAnswers;
 use OpenHealthcare\ClinicForms\Repository\SiteData;
 
 if (!AclMain::aclCheckCore('patients', 'demo')) {
@@ -59,7 +60,12 @@ $provider = $site->provider((int)($_POST['provider'] ?? 0));
 $settings = Settings::forSite($siteDir);
 // What the chart already holds, carried into the questions that ask it, for the patient to check (Fill).
 [$chart, $chartCodes] = $patient !== [] ? $site->chart($pid) : [[], []];
-$renderer = new Renderer(new Context($facility, $patient, $recipient, $today, $logo !== '' ? $logo : null, [], $provider, $chart, $settings->site(), $chartCodes), $language, $taglines, $settings->labelBox);
+// Answers kept on file from earlier forms (the representative, pack-years, the school), read back from the patient's saved responses, to check.
+$kept = $patient !== [] ? KeptAnswers::forLibraries(
+    [DocumentLibrary::forSite($siteDir, 'en', $pack?->id, $region), DocumentLibrary::forSite($siteDir, 'es', $pack?->id, $region)],
+    DocumentLibrary::forSite($siteDir, $language, $pack?->id, $region),
+)->forPatient($pid, new DateTimeImmutable('today'), static fn(string $date): string => function_exists('oeFormatShortDate') ? (string)oeFormatShortDate($date) : $date) : [];
+$renderer = new Renderer(new Context($facility, $patient, $recipient, $today, $logo !== '' ? $logo : null, [], $provider, $chart, $settings->site(), $chartCodes, $kept), $language, $taglines, $settings->labelBox);
 
 $pages = [];
 $titles = [];

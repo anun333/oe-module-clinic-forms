@@ -36,19 +36,29 @@
       "type": "fields",
       "fields": [
         {
-          "label": "Name"
+          "label": "Name",
+          "defines": "repname",
+          "fill": "kept.repname"
         },
         {
-          "label": "Relationship to the patient"
+          "label": "Relationship to the patient",
+          "defines": "reprelationship",
+          "fill": "kept.reprelationship"
         },
         {
-          "label": "Phone"
+          "label": "Phone",
+          "defines": "repphone",
+          "fill": "kept.repphone"
         },
         {
-          "label": "Address"
+          "label": "Address",
+          "defines": "repaddress",
+          "fill": "kept.repaddress"
         },
         {
-          "label": "Email"
+          "label": "Email",
+          "defines": "repemail",
+          "fill": "kept.repemail"
         }
       ]
     },
@@ -61,21 +71,28 @@
         "Parent or legal guardian of a minor child",
         "Executor or administrator of the estate of a patient who has died",
         "Other legal authority (write below)"
-      ]
+      ],
+      "defines": "repauthority"
     },
     {
       "type": "lines",
       "label": "Other authority, and any limits on it",
-      "count": 2
+      "count": 2,
+      "defines": "repother",
+      "fill": "kept.repother"
     },
     {
       "type": "fields",
       "fields": [
         {
-          "label": "Starts"
+          "label": "Starts",
+          "defines": "repstarts",
+          "fill": "kept.repstarts"
         },
         {
-          "label": "Ends (if known)"
+          "label": "Ends (if known)",
+          "defines": "repends",
+          "fill": "kept.repends"
         }
       ]
     },

@@ -72,11 +72,14 @@ final readonly class OfficeExport
                 'heading' => $writer->heading($this->text($block['text'])),
                 'paragraph' => $writer->paragraph($this->text($block['text'])),
                 'fields' => $writer->fields(array_map(
-                    fn(array $f): array => [$this->text($f['label']), ($v = Fill::fieldValue($f)) !== null ? $this->value($v) : ''],
+                    fn(array $f): array => [$this->text($f['label']), (($v = Fill::fieldValue($f)) !== null ? $this->value($v) : '') . $this->keptFrom(Fill::of($f))],
                     $block['fields'],
                 )),
                 'checklist' => $writer->checklist(isset($block['label']) ? $this->text($block['label']) : null, array_map($this->text(...), $block['items']), Fill::tickedItem($block, $this->context)),
-                'lines' => $writer->lines($this->text($block['label']), $block['count']),
+                // A kept answer on lines prints as a filled field, for the patient to check and correct.
+                'lines' => ($kept = Fill::of($block)) !== null && $this->context->value($kept) !== ''
+                    ? $writer->fields([[$this->text($block['label']), $this->context->value($kept) . $this->keptFrom($kept)]])
+                    : $writer->lines($this->text($block['label']), $block['count']),
                 'signature' => $writer->signatures(array_map($this->text(...), $block['signers'])),
                 'scale' => $writer->scale(
                     $this->text($block['label']),
@@ -106,6 +109,13 @@ final readonly class OfficeExport
         foreach ($this->taglines as $tagline) {
             $writer->paragraph($this->text($tagline));
         }
+    }
+
+    /** Where an answer kept on file came from, after it: " (from Personal Representative on 3/2/2026: still right?)". */
+    private function keptFrom(?string $fill): string
+    {
+        $from = $fill !== null ? $this->context->keptFrom($fill) : null;
+        return $from === null ? '' : ' (' . sprintf($this->t(Renderer::KEPT_FROM), $from['from'], $from['date']) . ')';
     }
 
     /** The line at the top of every page: patient name, date of birth and ID, or blanks to fill in. */

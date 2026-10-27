@@ -114,9 +114,19 @@ A question can carry what the clinic already has, printed when the document is f
 
 A carried chart answer prints for the patient to check: the document says so at the top, and nothing goes back into the chart. A validated instrument's question never takes a fill, and the documents signed for confidential care (Title X, Part 2, a minor's own consent) never take a guardian's, an emergency contact's or insurance details: both are refused when the file is read. Like skip logic and codes, a fill isn't wording: it changes no version, and a translation copies it (the generator does). On screen, the chart facts a FHIR Patient holds become an SDC `initialExpression` on `%patient` in the richer forms.
 
+## Answers kept on file from an earlier form
+
+A fact core has no column for (the personal representative, pack-years, the countries a patient lived in, the school a student goes to) is read back from the patient's own saved questionnaire responses: nothing new is stored.
+
+- **Where it's asked:** `{"label": "Name", "defines": "repname"}` on a field, a labelled checklist or lines. On screen the item carries the fact's definition (`https://github.com/anun333/oe-module-clinic-forms/definition/repname`), so its answer is found whatever the form's later wording; in a response saved from an older copy, by its wording under its heading. Only the module's own documents define facts, never one signed for confidential care (Title X, Part 2, a minor's own consent), so nothing said there is carried out of it, and never a validated instrument's question.
+- **Where it's carried:** `"fill": "kept.repname"` on a field or lines. It prints the latest answer that counts, with the form and date it came from ("from Personal Representative on 3/2/2026: still right?"). A response counts as the report modules count one: not entered in error, not stopped, not one whose encounter form was deleted, and from runtime 0.4.0 finished. In a document signed for confidential care a kept fill is left out: the shared representative block carries none there.
+- **The facts** (`Kept::KEEPS`) and how long an answer keeps: the representative (`repname`, `reprelationship`, `repauthority`, `repphone`, `repaddress`, `repemail`, `repother`, `repstarts`, `repends`, and `reprole`, the relationship with the authority ticked) until the authority's end date, all from the latest Personal Representative response; pack-years (`packsperday`, `yearssmoked`, `yearquit`), who the patient lives with (`livewith`), other care (`othercare`) and medicines reported (`medicines`) for a year; `school` and `grade` until the next 1 August; family cancers (`familycancers`), countries lived in (`countries`) and the language read (`readlanguage`) until changed.
+
+Like a chart fill, neither is wording: no version changes and a translation copies both.
+
 ## Placeholders
 
-Text can use `{group.key}`: `facility` (name, address, phone, fax, email, website, npi), `patient` (name, dob, id, address, street, city, state, zip, phone, sex, allergies, medications, problems), `recipient` (an Address Book entry), `provider` (the signing provider: name, credentials, npi, specialty), `user` (the person printing), `clinic.today` and the clinic's contacts above, and the chart facts above (`{chart.email}`). An unknown placeholder is refused when the file is read.
+Text can use `{group.key}`: `facility` (name, address, phone, fax, email, website, npi), `patient` (name, dob, id, address, street, city, state, zip, phone, sex, allergies, medications, problems), `recipient` (an Address Book entry), `provider` (the signing provider: name, credentials, npi, specialty), `user` (the person printing), `clinic.today` and the clinic's contacts above, the chart facts above (`{chart.email}`) and the kept answers (`{kept.repname}`). An unknown placeholder is refused when the file is read.
 
 ## Translations
 
