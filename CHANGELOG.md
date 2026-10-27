@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.40.4 (unreleased)
+## 0.40.4 (2026-10-26)
 
 - **The picker declares the user's language.** The page's `lang` and `dir` follow the signed-in user's OpenEMR language (openhealthcare-common 1.4.0), so a screen reader reads a Spanish OpenEMR's picker in Spanish; it was always marked English. Where an older copy of the library was loaded first (modules copied in by hand at different versions), it falls back to English rather than stopping the page. The print page keeps each document's own language.
 - **The "ES" badge reads as "Spanish"** to a screen reader, which read the two letters before.
