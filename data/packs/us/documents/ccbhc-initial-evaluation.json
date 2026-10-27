@@ -1,0 +1,193 @@
+{
+  "id": "ccbhc-initial-evaluation",
+  "title": "Initial Evaluation (Behavioral Health)",
+  "category": "Clinical notes",
+  "about": "The initial evaluation that follows a new person's preliminary triage, with the twelve elements SAMHSA's CCBHC criteria require (4.d.3), and the time frames of 2.b.1: within one business day for an urgent need, ten business days for a routine one. The clinician records their own preliminary diagnoses, coded in ICD-10-CM; the form suggests none. A comprehensive evaluation follows within 60 calendar days of the first request.",
+  "audience": "provider",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "url": "https://www.samhsa.gov/sites/default/files/ccbhc-criteria-2023.pdf",
+    "name": "SAMHSA CCBHC Certification Criteria (2023, updated August 2025): 2.b.1 and 4.d.3"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "include",
+      "block": "note-header"
+    },
+    {
+      "type": "checklist",
+      "label": "The preliminary triage found (tick one)",
+      "single": true,
+      "items": [
+        "An emergency or crisis need: acted on at once",
+        "An urgent need: this evaluation within one business day of the request",
+        "A routine need: this evaluation within 10 business days"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date services were first requested"
+        },
+        {
+          "label": "Source of referral"
+        },
+        {
+          "label": "Releases of information obtained for this evaluation"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "This evaluation was done (tick one)",
+      "single": true,
+      "items": [
+        "In person",
+        "By video",
+        "By telephone: see the person in person at the next visit and review this evaluation then"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Reason for seeking care, in the person's words, or those of someone closely involved",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "Immediate clinical care needs for mental health and substance use",
+      "count": 2
+    },
+    {
+      "type": "table",
+      "label": "Current medicines: prescriptions, over-the-counter medicines, herbal remedies and supplements",
+      "columns": [
+        "Medicine",
+        "Dose and how often",
+        "What it is for"
+      ],
+      "rows": 6
+    },
+    {
+      "type": "table",
+      "label": "Past mental health and substance use treatment",
+      "columns": [
+        "Treatment, where and when",
+        "What helped",
+        "What did not help"
+      ],
+      "rows": 3
+    },
+    {
+      "type": "lines",
+      "label": "Alcohol and other drug use",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Safety"
+    },
+    {
+      "type": "checklist",
+      "label": "Risk to self or others",
+      "items": [
+        "No current risk found",
+        "Suicide risk factors",
+        "Risk to others"
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Other safety concerns",
+      "items": [
+        "None reported",
+        "Intimate partner violence",
+        "Another threat to the person's safety"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "What was found, and what was done about it",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Other needs"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Need for medical care, and the referral and follow-up made"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "Has the person ever served in the U.S. Armed Services? (tick one)",
+      "single": true,
+      "items": [
+        "Yes, in the past",
+        "Yes, on active duty now",
+        "No",
+        "Did not say"
+      ],
+      "fill": "chart.veteran",
+      "fill_options": [
+        "veteran",
+        "active_duty",
+        "not_veteran",
+        "declined"
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "For a child or youth: child welfare or juvenile justice involvement"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Preliminary diagnoses"
+    },
+    {
+      "type": "table",
+      "label": "Preliminary diagnoses",
+      "columns": [
+        "Diagnosis, in the clinician's words",
+        "ICD-10-CM code"
+      ],
+      "rows": 4
+    },
+    {
+      "type": "paragraph",
+      "text": "The diagnoses are the clinician's own, from this evaluation: the form suggests none."
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Comprehensive evaluation due (60 calendar days after the first request)"
+        }
+      ]
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Clinician"
+      ]
+    },
+    {
+      "type": "include",
+      "block": "clinician-signoff"
+    }
+  ]
+}

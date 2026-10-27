@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.43.0 (unreleased)
+
+**The two CCBHC evaluations.**
+
+- **New: Initial Evaluation (Behavioral Health) and Comprehensive Evaluation (Behavioral Health)** (US pack, for clinicians). Written to SAMHSA's CCBHC Certification Criteria (2023, updated August 2025): the initial evaluation with the 12 elements of criterion 4.d.3 and the time frames of 2.b.1 (one business day for an urgent need, 10 for a routine one, in person at the next visit after a telephone evaluation); the comprehensive evaluation with the 15 elements of 4.d.4, due within 60 calendar days of the first request, including a mental status examination and the depression, substance use and cognitive screens. Each element is a rule in the US pack's requirements, checked on every build.
+- **Diagnoses are the clinician's own.** Both record the clinician's diagnoses with their ICD-10-CM codes and suggest none. No DSM or ICD-11 text is used.
+- **Filled from the chart for a patient:** the chart identification and signing clinician (the shared note header and sign-off), the armed-services answer on the initial evaluation, and language, interpreter need and allergies on the comprehensive one, each printed for the clinician to check.
+- **Accessible blank PDFs** for both, checked against PDF/UA-1. English only: they're written for clinicians, not patients.
+- **Install:** after adding, upgrading or removing a module copied in by hand, restart the container (or Apache). OpenEMR's official images cache class locations, including classes not found, until then.
+
 ## 0.42.0 (2026-10-26)
 
 **Answers already on file: forms ask once what the chart has.**

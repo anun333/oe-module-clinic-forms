@@ -12,7 +12,7 @@ A document not cleared for public release is held, with its reason (`data/releas
 
 Checked beside this, outside the module: every FHIR export against FHIR R4 and SDC 4.0.0 (the HL7 validator), skip logic and totals in OpenEMR's own questionnaire runtime, and patient PDFs against PDF/UA-1. The README says where.
 
-**97 documents:** 44 written, 34 rule, 19 instrument. Nothing out of conformance. Held for release: none.
+**99 documents:** 44 written, 36 rule, 19 instrument. Nothing out of conformance. Held for release: none.
 
 ## Written to a rule
 
@@ -20,6 +20,8 @@ Checked beside this, outside the module: every FHIR export against FHIR R4 and S
 |---|---|---|---|
 | `sharps-injury-log` (staff) | OSHA Bloodborne Pathogens, 29 CFR 1910.1030(h)(5), and 29 CFR 1904.33 (eCFR, 2026-10-20) | 5 elements of its rule (requirements.json) | cleared |
 | `behavioral-health-treatment-plan` (provider) | SAMHSA CCBHC Certification Criteria (2023, updated August 2025): 2.b.2, 3.a.4, 4.e.2 to 4.e.7 | 10 elements of its rule (requirements.json) | cleared |
+| `ccbhc-comprehensive-evaluation` (provider) | SAMHSA CCBHC Certification Criteria (2023, updated August 2025): 2.b.1 and 4.d.4 | 16 elements of its rule (requirements.json) | cleared |
+| `ccbhc-initial-evaluation` (provider) | SAMHSA CCBHC Certification Criteria (2023, updated August 2025): 2.b.1 and 4.d.3 | 13 elements of its rule (requirements.json) | cleared |
 | `title-x-visit-record` (provider) | OPA Family Planning Annual Report (FPAR) 2.0 data elements, valid values of 4/3/2026; Title X family planning projects, 42 CFR 59 subpart A | 5 elements of its rule (requirements.json); 10 coded questions | cleared |
 | `privacy-acknowledgment` (patient) | Notice of Privacy Practices acknowledgment, 45 CFR 164.520(c)(2)(ii) | 3 elements of its rule (requirements.json); reading level grade 5.8 | cleared |
 | `release-of-information` (patient) | HIPAA authorization, 45 CFR 164.508(c) | 11 elements of its rule (requirements.json); reading level grade 7.9 | cleared |

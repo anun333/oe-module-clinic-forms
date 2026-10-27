@@ -60,6 +60,19 @@ The score appears only once every scored question is answered. If the patient le
 3. With the patient open, tick **Fill in the current patient**.
 4. Choose **Open for printing**, or download it to edit first: **Word** or **LibreOffice**.
 
+### Record a CCBHC initial or comprehensive evaluation
+
+The two evaluations SAMHSA's CCBHC criteria require, each with every element the criteria list (4.d.3 and 4.d.4); your state may ask for more.
+
+- Initial Evaluation (Behavioral Health) follows the preliminary triage: within one business day for an urgent need, 10 business days for a routine one. If it's done by telephone, see the person in person at the next visit and review it then.
+- Comprehensive Evaluation (Behavioral Health) is due within 60 calendar days of the first request and builds on the initial one. It has a mental status examination and lines for the depression, substance use and cognitive screens you used.
+
+1. Tick the evaluation and choose the **Signing provider (for letters and notes)**.
+2. With the patient open, tick **Fill in the current patient**: the patient's name, date of birth and chart number, and on the comprehensive evaluation their language, interpreter need and allergies, come from the chart. The initial evaluation's armed-services question ticks the answer on file. Check each one with the person.
+3. Choose **Open for printing**, or download **Word** or **LibreOffice** to type into.
+
+The diagnoses are yours: write each with its ICD-10-CM code. The form suggests none. If your clinic uses the CCBHC Report module, it times the evaluations from the visit categories its settings name, not from this form.
+
 ## The administrator or office manager
 
 ### Add questionnaires to OpenEMR

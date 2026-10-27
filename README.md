@@ -330,6 +330,8 @@ composer require anun333/oe-module-clinic-forms
 
 Run it in the OpenEMR directory. It installs into `interface/modules/custom_modules/oe-module-clinic-forms/`. Then, under **Modules › Manage Modules**, register, install and enable **Clinic Forms**. There is no install SQL. It brings [openhealthcare-common](https://github.com/anun333/openhealthcare-common), the small library of OpenEMR compatibility code the openhealthcare modules share; Composer installs it alongside. If you copy several of our modules in by hand instead, keep their `vendor/openhealthcare-common` at the same version: OpenEMR loads the first copy it finds for all of them.
 
+**After adding, upgrading or removing a module copied in by hand, restart the container (or Apache).** OpenEMR's official Docker images (8.0.0 to 8.5.0) keep in APCu which file holds each class, and each class they didn't find, across requests: until a restart, a class once not found stays not found, and a removed module's classes still point at its folder. An OpenEMR built from source without Composer's `--apcu-autoloader` has no such cache.
+
 ## Access
 
 As written in the code, not verified for restricted users:

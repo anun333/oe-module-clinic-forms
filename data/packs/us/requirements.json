@@ -2291,6 +2291,291 @@
           ]
         }
       ]
+    },
+    "ccbhc-initial-evaluation": {
+      "source": "SAMHSA CCBHC Certification Criteria (2023, updated August 2025): https://www.samhsa.gov/sites/default/files/ccbhc-criteria-2023.pdf",
+      "elements": [
+        {
+          "name": "Preliminary diagnoses",
+          "cite": "CCBHC 4.d.3(1)",
+          "all": [
+            "preliminary diagnoses",
+            "icd-10-cm"
+          ]
+        },
+        {
+          "name": "The source of referral",
+          "cite": "CCBHC 4.d.3(2)",
+          "all": [
+            "source of referral"
+          ]
+        },
+        {
+          "name": "The reason for seeking care, as stated by the person or others significantly involved",
+          "cite": "CCBHC 4.d.3(3)",
+          "all": [
+            "reason for seeking care",
+            "in the person's words"
+          ]
+        },
+        {
+          "name": "Immediate clinical care needs for mental health and substance use",
+          "cite": "CCBHC 4.d.3(4)",
+          "all": [
+            "immediate clinical care needs",
+            "mental health",
+            "substance use"
+          ]
+        },
+        {
+          "name": "Current prescriptions, over-the-counter medicines, herbal remedies and supplements, with what each is for",
+          "cite": "CCBHC 4.d.3(5)",
+          "all": [
+            "prescriptions",
+            "over-the-counter",
+            "herbal remedies",
+            "supplements",
+            "what it is for"
+          ]
+        },
+        {
+          "name": "Previous mental health and substance use treatment: what helped and what did not",
+          "cite": "CCBHC 4.d.3(6)",
+          "all": [
+            "past mental health and substance use treatment",
+            "what helped",
+            "what did not help"
+          ]
+        },
+        {
+          "name": "Alcohol and other drug use",
+          "cite": "CCBHC 4.d.3(7)",
+          "all": [
+            "alcohol and other drug use"
+          ]
+        },
+        {
+          "name": "Risk to self or others, including suicide risk factors",
+          "cite": "CCBHC 4.d.3(8)",
+          "all": [
+            "risk to self or others",
+            "suicide risk factors"
+          ]
+        },
+        {
+          "name": "Other safety concerns, such as intimate partner violence",
+          "cite": "CCBHC 4.d.3(9)",
+          "all": [
+            "other safety concerns",
+            "intimate partner violence"
+          ]
+        },
+        {
+          "name": "Need for medical care, with referral and follow-up",
+          "cite": "CCBHC 4.d.3(10)",
+          "all": [
+            "need for medical care",
+            "referral",
+            "follow-up"
+          ]
+        },
+        {
+          "name": "Whether the person is, or ever has been, a member of the U.S. Armed Services",
+          "cite": "CCBHC 4.d.3(11)",
+          "all": [
+            "u.s. armed services",
+            "active duty"
+          ]
+        },
+        {
+          "name": "For children and youth, child welfare or juvenile justice involvement",
+          "cite": "CCBHC 4.d.3(12)",
+          "all": [
+            "child or youth",
+            "child welfare",
+            "juvenile justice"
+          ]
+        },
+        {
+          "name": "Within one business day for an urgent need, 10 for a routine one; in person at the next visit after a telephone evaluation",
+          "cite": "CCBHC 2.b.1",
+          "all": [
+            "one business day",
+            "10 business days",
+            "in person at the next visit"
+          ]
+        }
+      ]
+    },
+    "ccbhc-comprehensive-evaluation": {
+      "source": "SAMHSA CCBHC Certification Criteria (2023, updated August 2025): https://www.samhsa.gov/sites/default/files/ccbhc-criteria-2023.pdf",
+      "elements": [
+        {
+          "name": "Reasons for seeking services: onset, severity and circumstances",
+          "cite": "CCBHC 4.d.4(1)",
+          "all": [
+            "reasons for seeking services",
+            "began",
+            "severe",
+            "what led the person here"
+          ]
+        },
+        {
+          "name": "Social supports, social determinants and health-related social needs (housing, vocational and educational status, family and caregivers, legal issues, insurance)",
+          "cite": "CCBHC 4.d.4(2)",
+          "all": [
+            "social supports",
+            "health-related social needs",
+            "housing",
+            "work",
+            "school",
+            "family or caregivers",
+            "legal issues",
+            "insurance"
+          ]
+        },
+        {
+          "name": "Cultural and environmental factors, including the need for language services",
+          "cite": "CCBHC 4.d.4(3)",
+          "all": [
+            "cultural and environmental factors",
+            "language services",
+            "interpreter"
+          ]
+        },
+        {
+          "name": "Pregnancy and parenting status",
+          "cite": "CCBHC 4.d.4(4)",
+          "all": [
+            "pregnant",
+            "parenting"
+          ]
+        },
+        {
+          "name": "Behavioral health history: trauma, past treatment and hospital stays, what helped and what did not",
+          "cite": "CCBHC 4.d.4(5)",
+          "all": [
+            "behavioral health history",
+            "trauma",
+            "hospital stays",
+            "what helped",
+            "what did not"
+          ]
+        },
+        {
+          "name": "Relevant medical history and major health conditions affecting psychological state",
+          "cite": "CCBHC 4.d.4(6)",
+          "all": [
+            "medical history",
+            "major health conditions"
+          ]
+        },
+        {
+          "name": "Medication list (prescriptions, over-the-counter, herbal remedies, supplements, other treatments), the PDMP, and allergies including medicine allergies",
+          "cite": "CCBHC 4.d.4(7)",
+          "all": [
+            "prescriptions",
+            "over-the-counter",
+            "herbal remedies",
+            "supplements",
+            "other treatments",
+            "prescription drug monitoring program",
+            "medicine allergies"
+          ]
+        },
+        {
+          "name": "An examination: mental status, depression screening and other measures, substance use including tobacco, alcohol and other drugs",
+          "cite": "CCBHC 4.d.4(8)",
+          "all": [
+            "examination",
+            "mood",
+            "thought content",
+            "depression screen",
+            "measures for ongoing care",
+            "tobacco",
+            "alcohol",
+            "other drugs"
+          ]
+        },
+        {
+          "name": "Basic cognitive screening",
+          "cite": "CCBHC 4.d.4(9)",
+          "all": [
+            "cognitive screen"
+          ]
+        },
+        {
+          "name": "Imminent risk: suicide, withdrawal and overdose, danger to self or others, urgent medical conditions, threats from another person",
+          "cite": "CCBHC 4.d.4(10)",
+          "all": [
+            "imminent risk",
+            "suicide",
+            "withdrawal",
+            "overdose",
+            "danger to self",
+            "danger to others",
+            "urgent or critical medical condition",
+            "threat from another person"
+          ]
+        },
+        {
+          "name": "Strengths, goals and preferences for treatment and recovery",
+          "cite": "CCBHC 4.d.4(11)",
+          "all": [
+            "strengths",
+            "goals",
+            "preferences for treatment and recovery"
+          ]
+        },
+        {
+          "name": "Need for peer and family or caregiver support, targeted case management and psychiatric rehabilitation",
+          "cite": "CCBHC 4.d.4(12)",
+          "all": [
+            "peer support",
+            "family or caregiver support",
+            "targeted case management",
+            "psychiatric rehabilitation"
+          ]
+        },
+        {
+          "name": "Social service needs and referrals; for children and youth, child welfare and juvenile justice involvement and referral to child welfare",
+          "cite": "CCBHC 4.d.4(13)",
+          "all": [
+            "social service needs",
+            "referrals made",
+            "child welfare",
+            "juvenile justice"
+          ]
+        },
+        {
+          "name": "Need for a physical exam or further evaluation, including by the primary care provider, with referral",
+          "cite": "CCBHC 4.d.4(14)",
+          "all": [
+            "physical exam",
+            "primary care provider",
+            "referral"
+          ]
+        },
+        {
+          "name": "Preferences about care by technology: video, telephone, remote monitoring, asynchronous",
+          "cite": "CCBHC 4.d.4(15)",
+          "all": [
+            "care by technology",
+            "video",
+            "telephone",
+            "remote monitoring",
+            "messages between visits"
+          ]
+        },
+        {
+          "name": "Completed within 60 calendar days of the first request",
+          "cite": "CCBHC 2.b.1",
+          "all": [
+            "60 calendar days",
+            "first requested"
+          ]
+        }
+      ]
     }
   }
 }

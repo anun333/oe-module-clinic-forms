@@ -1,0 +1,291 @@
+{
+  "id": "ccbhc-comprehensive-evaluation",
+  "title": "Comprehensive Evaluation (Behavioral Health)",
+  "category": "Clinical notes",
+  "about": "The comprehensive evaluation every person receiving CCBHC services has, with the fifteen elements of SAMHSA's CCBHC criteria (4.d.4), completed within 60 calendar days of the first request (2.b.1) and building on the initial evaluation. It includes a mental status examination and the screens the criteria name. The clinician records their own diagnoses, coded in ICD-10-CM; the form suggests none. The treatment plan is made from it (4.e.2).",
+  "audience": "provider",
+  "version": 1,
+  "status": "active",
+  "source": {
+    "kind": "rule",
+    "url": "https://www.samhsa.gov/sites/default/files/ccbhc-criteria-2023.pdf",
+    "name": "SAMHSA CCBHC Certification Criteria (2023, updated August 2025): 2.b.1 and 4.d.4"
+  },
+  "licence": {
+    "holder": "Clinic Forms contributors",
+    "terms": "CC0 1.0: dedicated to the public domain. Use and adapt it freely, with no credit needed."
+  },
+  "blocks": [
+    {
+      "type": "include",
+      "block": "note-header"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date services were first requested"
+        },
+        {
+          "label": "Initial evaluation done on"
+        },
+        {
+          "label": "Due by (60 calendar days after the first request)"
+        }
+      ]
+    },
+    {
+      "type": "paragraph",
+      "text": "Ask in the depth the person's needs call for, and follow their preferences about how much to go into."
+    },
+    {
+      "type": "heading",
+      "text": "Why the person came"
+    },
+    {
+      "type": "lines",
+      "label": "Reasons for seeking services: when the symptoms began, how severe they are, and what led the person here",
+      "count": 3
+    },
+    {
+      "type": "heading",
+      "text": "Life and supports"
+    },
+    {
+      "type": "checklist",
+      "label": "Health-related social needs",
+      "items": [
+        "Housing",
+        "Food",
+        "Transportation",
+        "Utilities",
+        "Work",
+        "School or training",
+        "Legal issues",
+        "Insurance",
+        "None"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Social supports, family or caregivers, and the needs ticked",
+      "count": 2
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Language the person prefers",
+          "fill": "chart.language"
+        },
+        {
+          "label": "Interpreter needed",
+          "fill": "chart.interpreter"
+        }
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Cultural and environmental factors that may affect the treatment plan, including any need for language services",
+      "count": 2
+    },
+    {
+      "type": "checklist",
+      "label": "Pregnancy and parenting",
+      "items": [
+        "Pregnant",
+        "Gave birth in the past year",
+        "Parenting a child",
+        "None of these"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "History"
+    },
+    {
+      "type": "lines",
+      "label": "Behavioral health history: trauma, past treatment and hospital stays, what helped and what did not",
+      "count": 3
+    },
+    {
+      "type": "lines",
+      "label": "Medical history and major health conditions that affect the person's psychological state",
+      "count": 2
+    },
+    {
+      "type": "table",
+      "label": "Medicines and other treatments: prescriptions, over-the-counter medicines, herbal remedies and supplements, including any found in the prescription drug monitoring program (PDMP)",
+      "columns": [
+        "Medicine or treatment",
+        "Dose and how often",
+        "What it is for",
+        "From the PDMP"
+      ],
+      "rows": 6
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Allergies, including medicine allergies",
+          "value": "{patient.allergies}"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Examination"
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Appearance"
+        },
+        {
+          "label": "Behavior"
+        },
+        {
+          "label": "Speech"
+        },
+        {
+          "label": "Mood, in the person's words"
+        },
+        {
+          "label": "Affect"
+        },
+        {
+          "label": "Thought process"
+        },
+        {
+          "label": "Thought content"
+        },
+        {
+          "label": "Perception"
+        },
+        {
+          "label": "Orientation, attention and memory"
+        },
+        {
+          "label": "Insight"
+        },
+        {
+          "label": "Judgment"
+        }
+      ]
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Depression screen: tool and score"
+        },
+        {
+          "label": "Other measures for ongoing care: tool and score"
+        },
+        {
+          "label": "Substance use, including tobacco, alcohol and other drugs: tool and result"
+        },
+        {
+          "label": "Cognitive screen: tool and result"
+        }
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Imminent risk"
+    },
+    {
+      "type": "checklist",
+      "label": "Risks found",
+      "items": [
+        "Suicide",
+        "Withdrawal",
+        "Overdose",
+        "Danger to self",
+        "Danger to others",
+        "An urgent or critical medical condition",
+        "A threat from another person",
+        "None found"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "What was found, and what was done about it",
+      "count": 2
+    },
+    {
+      "type": "heading",
+      "text": "Planning"
+    },
+    {
+      "type": "lines",
+      "label": "Strengths, goals and preferences for treatment and recovery, in the person's words",
+      "count": 3
+    },
+    {
+      "type": "checklist",
+      "label": "Other services needed",
+      "items": [
+        "Peer support",
+        "Family or caregiver support",
+        "Targeted case management",
+        "Psychiatric rehabilitation",
+        "None now"
+      ]
+    },
+    {
+      "type": "lines",
+      "label": "Social service needs and referrals made (for a child or youth: child welfare or juvenile justice involvement, and any referral to child welfare)",
+      "count": 2
+    },
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Need for a physical exam or further evaluation, including by the primary care provider, and the referral made"
+        }
+      ]
+    },
+    {
+      "type": "checklist",
+      "label": "How the person would like care by technology",
+      "items": [
+        "Video visits",
+        "Telephone visits",
+        "Remote monitoring",
+        "Messages between visits",
+        "In person only"
+      ]
+    },
+    {
+      "type": "heading",
+      "text": "Diagnoses"
+    },
+    {
+      "type": "table",
+      "label": "Diagnoses",
+      "columns": [
+        "Diagnosis, in the clinician's words",
+        "ICD-10-CM code",
+        "New, confirmed or changed since the initial evaluation"
+      ],
+      "rows": 5
+    },
+    {
+      "type": "paragraph",
+      "text": "The diagnoses are the clinician's own, from this evaluation: the form suggests none."
+    },
+    {
+      "type": "signature",
+      "signers": [
+        "Clinician"
+      ]
+    },
+    {
+      "type": "include",
+      "block": "clinician-signoff"
+    }
+  ]
+}
