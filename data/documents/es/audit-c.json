@@ -6,20 +6,8 @@
   "about": "Las tres primeras preguntas del AUDIT de la Organización Mundial de la Salud, con puntuación de 0 a 12.",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Fecha"
-        }
-      ]
+      "type": "include",
+      "block": "screening-header"
     },
     {
       "type": "paragraph",
@@ -120,15 +108,8 @@
       "text": "Puntos de corte habituales para un resultado positivo: 4 o más en hombres, 3 o más en mujeres."
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Revisado por"
-        },
-        {
-          "label": "Registrado en OpenEMR por"
-        }
-      ]
+      "type": "include",
+      "block": "office-review"
     },
     {
       "type": "paragraph",

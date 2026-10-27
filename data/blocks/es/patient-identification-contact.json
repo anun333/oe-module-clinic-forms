@@ -1,0 +1,32 @@
+{
+  "id": "patient-identification-contact",
+  "title": "Identificación y contacto del paciente",
+  "about": "El nombre, la fecha de nacimiento, el número, el teléfono y la dirección del paciente, al principio de las solicitudes de privacidad y de la solicitud de descuento por escala móvil. Se llenan con el expediente cuando se imprimen para un paciente.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Teléfono",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Dirección",
+          "value": "{patient.address}"
+        }
+      ]
+    }
+  ]
+}

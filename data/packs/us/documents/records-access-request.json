@@ -17,29 +17,8 @@
   },
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Patient name",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Patient ID",
-          "value": "{patient.id}"
-        },
-        {
-          "label": "Phone",
-          "value": "{patient.phone}"
-        },
-        {
-          "label": "Address",
-          "value": "{patient.address}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification-contact"
     },
     {
       "type": "heading",
@@ -116,21 +95,8 @@
       "text": "We will answer within 30 days, usually sooner. If we need more time, we will tell you why in writing. We may charge a fair, cost-based fee for copying, supplies and postage, and we will tell you the fee before we make the copy."
     },
     {
-      "type": "signature",
-      "signers": [
-        "Patient or legal representative"
-      ]
-    },
-    {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "If signed by a representative: name"
-        },
-        {
-          "label": "Relationship or legal authority"
-        }
-      ]
+      "type": "include",
+      "block": "consent-signature"
     },
     {
       "type": "heading",

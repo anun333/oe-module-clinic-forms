@@ -24,20 +24,8 @@
   },
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Name",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Date"
-        }
-      ]
+      "type": "include",
+      "block": "screening-header"
     },
     {
       "type": "scale",
@@ -74,15 +62,8 @@
       "text": "Published cut-offs (Sohal 2007): 1 or more, positive screen for intimate partner violence in the past year. Give this form when the patient is alone. For a positive screen, follow the clinic's protocol: talk with the patient privately, and offer support and local resources."
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Reviewed by"
-        },
-        {
-          "label": "Entered into OpenEMR by"
-        }
-      ]
+      "type": "include",
+      "block": "office-review"
     },
     {
       "type": "paragraph",

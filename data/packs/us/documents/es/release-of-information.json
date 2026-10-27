@@ -7,21 +7,8 @@
   "about": "Autorización de HIPAA para divulgar información de salud, con los elementos que exige 45 CFR 164.508.",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre del paciente",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Número de paciente",
-          "value": "{patient.id}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification"
     },
     {
       "type": "heading",
@@ -161,21 +148,8 @@
       "text": "La persona que reciba información divulgada con esta autorización puede volver a divulgarla. Es posible que entonces ya no esté protegida por la ley federal de privacidad. Usted recibirá una copia de esta autorización."
     },
     {
-      "type": "signature",
-      "signers": [
-        "Paciente o representante legal"
-      ]
-    },
-    {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Si firma un representante: nombre"
-        },
-        {
-          "label": "Relación o autoridad legal"
-        }
-      ]
+      "type": "include",
+      "block": "consent-signature"
     }
   ]
 }

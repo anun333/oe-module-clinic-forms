@@ -18,11 +18,33 @@ final class Loinc
 
     /** @var ?array{en: array<string, string>, es: array<string, string>} */
     private static ?array $names = null;
+    /** @var ?array<string, string> */
+    private static ?array $definitions = null;
 
     /** data/loinc-names.json: LOINC's long common name for every LOINC code the module sends, written by tools/loinc-names.php. */
     public static function namesFile(): string
     {
         return dirname(__DIR__, 2) . '/data/loinc-names.json';
+    }
+
+    /** data/loinc-definitions.json: each LOINC question's item in LOINC's own questionnaire, written by tools/loinc-definitions.php. */
+    public static function definitionsFile(): string
+    {
+        return dirname(__DIR__, 2) . '/data/loinc-definitions.json';
+    }
+
+    /**
+     * Where LOINC defines a question: its item in LOINC's own FHIR questionnaire, as SDC's Questionnaire
+     * library reference ("http://loinc.org/q/55757-9#32742"), the same in every form that asks it. Null for
+     * a code LOINC's questionnaires for the module's instruments don't ask as a question.
+     */
+    public static function definition(string $code): ?string
+    {
+        if (self::$definitions === null) {
+            $data = is_file(self::definitionsFile()) ? json_decode((string)file_get_contents(self::definitionsFile()), true) : null;
+            self::$definitions = is_array($data['definitions'] ?? null) ? array_map('strval', $data['definitions']) : [];
+        }
+        return self::$definitions[$code] ?? null;
     }
 
     /** An answer code as LOINC writes them: LA, a number, a hyphen and a digit (not the terms' check digit). */

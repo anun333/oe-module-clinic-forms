@@ -24,20 +24,8 @@
     },
     "blocks": [
         {
-            "type": "fields",
-            "fields": [
-                {
-                    "label": "Name",
-                    "value": "{patient.name}"
-                },
-                {
-                    "label": "Date of birth",
-                    "value": "{patient.dob}"
-                },
-                {
-                    "label": "Date"
-                }
-            ]
+            "type": "include",
+            "block": "screening-header"
         },
         {
             "type": "scale",
@@ -128,15 +116,8 @@
             "text": "Published cut-offs (CDC STEADI): 4 or more, may be at risk for falling: discuss with a clinician."
         },
         {
-            "type": "fields",
-            "fields": [
-                {
-                    "label": "Reviewed by"
-                },
-                {
-                    "label": "Entered into OpenEMR by"
-                }
-            ]
+            "type": "include",
+            "block": "office-review"
         },
         {
             "type": "paragraph",

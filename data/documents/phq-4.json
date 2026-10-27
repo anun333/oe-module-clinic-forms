@@ -24,20 +24,8 @@
   },
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Name",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Date"
-        }
-      ]
+      "type": "include",
+      "block": "screening-header"
     },
     {
       "type": "scale",
@@ -51,8 +39,9 @@
       "items": [
         "Feeling nervous, anxious or on edge",
         "Not being able to stop or control worrying",
-        "Little interest or pleasure in doing things",
-        "Feeling down, depressed, or hopeless"
+        {
+          "include": "phq-2-questions"
+        }
       ],
       "scores": [
         0,
@@ -84,15 +73,8 @@
       "text": "Published cut-offs (Kroenke 2009): Anxiety: 3 or more, positive anxiety screen: give the GAD-7 and a clinical interview. Depression: 3 or more, positive depression screen: give the PHQ-9 and a clinical interview."
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Reviewed by"
-        },
-        {
-          "label": "Entered into OpenEMR by"
-        }
-      ]
+      "type": "include",
+      "block": "office-review"
     },
     {
       "type": "paragraph",

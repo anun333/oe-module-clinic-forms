@@ -6,20 +6,8 @@
   "about": "Detección de ansiedad: siete preguntas con puntuación de 0 a 21. Las respuestas se pueden registrar en el formulario GAD-7 de OpenEMR (actívelo en Administración > Formularios > Administración de formularios).",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Fecha"
-        }
-      ]
+      "type": "include",
+      "block": "screening-header"
     },
     {
       "type": "scale",
@@ -48,14 +36,8 @@
       "total": "Puntuación total (para uso de la oficina)"
     },
     {
-      "type": "checklist",
-      "label": "Si marcó cualquiera de los problemas, ¿qué tanta dificultad le han dado estos problemas para hacer su trabajo, encargarse de las tareas del hogar, o llevarse bien con otras personas?",
-      "items": [
-        "No ha sido difícil",
-        "Un poco difícil",
-        "Muy difícil",
-        "Extremadamente difícil"
-      ]
+      "type": "include",
+      "block": "functional-difficulty"
     },
     {
       "type": "heading",
@@ -66,19 +48,12 @@
       "text": "Gravedad publicada (Spitzer 2006): 5 o más, leve; 10 o más, moderada; 15 o más, ansiedad grave. Un total de 10 o más es el punto habitual para evaluar un trastorno de ansiedad generalizada."
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Revisado por"
-        },
-        {
-          "label": "Registrado en OpenEMR por"
-        }
-      ]
+      "type": "include",
+      "block": "office-review"
     },
     {
-      "type": "paragraph",
-      "text": "Elaborado por los doctores Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke y colegas, mediante una subvención educativa otorgada por Pfizer Inc. No se requiere permiso para reproducir, traducir, presentar o distribuir."
+      "type": "include",
+      "block": "phq-licence"
     }
   ]
 }

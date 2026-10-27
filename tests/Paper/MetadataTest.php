@@ -62,7 +62,7 @@ final class MetadataTest extends TestCase
 
     public function testEveryVersionIsRecordedWithItsWording(): void
     {
-        self::assertSame([], DocumentVersions::problems(DocumentVersions::load(), DocumentVersions::shipped()));
+        self::assertSame([], DocumentVersions::problems(DocumentVersions::load(), DocumentVersions::shipped() + DocumentVersions::shippedBlocks()));
     }
 
     public function testAWordingChangeWithoutANewVersionIsCaught(): void

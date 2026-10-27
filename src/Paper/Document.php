@@ -21,6 +21,9 @@
  *   table      {"type": "table", "label": "...", "columns": ["Name", "Age"], "rows": 6}   a grid of blank rows
  *   taglines   {"type": "taglines"}   the language assistance taglines (data/taglines.json and the clinic's own)
  *
+ *   include    {"type": "include", "block": "consent-signature"}   a shared block's content (data/blocks, see Blocks),
+ *              put in place when the document is read; a scale's item {"include": "phq-2-questions"} puts its questions there
+ *
  * A translation (data/documents/es/<id>.json) has the same id, title, category, about and blocks,
  * and takes its audience, code and validated flag from the English document. Its "translates" names
  * the English it was made from (Translation::fingerprint); when the English changes, the translation
@@ -73,6 +76,8 @@ final readonly class Document
      * @param ?array{kind: string, name: string, url?: string} $origin where the wording comes from (the JSON's "source")
      * @param ?array{holder: string, terms: string, permission?: string} $licence
      * @param ?string                    $basedOn   for a clinic's own version, the fingerprint of the module's version it was copied from
+     * @param list<array{block: string, version: int, title: string, about: string, source: string, at: int, count: int, row?: int}> $includes
+     *                                              the shared blocks put in place (Blocks::expand): where each went in $blocks
      */
     public function __construct(
         public string $id,
@@ -95,6 +100,7 @@ final readonly class Document
         public ?string $basedOn = null,
         public bool $anonymous = false,
         public bool $machineAssisted = false,
+        public array $includes = [],
     ) {
     }
 
@@ -104,7 +110,7 @@ final readonly class Document
     {
         return new self($this->id, $this->title, $this->category, $this->about, $blocks, $this->uses, $this->source, $this->audience,
             $this->code, $this->validated, $this->language, $this->poster, $this->translates, $this->version, $this->status,
-            $this->origin, $this->licence, $this->basedOn, $this->anonymous, $this->machineAssisted);
+            $this->origin, $this->licence, $this->basedOn, $this->anonymous, $this->machineAssisted, $this->includes);
     }
 
     public function stamp(): string

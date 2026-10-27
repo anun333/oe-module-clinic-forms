@@ -31,6 +31,19 @@
  * OpenEMR's pages pass the form no patient yet (launchContext), so the expression shows the row
  * whenever the patient's gender is unknown, as today; a host that passes one gets the skip.
  *
+ * A LOINC question, and an instrument's total, carries the item LOINC's own FHIR questionnaire defines
+ * it by as its "definition" (Loinc::definition(), SDC's Questionnaire library reference), the same in
+ * every form that asks it.
+ *
+ * A shared block of questions (Blocks) that carry linkIds of their own, their LOINC codes, stands on its
+ * own in FHIR, as SDC 4.0.0's Modular Forms have it: forms() gives the block's items, which
+ * blockQuestionnaire() makes a Questionnaire of its own (canonical url and version), and the document's
+ * modular form, which names the block by a subQuestionnaire where its items go. The form fillers get the
+ * assembled form (questionnaire()): the same items as before blocks, with assembledFrom naming the blocks
+ * it was assembled from. Blocks whose items' linkIds say where they sit in the document (b5.0) stay
+ * written out: SDC's linkIdPrefix can only put text in front of a block's linkIds, so a block used in
+ * two places couldn't give each its own, and the linkIds are what saved responses hold.
+ *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
  */
@@ -58,6 +71,13 @@ final readonly class QuestionnaireExport
     public const SDC_PROFILE = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire|4.0.0';
     /** A translated instrument's answers, coded by their position in the question ("1", "2"...). */
     public const ANSWER_SYSTEM = 'https://github.com/anun333/oe-module-clinic-forms/answers';
+    /** SDC's profile for a form that names others (a modular form) or is named by one (a block). */
+    public const MODULAR_PROFILE = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-modular|4.0.0';
+    public const SUB_QUESTIONNAIRE = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-subQuestionnaire';
+    public const ASSEMBLED_FROM = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-assembledFrom';
+    public const ASSEMBLE_EXPECTATION = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-assemble-expectation';
+    /** Tells the two forms of one url and version apart, as SDC asks when both are published: computable (modular) or executable (assembled). */
+    public const KNOWLEDGE_CAPABILITY = 'http://hl7.org/fhir/StructureDefinition/cqf-knowledgeCapability';
     private const BLANK = '__________';
     private const SNOMED = 'http://snomed.info/sct';
     private const SNOMED_INTERNATIONAL_EDITION = 'http://snomed.info/sct/900000000000207008';
@@ -65,6 +85,9 @@ final readonly class QuestionnaireExport
     private const ENABLE_WHEN_EXPRESSION = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-enableWhenExpression';
     private const LAUNCH_CONTEXT = 'http://hl7.org/fhir/uv/sdc/StructureDefinition/sdc-questionnaire-launchContext';
     private const SIGNATURE_REQUIRED = 'http://hl7.org/fhir/StructureDefinition/questionnaire-signatureRequired';
+    /** A version that is a whole number (artifact-versionAlgorithm integer). */
+    private const VERSION_ALGORITHM = ['url' => 'http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm',
+        'valueCoding' => ['system' => 'http://hl7.org/fhir/version-algorithm', 'code' => 'integer', 'display' => 'Integer']];
     /** ASTM E1762's signature types, as FHIR R4's Signature.type names them. */
     private const SIGNATURE_TYPE = 'urn:iso-astm:E1762-95:2013';
 
@@ -107,10 +130,25 @@ final readonly class QuestionnaireExport
     }
 
     /**
+     * The form fillers' Questionnaire: the assembled form, when the document includes a block that stands on its own.
+     *
      * @param ?Document $english a translation's English document, whose instrument it must keep to carry codes
      * @return array<string, mixed>
      */
     public function questionnaire(Document $doc, ?Document $english = null): array
+    {
+        return $this->forms($doc, $english)['assembled'];
+    }
+
+    /**
+     * The document as form fillers run it ("assembled"), and, when it includes a shared block that
+     * stands on its own in FHIR, its modular form, which names each such block by a subQuestionnaire
+     * in place of its items, with each block's items ("blocks", for blockQuestionnaire()).
+     *
+     * @param ?Document $english a translation's English document, whose instrument it must keep to carry codes
+     * @return array{assembled: array<string, mixed>, modular: ?array<string, mixed>, blocks: list<array{include: array<string, mixed>, language: string, items: list<array<string, mixed>>, copyright: ?string}>}
+     */
+    public function forms(Document $doc, ?Document $english = null): array
     {
         $codes = Instrument::matched($doc, $english);
         $q = ['resourceType' => 'Questionnaire', 'id' => $doc->id . ($doc->language !== 'en' ? '-' . $doc->language : '')];
@@ -125,8 +163,7 @@ final readonly class QuestionnaireExport
         if ($doc->version > 0) {
             $q['version'] = (string)$doc->version;
             // Versions are whole numbers, raised when the wording changes; SDC asks a versioned Questionnaire to say so (sdc-2).
-            $q['extension'] = [['url' => 'http://hl7.org/fhir/StructureDefinition/artifact-versionAlgorithm',
-                'valueCoding' => ['system' => 'http://hl7.org/fhir/version-algorithm', 'code' => 'integer', 'display' => 'Integer']]];
+            $q['extension'] = [self::VERSION_ALGORITHM];
         }
         $q += [
             'name' => self::name($doc->title),
@@ -149,7 +186,8 @@ final readonly class QuestionnaireExport
         if ($copyright !== '') {
             $q['copyright'] = $copyright;
         }
-        $q['item'] = $this->items($doc, $codes);
+        $modules = [];
+        $q['item'] = $this->items($doc, $codes, $modules);
         if ($this->rich && array_filter($doc->blocks, static fn(array $b): bool => array_filter($b['item_sex'] ?? []) !== []) !== []) {
             // The patient, for the rows asked of one sex: a host that has one supplies it as %patient.
             $q['extension'][] = ['url' => self::LAUNCH_CONTEXT, 'extension' => [
@@ -158,11 +196,105 @@ final readonly class QuestionnaireExport
                 ['url' => 'description', 'valueString' => 'The patient filling in the form, whose gender decides the rows asked of one sex'],
             ]];
         }
-        // A short narrative, as FHIR recommends for every resource.
-        $lang = htmlspecialchars($doc->language, ENT_XML1);
-        $q = array_slice($q, 0, 3) + ['text' => ['status' => 'generated', 'div' => '<div xmlns="http://www.w3.org/1999/xhtml" lang="' . $lang . '" xml:lang="' . $lang . '"><p><b>'
+        $q = self::withNarrative($q, $doc->language);
+        if ($modules === []) {
+            return ['assembled' => $q, 'modular' => null, 'blocks' => []];
+        }
+        $assembled = $q;
+        $modular = $q;
+        // The same url and version in both forms, as SDC has an assembled form keep its modular form's.
+        $modular['id'] = $q['id'] . '-modular';
+        $modular['meta'] = ['profile' => [self::MODULAR_PROFILE]];
+        foreach (array_unique(array_map(static fn(array $m): string => self::blockCanonical($m['include'], $doc->language), $modules)) as $canonical) {
+            $assembled['extension'][] = ['url' => self::ASSEMBLED_FROM, 'valueCanonical' => $canonical];
+        }
+        $assembled['extension'][] = ['url' => self::KNOWLEDGE_CAPABILITY, 'valueCode' => 'executable'];
+        $modular['extension'][] = ['url' => self::ASSEMBLE_EXPECTATION, 'valueCode' => 'assemble-root'];
+        $modular['extension'][] = ['url' => self::KNOWLEDGE_CAPABILITY, 'valueCode' => 'computable'];
+        $modular['item'] = self::withModules($q['item'], $modules, fn(array $m): array => [
+            'linkId' => $m['parent'] . '.' . $m['include']['block'],
+            // Shown only by a filler that can't assemble the form, as SDC asks.
+            'text' => Words::t('Some questions are missing: this form needs SDC assembly to show the block', $doc->language) . ' "' . $this->text($m['include']['title']) . '".',
+            'type' => 'display',
+            'extension' => [['url' => self::SUB_QUESTIONNAIRE, 'valueCanonical' => self::blockCanonical($m['include'], $doc->language)]],
+        ]);
+        $blocks = array_map(static fn(array $m): array => ['include' => $m['include'], 'language' => $doc->language, 'items' => $m['items'], 'copyright' => $q['copyright'] ?? null], $modules);
+        return ['assembled' => $assembled, 'modular' => $modular, 'blocks' => $blocks];
+    }
+
+    /**
+     * A shared block's Questionnaire: its items as forms() gave them, its own canonical url and version,
+     * and "independent-child", since it is filled only as part of another form but needs no assembly
+     * itself. Its copyright is that of the document its items came from (an instrument's, with LOINC's notice).
+     *
+     * @param array{block: string, version: int, title: string, about: string} $include
+     * @param list<array<string, mixed>> $items
+     * @return array<string, mixed>
+     */
+    public function blockQuestionnaire(array $include, string $language, array $items, ?string $copyright = null): array
+    {
+        $q = ['resourceType' => 'Questionnaire', 'id' => 'block-' . $include['block'] . ($language !== 'en' ? '-' . $language : '')];
+        $q['meta'] = ['profile' => [self::MODULAR_PROFILE]];
+        $q['language'] = $language;
+        $q['url'] = explode('|', self::blockCanonical($include, $language))[0];
+        $q['version'] = (string)$include['version'];
+        $q['extension'] = [self::VERSION_ALGORITHM, ['url' => self::ASSEMBLE_EXPECTATION, 'valueCode' => 'independent-child']];
+        $q += [
+            'name' => self::name($include['title']),
+            'title' => $this->text($include['title']),
+            'status' => 'active',
+            'subjectType' => ['Patient'],
+            'publisher' => 'Clinic Forms',
+            'description' => $this->text($include['about']),
+        ];
+        if ($copyright !== null && $copyright !== '') {
+            $q['copyright'] = $copyright;
+        }
+        $q['item'] = $items;
+        return self::withNarrative($q, $language);
+    }
+
+    /** A block's canonical reference, url and version: the module's repository names it, one url per language. */
+    private static function blockCanonical(array $include, string $language): string
+    {
+        return self::CANONICAL . 'block/' . $include['block'] . ($language !== 'en' ? '-' . $language : '') . '|' . $include['version'];
+    }
+
+    /**
+     * The items with each block's items replaced by the display item that names it.
+     *
+     * @param list<array<string, mixed>> $items
+     * @param list<array{parent: string, linkIds: list<string>}> $modules
+     * @return list<array<string, mixed>>
+     */
+    private static function withModules(array $items, array $modules, callable $display): array
+    {
+        foreach ($items as &$item) {
+            foreach ($modules as $m) {
+                if ($item['linkId'] === $m['parent']) {
+                    $at = array_search($m['linkIds'][0], array_column($item['item'], 'linkId'), true);
+                    array_splice($item['item'], (int)$at, count($m['linkIds']), [$display($m)]);
+                }
+            }
+            if (isset($item['item'])) {
+                $item['item'] = self::withModules($item['item'], $modules, $display);
+            }
+        }
+        unset($item);
+        return $items;
+    }
+
+    /**
+     * A short narrative, as FHIR recommends for every resource, after the id, meta and language.
+     *
+     * @param array<string, mixed> $q
+     * @return array<string, mixed>
+     */
+    private static function withNarrative(array $q, string $language): array
+    {
+        $lang = htmlspecialchars($language, ENT_XML1);
+        return array_slice($q, 0, 3) + ['text' => ['status' => 'generated', 'div' => '<div xmlns="http://www.w3.org/1999/xhtml" lang="' . $lang . '" xml:lang="' . $lang . '"><p><b>'
             . htmlspecialchars($q['title'], ENT_XML1) . '</b></p><p>' . htmlspecialchars($q['description'], ENT_XML1) . '</p></div>']] + $q;
-        return $q;
     }
 
     /**
@@ -170,9 +302,11 @@ final readonly class QuestionnaireExport
      * next heading.
      *
      * @param ?array{reference: array, map: array<int, array>} $codes
+     * @param list<array{include: array<string, mixed>, parent: string, linkIds: list<string>, items: list<array<string, mixed>>}> $modules
+     *        filled with the shared blocks of questions that stand on their own (forms())
      * @return list<array<string, mixed>>
      */
-    private function items(Document $doc, ?array $codes): array
+    private function items(Document $doc, ?array $codes, array &$modules = []): array
     {
         $asked = 0;  // the document's questions so far, as Instrument::questions() counts them
         $root = [];
@@ -251,6 +385,20 @@ final readonly class QuestionnaireExport
                             $child['extension'][] = self::askedOf($sex);
                         }
                         $children[] = $child;
+                    }
+                    foreach ($doc->includes as $include) {
+                        if (($include['row'] ?? null) !== 0 || $include['at'] !== $b) {
+                            continue;
+                        }
+                        // A block of questions stands on its own when its questions carry linkIds of their own
+                        // (their LOINC codes) and their numbers are the block's own (the top of a scale numbered
+                        // from 1), so the same items come back wherever it's assembled: in the module's documents,
+                        // whose blocks the module publishes.
+                        $run = array_slice($children, 0, $include['count']);
+                        if (($block['start'] ?? 1) === 1 && $doc->source !== 'clinic' && $include['source'] === 'shipped'
+                            && array_filter($run, static fn(array $c): bool => !str_starts_with($c['linkId'], '/')) === []) {
+                            $modules[] = ['include' => $include, 'parent' => $id, 'linkIds' => array_column($run, 'linkId'), 'items' => $run];
+                        }
                     }
                     if (isset($block['id'])) {
                         $rows = [];
@@ -481,6 +629,7 @@ final readonly class QuestionnaireExport
         $text = $this->text($label);
         $item = ['linkId' => $coded !== null ? '/' . $coded['code'] : $linkId];
         if ($coded !== null) {
+            $item += self::definition($coded['code']);
             $item['code'] = [self::loincCoding($coded['code'], $language)];
         }
         if (preg_match('/^\s*(\d+[.)])\s+(.*)$/su', $text, $m) === 1) {
@@ -514,7 +663,7 @@ final readonly class QuestionnaireExport
     private static function total(string $linkId, string $text, bool $calculated, ?array $questions = null, ?string $loinc = null, string $language = 'en'): array
     {
         // The instrument's own total carries LOINC's term for it; a part's score has none here.
-        $item = ['linkId' => $linkId] + ($loinc !== null ? ['code' => [self::loincCoding($loinc, $language)]] : [])
+        $item = ['linkId' => $linkId] + ($loinc !== null ? self::definition($loinc) + ['code' => [self::loincCoding($loinc, $language)]] : [])
             + ['text' => $text, 'type' => 'decimal', 'readOnly' => true];
         if ($calculated) {
             // The points of all the answers given, or only those of the named questions (a part's),
@@ -577,6 +726,13 @@ final readonly class QuestionnaireExport
         return $out === [] ? [] : ['enableWhen' => $out] + (count($out) > 1 ? ['enableBehavior' => 'any'] : []);
     }
 
+    /** @return array{definition?: string} where LOINC's own questionnaire defines the question, when it does */
+    private static function definition(string $code): array
+    {
+        $definition = Loinc::definition($code);
+        return $definition !== null ? ['definition' => $definition] : [];
+    }
+
     /**
      * LOINC's term for the instrument's total, from its reference, or null.
      *
@@ -614,7 +770,7 @@ final readonly class QuestionnaireExport
     private function codedChoice(string $label, array $block, string $language): array
     {
         $text = $this->text($label);
-        $item = ['linkId' => '/' . $block['code']['code'], 'code' => [self::loincCoding($block['code']['code'], $language)]];
+        $item = ['linkId' => '/' . $block['code']['code']] + self::definition($block['code']['code']) + ['code' => [self::loincCoding($block['code']['code'], $language)]];
         if (preg_match('/^\s*(\d+[.)])\s+(.*)$/su', $text, $m) === 1) {
             $item['prefix'] = $m[1];
             $text = $m[2];

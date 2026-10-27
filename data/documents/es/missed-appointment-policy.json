@@ -7,21 +7,8 @@
   "about": "La política de la clínica sobre citas perdidas y llegadas tarde, para que el paciente la conserve. Cambie los tiempos para que coincidan con los de su clínica.",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre del paciente",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Número de paciente",
-          "value": "{patient.id}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification"
     },
     {
       "type": "paragraph",

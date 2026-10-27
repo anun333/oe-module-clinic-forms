@@ -1,0 +1,11 @@
+{
+  "id": "phq-licence",
+  "title": "Aviso de licencia del PHQ y el GAD-7",
+  "about": "El crédito y el permiso de los cuestionarios PHQ y GAD-7, impresos como lo pide Pfizer: al pie del PHQ-2, el PHQ-9 y el GAD-7.",
+  "blocks": [
+    {
+      "type": "paragraph",
+      "text": "Elaborado por los doctores Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke y colegas, mediante una subvención educativa otorgada por Pfizer Inc. No se requiere permiso para reproducir, traducir, presentar o distribuir."
+    }
+  ]
+}

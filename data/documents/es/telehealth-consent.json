@@ -7,21 +7,8 @@
   "about": "Consentimiento para consultas por video o por teléfono.",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre del paciente",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Número de paciente",
-          "value": "{patient.id}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification"
     },
     {
       "type": "paragraph",
@@ -57,21 +44,8 @@
       ]
     },
     {
-      "type": "signature",
-      "signers": [
-        "Paciente o representante legal"
-      ]
-    },
-    {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Si firma un representante: nombre"
-        },
-        {
-          "label": "Relación o autoridad legal"
-        }
-      ]
+      "type": "include",
+      "block": "consent-signature"
     }
   ]
 }

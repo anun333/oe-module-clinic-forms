@@ -11,29 +11,8 @@
       "text": "{facility.name} ofrece descuentos según el tamaño del hogar y los ingresos. Lo que escriba aquí se mantiene privado. Lo usamos para decidir su descuento y, sin su nombre, en los informes que la clínica debe presentar."
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre del paciente",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Número de paciente",
-          "value": "{patient.id}"
-        },
-        {
-          "label": "Teléfono",
-          "value": "{patient.phone}"
-        },
-        {
-          "label": "Dirección",
-          "value": "{patient.address}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification-contact"
     },
     {
       "type": "heading",

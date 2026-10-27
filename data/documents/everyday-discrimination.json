@@ -23,20 +23,8 @@
   },
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Name",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Date"
-        }
-      ]
+      "type": "include",
+      "block": "screening-header"
     },
     {
       "type": "scale",

@@ -21,21 +21,8 @@
   },
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Patient name",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Patient ID",
-          "value": "{patient.id}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification"
     },
     {
       "type": "paragraph",
@@ -82,21 +69,8 @@
       "text": "I understand that email and text messages may not be secure, and I accept that risk for the messages I have allowed. Message and data rates may apply. I may change these choices at any time."
     },
     {
-      "type": "signature",
-      "signers": [
-        "Patient or legal representative"
-      ]
-    },
-    {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "If signed by a representative: name"
-        },
-        {
-          "label": "Relationship or legal authority"
-        }
-      ]
+      "type": "include",
+      "block": "consent-signature"
     },
     {
       "type": "heading",

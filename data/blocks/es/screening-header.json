@@ -1,0 +1,23 @@
+{
+  "id": "screening-header",
+  "title": "Encabezado de las evaluaciones",
+  "about": "El nombre y la fecha de nacimiento del paciente, llenados con el expediente, y la fecha, al principio de los cuestionarios de evaluación.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Fecha"
+        }
+      ]
+    }
+  ]
+}

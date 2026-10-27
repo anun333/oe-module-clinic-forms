@@ -24,20 +24,8 @@
   },
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Name",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Date"
-        }
-      ]
+      "type": "include",
+      "block": "screening-header"
     },
     {
       "type": "scale",
@@ -87,15 +75,8 @@
       "text": "Published cut-offs (Kroenke 2002): 5 or more, low somatic symptom severity; 10 or more, medium somatic symptom severity; 15 or more, high somatic symptom severity."
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Reviewed by"
-        },
-        {
-          "label": "Entered into OpenEMR by"
-        }
-      ]
+      "type": "include",
+      "block": "office-review"
     },
     {
       "type": "paragraph",

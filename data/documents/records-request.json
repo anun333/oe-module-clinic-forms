@@ -45,21 +45,8 @@
       "text": "{facility.name} is now caring for the patient below. Please send the records ticked below to us at fax {facility.fax}, or to {facility.address}."
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Patient name",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Patient ID",
-          "value": "{patient.id}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification"
     },
     {
       "type": "checklist",
@@ -92,21 +79,8 @@
       "text": "The patient agrees to this request (signature below). If the law requires a signed authorization for these records, it is attached."
     },
     {
-      "type": "signature",
-      "signers": [
-        "Patient or legal representative"
-      ]
-    },
-    {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "If signed by a representative: name"
-        },
-        {
-          "label": "Relationship or legal authority"
-        }
-      ]
+      "type": "include",
+      "block": "consent-signature"
     }
   ]
 }

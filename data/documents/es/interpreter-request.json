@@ -7,21 +7,8 @@
   "about": "Registra los idiomas del paciente y la ayuda que desea (un intérprete, lenguaje de señas, traducción escrita, letra grande), con una sección para el personal sobre lo que se programó.",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre del paciente",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Número de paciente",
-          "value": "{patient.id}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification"
     },
     {
       "type": "fields",
@@ -66,21 +53,8 @@
       "text": "No necesita traer a alguien que interprete por usted. Por favor, no le pida a un niño que interprete. Nosotros lo programaremos, sin costo para usted."
     },
     {
-      "type": "signature",
-      "signers": [
-        "Paciente o representante legal"
-      ]
-    },
-    {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Si firma un representante: nombre"
-        },
-        {
-          "label": "Relación o autoridad legal"
-        }
-      ]
+      "type": "include",
+      "block": "consent-signature"
     },
     {
       "type": "heading",

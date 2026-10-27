@@ -130,21 +130,8 @@
       ]
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Name (printed)",
-          "value": "{provider.name}"
-        },
-        {
-          "label": "Credentials",
-          "value": "{provider.credentials}"
-        },
-        {
-          "label": "NPI",
-          "value": "{provider.npi}"
-        }
-      ]
+      "type": "include",
+      "block": "clinician-signoff"
     },
     {
       "type": "fields",

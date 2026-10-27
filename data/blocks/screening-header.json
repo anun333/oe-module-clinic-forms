@@ -1,0 +1,24 @@
+{
+  "id": "screening-header",
+  "title": "Screening header",
+  "about": "The patient's name and date of birth, filled from the chart, and the date, at the top of screening questionnaires.",
+  "version": 1,
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Date"
+        }
+      ]
+    }
+  ]
+}

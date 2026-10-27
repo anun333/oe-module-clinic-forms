@@ -24,20 +24,8 @@
     },
     "blocks": [
         {
-            "type": "fields",
-            "fields": [
-                {
-                    "label": "Name",
-                    "value": "{patient.name}"
-                },
-                {
-                    "label": "Date of birth",
-                    "value": "{patient.dob}"
-                },
-                {
-                    "label": "Date"
-                }
-            ]
+            "type": "include",
+            "block": "screening-header"
         },
         {
             "type": "scale",
@@ -79,15 +67,8 @@
             "text": "Published cut-points for a possible substance use disorder (Gryczynski 2017): Monthly or more often on questions 1 to 3 (tobacco and alcohol), or any use on questions 4 and 5 (drugs, and prescription medications not used as prescribed). They are a reason to assess further, not a diagnosis."
         },
         {
-            "type": "fields",
-            "fields": [
-                {
-                    "label": "Reviewed by"
-                },
-                {
-                    "label": "Entered into OpenEMR by"
-                }
-            ]
+            "type": "include",
+            "block": "office-review"
         },
         {
             "type": "paragraph",

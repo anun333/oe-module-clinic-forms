@@ -1,0 +1,24 @@
+{
+  "id": "patient-identification",
+  "title": "Identificación del paciente",
+  "about": "El nombre, la fecha de nacimiento y el número del paciente, al principio de los consentimientos, las solicitudes y otros formularios de recepción. Se llenan con el expediente cuando se imprimen para un paciente.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Nombre del paciente",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Fecha de nacimiento",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Número de paciente",
+          "value": "{patient.id}"
+        }
+      ]
+    }
+  ]
+}

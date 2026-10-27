@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Records the wording of each shipped document's version in data/document-versions.json.
+ * Records the wording of each shipped document's version, and each shared block's, in data/document-versions.json.
  *
  *   php tools/document-versions.php                 record new versions (refuses if a recorded one changed)
  *   php tools/document-versions.php --check         report only; exit 1 on any problem
@@ -26,7 +26,7 @@ use OpenHealthcare\ClinicForms\Paper\DocumentVersions;
 
 $file = dirname(__DIR__) . '/' . DocumentVersions::FILE;
 $recorded = DocumentVersions::load();
-$documents = DocumentVersions::shipped();
+$documents = DocumentVersions::shipped() + DocumentVersions::shippedBlocks();
 
 if (($argv[1] ?? '') === '--changes') {
     $before = DocumentVersions::load($argv[2] ?? '');
@@ -41,5 +41,5 @@ if (($argv[1] ?? '') === '--check' || $changed !== []) {
     exit($problems === [] ? 0 : 1);
 }
 $new = DocumentVersions::record($recorded, $documents);
-file_put_contents($file, json_encode(['about' => 'The wording (fingerprint) of each version of each shipped document. Written by tools/document-versions.php; do not edit.', 'documents' => $new], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
-echo 'Recorded ' . count($new) . " documents.\n";
+file_put_contents($file, json_encode(['about' => 'The wording (fingerprint) of each version of each shipped document and shared block. Written by tools/document-versions.php; do not edit.', 'documents' => $new], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+echo 'Recorded ' . count($new) . " documents and blocks.\n";

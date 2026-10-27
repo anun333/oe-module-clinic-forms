@@ -22,21 +22,8 @@
   },
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Patient name",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Patient ID",
-          "value": "{patient.id}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification"
     },
     {
       "type": "heading",
@@ -176,21 +163,8 @@
       "text": "Information released under this authorization may be disclosed again by the person who receives it. It may then no longer be protected by federal privacy law. You will be given a copy of this authorization."
     },
     {
-      "type": "signature",
-      "signers": [
-        "Patient or legal representative"
-      ]
-    },
-    {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "If signed by a representative: name"
-        },
-        {
-          "label": "Relationship or legal authority"
-        }
-      ]
+      "type": "include",
+      "block": "consent-signature"
     }
   ]
 }

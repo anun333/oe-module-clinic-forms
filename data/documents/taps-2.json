@@ -24,20 +24,8 @@
     },
     "blocks": [
         {
-            "type": "fields",
-            "fields": [
-                {
-                    "label": "Name",
-                    "value": "{patient.name}"
-                },
-                {
-                    "label": "Date of birth",
-                    "value": "{patient.dob}"
-                },
-                {
-                    "label": "Date"
-                }
-            ]
+            "type": "include",
+            "block": "screening-header"
         },
         {
             "type": "paragraph",
@@ -244,15 +232,8 @@
             "text": "Each substance's score is its number of Yes answers; for alcohol, count the 4-or-more or the 5-or-more question, whichever was answered. Published cut-offs (McNeely 2016): for tobacco, alcohol and marijuana, 1 or more is problem use and 2 or more higher risk, a likely substance use disorder; for the other substances, 1 or more means assess further for a substance use disorder."
         },
         {
-            "type": "fields",
-            "fields": [
-                {
-                    "label": "Reviewed by"
-                },
-                {
-                    "label": "Entered into OpenEMR by"
-                }
-            ]
+            "type": "include",
+            "block": "office-review"
         },
         {
             "type": "paragraph",

@@ -16,21 +16,8 @@
   },
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Patient name",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Patient ID",
-          "value": "{patient.id}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification"
     },
     {
       "type": "fields",
@@ -75,21 +62,8 @@
       "text": "You do not need to bring someone to interpret for you. Please do not ask a child to interpret. We will arrange it, free of charge."
     },
     {
-      "type": "signature",
-      "signers": [
-        "Patient or legal representative"
-      ]
-    },
-    {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "If signed by a representative: name"
-        },
-        {
-          "label": "Relationship or legal authority"
-        }
-      ]
+      "type": "include",
+      "block": "consent-signature"
     },
     {
       "type": "heading",

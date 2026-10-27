@@ -22,21 +22,8 @@
   },
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Patient",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Chart number",
-          "value": "{patient.id}"
-        }
-      ]
+      "type": "include",
+      "block": "chart-identification"
     },
     {
       "type": "checklist",

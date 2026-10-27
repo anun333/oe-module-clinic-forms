@@ -1,0 +1,25 @@
+{
+  "id": "note-header",
+  "title": "Clinical note header",
+  "about": "The date and the clinician, then the patient's chart identification, at the top of a clinical note.",
+  "version": 1,
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Date",
+          "value": "{clinic.today}"
+        },
+        {
+          "label": "Clinician",
+          "value": "{provider.name}"
+        }
+      ]
+    },
+    {
+      "type": "include",
+      "block": "chart-identification"
+    }
+  ]
+}

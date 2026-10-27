@@ -6,20 +6,8 @@
   "about": "Detección de depresión: nueve preguntas con puntuación de 0 a 27. Las respuestas se pueden registrar en el formulario PHQ-9 de OpenEMR (actívelo en Administración > Formularios > Administración de formularios).",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Fecha"
-        }
-      ]
+      "type": "include",
+      "block": "screening-header"
     },
     {
       "type": "scale",
@@ -37,8 +25,9 @@
         3
       ],
       "items": [
-        "Poco interés o placer en hacer cosas",
-        "Se ha sentido decaído(a), deprimido(a) o sin esperanzas",
+        {
+          "include": "phq-2-questions"
+        },
         "Ha tenido dificultad para quedarse o permanecer dormido(a), o ha dormido demasiado",
         "Se ha sentido cansado(a) o con poca energía",
         "Sin apetito o ha comido en exceso",
@@ -50,14 +39,8 @@
       "total": "Puntuación total (para uso de la oficina)"
     },
     {
-      "type": "checklist",
-      "label": "Si marcó cualquiera de los problemas, ¿qué tanta dificultad le han dado estos problemas para hacer su trabajo, encargarse de las tareas del hogar, o llevarse bien con otras personas?",
-      "items": [
-        "No ha sido difícil",
-        "Un poco difícil",
-        "Muy difícil",
-        "Extremadamente difícil"
-      ]
+      "type": "include",
+      "block": "functional-difficulty"
     },
     {
       "type": "paragraph",
@@ -76,19 +59,12 @@
       "text": "Si la pregunta 9 tiene una respuesta distinta de \"Ningún día\", o está en blanco, un clínico pregunta sobre ella el mismo día, antes de que el paciente se vaya. Si el paciente ya se fue, comuníquese con él hoy."
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Revisado por"
-        },
-        {
-          "label": "Registrado en OpenEMR por"
-        }
-      ]
+      "type": "include",
+      "block": "office-review"
     },
     {
-      "type": "paragraph",
-      "text": "Elaborado por los doctores Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke y colegas, mediante una subvención educativa otorgada por Pfizer Inc. No se requiere permiso para reproducir, traducir, presentar o distribuir."
+      "type": "include",
+      "block": "phq-licence"
     }
   ]
 }

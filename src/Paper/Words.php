@@ -50,6 +50,7 @@ final class Words
         'Abnormal' => 'Anormal',
         'Date/Notes' => 'Fecha y notas',
         'Language assistance' => 'Asistencia con el idioma',
+        'Some questions are missing: this form needs SDC assembly to show the block' => 'Faltan preguntas: este formulario necesita el ensamblaje SDC para mostrar el bloque',
     ];
 
     public static function t(string $english, string $language): string

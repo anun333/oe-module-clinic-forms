@@ -50,6 +50,7 @@ final class DocumentLibrary
     private array $withdrawn = [];
     /** @var list<array{id: string, title: string, version: int, fingerprint: string}> clinic versions that don't say which of the module's they were copied from */
     private array $unstated = [];
+    private ?Blocks $blocks = null;
 
     /**
      * @param ?string $localDir   the clinic's own documents, or null for none
@@ -107,6 +108,17 @@ final class DocumentLibrary
         return $layers;
     }
 
+    /** The blocks this library's documents can include: the module's, and the clinic's own (sites/<site>/documents/clinic-forms/blocks). */
+    public function blocks(): Blocks
+    {
+        if ($this->blocks === null) {
+            $this->blocks = $this->localDir === null
+                ? Blocks::shipped()
+                : new Blocks(dirname(__DIR__, 2) . '/data/' . Blocks::FOLDER, $this->localDir . '/' . Blocks::FOLDER, $this->localLabel . '/' . Blocks::FOLDER);
+        }
+        return $this->blocks;
+    }
+
     /** @return array<string, Document> */
     public function all(): array
     {
@@ -124,7 +136,7 @@ final class DocumentLibrary
             foreach ($layers as [$dir, $label, $source]) {
                 foreach (glob($dir . '/*.json') ?: [] as $file) {
                     try {
-                        $doc = self::read($file, $label, $source);
+                        $doc = self::read($file, $label, $source, null, 'en', $this->blocks());
                     } catch (\InvalidArgumentException $e) {
                         if ($source === 'shipped') {
                             throw $e;
@@ -150,7 +162,7 @@ final class DocumentLibrary
                             if ($english === null) {
                                 throw new \InvalidArgumentException("$label/" . basename($file) . ': a translation of a document that does not exist');
                             }
-                            $doc = self::read($file, $label, $source, $english, $this->language);
+                            $doc = self::read($file, $label, $source, $english, $this->language, $this->blocks());
                             if ($doc->translates !== Translation::fingerprint($english) && ($doc->translates !== null || $source === 'shipped')) {
                                 $this->outOfDate[$doc->id] = "$label/" . basename($file);
                                 continue;
@@ -193,7 +205,7 @@ final class DocumentLibrary
     public function problems(): array
     {
         $this->all();
-        return $this->problems;
+        return array_merge($this->blocks()->problems(), $this->problems);
     }
 
     /**
@@ -261,8 +273,9 @@ final class DocumentLibrary
     /**
      * @param string    $source   'shipped' or 'clinic'
      * @param ?Document $english  for a translation, the English document it translates
+     * @param ?Blocks   $blocks   the blocks it can include: the module's when null
      */
-    public static function read(string $file, string $label = 'data/documents', string $source = 'shipped', ?Document $english = null, string $language = 'en'): Document
+    public static function read(string $file, string $label = 'data/documents', string $source = 'shipped', ?Document $english = null, string $language = 'en', ?Blocks $blocks = null): Document
     {
         $where = $label . '/' . basename($file);
         try {
@@ -273,6 +286,8 @@ final class DocumentLibrary
         if (!is_array($data)) {
             throw new \InvalidArgumentException("$where: must be an object");
         }
+        // Shared blocks put in place first, so everything below checks the whole document.
+        [$data['blocks'], $includes] = ($blocks ?? Blocks::shipped())->expand($data['blocks'] ?? null, $where, $language);
         $translates = null;
         $machineAssisted = false;
         if ($english !== null) {
@@ -498,6 +513,7 @@ final class DocumentLibrary
             $basedOn,
             ($data['anonymous'] ?? false) === true,
             $machineAssisted,
+            $includes,
         );
     }
 

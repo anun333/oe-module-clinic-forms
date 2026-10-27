@@ -7,29 +7,8 @@
   "about": "Solicitud del paciente de una lista de las personas con quienes la clínica compartió su información. HIPAA, registro de divulgaciones, 45 CFR 164.528.",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre del paciente",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Número de paciente",
-          "value": "{patient.id}"
-        },
-        {
-          "label": "Teléfono",
-          "value": "{patient.phone}"
-        },
-        {
-          "label": "Dirección",
-          "value": "{patient.address}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification-contact"
     },
     {
       "type": "heading",
@@ -63,21 +42,8 @@
       "text": "La lista muestra con quién compartimos su información y por qué. No incluye lo que compartimos para tratamiento, pago y nuestras operaciones, ni algunos otros casos que la ley permite. La primera lista en cualquier período de 12 meses es gratis. Por otra lista dentro de esos 12 meses, podemos cobrarle una tarifa justa basada en el costo. Le diremos la tarifa primero, y usted podrá cambiar o cancelar su solicitud. Le responderemos en un plazo de 60 días. Si necesitamos más tiempo, le diremos el motivo por escrito y le responderemos en un plazo de 30 días más."
     },
     {
-      "type": "signature",
-      "signers": [
-        "Paciente o representante legal"
-      ]
-    },
-    {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Si firma un representante: nombre"
-        },
-        {
-          "label": "Relación o autoridad legal"
-        }
-      ]
+      "type": "include",
+      "block": "consent-signature"
     },
     {
       "type": "heading",

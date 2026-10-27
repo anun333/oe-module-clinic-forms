@@ -7,21 +7,8 @@
   "about": "Consentimiento para usar o compartir registros protegidos por 42 CFR Parte 2, incluido el consentimiento único para tratamiento, pago y operaciones de atención médica, con todos los elementos de 42 CFR 2.31.",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre del paciente",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Número de paciente",
-          "value": "{patient.id}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification"
     },
     {
       "type": "paragraph",
@@ -136,15 +123,8 @@
       ]
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Si firma un representante: nombre"
-        },
-        {
-          "label": "Relación o autoridad legal"
-        }
-      ]
+      "type": "include",
+      "block": "representative"
     }
   ]
 }

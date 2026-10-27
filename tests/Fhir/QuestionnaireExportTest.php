@@ -385,6 +385,173 @@ final class QuestionnaireExportTest extends TestCase
         self::assertSame('Q2024Update', QuestionnaireExport::name('2024 update'));
     }
 
+    /**
+     * The PHQ-2's questions open the PHQ-9 and are the PHQ-2: one block, its own Questionnaire, named by a
+     * subQuestionnaire in each document's modular form. The PHQ-4 asks them as questions 3 and 4, numbers
+     * that aren't the block's, so it keeps them written out.
+     */
+    public function testThePhq2QuestionsAreABlockOfTheirOwnInTheModularForms(): void
+    {
+        $export = new QuestionnaireExport(new Context(['name' => 'C']));
+        $phq9 = $export->forms($this->doc('phq-9'));
+        self::assertNotNull($phq9['modular']);
+        self::assertSame('phq-9-modular', $phq9['modular']['id']);
+        self::assertSame([QuestionnaireExport::MODULAR_PROFILE], $phq9['modular']['meta']['profile']);
+        self::assertSame([$phq9['assembled']['url'], $phq9['assembled']['version']], [$phq9['modular']['url'], $phq9['modular']['version']],
+            'one url and version, in two forms');
+        $canonical = QuestionnaireExport::CANONICAL . 'block/phq-2-questions|1';
+        $scale = self::flatten($phq9['modular']['item'])['b2'];
+        self::assertSame(['b2.phq-2-questions', '/44259-0'], array_column(array_slice($scale['item'], 0, 2), 'linkId'));
+        self::assertSame('display', $scale['item'][0]['type']);
+        self::assertSame([['url' => QuestionnaireExport::SUB_QUESTIONNAIRE, 'valueCanonical' => $canonical]], $scale['item'][0]['extension']);
+        self::assertContains(['url' => QuestionnaireExport::ASSEMBLE_EXPECTATION, 'valueCode' => 'assemble-root'], $phq9['modular']['extension']);
+        self::assertContains(['url' => QuestionnaireExport::KNOWLEDGE_CAPABILITY, 'valueCode' => 'computable'], $phq9['modular']['extension']);
+        self::assertContains(['url' => QuestionnaireExport::ASSEMBLED_FROM, 'valueCanonical' => $canonical], $phq9['assembled']['extension']);
+        self::assertContains(['url' => QuestionnaireExport::KNOWLEDGE_CAPABILITY, 'valueCode' => 'executable'], $phq9['assembled']['extension']);
+
+        $phq2 = $export->forms($this->doc('phq-2'));
+        self::assertSame($phq9['blocks'][0]['items'], $phq2['blocks'][0]['items'], 'the same items in both documents');
+        self::assertSame(['/44250-9', '/44255-8'], array_column($phq9['blocks'][0]['items'], 'linkId'));
+        $block = $export->blockQuestionnaire($phq9['blocks'][0]['include'], 'en', $phq9['blocks'][0]['items'], $phq9['blocks'][0]['copyright']);
+        self::assertSame(['block-phq-2-questions', QuestionnaireExport::CANONICAL . 'block/phq-2-questions', '1', 'PHQ-2 questions'], [$block['id'], $block['url'], $block['version'], $block['title']]);
+        self::assertContains(['url' => QuestionnaireExport::ASSEMBLE_EXPECTATION, 'valueCode' => 'independent-child'], $block['extension']);
+        self::assertStringStartsWith('Pfizer Inc.', $block['copyright']);
+
+        $phq4 = $export->forms($this->doc('phq-4'));
+        self::assertNull($phq4['modular'], 'numbered 3 and 4 in the PHQ-4: written out');
+        self::assertArrayNotHasKey('/44250-9', array_filter(self::flatten($phq4['assembled']['item']), static fn(array $i): bool => $i['type'] === 'display'));
+        self::assertNotContains(QuestionnaireExport::ASSEMBLED_FROM, array_column($phq4['assembled']['extension'], 'url'));
+    }
+
+    /**
+     * Every shipped document, in each language and both forms: the assembled form is the document's
+     * Questionnaire as it was with its blocks written out, with only assembledFrom and the capability
+     * added; its modular form, assembled by SDC's rules from the blocks' Questionnaires, gives it back;
+     * and a block's items are the same in every document that names it.
+     */
+    public function testEveryModularFormAssemblesToTheFormFillersRun(): void
+    {
+        $english = DocumentLibrary::shipped();
+        $modular = 0;
+        foreach (array_keys(Words::LANGUAGES) as $language) {
+            foreach ([false, true] as $rich) {
+                $export = new QuestionnaireExport(new Context(['name' => 'C']), $language, [], $rich);
+                $blocks = [];
+                $library = [];
+                foreach (DocumentLibrary::shipped($language)->all() as $doc) {
+                    $en = $language === 'en' ? null : $english->get($doc->id);
+                    $forms = $export->forms($doc, $en);
+                    $writtenOut = new Document(...array_merge(get_object_vars($doc), ['includes' => []]));
+                    $added = [QuestionnaireExport::ASSEMBLED_FROM, QuestionnaireExport::KNOWLEDGE_CAPABILITY];
+                    $assembled = $forms['assembled'];
+                    $assembled['extension'] = array_values(array_filter($assembled['extension'] ?? [], static fn(array $e): bool => !in_array($e['url'], $added, true)));
+                    $before = $export->questionnaire($writtenOut, $en);
+                    self::assertSame($before['extension'] ?? [], $assembled['extension'], "$language $doc->id");
+                    unset($assembled['extension'], $before['extension']);
+                    self::assertSame($before, $assembled, "$language $doc->id: the assembled form is the document written out");
+                    foreach ($forms['blocks'] as $block) {
+                        $id = $block['include']['block'];
+                        $blocks[$id] ??= $block['items'];
+                        self::assertSame($blocks[$id], $block['items'], "$language $id in $doc->id");
+                        $q = $export->blockQuestionnaire($block['include'], $block['language'], $block['items']);
+                        $library[self::canonical($q)] = $q;
+                    }
+                    if ($forms['modular'] !== null) {
+                        self::assertSame($forms['assembled'], self::assemble($forms['modular'], $library), "$language $doc->id: the modular form assembles to the form fillers run");
+                        $modular++;
+                    }
+                }
+            }
+        }
+        // The Hunger Vital Sign has no Spanish yet, so a Spanish library offers its English, modular too.
+        self::assertSame(12, $modular, 'PHQ-2, PHQ-9 and the Hunger Vital Sign in each language, plain and rich');
+    }
+
+    /**
+     * A LOINC question carries its item in LOINC's own questionnaire as its definition, the same in
+     * every form that asks it: the PHQ-2's questions are defined by the PHQ-2's questionnaire in the
+     * PHQ-2, PHQ-4 and PHQ-9, in English and Spanish. An instrument's total carries its questionnaire's
+     * total item. A question with no LOINC code has none.
+     */
+    public function testLoincQuestionsCarryTheItemLoincDefinesThemBy(): void
+    {
+        $definitions = static fn(array $q): array => array_filter(array_map(static fn(array $i): ?string => $i['definition'] ?? null, self::flatten($q['item'])));
+        $phq9 = $definitions($this->export('phq-9'));
+        self::assertSame('http://loinc.org/q/55757-9#32742', $phq9['/44250-9']);
+        self::assertSame('http://loinc.org/q/55757-9#32743', $phq9['/44255-8']);
+        self::assertSame('http://loinc.org/q/44249-1#14365', $phq9['/44259-0']);
+        self::assertSame('http://loinc.org/q/44249-1#14372', array_values(array_filter($phq9, static fn(string $d, string $id): bool => str_contains($id, 'total'), ARRAY_FILTER_USE_BOTH))[0]);
+        foreach (['phq-2', 'phq-4'] as $id) {
+            $other = $definitions($this->export($id));
+            self::assertSame($phq9['/44250-9'], $other['/44250-9'], $id);
+        }
+        $es = DocumentLibrary::shipped('es')->get('phq-9');
+        self::assertNotNull($es);
+        $q = (new QuestionnaireExport(new Context(['name' => 'C']), 'es'))->questionnaire($es, $this->doc('phq-9'));
+        self::assertSame($phq9['/44250-9'], $definitions($q)['/44250-9'], 'the same in Spanish');
+        self::assertSame([], $definitions($this->export('consent-to-treat')), 'no LOINC question, no definition');
+        foreach ($phq9 as $definition) {
+            self::assertMatchesRegularExpression('~^http://loinc\.org/q/\d+-\d#\d+$~', $definition);
+        }
+    }
+
+    public function testAClinicsOwnDocumentIsNotPublishedAsModular(): void
+    {
+        $phq9 = $this->doc('phq-9');
+        $clinic = new Document(...array_merge(get_object_vars($phq9), ['source' => 'clinic']));
+        $forms = (new QuestionnaireExport(new Context(['name' => 'C'])))->forms($clinic);
+        self::assertNull($forms['modular'], "the module publishes its own documents' modular forms, not a clinic's");
+        self::assertNotContains(QuestionnaireExport::ASSEMBLED_FROM, array_column($forms['assembled']['extension'] ?? [], 'url'));
+    }
+
+    /** @param array<string, mixed> $q */
+    private static function canonical(array $q): string
+    {
+        return $q['url'] . '|' . $q['version'];
+    }
+
+    /**
+     * SDC 4.0.0's assembly, as far as these forms use it: each display item with a subQuestionnaire
+     * becomes the named Questionnaire's items (no linkIdPrefix, so their linkIds as they are), in a form
+     * of the same language; assembledFrom names each; assemble-root goes; the form becomes executable.
+     *
+     * @param array<string, mixed> $modular
+     * @param array<string, array<string, mixed>> $library by canonical
+     * @return array<string, mixed>
+     */
+    private static function assemble(array $modular, array $library): array
+    {
+        $used = [];
+        $walk = static function (array $items) use (&$walk, &$used, $library, $modular): array {
+            $out = [];
+            foreach ($items as $item) {
+                $sub = array_values(array_filter($item['extension'] ?? [], static fn(array $e): bool => $e['url'] === QuestionnaireExport::SUB_QUESTIONNAIRE));
+                if ($sub !== []) {
+                    $child = $library[$sub[0]['valueCanonical']];
+                    self::assertSame($modular['language'], $child['language']);
+                    $used[$sub[0]['valueCanonical']] = true;
+                    array_push($out, ...$child['item']);
+                    continue;
+                }
+                if (isset($item['item'])) {
+                    $item['item'] = $walk($item['item']);
+                }
+                $out[] = $item;
+            }
+            return $out;
+        };
+        $q = $modular;
+        $q['item'] = $walk($modular['item']);
+        $q['id'] = substr($modular['id'], 0, -strlen('-modular'));
+        $q['meta'] = ['profile' => [QuestionnaireExport::SDC_PROFILE]];
+        $q['extension'] = array_values(array_filter($q['extension'], static fn(array $e): bool => !in_array($e['url'], [QuestionnaireExport::ASSEMBLE_EXPECTATION, QuestionnaireExport::KNOWLEDGE_CAPABILITY], true)));
+        foreach (array_keys($used) as $canonical) {
+            $q['extension'][] = ['url' => QuestionnaireExport::ASSEMBLED_FROM, 'valueCanonical' => $canonical];
+        }
+        $q['extension'][] = ['url' => QuestionnaireExport::KNOWLEDGE_CAPABILITY, 'valueCode' => 'executable'];
+        return $q;
+    }
+
     /** @return array<string, mixed> */
     private function export(string $id): array
     {

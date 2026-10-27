@@ -1,0 +1,18 @@
+{
+  "id": "functional-difficulty",
+  "title": "Difficulty question",
+  "about": "The PHQ's closing question, how difficult the problems have made work, home and getting along with others: on the PHQ-9 and the GAD-7.",
+  "version": 1,
+  "blocks": [
+    {
+      "type": "checklist",
+      "label": "If you checked off any problems, how difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?",
+      "items": [
+        "Not difficult at all",
+        "Somewhat difficult",
+        "Very difficult",
+        "Extremely difficult"
+      ]
+    }
+  ]
+}

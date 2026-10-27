@@ -55,7 +55,7 @@ The score appears only once every scored question is answered. If the patient le
 2. Optionally, under **Also list them in visits of these types (optional)**, tick visit types, so each appears in those visits' Questionnaires menu (OpenEMR 8.5 and later).
 3. Choose **Add to OpenEMR questionnaires**. Adding a form again updates it; a questionnaire Clinic Forms didn't add is left alone.
 
-To use the forms in another system, **FHIR Questionnaire** downloads them as blank forms, never with patient details.
+To use the forms in another system, **FHIR Questionnaire** downloads them as blank forms, never with patient details. Each is the complete form, ready to fill, including those built from shared parts, such as the PHQ-9 with the PHQ-2's questions.
 
 ### Add your clinic's own Word or LibreOffice documents
 
@@ -69,4 +69,4 @@ Spanish made with machine help is marked **ES needs review**: have a qualified t
 
 ### Fix local documents the page flags
 
-When **Some local documents or packets need attention** shows, the page lists what to fix, such as a local copy without the version it was copied from. Your own versions and settings live in your site's Clinic Forms folder; the README explains them.
+When **Some local documents or packets need attention** shows, the page lists what to fix, such as a local copy without the version it was copied from, or a shared block of your own (a part your documents include by name, such as a signature section) that has a mistake or takes the name of one of the module's. Your own versions and settings live in your site's Clinic Forms folder; the README explains them.

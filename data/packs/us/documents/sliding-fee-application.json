@@ -21,29 +21,8 @@
       "text": "{facility.name} offers discounts based on household size and income. What you write here is kept private. We use it to decide your discount, and, without your name, in reports the clinic must make."
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Patient name",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Patient ID",
-          "value": "{patient.id}"
-        },
-        {
-          "label": "Phone",
-          "value": "{patient.phone}"
-        },
-        {
-          "label": "Address",
-          "value": "{patient.address}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification-contact"
     },
     {
       "type": "heading",

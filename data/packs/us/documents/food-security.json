@@ -24,20 +24,8 @@
   },
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Name",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Date"
-        }
-      ]
+      "type": "include",
+      "block": "screening-header"
     },
     {
       "type": "scale",
@@ -117,15 +105,8 @@
       "text": "Counts on UDS Table 6A line 39 (screening for upstream drivers of health) when it is added to OpenEMR's questionnaires from the Clinic Forms page and answered there."
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Reviewed by"
-        },
-        {
-          "label": "Entered into OpenEMR by"
-        }
-      ]
+      "type": "include",
+      "block": "office-review"
     },
     {
       "type": "paragraph",

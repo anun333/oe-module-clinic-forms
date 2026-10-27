@@ -9,6 +9,9 @@
  *
  *   {"documents": {"documents/consent-to-treat": {"1": "<fingerprint>", "2": "<fingerprint>"}}}
  *
+ * Shared blocks (data/blocks, see Blocks) are versioned the same way, under "blocks/<id>": a block's
+ * version is the one a modular FHIR form names it by, so it too always means one wording.
+ *
  * @package   OpenHealthcare\ClinicForms
  * @license   https://www.gnu.org/licenses/gpl-3.0.html GNU General Public License 3
  */
@@ -30,16 +33,37 @@ final class DocumentVersions
     public static function shipped(?string $root = null): array
     {
         $root ??= dirname(__DIR__, 2);
+        $blocks = Blocks::shipped($root);
         $out = [];
         $dirs = array_merge([$root . '/data/documents'], glob($root . '/data/packs/*/documents') ?: [], glob($root . '/data/packs/*/regions/*/documents') ?: []);
         foreach ($dirs as $dir) {
             $label = substr($dir, strlen($root) + 1);
             foreach (glob($dir . '/*.json') ?: [] as $file) {
-                $out[substr($label, strlen('data/')) . '/' . basename($file, '.json')] = DocumentLibrary::read($file, $label);
+                $out[substr($label, strlen('data/')) . '/' . basename($file, '.json')] = DocumentLibrary::read($file, $label, 'shipped', null, 'en', $blocks);
             }
         }
         ksort($out);
         return $out;
+    }
+
+    /**
+     * Every shared block, by its path under data/ without .json ("blocks/consent-signature").
+     *
+     * @return array<string, Block>
+     */
+    public static function shippedBlocks(?string $root = null): array
+    {
+        $out = [];
+        foreach (Blocks::shipped($root)->all() as $id => $block) {
+            $out[Blocks::FOLDER . '/' . $id] = $block;
+        }
+        return $out;
+    }
+
+    /** A document's or block's wording, in 16 hex digits. */
+    private static function fingerprint(Document|Block $item): string
+    {
+        return $item instanceof Block ? $item->fingerprint() : Translation::fingerprint($item);
     }
 
     /** @return array<string, array<string, string>> */
@@ -60,14 +84,14 @@ final class DocumentVersions
      * under a recorded version.
      *
      * @param array<string, array<string, string>> $recorded
-     * @param array<string, Document>              $documents
+     * @param array<string, Document|Block>        $documents
      * @return list<string>
      */
     public static function problems(array $recorded, array $documents): array
     {
         $out = [];
         foreach ($documents as $key => $doc) {
-            $fingerprint = Translation::fingerprint($doc);
+            $fingerprint = self::fingerprint($doc);
             $was = $recorded[$key][(string)$doc->version] ?? null;
             if ($doc->version < 1) {
                 $out[] = "$key: has no version";
@@ -84,14 +108,14 @@ final class DocumentVersions
      * The record with each document's current version added. Never rewrites a recorded version.
      *
      * @param array<string, array<string, string>> $recorded
-     * @param array<string, Document>              $documents
+     * @param array<string, Document|Block>        $documents
      * @return array<string, array<string, string>>
      */
     public static function record(array $recorded, array $documents): array
     {
         foreach ($documents as $key => $doc) {
             if ($doc->version >= 1 && !isset($recorded[$key][(string)$doc->version])) {
-                $recorded[$key][(string)$doc->version] = Translation::fingerprint($doc);
+                $recorded[$key][(string)$doc->version] = self::fingerprint($doc);
                 ksort($recorded[$key], SORT_NUMERIC);
             }
         }

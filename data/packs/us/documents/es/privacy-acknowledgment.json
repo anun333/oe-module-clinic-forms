@@ -7,42 +7,16 @@
   "about": "Constancia de que el paciente recibió el Aviso de prácticas de privacidad de la clínica.",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre del paciente",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Número de paciente",
-          "value": "{patient.id}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification"
     },
     {
       "type": "paragraph",
       "text": "Recibí una copia del Aviso de prácticas de privacidad de {facility.name}. Explica cómo se puede usar y compartir mi información de salud, y mis derechos sobre ella."
     },
     {
-      "type": "signature",
-      "signers": [
-        "Paciente o representante legal"
-      ]
-    },
-    {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Si firma un representante: nombre"
-        },
-        {
-          "label": "Relación o autoridad legal"
-        }
-      ]
+      "type": "include",
+      "block": "consent-signature"
     },
     {
       "type": "heading",

@@ -24,20 +24,8 @@
   },
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Name",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Date"
-        }
-      ]
+      "type": "include",
+      "block": "screening-header"
     },
     {
       "type": "scale",
@@ -66,14 +54,8 @@
       "total": "Total score (for office use)"
     },
     {
-      "type": "checklist",
-      "label": "If you checked off any problems, how difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?",
-      "items": [
-        "Not difficult at all",
-        "Somewhat difficult",
-        "Very difficult",
-        "Extremely difficult"
-      ]
+      "type": "include",
+      "block": "functional-difficulty"
     },
     {
       "type": "heading",
@@ -84,19 +66,12 @@
       "text": "Published severity (Spitzer 2006): 5 or more, mild; 10 or more, moderate; 15 or more, severe anxiety. A total of 10 or more is the usual point to assess for generalized anxiety disorder."
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Reviewed by"
-        },
-        {
-          "label": "Entered into OpenEMR by"
-        }
-      ]
+      "type": "include",
+      "block": "office-review"
     },
     {
-      "type": "paragraph",
-      "text": "Developed by Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc. No permission required to reproduce, translate, display or distribute."
+      "type": "include",
+      "block": "phq-licence"
     }
   ]
 }

@@ -7,20 +7,8 @@
   "about": "Las respuestas que el expediente no tiene y que deciden qué pruebas de detección y medicamentos preventivos de grado A y B del USPSTF le corresponden al paciente: antecedentes de tabaquismo en paquetes-año, cánceres y enfermedades intestinales previas, cánceres y otras enfermedades en familiares cercanos, salud sexual en los últimos 6 meses, dónde nació y ha vivido, y embarazo. Pregunte una vez, y de nuevo cuando algo cambie. La sección para uso de la oficina, redactada a partir de las recomendaciones (sin reproducir el texto del USPSTF), indica a qué puede apuntar cada respuesta; el profesional clínico decide.",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Fecha"
-        }
-      ]
+      "type": "include",
+      "block": "screening-header"
     },
     {
       "type": "paragraph",

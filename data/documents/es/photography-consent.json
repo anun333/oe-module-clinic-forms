@@ -7,21 +7,8 @@
   "about": "Permiso para tomar fotos, video o grabaciones de audio de un paciente, con una opción aparte para cada uso: el expediente médico y la atención, y la enseñanza. La publicidad, los sitios web, las redes sociales y cualquier otro uso fuera de la atención y la enseñanza necesitan un permiso escrito aparte para ese uso.",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre del paciente",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Número de paciente",
-          "value": "{patient.id}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification"
     },
     {
       "type": "paragraph",
@@ -63,21 +50,8 @@
       ]
     },
     {
-      "type": "signature",
-      "signers": [
-        "Paciente o representante legal"
-      ]
-    },
-    {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Si firma un representante: nombre"
-        },
-        {
-          "label": "Relación o autoridad legal"
-        }
-      ]
+      "type": "include",
+      "block": "consent-signature"
     },
     {
       "type": "fields",

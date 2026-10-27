@@ -1,0 +1,9 @@
+{
+  "id": "phq-2-questions",
+  "title": "Preguntas del PHQ-2",
+  "about": "Las dos preguntas del PHQ-2, sobre el interés y el ánimo en las últimas 2 semanas, que también abren el PHQ-9 y cierran el PHQ-4.",
+  "rows": [
+    "Poco interés o placer en hacer cosas",
+    "Se ha sentido decaído(a), deprimido(a) o sin esperanzas"
+  ]
+}

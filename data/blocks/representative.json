@@ -1,0 +1,19 @@
+{
+  "id": "representative",
+  "title": "Representative",
+  "about": "Who signed for the patient, and their relationship or legal authority: under a patient's signature that a representative may sign.",
+  "version": 1,
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "If signed by a representative: name"
+        },
+        {
+          "label": "Relationship or legal authority"
+        }
+      ]
+    }
+  ]
+}

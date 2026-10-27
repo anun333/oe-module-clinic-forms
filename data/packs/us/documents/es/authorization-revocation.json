@@ -7,29 +7,8 @@
   "about": "Retira una autorización que el paciente firmó antes. HIPAA, 45 CFR 164.508(b)(5).",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre del paciente",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Número de paciente",
-          "value": "{patient.id}"
-        },
-        {
-          "label": "Teléfono",
-          "value": "{patient.phone}"
-        },
-        {
-          "label": "Dirección",
-          "value": "{patient.address}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification-contact"
     },
     {
       "type": "paragraph",
@@ -54,21 +33,8 @@
       "text": "Esto se aplica desde que {facility.name} lo recibe. No deshace lo que ya se hizo debido a la autorización."
     },
     {
-      "type": "signature",
-      "signers": [
-        "Paciente o representante legal"
-      ]
-    },
-    {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Si firma un representante: nombre"
-        },
-        {
-          "label": "Relación o autoridad legal"
-        }
-      ]
+      "type": "include",
+      "block": "consent-signature"
     },
     {
       "type": "heading",

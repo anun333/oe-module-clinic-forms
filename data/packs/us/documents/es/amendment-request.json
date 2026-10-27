@@ -7,29 +7,8 @@
   "about": "Solicitud del paciente para corregir o completar su expediente. HIPAA, derecho a enmendar, 45 CFR 164.526.",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre del paciente",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Número de paciente",
-          "value": "{patient.id}"
-        },
-        {
-          "label": "Teléfono",
-          "value": "{patient.phone}"
-        },
-        {
-          "label": "Dirección",
-          "value": "{patient.address}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification-contact"
     },
     {
       "type": "heading",
@@ -74,21 +53,8 @@
       "text": "Le responderemos en un plazo de 60 días. Si necesitamos más tiempo, le diremos por escrito el motivo. Si le decimos que no, le diremos por escrito el motivo. Usted podrá entonces enviarnos una declaración de que no está de acuerdo, y la agregaremos a su expediente."
     },
     {
-      "type": "signature",
-      "signers": [
-        "Paciente o representante legal"
-      ]
-    },
-    {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Si firma un representante: nombre"
-        },
-        {
-          "label": "Relación o autoridad legal"
-        }
-      ]
+      "type": "include",
+      "block": "consent-signature"
     },
     {
       "type": "heading",

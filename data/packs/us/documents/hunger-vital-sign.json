@@ -24,20 +24,8 @@
   },
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Name",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Date"
-        }
-      ]
+      "type": "include",
+      "block": "screening-header"
     },
     {
       "type": "scale",
@@ -48,8 +36,9 @@
         "Never true"
       ],
       "items": [
-        "Within the past 12 months we worried whether our food would run out before we got money to buy more.",
-        "Within the past 12 months the food we bought just didn't last and we didn't have money to get more."
+        {
+          "include": "hunger-vital-sign-questions"
+        }
       ]
     },
     {
@@ -77,15 +66,8 @@
       ]
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Reviewed by"
-        },
-        {
-          "label": "Entered into OpenEMR by"
-        }
-      ]
+      "type": "include",
+      "block": "office-review"
     },
     {
       "type": "paragraph",

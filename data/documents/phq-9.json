@@ -24,20 +24,8 @@
   },
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Name",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Date"
-        }
-      ]
+      "type": "include",
+      "block": "screening-header"
     },
     {
       "type": "scale",
@@ -55,8 +43,9 @@
         3
       ],
       "items": [
-        "Little interest or pleasure in doing things",
-        "Feeling down, depressed, or hopeless",
+        {
+          "include": "phq-2-questions"
+        },
         "Trouble falling or staying asleep, or sleeping too much",
         "Feeling tired or having little energy",
         "Poor appetite or overeating",
@@ -68,14 +57,8 @@
       "total": "Total score (for office use)"
     },
     {
-      "type": "checklist",
-      "label": "If you checked off any problems, how difficult have these problems made it for you to do your work, take care of things at home, or get along with other people?",
-      "items": [
-        "Not difficult at all",
-        "Somewhat difficult",
-        "Very difficult",
-        "Extremely difficult"
-      ]
+      "type": "include",
+      "block": "functional-difficulty"
     },
     {
       "type": "paragraph",
@@ -94,19 +77,12 @@
       "text": "If question 9 is answered above \"Not at all\", or is left blank, a clinician asks about it the same day, before the patient leaves. If the patient has already left, contact them today."
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Reviewed by"
-        },
-        {
-          "label": "Entered into OpenEMR by"
-        }
-      ]
+      "type": "include",
+      "block": "office-review"
     },
     {
-      "type": "paragraph",
-      "text": "Developed by Drs. Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke and colleagues, with an educational grant from Pfizer Inc. No permission required to reproduce, translate, display or distribute."
+      "type": "include",
+      "block": "phq-licence"
     }
   ]
 }

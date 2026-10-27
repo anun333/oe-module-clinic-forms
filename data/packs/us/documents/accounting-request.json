@@ -17,29 +17,8 @@
   },
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Patient name",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Patient ID",
-          "value": "{patient.id}"
-        },
-        {
-          "label": "Phone",
-          "value": "{patient.phone}"
-        },
-        {
-          "label": "Address",
-          "value": "{patient.address}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification-contact"
     },
     {
       "type": "heading",
@@ -73,21 +52,8 @@
       "text": "The list shows who we shared your information with and why. It leaves out sharing for treatment, payment and our operations, and some other cases the law allows. The first list in any 12 months is free. For another list within 12 months, we may charge a fair, cost-based fee. We will tell you the fee first, and you can change or cancel your request. We will answer within 60 days. If we need more time, we will tell you why in writing and answer within 30 more days."
     },
     {
-      "type": "signature",
-      "signers": [
-        "Patient or legal representative"
-      ]
-    },
-    {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "If signed by a representative: name"
-        },
-        {
-          "label": "Relationship or legal authority"
-        }
-      ]
+      "type": "include",
+      "block": "consent-signature"
     },
     {
       "type": "heading",

@@ -7,21 +7,8 @@
   "about": "Lo que se encontró y qué hacer después, para que el paciente se lo lleve a casa: motivos, hallazgos, cambios de medicamentos, instrucciones, pruebas y la próxima consulta.",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre del paciente",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Número de paciente",
-          "value": "{patient.id}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification"
     },
     {
       "type": "fields",

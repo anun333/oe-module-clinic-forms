@@ -1,0 +1,33 @@
+{
+  "id": "patient-identification-contact",
+  "title": "Patient identification and contact",
+  "about": "The patient's name, date of birth, ID, phone and address, at the top of privacy requests and the sliding fee application. Filled from the chart when printed for a patient.",
+  "version": 1,
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        },
+        {
+          "label": "Phone",
+          "value": "{patient.phone}"
+        },
+        {
+          "label": "Address",
+          "value": "{patient.address}"
+        }
+      ]
+    }
+  ]
+}

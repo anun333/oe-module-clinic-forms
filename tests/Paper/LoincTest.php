@@ -30,4 +30,19 @@ final class LoincTest extends TestCase
         // The method's worked example: for 12345 the check digit is 5.
         self::assertSame(5, Loinc::checkDigit('12345'));
     }
+
+    public function testEachDefinitionIsAnItemOfLoincsQuestionnaireForAnInstrumentWeHave(): void
+    {
+        $data = json_decode((string)file_get_contents(Loinc::definitionsFile()), true, 8, JSON_THROW_ON_ERROR);
+        $panels = array_map(static fn(string $f): string => basename($f, '.json'), glob(dirname(__DIR__, 2) . '/data/instruments/*.json') ?: []);
+        self::assertGreaterThan(100, count($data['definitions']));
+        foreach ($data['definitions'] as $code => $definition) {
+            self::assertTrue(Loinc::isValid((string)$code), (string)$code);
+            self::assertMatchesRegularExpression('~^http://loinc\.org/q/(\d+-\d)#\d+$~', $definition, (string)$code);
+            preg_match('~/q/(\d+-\d)#~', $definition, $m);
+            self::assertContains($m[1], $panels, "$code: LOINC's questionnaire for one of data/instruments' panels");
+            self::assertSame($definition, Loinc::definition((string)$code));
+        }
+        self::assertNull(Loinc::definition('59284-0'), 'a document code is no question');
+    }
 }

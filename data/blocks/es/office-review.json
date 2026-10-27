@@ -1,0 +1,18 @@
+{
+  "id": "office-review",
+  "title": "Revisión de la oficina",
+  "about": "Quién revisó el formulario y quién lo registró en OpenEMR, bajo \"Para uso de la oficina\" en los cuestionarios de evaluación.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Revisado por"
+        },
+        {
+          "label": "Registrado en OpenEMR por"
+        }
+      ]
+    }
+  ]
+}

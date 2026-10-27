@@ -41,7 +41,42 @@ A document is one JSON file named by its id (`consent-to-treat.json`), in `data/
 
 ## Blocks
 
-`heading`, `paragraph`, `fields` (label and optional value), `checklist` (optionally coded: see below; `"names": true` when its items are names of peoples, places or languages, which the reading-level check then leaves out, since it would read their syllables as hard words), `lines` (ruled lines), `signature` (one line per signer, each with a date), `scale` (a question per row and a box per answer, optionally scored), `table` (column headings over blank rows), `taglines` (the language assistance taglines). Exact shapes are in `src/Paper/Document.php`.
+`heading`, `paragraph`, `fields` (label and optional value), `checklist` (optionally coded: see below; `"names": true` when its items are names of peoples, places or languages, which the reading-level check then leaves out, since it would read their syllables as hard words), `lines` (ruled lines), `signature` (one line per signer, each with a date), `scale` (a question per row and a box per answer, optionally scored), `table` (column headings over blank rows), `taglines` (the language assistance taglines), `include` (a shared block, below). Exact shapes are in `src/Paper/Document.php`.
+
+## Shared blocks
+
+A part that several documents print the same way is written once, in `data/blocks/<id>.json`, and each document includes it by name. When a document is read, the block's content is put in its place, so the printed page, the checks, the version and the fingerprints are the same as if it were written out.
+
+```json
+{"type": "include", "block": "consent-signature"}
+```
+
+A scale's questions can be a block too, included as one of the scale's items:
+
+```json
+{"type": "scale", "label": "...", "columns": ["Not at all", "Several days", "More than half the days", "Nearly every day"],
+ "items": [{"include": "phq-2-questions"}, "Trouble falling or staying asleep, or sleeping too much"]}
+```
+
+A block file has an `id` (its file name), a `title`, what it is (`about`), a `version` (raised when its wording changes, as a document's is, and recorded by `tools/document-versions.php` under `blocks/<id>`), and either `blocks` (document blocks, which may include other blocks) or `rows` (a scale's questions). Skip logic belongs to the document, so a block's content has no `id` or `show_if`, and an include has nothing but its name. A change to a block changes every document that includes it, so raise their versions too; the tests say which.
+
+| Block | What it is | Documents |
+|---|---|---|
+| `patient-identification` | Patient name, date of birth and ID, from the chart | 23 |
+| `screening-header` | Name and date of birth from the chart, and the date, on screening questionnaires | 21 |
+| `representative` | A representative's name and relationship or legal authority | 19 (13 through `consent-signature`) |
+| `office-review` | Reviewed by, and entered into OpenEMR by | 15 |
+| `consent-signature` | The patient's or legal representative's signature, with `representative` | 13 |
+| `chart-identification` | Patient, date of birth and chart number, on clinical notes | 7 (5 through `note-header`) |
+| `patient-identification-contact` | `patient-identification` with phone and address, on privacy requests | 6 |
+| `note-header` | Date and clinician, then `chart-identification` | 5 |
+| `clinician-signoff` | The signing clinician's printed name, credentials and NPI | 5 |
+| `phq-licence` | Pfizer's credit and permission for the PHQ and GAD-7 | 3 |
+| `phq-2-questions` | The PHQ-2's two questions (rows), which open the PHQ-9 and close the PHQ-4 | 3 |
+| `functional-difficulty` | The PHQ's closing difficulty question | 2 |
+| `hunger-vital-sign-questions` | The Hunger Vital Sign's two statements (rows), for any form that screens for food insecurity | 1 |
+
+**On screen (FHIR).** A block of questions whose questions carry their LOINC codes as linkIds stands on its own, as SDC 4.0.0's Modular Forms have it: `tools/export-questionnaires.php` writes it as a Questionnaire of its own (`block-phq-2-questions.json`, with its canonical url and version) and the documents that include it as modular forms (`phq-9-modular.json`), which name it with a `subQuestionnaire`. The form fillers, OpenEMR's included, get the assembled form (`phq-9.json`): the same items as before, with `assembledFrom` naming the block. Only where the block's numbers are its own (the top of a scale numbered from 1), so the PHQ-4, which asks the PHQ-2's questions as 3 and 4, keeps them written out. Other blocks stay written out on screen: their items' linkIds say where they sit in the document (`b5.0`), and SDC's `linkIdPrefix` can only put text in front of a block's linkIds, so a block used in two places couldn't give each its own; the linkIds are what saved responses hold.
 
 ## Tables another module fills
 
@@ -68,7 +103,7 @@ A labelled checklist can say what it asks in code, so the answer saved on screen
 - **`answer_codes`**: one code for each item, in the same order. LOINC answers (`LA...`) take LOINC's own text from `data/loinc-names.json`. SNOMED CT answers, and HL7's null flavors (`UNK`), give the code system's own name in `display`.
 - **`single`**: `true` when one answer is chosen. Otherwise any number can be ticked.
 
-The paper prints the document's own words. On screen each answer shows its code system's name, as coded instruments do. SNOMED CT codes go out with the US Edition named, which holds the US extension's codes. Codes aren't wording: they change no version, and a translation copies them, like skip logic. A mistake (a wrong check digit, a code for each item missing, a LOINC answer with its own display) is refused when the file is read.
+The paper prints the document's own words. On screen each answer shows its code system's name, as coded instruments do. A question whose LOINC code LOINC's own questionnaires ask also names that item as its `definition` (`data/loinc-definitions.json`). SNOMED CT codes go out with the US Edition named, which holds the US extension's codes. Codes aren't wording: they change no version, and a translation copies them, like skip logic. A mistake (a wrong check digit, a code for each item missing, a LOINC answer with its own display) is refused when the file is read.
 
 ## Placeholders
 
@@ -76,7 +111,7 @@ Text can use `{group.key}`: `facility` (name, address, phone, fax, email, websit
 
 ## Translations
 
-A translation sits in a language folder beside its document (`data/documents/es/consent-to-treat.json`) with the same `id` and the same structure: `title`, `category`, `about`, `blocks`, and `translates`, the fingerprint of the English it was made from. Everything else (audience, code, version, status, source, licence) comes from the English document. When the English changes, the translation is out of date and the document prints in English until it is updated. The Spanish files are generated by `dev/clinic_forms_translate_es.py` in the openhealthcare workspace, which fails on any untranslated string.
+A translation sits in a language folder beside its document (`data/documents/es/consent-to-treat.json`) with the same `id` and the same structure: `title`, `category`, `about`, `blocks`, and `translates`, the fingerprint of the English it was made from (of the English with its shared blocks in place). A translated document includes the block's translation, `data/blocks/es/<id>.json`, which has its own `title`, `about` and wording and the English block's version. Everything else (audience, code, version, status, source, licence) comes from the English document. When the English changes, the translation is out of date and the document prints in English until it is updated. The Spanish files are generated by `dev/clinic_forms_translate_es.py` in the openhealthcare workspace, which fails on any untranslated string.
 
 ## A clinic's own versions
 
@@ -84,3 +119,4 @@ A translation sits in a language folder beside its document (`data/documents/es/
 - Copy the shipped file to start, and add `"based_on"` with the value the page shows, so the page says when the module's version changes.
 - To stop offering a shipped document without replacing it, list its id in `settings.json`: `{"hide": ["financial-policy"]}`.
 - Mistakes are reported on the page and the file is left out; the shipped documents stay.
+- **Shared blocks.** Your documents can include the module's blocks, and your own, in a `blocks/` folder inside the site's Clinic Forms folder, in the same format. Yours can't take the name of one of the module's, since that would change the module's documents: such a file is left out and reported. Your documents aren't published as modular FHIR forms; their Questionnaires have the blocks written out.

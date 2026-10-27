@@ -1,0 +1,25 @@
+{
+  "id": "patient-identification",
+  "title": "Patient identification",
+  "about": "The patient's name, date of birth and ID, at the top of consents, requests and other front-desk forms. Filled from the chart when printed for a patient.",
+  "version": 1,
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Patient name",
+          "value": "{patient.name}"
+        },
+        {
+          "label": "Date of birth",
+          "value": "{patient.dob}"
+        },
+        {
+          "label": "Patient ID",
+          "value": "{patient.id}"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "id": "functional-difficulty",
+  "title": "Pregunta sobre la dificultad",
+  "about": "La pregunta final del PHQ, qué tan difícil le han hecho los problemas el trabajo, las tareas de la casa y llevarse bien con otras personas: en el PHQ-9 y el GAD-7.",
+  "blocks": [
+    {
+      "type": "checklist",
+      "label": "Si marcó cualquiera de los problemas, ¿qué tanta dificultad le han dado estos problemas para hacer su trabajo, encargarse de las tareas del hogar, o llevarse bien con otras personas?",
+      "items": [
+        "No ha sido difícil",
+        "Un poco difícil",
+        "Muy difícil",
+        "Extremadamente difícil"
+      ]
+    }
+  ]
+}

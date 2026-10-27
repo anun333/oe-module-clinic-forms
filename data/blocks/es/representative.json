@@ -1,0 +1,18 @@
+{
+  "id": "representative",
+  "title": "Representante",
+  "about": "Quién firmó por el paciente y su relación o autoridad legal: debajo de la firma del paciente, que puede firmar un representante.",
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Si firma un representante: nombre"
+        },
+        {
+          "label": "Relación o autoridad legal"
+        }
+      ]
+    }
+  ]
+}

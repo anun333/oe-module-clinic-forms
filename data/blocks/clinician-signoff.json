@@ -1,0 +1,25 @@
+{
+  "id": "clinician-signoff",
+  "title": "Clinician sign-off",
+  "about": "The signing clinician's printed name, credentials and NPI, under the signature on letters and notes. Filled from the provider's record.",
+  "version": 1,
+  "blocks": [
+    {
+      "type": "fields",
+      "fields": [
+        {
+          "label": "Name (printed)",
+          "value": "{provider.name}"
+        },
+        {
+          "label": "Credentials",
+          "value": "{provider.credentials}"
+        },
+        {
+          "label": "NPI",
+          "value": "{provider.npi}"
+        }
+      ]
+    }
+  ]
+}

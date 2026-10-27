@@ -1,6 +1,45 @@
 {
-    "about": "The wording (fingerprint) of each version of each shipped document. Written by tools/document-versions.php; do not edit.",
+    "about": "The wording (fingerprint) of each version of each shipped document and shared block. Written by tools/document-versions.php; do not edit.",
     "documents": {
+        "blocks/chart-identification": {
+            "1": "6b064ebfadfa106f"
+        },
+        "blocks/clinician-signoff": {
+            "1": "0028418a01af7923"
+        },
+        "blocks/consent-signature": {
+            "1": "d14d1c8ed1be7437"
+        },
+        "blocks/functional-difficulty": {
+            "1": "badc3edc75ad7c12"
+        },
+        "blocks/hunger-vital-sign-questions": {
+            "1": "50f13b46a95ca447"
+        },
+        "blocks/note-header": {
+            "1": "f9dd9c01a04f84c5"
+        },
+        "blocks/office-review": {
+            "1": "040c4db4a113925a"
+        },
+        "blocks/patient-identification": {
+            "1": "1dc794b462379d1b"
+        },
+        "blocks/patient-identification-contact": {
+            "1": "dc37d632e6790817"
+        },
+        "blocks/phq-2-questions": {
+            "1": "f4c7d36294cdd4b4"
+        },
+        "blocks/phq-licence": {
+            "1": "86f6b4f776e94ef4"
+        },
+        "blocks/representative": {
+            "1": "5e7f233cab938a55"
+        },
+        "blocks/screening-header": {
+            "1": "07b348fd0874f087"
+        },
         "documents/after-visit-summary": {
             "1": "19c20a9cb956794b",
             "2": "3415442c9c5d43bb"

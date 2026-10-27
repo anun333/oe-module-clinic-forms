@@ -1,0 +1,10 @@
+{
+  "id": "hunger-vital-sign-questions",
+  "title": "Hunger Vital Sign questions",
+  "about": "The Hunger Vital Sign's two statements about the household's food in the past 12 months (Children's HealthWatch), for any form that screens for food insecurity.",
+  "version": 1,
+  "rows": [
+    "Within the past 12 months we worried whether our food would run out before we got money to buy more.",
+    "Within the past 12 months the food we bought just didn't last and we didn't have money to get more."
+  ]
+}

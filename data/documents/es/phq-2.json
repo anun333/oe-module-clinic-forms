@@ -6,20 +6,8 @@
   "about": "Detección de depresión con dos preguntas, con puntuación de 0 a 6. Una puntuación de 3 o más es el punto habitual para aplicar el PHQ-9.",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Fecha"
-        }
-      ]
+      "type": "include",
+      "block": "screening-header"
     },
     {
       "type": "scale",
@@ -37,8 +25,9 @@
         3
       ],
       "items": [
-        "Poco interés o placer en hacer cosas",
-        "Se ha sentido decaído(a), deprimido(a) o sin esperanzas"
+        {
+          "include": "phq-2-questions"
+        }
       ],
       "total": "Puntuación total (para uso de la oficina)"
     },
@@ -55,19 +44,12 @@
       "text": "El PHQ-2 no pregunta sobre pensamientos de hacerse daño, así que un total menor de 3 no descarta un riesgo. Pregunte directamente, o aplique el PHQ-9 o el ASQ, si hay preocupación."
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Revisado por"
-        },
-        {
-          "label": "Registrado en OpenEMR por"
-        }
-      ]
+      "type": "include",
+      "block": "office-review"
     },
     {
-      "type": "paragraph",
-      "text": "Elaborado por los doctores Robert L. Spitzer, Janet B.W. Williams, Kurt Kroenke y colegas, mediante una subvención educativa otorgada por Pfizer Inc. No se requiere permiso para reproducir, traducir, presentar o distribuir."
+      "type": "include",
+      "block": "phq-licence"
     }
   ]
 }

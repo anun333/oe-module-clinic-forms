@@ -34,21 +34,8 @@
       ]
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Patient",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Date of birth",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Chart number",
-          "value": "{patient.id}"
-        }
-      ]
+      "type": "include",
+      "block": "chart-identification"
     },
     {
       "type": "checklist",
@@ -129,21 +116,8 @@
       ]
     },
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Name (printed)",
-          "value": "{provider.name}"
-        },
-        {
-          "label": "Credentials",
-          "value": "{provider.credentials}"
-        },
-        {
-          "label": "NPI",
-          "value": "{provider.npi}"
-        }
-      ]
+      "type": "include",
+      "block": "clinician-signoff"
     }
   ]
 }

@@ -1,0 +1,17 @@
+{
+  "id": "consent-signature",
+  "title": "Firma del consentimiento",
+  "about": "La firma del paciente, o la de un representante legal con su nombre y su autoridad, al final de un consentimiento o una solicitud.",
+  "blocks": [
+    {
+      "type": "signature",
+      "signers": [
+        "Paciente o representante legal"
+      ]
+    },
+    {
+      "type": "include",
+      "block": "representative"
+    }
+  ]
+}

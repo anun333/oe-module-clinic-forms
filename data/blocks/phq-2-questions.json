@@ -1,0 +1,10 @@
+{
+  "id": "phq-2-questions",
+  "title": "PHQ-2 questions",
+  "about": "The PHQ-2's two questions, interest and mood over the last 2 weeks, which also open the PHQ-9 and close the PHQ-4.",
+  "version": 1,
+  "rows": [
+    "Little interest or pleasure in doing things",
+    "Feeling down, depressed, or hopeless"
+  ]
+}

@@ -6,20 +6,8 @@
   "about": "La herramienta del NIMH para detectar el riesgo de suicidio en pacientes de 8 años o más en entornos médicos: cuatro preguntas de sí o no que hace una enfermera o un médico, y una pregunta de agudeza si alguna se contesta que Sí. No hay puntuación total; el resultado es una prueba negativa, positiva no aguda o positiva aguda.",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Fecha"
-        }
-      ]
+      "type": "include",
+      "block": "screening-header"
     },
     {
       "type": "scale",

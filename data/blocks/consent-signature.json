@@ -1,0 +1,18 @@
+{
+  "id": "consent-signature",
+  "title": "Consent signature",
+  "about": "The patient's signature, or a legal representative's with their name and authority, at the end of a consent or request.",
+  "version": 1,
+  "blocks": [
+    {
+      "type": "signature",
+      "signers": [
+        "Patient or legal representative"
+      ]
+    },
+    {
+      "type": "include",
+      "block": "representative"
+    }
+  ]
+}

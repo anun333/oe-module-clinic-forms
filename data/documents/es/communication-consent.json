@@ -7,21 +7,8 @@
   "about": "Cómo puede comunicarse la clínica con el paciente: teléfono, buzón de voz, mensajes de texto, correo electrónico y portal del paciente.",
   "blocks": [
     {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Nombre del paciente",
-          "value": "{patient.name}"
-        },
-        {
-          "label": "Fecha de nacimiento",
-          "value": "{patient.dob}"
-        },
-        {
-          "label": "Número de paciente",
-          "value": "{patient.id}"
-        }
-      ]
+      "type": "include",
+      "block": "patient-identification"
     },
     {
       "type": "paragraph",
@@ -68,21 +55,8 @@
       "text": "Entiendo que el correo electrónico y los mensajes de texto pueden no ser seguros, y acepto ese riesgo para los mensajes que he permitido. Pueden aplicarse cargos por mensajes y datos. Puedo cambiar estas opciones en cualquier momento."
     },
     {
-      "type": "signature",
-      "signers": [
-        "Paciente o representante legal"
-      ]
-    },
-    {
-      "type": "fields",
-      "fields": [
-        {
-          "label": "Si firma un representante: nombre"
-        },
-        {
-          "label": "Relación o autoridad legal"
-        }
-      ]
+      "type": "include",
+      "block": "consent-signature"
     },
     {
       "type": "heading",
