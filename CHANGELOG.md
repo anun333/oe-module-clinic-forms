@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.41.0 (unreleased)
+## 0.41.0 (2026-10-26)
 
 **Portable forms: shared blocks, SDC modular forms, and each LOINC question's definition.**
 
